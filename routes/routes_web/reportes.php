@@ -86,9 +86,10 @@ Route::prefix('reportes')->group(function () {
   Route::get('util-ventas-pdf', 'ReportesController@utilidades_ventas_pdf')->name('reportes.util-ventas.pdf');
 
   # Ventas mensual
-  Route::get('ventas-mensual', 'Reportes\VentasController@ventas_mensual')->name('reportes.ventas_mensual');
-  Route::get('ventas-mensual-pdf', 'Reportes\VentasController@ventas_mensual_pdf')->name('reportes.ventas_mensual_pdf');
-
+  Route::get('ventas-mensual', 'Reportes\VentasMensualController@show')->name('reportes.ventas_mensual');
+  Route::post('ventas-mensual-data', 'Reportes\VentasMensualController@getData')->name('reportes.ventas_mensual_getdata');
+  Route::get('ventas-mensual-pdf', 'Reportes\VentasMensualController@pdf')->name('reportes.ventas_mensual_pdf');
+  
   # Ventas mensual
   Route::get('validate-documentos-mensual', 'Reportes\VentasValidateController@show')->name('reportes.validate_documentos_mensual');
   Route::get('validate-documentos-mensual-report', 'Reportes\VentasValidateController@make')->name('reportes.validate_documentos_mensual_report');
