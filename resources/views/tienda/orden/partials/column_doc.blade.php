@@ -1,0 +1,1 @@
+{{ optional($model->info->where('meta_key', '_billing_first_name')->first())->meta_value  }}

@@ -1,0 +1,68 @@
+body.admin .home .info-box {
+  
+  font-family: sans-serif;
+  transition: 1s all;
+  border: 1px solid #cccccc;
+  box-shadow: 0 0 3px 1px #ccc;
+
+  .info-box-icon {
+    color: white;
+    background-color: rgb(197, 197, 197);
+  }
+
+  .info-box-icon .fa:before {
+    content: '\f10c';
+  }
+
+  .info-box-content .info-box-text {
+  }
+
+  .info-box-content .info-box-number {
+    font-weight: bold;
+    font-size: 18px;    
+  }
+  
+}
+
+body.admin .home .info-box:hover {
+  box-shadow: none;
+}
+
+//  
+
+body.admin .home .info.info-empresas_activas {
+  .info-box-icon .fa:before {
+    content: '\f0f7';
+  }
+  .info-box-icon {
+    background-color: #3a85a5;
+  }
+}
+
+body.admin .home .info.info-ventas_totales {
+  .info-box-icon .fa:before {
+    content: '\f0f6';
+  }
+  .info-box-icon {
+    background-color: #389135;
+  }
+}
+
+body.admin .home .info.info-compras_totales {
+  .info-box-icon .fa:before {
+    content: '\f0f6';
+  }
+  .info-box-icon {
+    background-color: #d96666;
+  }
+}
+
+body.admin .home .info.info-usuarios_activos {
+  .info-box-icon .fa:before {
+    content: '\f0c0';
+  }
+  .info-box-icon {
+    background-color: #00d5ff;
+  }
+}
+

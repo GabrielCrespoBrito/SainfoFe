@@ -1,0 +1,75 @@
+.data-pendientes {
+
+  .info {
+    text-align: center;;
+
+
+  .info-container {
+    border-bottom: 1px dotted #999;
+  }
+
+
+    .descripcion {
+      color: gray;
+    }
+
+    .value {
+      font-weight: bold;
+      margin-left: 10px;
+    }    
+
+  }
+ 
+}
+
+// Table de documentos
+
+#datatable-documentos {
+
+  .input-modify-date {
+    // Comentario
+    // max-width: 90px;
+    // margin-right: 10px;
+    // line-height: 0;
+  }
+
+  .input-modify-date:disabled {
+    border-color: transparent;
+  }
+
+  .btn-modify-date,
+  .btn-cancel-modify-date,
+  .btn-save-modify-date
+  {
+    color: #999999;
+    background: transparent;    
+
+    :hover {
+      color: black;
+    }
+  }
+
+  // Boton para cancelar guardado
+  .btn-cancel-modify-date
+  {
+    color: #c16565;
+    margin-left:5px;
+    :hover {
+      color: #db4f4f;
+    }
+  }
+
+  // Boton de guardar
+  .btn-save-modify-date
+  {
+    color: #3c8dbc;
+    :hover {
+      color: #08659b;
+    }
+  } 
+
+}
+
+
+@import 'no_pendientes';
+@import 'opciones_entidad';

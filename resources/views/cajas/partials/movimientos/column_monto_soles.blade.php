@@ -1,0 +1,1 @@
+{{ $model->isIngreso() ? $model->CANINGS : $model->CANEGRS }}

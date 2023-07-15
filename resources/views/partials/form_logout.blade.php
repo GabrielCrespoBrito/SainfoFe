@@ -1,0 +1,1 @@
+<form id="form-logout" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf </form>

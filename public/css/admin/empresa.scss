@@ -1,0 +1,67 @@
+
+.btn-suscripcion-enlace {
+  padding: 2px 5px;
+  color: #484848;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: .5s all;
+
+  :hover {
+    color: initial;
+    background: initial;
+  }
+
+  .plan-codigo {
+    color: #6a91a9ab;
+  }
+
+  .plan-fecha {
+    font-weight: 900;
+  }
+
+  .plan-estatus {
+    
+  }
+
+}
+
+
+.btn-suscripcion-enlace.suscripcion-1 {
+  background-color: #6ebc7e1f;
+
+  :hover {
+  }
+
+  .plan-codigo {
+  }
+
+  .plan-fecha {
+  }
+
+  .plan-estatus {}
+
+}
+
+.btn-suscripcion-enlace.suscripcion-0 {
+
+  background-color: #ff00021f;
+  
+  :hover {}
+
+  .plan-codigo {}
+
+  .plan-fecha {}
+
+  .plan-estatus {}
+
+}
+
+
+/**/
+
+.row.enviar-directo {
+  border-bottom: 1px solid #c3c2c2;
+  margin-bottom: 20px;
+  border-top: 1px solid #c3c2c2;
+  margin-top: 20px;
+}

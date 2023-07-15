@@ -1,0 +1,1 @@
+<a href="{{ route('cajas.resumen', $model->CajNume ) }}">{{ $model->CajNume }}</a>

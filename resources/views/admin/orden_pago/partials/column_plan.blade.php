@@ -1,0 +1,2 @@
+{{ $model->planduracion->nombreCompleto()  }}
+

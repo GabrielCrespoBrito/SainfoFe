@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class ReporteEnvioDocumentosMail extends Mailable
+{
+	use Queueable, SerializesModels;
+
+	/**
+	 * Create a new message instance.
+	 *
+	 * @return void
+	 */
+	public $data;
+
+
+	public function __construct($data)
+	{
+		$this->data = $data;
+	}
+
+	/**
+	 * Build the message.
+	 *
+	 * @return $this
+	 */
+	public function build()
+	{
+		$mail = $this
+		->subject( $this->data['subject']  )
+		->from( env('MAIL_USERNAME') , $this->data['name'] )
+		->view( 'mails.reporte_documentos_enviados' , $this->data );
+		
+		return $mail;
+	}
+}

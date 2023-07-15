@@ -1,0 +1,2 @@
+
+{{ $model->GuiSeri }} - {{ $model->GuiNumee }}

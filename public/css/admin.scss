@@ -1,0 +1,12 @@
+/*  Admin SASS */
+
+$font-title: Helvetica, sans-serif;
+$title-color: #333;
+$bg-navbar: #48558d;
+
+@import 'admin/mixs';
+@import 'admin/base';
+@import 'admin/home';
+@import 'admin/documentos';
+@import 'admin/empresa';
+@import 'admin/planes';

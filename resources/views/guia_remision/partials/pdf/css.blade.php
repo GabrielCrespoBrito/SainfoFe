@@ -1,0 +1,384 @@
+.container {
+font-size: 12px;
+}
+
+body { 
+font-family: Arial !important; 
+text-align: left;
+margin:0;
+margin:0;
+margin-left: .5cm;
+margin-right: -.5cm;			
+}
+
+
+.border {
+  width: 100%;
+  /*height: 100%;*/
+  border: 1px solid black;
+  border-radius: 10px
+}
+
+.t_cabezera {
+margin-bottom: 5px;
+border-collapse: collapse;
+}
+
+.t_cabezera .data_1 {
+  width: 60%;
+}
+
+
+.t_cabezera .empresa_nombre {
+color: #ff8000;
+font-weight: bold;
+font-size: 1.5em;
+padding: 0;
+margin: 5px 0;
+}
+
+.t_cabezera .empresa_nombre_subtitulo {
+font-weight: bold;
+font-size: 1.1em;
+}		
+
+
+.t_cabezera .showAll {
+  width: 400px;
+  text-align: center;
+}
+.t_cabezera .data_1 .img_logo{
+width: 150px;
+max-width: 200px;
+height: 60px;
+max-height: 80px;    	
+}
+
+.t_cabezera .data_1 .img_logo2{
+width: 250px;
+max-width: 350px;
+height: 60px;
+max-height: 80px;
+}
+
+.cimg_logo1{
+text-align: left;
+max-width: 150px;
+}
+
+.cimg_logo2{
+  max-width: 350px;
+}
+
+
+.total_le {
+padding-left: 10px;
+}
+
+
+.t_cabezera .data_1 .data_1_1 {
+width: 30%;
+}	
+
+.t_cabezera .data_1 .data_1_2 {
+width: 70%;
+}		
+
+.t_cabezera .direccion,.telefono,.email {
+padding: 0;
+margin: 0
+}
+
+
+/* informacion factura  */
+.t_cabezera .data_2{
+  width: 40%;			
+  text-align: center;
+  /*border: 1px solid black;*/
+  /*border-radius: 20px*/
+}
+
+
+ .empresa_ruc {
+font-weight: bold;
+font-weight: bold;
+font-size: 1.3em;
+}		
+
+ .factura_titulo {
+color: #ff8047;
+font-weight: bold;
+font-size: 1.3em;
+}		
+
+ .factura_numero {
+font-weight: bold;
+font-size: 1.3em;
+}						
+
+
+.text-r {
+text-align: right;
+}
+
+/* cliente  */
+
+.cliente {
+border-collapse: collapse;
+}
+
+.cliente .data_1 .border, .cliente .data_2 {
+/*border: 1px solid black;*/
+padding: 5px 10px;
+}
+
+
+
+.cliente .cliente_factura,
+.cliente .doc_interno {
+display: inline-block;
+border: 1px solid #666666;
+padding: 10px;
+height: 80px;
+border-radius: 10px;
+}
+
+.cliente .cliente_factura {
+width: 70%;
+}
+
+.cliente .cliente_tipodato {
+font-weight: bold;		
+}
+
+.italic {
+  font-style: italic
+}
+
+/* info pago */
+
+.info_pago {
+border-collapse: collapse;
+}
+
+.data_pago {
+border: 1px solid black;
+padding: 5px;
+}
+
+.data_pago .cliente_tipodato {
+font-weight: bold;	
+}
+
+.items {
+position: relative;
+top: -90px;
+}
+
+.table_factura {
+  /* border-collapse: collapse; */
+  text-align: center;
+  width: 100%;
+}
+
+
+
+.table_factura td {
+  border-right: 1px solid black;
+  border-bottom: 1px dotted rgb(100, 100, 100);
+}
+
+.table_factura td:last-child {
+  border-right: none;
+}
+
+
+.table_factura thead {
+  border-collapse: collapse;
+  background-color: #ccc;
+  color: black;
+}
+
+
+.table_factura thead td {
+  border-collapse: collapse;  
+}
+
+/*pie*/
+
+.row_pie {
+  /* overflow: hidden; */
+  /* width: 100%; */
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* padding: 0; */
+  /* margin: 0; */
+}
+
+
+.row_pie .td_principal {
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.referencia{	
+  border-top: 1px solid #ccc;
+}
+
+
+.nombre_ref {
+  display: inline-block;
+  text-align: left;
+  margin-top: .2em;
+  font-weight: bold;
+}
+
+.table_orden td {
+  border-right: 1px solid black
+}
+
+.table_orden td:last-child {
+  border-right: none
+}
+
+.valie_ref {
+display: inline-block;
+text-align: right;
+}
+
+.pie {
+  width: 100%;
+/* border-top: 1px solid #ccc; */
+}
+
+.pie .data_1 {
+padding-left: 30px;
+}
+
+.pie .data_2 {
+/* border-left: 1px solid #999; */
+}
+
+.pie .items_resumen ,
+.pie .items_totales {
+padding: 0;
+display: inline-block;
+}
+
+.pie .items_resumen p {
+margin: 0;
+padding: 0;
+}
+
+.lipo  {
+/* outline: 1px solid black; */
+}
+
+.text-c {
+text-align: center;
+}
+
+.table_totales {
+border-collapse: collapse;
+}
+
+
+.table_totales  td {
+padding: 5px 0;
+}
+
+.table_totales .mon {
+  line-height: -10px;
+  margin: 100%;
+  vertical-align: baseline;
+  position: relative;
+  top: -20px;
+}
+
+.table_totales .total_cifra {
+  text-align: right;
+  margin-top: 5px;
+  padding-right: 10px;
+  position: relative;
+  top: 0px;
+  margin-top:10px;
+}
+
+.table_totales .nombre_total {
+  padding-left: 10px;
+}
+
+.title_pie {
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+}
+
+
+.row_pie .seccion {
+  /*border: 2px solid #000 */
+}
+
+
+.table_motivo  {
+  font-size: .7em;
+  width: 100%;
+}
+
+
+
+.table_motivo .name_motivo {
+  
+}
+
+.table_motivo .name_motivo::before 
+{
+  border: 1px solid #000;
+  width: 40px;
+  content: '';
+  padding: 12px;
+  height: 28px;
+  font-weight: bold;
+}
+
+.table_motivo .name_motivo.checked::before 
+{
+  padding: 7px;
+  content: 'X';
+}
+
+.seccion.unidad {
+  /*border: 1px solid #000;*/
+  /*border-radius: 5px;*/
+}
+
+.seccion.unidad .data {
+  font-size: .7em;
+}
+
+.seccion.unidad .attr {
+  font-weight: bold;
+}
+
+.seccion.unidad .value {
+  text-transform: uppercase;
+}
+
+.seccion p {
+ 
+  margin: 5px 3px;
+}
+
+
+.seccion.unidad.empresa_  {
+  border-top: 0
+}
+
+.name_empresa {
+  margin: 0;
+  margin-top: 10px;
+  border-top: 1px solid #999;
+  display: inline-block;
+
+}

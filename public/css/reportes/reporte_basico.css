@@ -1,0 +1,74 @@
+.header 
+{
+  outline: 2px solid black;
+}
+
+* {
+}
+
+.header .table-header-nombre
+{
+}
+
+.header .table-header-nombre .nombre
+{
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.header .table-header-nombre .fecha
+{
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+
+.header .empresa-nombre
+{
+  font-weight: bold;
+}
+
+.header  .empresa-ruc
+{
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+
+.table-contenido  {
+  border-collapse: collapse
+}
+
+
+.table-contenido  thead td  {
+  font-weight: bold; 
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 0
+}
+
+.table-contenido tbody td  
+{
+}
+
+.table-contenido td
+{
+  background-color: red;
+}
+
+.table-contenido tbody td {
+  outline: 1px solid black;
+}
+
+table {
+  outline: 1px solid black;
+}
+
+table .totales td {
+  margin-top: 1px dotted #999;
+  margin-bottom: 1px dotted #999;
+}
+
+

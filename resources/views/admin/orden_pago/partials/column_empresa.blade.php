@@ -1,0 +1,2 @@
+{{ optional($model->empresa)->nombre() }}
+

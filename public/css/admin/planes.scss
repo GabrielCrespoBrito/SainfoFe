@@ -1,0 +1,32 @@
+.plan-link {
+  font-weight: 900;
+}
+
+.plan-link.is-empresa {
+  color: black;
+}
+
+.plan-link.is-maestro {
+  color: #48558d;
+}
+
+.parent-caracteristica.empresa 
+{
+  color: black;
+}
+
+.parent-caracteristica.maestro
+{
+  // outline: 1px solid red;
+
+
+
+  label {
+    color: red
+  }
+
+  label small {
+    // outline: 1px solid black;
+  }
+
+}

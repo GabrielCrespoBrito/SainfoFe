@@ -1,0 +1,44 @@
+// 
+
+body.admin .small-box {
+  box-shadow: none;
+  transition: .5s all;
+
+  h3 {
+  color: #5c5c5c;
+  }
+  
+  p {
+    color: #444444;
+  }
+
+  p:hover {
+    color: #444444;
+  }  
+}
+
+body.admin .small-box > .inner:hover
+{
+  box-shadow: none;
+}
+
+body.admin .stats.stats-empresas_activas .small-box 
+{
+  background-color: #8bada7;
+  
+  // Icono: .fa-building
+  .icon .fa:before { 
+    content:"\f1ad"
+  }
+
+}
+
+body.admin .stats.stats-docs_pendientes .small-box 
+{
+  background-color: #7171d7ab;
+
+  // Icono: .fa-clock-o
+  .icon .fa:before {
+    content:"\f017"
+  }  
+}
