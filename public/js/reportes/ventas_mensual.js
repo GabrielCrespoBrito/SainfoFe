@@ -142,9 +142,10 @@ $("body").on('click', ".generate-report", (e) => {
 
   let $btn = $(e.target)
   let url = $btn.attr('data-url');
+  let status = getStatus();
   let params = new URLSearchParams();
   params.set('formato', $("[name=formato]").val());
-  params.set('estado_sunat', getStatus() );
+  params.set('estado_sunat', status ? status : 'todos' );
   params.set('mes', $("[name=mes]").val());
   url = url.concat( '?', params.toString());
   $btn.attr('href', url )
