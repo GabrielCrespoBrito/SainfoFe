@@ -113,6 +113,8 @@ class VentasController extends Controller
         'ventas_cab.VtaImpo',
         'ventas_cab.VtaPago',
         'ventas_cab.VtaEsta',
+        'ventas_cab.VtaFMail',
+        'ventas_cab.fe_estado',
         'ventas_cab.VtaSald',
         'ventas_cab.AlmEsta',
         'ventas_cab.VtaXML',
@@ -126,6 +128,10 @@ class VentasController extends Controller
         'prov_clientes.PCRucc',
         'moneda.monabre'
       );
+
+
+      // dd($request->all());
+      // exit();
 
     if ($status != null) {
       $busqueda->where('ventas_cab.VtaFMail', '=', $status);
@@ -184,9 +190,10 @@ class VentasController extends Controller
     return $dataTable
       ->addColumn('nro_venta', 'ventas.partials.factura.column_nro_venta')
       ->addColumn('estado', 'ventas.partials.factura.column_estado')
+      ->addColumn('estado_sunat', 'ventas.partials.factura.column_status_text')
       ->addColumn('btn', 'ventas.partials.factura.column_actions')
       ->addColumn('alm', 'partials.column_alm')
-      ->rawColumns(['nro_venta',  'estado', 'btn', 'alm'])
+      ->rawColumns(['nro_venta',  'estado', 'btn', 'alm', 'estado_sunat'])
       ->make(true);
   }
 

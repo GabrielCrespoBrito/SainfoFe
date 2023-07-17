@@ -1,5 +1,5 @@
-
-<table  class="table datatable" data-url="{{ route('ventas.consulta') }}">
+<div class="col-md-12 col-xs-12 content_ventas div_table_content no_pl" style="overflow-x: scroll;">
+<table width="100%" class="table datatable sainfo-table sainfo-noicon oneline" data-url="{{ route('ventas.consulta') }}">
 
 <thead>
   <tr>
@@ -22,3 +22,4 @@
 </thead>
 
 </table>
+</div>

@@ -22,7 +22,7 @@ class VentaStats
   const ESTADOS_NOMBRE = [
     StatusCode::CODE_0001 => 'enviados',
     StatusCode::CODE_0002 => 'no_aceptados',
-    StatusCode::CODE_0003 => 'enviados',
+    StatusCode::CODE_0003 => 'anuladas',
     StatusCode::CODE_0011 => 'por_enviar',
   ];
 
@@ -76,9 +76,15 @@ class VentaStats
   {
     $docInfo = [
       'total' => 0,
+      'total_importe' => 0,
       'enviados' => 0,
+      'enviados_importe' => 0,
       'por_enviar' => 0,
+      'por_enviar_importe' => 0,
       'no_aceptados' => 0,
+      'no_aceptados_importe' => 0,
+      'anuladas' => 0,
+      'anuladas_importe' => 0,
     ];
 
     $dataArr = [
@@ -111,17 +117,22 @@ class VentaStats
     $this->data['docs']['total'] += 1;
     # Sumar al tipo de documento
     $this->data['docs'][$documento->tipodocumento]['total'] += 1;
-
     $dia = (int) last(explode('-', $documento->fecha));
     # Sumar a su tipodedocumento
     $this->data['docs'][$documento->tipodocumento][self::ESTADOS_NOMBRE[$documento->estado]] += 1;
-
+    
     # Sumatoria al dia
     $isNC = $documento->tipodocumento == Venta::NOTA_CREDITO;    
     $soles = $documento->moneda == Moneda::SOL_ID ? $documento->importe : 0;
     $dolares = $documento->moneda == Moneda::DOLAR_ID ? $documento->importe : 0;
     $soles =  convertNegativeIfTrue($soles, $isNC);
-    $dolares =  convertNegativeIfTrue($dolares, $isNC);    
+    $dolares =  convertNegativeIfTrue($dolares, $isNC);
+
+    # Sumar al total general
+    $this->data['docs'][$documento->tipodocumento]['total_importe'] += $soles;
+    # Sumar a su estado especifico
+    $this->data['docs'][$documento->tipodocumento][self::ESTADOS_NOMBRE[$documento->estado] . '_importe' ] += $soles;
+
     $this->data['ventas'][$dia]['cantidad'] += 1;
     $this->data['ventas'][$dia]['01'] = $this->data['ventas'][$dia]['01'] + $soles;
     $this->data['ventas'][$dia]['02'] = $this->data['ventas'][$dia]['02'] + $dolares;

@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
   {
     ini_set('max_input_vars', 60000);
     if ( $isProduction = config('app.env') == 'production' ) {
-      URL::forceScheme('https');
+      // URL::forceScheme('https');
     }
 
     Schema::defaultStringLength(191);

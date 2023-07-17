@@ -21,15 +21,18 @@ function getStatus()
 
 function getTipoDoc()
 {
-  return window.tipo_doc;
+  return window.tipo_doc ? window.tipo_doc : 'todos';
 }
 
 function initDatable() {
 
   table = $('.datatable').DataTable({
-    "pageLength": 10,
+    "searching":false,
+    "pageLength": 50,
+    "lengthChange": false,
     "responsive": true,
     "processing": false,
+    "ordering" : false,
     'sorting': false,
     "oLanguage": {
       "sSearch": "", "sLengthMenu": "_MENU_",
@@ -44,31 +47,30 @@ function initDatable() {
       "url": $('.datatable').attr('data-url'),
       "data": function (d) {
         return $.extend({}, d, {
-          "buscar_por_fecha": $("[name=buscar_por_fecha]").val(),
+          "buscar_por_fecha": 1,
           "fecha_desde": getFechaInicio(),
           "fecha_hasta": getFechaFinal(),
-          "tipo": getStatus(),
-          "status": getTipoDoc(),
+          "tipo": getTipoDoc(),
+          "status": getStatus(),
+          "local": "todos",
         });
       }
     },
     "columns": [
+      { data: 'VtaFvta', sorting: false, orderable: false, searchable: false },
       { data: 'nro_venta', sorting: false, orderable: false, searchable: false },
       { data: 'TidCodi', orderable: false, searchable: false },
-      {
-        data: 'VtaNume', orderable: false, searchable: false, render: function (data, type, row, meta) {
-          return row.VtaSeri + "-" + row.VtaNumee;
-        }
-      },
-      { data: 'VtaFvta', orderable: false, searchable: false },
+      { data: 'VtaSeri', sorting: false, orderable: false, searchable: false },
+      { data: 'VtaNumee', sorting: false, orderable: false, searchable: false },
       { data: 'PCNomb', orderable: false, searchable: false, render: function (data) { return data.slice(0, 15).concat("...") } },
       { data: 'monabre', orderable: false, searchable: false },
       { data: 'VtaImpo', orderable: false, searchable: false, render: fixedNumber, className: 'text-right-i' },
-      { data: 'VtaPago', orderable: false, searchable: false, render: fixedNumber, className: 'text-right-i' },
-      { data: 'VtaSald', orderable: false, searchable: false, render: fixedNumber, className: 'text-right-i' },
-      { data: 'alm', orderable: false, searchable: false },
-      { data: 'estado', orderable: false, searchable: false, className: 'estado' },
-      { data: 'btn', orderable: false, searchable: false }
+      { data: 'VtaEsta', orderable: false, searchable: false },
+      { data: 'fe_estado', orderable: false, searchable: false },
+      { data: 'fe_rpta', orderable: false, searchable: false },
+      { data: 'fe_obse', orderable: false, searchable: false },
+      { data: 'VtaFMail', orderable: false, searchable: false },
+      { data: 'estado_sunat', orderable: false, searchable: false, className: 'estado' },
     ]
   });
 
@@ -79,8 +81,6 @@ function initDatable() {
 
 
 //
-
-
 
 function datepicker()
 {
@@ -108,6 +108,71 @@ $(".btn-filtro-change").on('click', (e) => {
 });
 
 
+function searchTable()
+{
+  table.draw();
+}
+
+function setFechas()
+{
+  const mescodi = $("[name=mes]").val();
+  const year = mescodi.substring(0, 4);
+  const mes = mescodi.substring(4, 6);
+  const fecha_inicio = `${year}-${mes}-01`;
+  let date_today = new Date(fecha_inicio)
+  let lastDay = new Date(date_today.getFullYear(), mes, 0);
+
+  window.fecha_inicio = fecha_inicio;
+  let diaFinal = lastDay.getDate();
+  diaFinal = diaFinal < 10 ? '0'.concat(diaFinal) : diaFinal;
+  window.fecha_final = `${year}-${mes}-${diaFinal}`;
+}
+
+function setTipo(tipo_doc) {
+  window.tipo_doc = tipo_doc;
+}
+
+function setStatus(status_doc) {
+  window.status_doc = status_doc;
+}
+
+$("[name=mes]").on('change', setFechas )
+
+$("body").on('click', ".generate-report", (e) => {
+
+  let $btn = $(e.target)
+  let url = $btn.attr('data-url');
+  let params = new URLSearchParams();
+  params.set('formato', $("[name=formato]").val());
+  params.set('estado_sunat', getStatus() );
+  params.set('mes', $("[name=mes]").val());
+  url = url.concat( '?', params.toString());
+  $btn.attr('href', url )
+})
+
+
+$("body").on('click', '.btn-status-change', (e) => {
+  
+  var $btn = e.target.tagName.toLowerCase() === 'a' ? $(e.target) : $(e.target).parent()
+  e.preventDefault()
+
+  if( $btn.is('.active') ){
+    return false;
+  }
+
+  $('.btn-status-change').removeClass('active');
+  $btn.addClass('active');    
+  
+  const status = $btn.attr('data-status') == "all" ? null : $btn.attr('data-status');
+  const tipo_doc = $btn.attr('data-tipo');
+  setStatus(status)
+  setTipo(tipo_doc)
+
+  console.log(status, tipo_doc);
+  searchTable();
+});
+
+
 $(".search-consulta").on('click', (e) => {
 
   e.preventDefault();
@@ -116,6 +181,8 @@ $(".search-consulta").on('click', (e) => {
   $("#load_screen").show();
 
   const url = $btn.attr('data-url');
+
+  // $(".btn-filtro-change.active").attr('data-tipo')
 
   const data = {
     tipo: $(".btn-filtro-change.active").attr('data-tipo'), 
@@ -128,10 +195,7 @@ $(".search-consulta").on('click', (e) => {
     success: (html) => {
       $(".reporte-data").empty();
       $(".reporte-data").append(html);
-
       initDatable();
-      // $(".datatable").Datatable();
-
     },
     complete : () => {
       $("#load_screen").hide();
@@ -139,17 +203,6 @@ $(".search-consulta").on('click', (e) => {
   }
 
   ajaxs( data , url , funcs ); 
-  // search - consulta
-  // if (!$btn.is('active')) {
-  //   let tipo = $btn.attr('data-tipo');
-  //   $(".btn-filtro-change").removeClass('active');
-  //   $btn.addClass('active');
-  //   $(".filtro_temporalidad").hide();
-  //   console.log({ tipo })
-  //   $(".filtro_temporalidad").filter('[data-tipo=' + tipo + ']').show();
-  // }
-
-
   return false;
 });
 
