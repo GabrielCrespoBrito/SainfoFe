@@ -209,7 +209,7 @@ $(".search-consulta").on('click', (e) => {
 
 
 
-init( datepicker )
+init( datepicker, setFechas )
 
 
 
