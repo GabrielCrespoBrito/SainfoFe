@@ -14,7 +14,7 @@
 
       <div class="filtro" style="padding:0" id="condicion">
         <fieldset class="fsStyle">
-          <legend class="legendStyle">Mes  xxx</legend>
+          <legend class="legendStyle">Mes </legend>
           <div class="row" id="demo">
             <div class="col-md-8" >
               <div class="filtro_temporalidad" data-tipo="mes">
