@@ -136,7 +136,44 @@ function setStatus(status_doc) {
   window.status_doc = status_doc;
 }
 
-$("[name=mes]").on('change', setFechas )
+$("[name=mes]").on('change', () => {
+  searchUltimaBusqueda();
+  setFechas();
+})
+
+function showDateInfo(show = true, date = null)
+{
+  if(show){
+    console.log(date)
+    $(".date-update").show();
+    date = date ? 'Ult. Fecha de Consulta: <strong>' + date + "</strong>" : 'No se ha consultado todavia';
+    $(".date-update").find('.value').empty().html(date);
+  }
+  else {
+    $(".date-update").hide();
+  }
+}
+
+
+function searchUltimaBusqueda()
+{
+  $("#load_screen").show();
+  const data = {
+    data : $("[name=mes]").val()
+  };
+
+  const url = $(".btn-filtro-change.active").attr('data-url');
+
+  const funcs = {
+    success: responde => showDateInfo(true, responde.date)
+    ,
+    complete : () => {
+      $("#load_screen").hide();
+    }
+  }
+
+  ajaxs( data, url , funcs );
+}
 
 $("body").on('click', ".generate-report", (e) => {
 

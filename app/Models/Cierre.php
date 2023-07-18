@@ -34,11 +34,21 @@ class Cierre extends Model
     return new CierreRepository($this);
   }
 
+  public static function getFechaUpdate($mescodi)
+  {
+    $mes = self::findByMes($mescodi);
+
+    if( $mes == null || optional($mes)->estadistica == null ){
+      return false;
+    }
+
+    return $mes->estadistica['busqueda']['ventas'];
+  }
+
+
   public static function findByMes($mescodi)
   {    
     return self::where('mescodi' , $mescodi)->first();
-
-    #Code here ............
   }
 
   public function getOrCreateStadistics()

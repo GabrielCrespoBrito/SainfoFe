@@ -127,5 +127,14 @@ class VentasMensualController extends Controller
     }
   }
 
+  public function consultDate( Request $request )
+  {
+    $data =  Cierre::getFechaUpdate($request->data);
+ 
+    return response()->json([
+      'date' => $data,
+    ]);
+  }
+
 
 }

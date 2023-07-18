@@ -62,12 +62,7 @@
 
   <div class="col-md-6 text-right ">
 
-    @include('partials.button_dropdown', ['name' => 'Reporte', 'options' => [
-      ['text' => 'PDF', 'route' => route('cajas.resumen_pdf_detallado',  [ 'id_caja' => $caja->CajNume, 'tipo' => 'pdf']) ],
-      ['text' => 'Excell', 'route' => route('cajas.resumen_pdf_detallado',[  'id_caja' => $caja->CajNume, 'tipo' => 'excell'])  ],
-    ]])
-
-    {{-- <a href="{{ route('cajas.resumen_pdf_detallado', $caja->CajNume) }}" target="blank" class="btn btn-default btn-flat"> <span class="fa"></span> Reporte </a> --}}
+    <a href="{{ route('cajas.resumen_pdf_detallado', $caja->CajNume) }}" target="blank" class="btn btn-default btn-flat"> <span class="fa"></span> Reporte </a>
 
   </div>
 
