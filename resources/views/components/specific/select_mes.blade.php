@@ -1,6 +1,7 @@
 @php
 	
 	$name = isset($name) ? $name : "mes";
+  $select_option = $select_option ?? false;
 	$mes = $mes ?? null;
 	$m = new App\Mes;
 	$data = $m->repository()->all()->reverse()->pluck('mesnomb','mescodi');

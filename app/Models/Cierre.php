@@ -10,6 +10,7 @@ use App\Jobs\EstadisticasMensual\CrearStats;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
 use App\Jobs\EstadisticasMensual\CreateStats;
 use App\Jobs\EstadisticasMensual\CrearEstadisticas;
+use App\Jobs\EstadisticasMensual\EstadisticaByFechas;
 
 class Cierre extends Model
 {
@@ -51,26 +52,31 @@ class Cierre extends Model
     return self::where('mescodi' , $mescodi)->first();
   }
 
-  public function getOrCreateStadistics()
+  public function getOrCreateStadistics($consult = false)
   {
-    // return $this->estadistica ?  $this->estadistica : self::crearEstadisticas($this->mescodi, $this);
-    return self::crearEstadisticas($this->mescodi, $this);
+    return self::crearEstadisticas($this->mescodi, $this, $consult);
   }
 
-  public static function crearEstadisticas($mescodi, $mes = null)
+  public static function crearEstadisticas($mescodi, $mes = null, $consult = false)
   {
-    return (new CreateStats($mescodi, $mes))->handle();
+    return (new CreateStats($mescodi, $mes, $consult ))->handle();
   }
 
-  public static function getStadistics( $mescodi )
+  public static function getStadistics( $mescodi, $consult = false )
   {
     $mes = self::findByMes($mescodi);
 
     if( $mes ){
-      return $mes->getOrCreateStadistics();
+      return $mes->getOrCreateStadistics( $consult );
     }
 
-    return self::crearEstadisticas($mescodi);
+    return self::crearEstadisticas($mescodi, null , $consult);
+  }
+
+
+  public function getStadisticsByFechas($fecha_desde, $fecha_hasta)
+  {
+    return (new EstadisticaByFechas( $fecha_desde, $fecha_hasta ))->handle();
   }
 
 

@@ -8,6 +8,7 @@ use App\Models\Cierre;
 use Illuminate\Http\Request;
 use mikehaertl\wkhtmlto\Pdf;
 use App\Http\Controllers\Controller;
+use App\Jobs\Venta\ConsultDocs;
 use App\Jobs\Venta\VentaContableReport;
 use App\Util\ExcellGenerator\VentaContableExcell;
 
@@ -20,7 +21,6 @@ class VentasMensualController extends Controller
 
   public function getData( Request $request )
   {
-
     $isFecha = $request->input('tipo') == "fecha";
     $rules = [];
     if( $isFecha ){
@@ -30,7 +30,12 @@ class VentasMensualController extends Controller
 
     $this->validate($request, $rules);
 
-    $data = $isFecha ? [] : Cierre::getStadistics($request->mes, true);
+    if($request->input('consult') ){
+      ini_set('max_execution_time', '300');
+      (new ConsultDocs($request->fecha_desde, $request->fecha_hasta ))->handle();
+    }
+
+    $data = $isFecha ? Cierre::getStadisticsByFechas($request->fecha_desde, $request->fecha_hasta) : Cierre::getStadistics($request->mes);
 
     return view('reportes.ventas_mensual.partials.data_complete', compact('data'));
   }
@@ -38,16 +43,20 @@ class VentasMensualController extends Controller
 
   public function report(Request $request)
   {
+    // dd( $request->all() );
+    // exit();
+
     $empresa = get_empresa();
     $formato = $request->formato;
     $mescodi = $request->mes;
     $estadoSunat = $request->estado_sunat;
     $year = substr($mescodi, 0, 4);
     $mes = substr($mescodi, 4, 6);
-    $fecha_inicio =  "{$year}-{$mes}-01";
-    $carbon = new Carbon($fecha_inicio);
-    $fecha_final =  $carbon->lastOfMonth()->format('Y-m-d');
-    $report = new VentaContableReport($mescodi, $estadoSunat);
+    $fecha_inicio = $request->fecha_inicio;
+    $fecha_final =  $request->fecha_final;
+    // dd($estadoSunat);
+    // exit();
+    $report = new VentaContableReport( $fecha_inicio, $fecha_final, $request->tipo, $estadoSunat);
 
     if ($request->cerrar_mes) {
       Cierre::createIfNotExists($mescodi);
@@ -84,7 +93,10 @@ class VentasMensualController extends Controller
         'total' => $data['total'],
         'nombre_empresa' => $empresa->EmpNomb,
         'ruc_empresa' => $empresa->EmpLin1,
-        'periodo' => Mes::find($request->mes)->mesnomb
+        'periodo' => sprintf('%s - %s', $fecha_inicio, $fecha_final),
+
+        // 'periodo' => Mes::find($request->mes)->mesnomb
+
       ]);
 
       $pdf->setOptions($globalOptions);

@@ -13,23 +13,17 @@ class VentaContableReport
   public $mes;
   public $fecha_inicio;
   public $fecha_final;
+  public $tipo;
   public $estadoSunat;
 
-  public function __construct($mescodi, $estadoSunat)
+  public function __construct($fecha_inicio, $fecha_final, $tipo, $estadoSunat)
   {
-    $this->setDates($mescodi);
-    $this->estadoSunat = $estadoSunat;
+    $this->estadoSunat = $estadoSunat == "todos" ? null : $estadoSunat;
+    $this->fecha_inicio =  $fecha_inicio;
+    $this->fecha_final =  $fecha_final;
+    $this->tipo =  $tipo == "todos" ? null : $tipo;
   }
 
-  public function setDates($mescodi)
-  {
-    $this->mescodi = $mescodi;
-    $year = substr($mescodi, 0, 4);
-    $mes = substr($mescodi, 4, 6);
-    $this->fecha_inicio =  "{$year}-{$mes}-01";
-    $carbon = new Carbon($this->fecha_inicio);
-    $this->fecha_final =  $carbon->lastOfMonth()->format('Y-m-d');
-  }
 
 
   public function getQuery()
@@ -73,8 +67,12 @@ class VentaContableReport
       ]);
 
 
-    if ($this->estadoSunat != "todos") {
+    if ($this->estadoSunat) {
       $docs->where('VtaFMail', '=', $this->estadoSunat);
+    }
+
+    if ($this->tipo) {
+      $docs->where('TidCodi', '=', $this->tipo);
     }
 
     return

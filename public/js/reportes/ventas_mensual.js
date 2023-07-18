@@ -74,9 +74,7 @@ function initDatable() {
     ]
   });
 
-
   window.table_ventas = table;
-
 }
 
 
@@ -157,7 +155,9 @@ function showDateInfo(show = true, date = null)
 
 function searchUltimaBusqueda()
 {
-  $("#load_screen").show();
+
+  $("[name=mes]").prop('disabled', true)
+
   const data = {
     data : $("[name=mes]").val()
   };
@@ -168,7 +168,7 @@ function searchUltimaBusqueda()
     success: responde => showDateInfo(true, responde.date)
     ,
     complete : () => {
-      $("#load_screen").hide();
+      $("[name=mes]").prop('disabled', false)
     }
   }
 
@@ -181,9 +181,12 @@ $("body").on('click', ".generate-report", (e) => {
   let url = $btn.attr('data-url');
   let status = getStatus();
   let params = new URLSearchParams();
+
   params.set('formato', $("[name=formato]").val());
   params.set('estado_sunat', status ? status : 'todos' );
-  params.set('mes', $("[name=mes]").val());
+  params.set('fecha_inicio', getFechaInicio());
+  params.set('fecha_final', getFechaFinal());
+  params.set('tipo', getTipoDoc());
   url = url.concat( '?', params.toString());
   $btn.attr('href', url )
 })
@@ -220,13 +223,12 @@ $(".search-consulta").on('click', (e) => {
 
   const url = $btn.attr('data-url');
 
-  // $(".btn-filtro-change.active").attr('data-tipo')
-
   const data = {
     tipo: $(".btn-filtro-change.active").attr('data-tipo'), 
     mes: $("[name=mes]").val(),
-    fecha_desde: $("[name=fecha_desde]").val(),
-    fecha_hasta: $("[name=fecha_desde]").val(),
+    fecha_desde:  getFechaInicio(),
+    fecha_hasta: getFechaFinal(),
+    consult: Number($("[name=consult]").is(':checked')),
   };
 
   const funcs = {
@@ -246,7 +248,7 @@ $(".search-consulta").on('click', (e) => {
 
 
 
-init( datepicker, setFechas )
+init(datepicker, setFechas, searchUltimaBusqueda )
 
 
 

@@ -27,7 +27,7 @@
           <div class="row" id="demo">
             <div class="col-md-8" >
               <div class="filtro_temporalidad" data-tipo="mes">
-                @component('components.specific.select_mes', ['mes' => $mes ?? null , 'fechas' => true ]) @endcomponent
+                @component('components.specific.select_mes', ['mes' => $mes ?? null , 'fechas' => true, 'select_option' => true ]) @endcomponent
               </div>
 
               <div class="filtro_temporalidad" style="display:none" data-tipo="fecha">
@@ -40,15 +40,14 @@
               </div>
             </div>
 
-            <div class="col-md-4 ">
+            <div class="col-md-3">
 
-              {{-- <a href="#" data-url="{{ route('reportes.ventas_mensual_getdata') }}" class="btn btn-flat btn-primary btn-flat btn-block search-consulta"> <span class="fa fa-search"></span> Consultar </a> --}}
-            
-              @include('partials.button_dropdown', ['name' => 'Reporte', 'className' => 'btn-primary', 'options' => [
-                ['text' => 'Solo Consultar', 'route' => route('cajas.resumen_pdf_detallado',  [ 'id_caja' => 1, 'tipo' => 'pdf']) ],
-                ['text' => 'Consultar y Reprocesar', 'route' => route('cajas.resumen_pdf_detallado',[  'id_caja' =>1, 'tipo' => 'excell'])  ],
-              ]])
+              <a href="#" data-url="{{ route('reportes.ventas_mensual_getdata') }}" class="btn btn-flat btn-primary btn-flat btn-block search-consulta"> <span class="fa fa-search"></span> Consultar </a>
+      
+            </div>
 
+            <div class="col-md-1">
+              <input style="margin-top:.5em" data-toggle="tooltip" title="Consultar Estado en la Sunat" type="checkbox" name="consult" value="1">
             </div>
 
 

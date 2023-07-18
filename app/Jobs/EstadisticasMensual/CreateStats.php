@@ -3,7 +3,6 @@
 namespace App\Jobs\EstadisticasMensual;
 
 use App\Models\Cierre;
-use Illuminate\Support\Facades\Log;
 use App\Jobs\EstadisticasMensual\GuiaStats;
 
 class CreateStats
@@ -12,15 +11,17 @@ class CreateStats
   public $stats;
   public $statExists;
   public $query;
+  public $consult;
   public $queryCompra;
   public $data = [];
   public $mescodi;
   public $lastUpdates;
 
-  public function __construct($mescodi, $mes = null)
+  public function __construct($mescodi, $mes = null, $consult = false)
   {
     $this->mescodi = $mescodi;
     $this->mes = $mes;
+    $this->consult = $consult;
     $this->searchLastUpdates();
   }
 
@@ -51,7 +52,7 @@ class CreateStats
   public function handle()
   {
     try {
-      $ventaStats  =   (new VentaStats($this->lastUpdates->ventas, $this->mescodi))->handle();
+      $ventaStats  =   (new VentaStats($this->lastUpdates->ventas, $this->mescodi, $this->consult ))->handle();
       $guiasStats  =   (new GuiaStats($this->lastUpdates->guias, $this->mescodi))->handle();
       $comprasStats= (new CompraStats($this->lastUpdates->compras, $this->mescodi))->handle();
       $this->processInfo($ventaStats, $guiasStats, $comprasStats);

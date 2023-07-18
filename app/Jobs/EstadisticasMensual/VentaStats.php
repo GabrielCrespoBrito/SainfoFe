@@ -15,6 +15,7 @@ class VentaStats
   public $currentSearch = null;
   
   public $mescodi;
+  public $consult;
   public $mesCantDias;
   public $query;
   public $data = [];
@@ -26,10 +27,11 @@ class VentaStats
     StatusCode::CODE_0011 => 'por_enviar',
   ];
 
-  public function __construct($lastSearchUpdate = null, $mescodi)
+  public function __construct($lastSearchUpdate = null, $mescodi, $consult = false)
   {
     $this->lastSearchUpdate = $lastSearchUpdate;
     $this->mescodi = $mescodi;
+    $this->consult = $consult;
     $this->mesCantDias = (int) last(explode('-', mes_to_fecha_inicio_final($mescodi)[1]));
     $this->currentSearch = date('Y:m:d H:i:s');
   }
