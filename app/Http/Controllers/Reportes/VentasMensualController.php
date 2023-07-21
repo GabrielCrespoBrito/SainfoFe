@@ -30,13 +30,23 @@ class VentasMensualController extends Controller
 
     $this->validate($request, $rules);
 
+    $searchSunat = null;
+
     if($request->input('consult') ){
       ini_set('max_execution_time', '300');
       (new ConsultDocs($request->fecha_desde, $request->fecha_hasta ))->handle();
+      $searchSunat = date('Y:m:d H:i:s'); 
+      
     }
 
-    $data = $isFecha ? Cierre::getStadisticsByFechas($request->fecha_desde, $request->fecha_hasta) : Cierre::getStadistics($request->mes);
+    $data = $isFecha ? 
+    Cierre::getStadisticsByFechas($request->fecha_desde, $request->fecha_hasta) : 
+    Cierre::getStadistics($request->mes, $searchSunat);
 
+
+    // dd($request->fecha_desde, $request->fecha_hasta );
+    // exit();
+    
     return view('reportes.ventas_mensual.partials.data_complete', compact('data'));
   }
 

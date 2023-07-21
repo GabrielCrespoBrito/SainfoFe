@@ -19,6 +19,9 @@ class VentaStats
   public $mesCantDias;
   public $query;
   public $data = [];
+  public $calculator;
+  public $sunatSearchDate;
+
 
   const ESTADOS_NOMBRE = [
     StatusCode::CODE_0001 => 'enviados',
@@ -27,13 +30,13 @@ class VentaStats
     StatusCode::CODE_0011 => 'por_enviar',
   ];
 
-  public function __construct($lastSearchUpdate = null, $mescodi, $consult = false)
+  public function __construct($lastSearchUpdate = null, $mescodi)
   {
     $this->lastSearchUpdate = $lastSearchUpdate;
     $this->mescodi = $mescodi;
-    $this->consult = $consult;
     $this->mesCantDias = (int) last(explode('-', mes_to_fecha_inicio_final($mescodi)[1]));
     $this->currentSearch = date('Y:m:d H:i:s');
+    $this->calculator = new CalculatorEstadistica([], [], true, $mescodi);
   }
 
   public function needSearch()
@@ -67,6 +70,15 @@ class VentaStats
         'ventas_cab.VtaFvta as fecha',
         'ventas_cab.User_FModi as fecha_modificacion',      
         'ventas_cab.VtaImpo as importe',
+        'ventas_cab.VtaIGVV as igv',
+        'ventas_cab.VtaISC as isc',
+        'ventas_cab.Vtabase as base',
+        'ventas_cab.VtaTcam as tc',
+        'ventas_cab.VtaDcto as dcto',
+        'ventas_cab.VtaInaf as inafecta',
+        'ventas_cab.VtaExon as exonerada',
+        'ventas_cab.VtaGrat as gratuita',
+        'ventas_cab.icbper as icbper',
         'ventas_cab.VtaFMail as estado',
         'ventas_cab.Moncodi as moneda'
       ])
@@ -77,6 +89,7 @@ class VentaStats
   public function setData()
   {
     $docInfo = [
+
       'total' => 0,
       'total_importe' => 0,
       'enviados' => 0,
@@ -87,6 +100,9 @@ class VentaStats
       'no_aceptados_importe' => 0,
       'anuladas' => 0,
       'anuladas_importe' => 0,
+
+      "estados" => [],
+      "totales" => [],
     ];
 
     $dataArr = [
@@ -119,8 +135,8 @@ class VentaStats
     $this->data['docs']['total'] += 1;
     # Sumar al tipo de documento
     $this->data['docs'][$documento->tipodocumento]['total'] += 1;
-    $dia = (int) last(explode('-', $documento->fecha));
     # Sumar a su tipodedocumento
+    $dia = (int) last(explode('-', $documento->fecha));
     $this->data['docs'][$documento->tipodocumento][self::ESTADOS_NOMBRE[$documento->estado]] += 1;
     
     # Sumatoria al dia
@@ -134,11 +150,14 @@ class VentaStats
     $this->data['docs'][$documento->tipodocumento]['total_importe'] += $soles;
     # Sumar a su estado especifico
     $this->data['docs'][$documento->tipodocumento][self::ESTADOS_NOMBRE[$documento->estado] . '_importe' ] += $soles;
-
     $this->data['ventas'][$dia]['cantidad'] += 1;
     $this->data['ventas'][$dia]['01'] = $this->data['ventas'][$dia]['01'] + $soles;
     $this->data['ventas'][$dia]['02'] = $this->data['ventas'][$dia]['02'] + $dolares;
     $this->lastSearch = $documento->fecha_modificacion > $this->lastSearch ? $documento->fecha_modificacion : $this->lastSearch;
+  }
+
+  public function calculate()
+  {
   }
 
   public function process()
@@ -152,7 +171,7 @@ class VentaStats
     foreach ($q as $dias) {
       foreach ($dias as $dia) {
         foreach ($dia as $documento) {
-          $this->addToTotal($documento);
+          $this->calculator->setDoc($documento);
         }
       }
     }
@@ -172,10 +191,16 @@ class VentaStats
     if( $search = $this->needSearch() ){
       $this->processData();
     }
+
+    
     return [
-      'data' => $this->data,
+      'data' => [
+        'calculos' => $this->calculator->stats_calculo,
+        'estados' => $this->calculator->stats_estados,
+        'dias' => $this->calculator->stats_dias,
+      ],
       'search' => $search,
-      'lastSearch' => $this->lastSearch ?? $this->currentSearch
+      'lastSearch' => $this->calculator->lastSearch
     ];
   }
 }

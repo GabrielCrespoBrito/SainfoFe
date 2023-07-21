@@ -4,14 +4,20 @@ window.status_doc = null;
 window.tipo_doc = null;
 
 
+function isFechaByMensual()
+{
+  return $(".btn-filtro-change.active").is('[data-tipo=mes]');
+}
+
+
 function getFechaInicio()
 {
-  return window.fecha_inicio;
+  return isFechaByMensual() ? window.fecha_inicio : $("[name=fecha_desde]").val();
 }
 
 function getFechaFinal()
 {
-  return window.fecha_final;
+  return isFechaByMensual() ? window.fecha_final : $("[name=fecha_final]").val();
 }
 
 function getStatus()
@@ -99,8 +105,8 @@ $(".btn-filtro-change").on('click', (e) => {
     $(".btn-filtro-change").removeClass('active');
     $btn.addClass('active');
     $(".filtro_temporalidad").hide();
-    console.log({tipo})
     $(".filtro_temporalidad").filter('[data-tipo=' + tipo  + ']').show();
+    showDateInfo(tipo == "mes")
   }
 
 });
@@ -142,10 +148,11 @@ $("[name=mes]").on('change', () => {
 function showDateInfo(show = true, date = null)
 {
   if(show){
-    console.log(date)
     $(".date-update").show();
+    
     date = date ? 'Ult. Fecha de Consulta: <strong>' + date + "</strong>" : 'No se ha consultado todavia';
-    $(".date-update").find('.value').empty().html(date);
+      $(".date-update").find('.value').empty().html(date);
+    
   }
   else {
     $(".date-update").hide();
@@ -155,6 +162,9 @@ function showDateInfo(show = true, date = null)
 
 function searchUltimaBusqueda()
 {
+  if( !isFechaByMensual() ){
+    return false;
+  }
 
   $("[name=mes]").prop('disabled', true)
 
@@ -214,6 +224,15 @@ $("body").on('click', '.btn-status-change', (e) => {
 });
 
 
+$("body").on('click', '.show-totales', (e) => {
+
+  console.log("hola")
+  const $ele = $(e.target);
+
+  $(".totales-reporte").filter("[data-codi=" +  $ele.attr('data-codi')  +"]").toggle();
+
+})
+
 $(".search-consulta").on('click', (e) => {
 
   e.preventDefault();
@@ -236,6 +255,7 @@ $(".search-consulta").on('click', (e) => {
       $(".reporte-data").empty();
       $(".reporte-data").append(html);
       initDatable();
+      searchUltimaBusqueda();
     },
     complete : () => {
       $("#load_screen").hide();

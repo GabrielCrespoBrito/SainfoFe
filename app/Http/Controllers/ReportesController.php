@@ -56,6 +56,10 @@ class ReportesController extends Controller
 
   public function importe_mensual(Request $request)
   {
+    // dd(Cierre::getStadistics($request->date));
+    // exit();
+
+
     return response()->json([
         'data' => Cierre::getStadistics($request->date)
     ]);

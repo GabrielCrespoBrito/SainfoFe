@@ -43,7 +43,10 @@ class Cierre extends Model
       return false;
     }
 
-    return $mes->estadistica['busqueda']['ventas'];
+    // dd( $mes->estadistica );
+    // exit();
+
+    return $mes->estadistica['busqueda']['ventas_sunat'] ?? false;
   }
 
 
@@ -52,29 +55,28 @@ class Cierre extends Model
     return self::where('mescodi' , $mescodi)->first();
   }
 
-  public function getOrCreateStadistics($consult = false)
+  public function getOrCreateStadistics($searchSunat = false, $onlyVenta = false)
   {
-    return self::crearEstadisticas($this->mescodi, $this, $consult);
+    return self::crearEstadisticas($this->mescodi, $this, $searchSunat, $onlyVenta);
   }
 
-  public static function crearEstadisticas($mescodi, $mes = null, $consult = false)
+  public static function crearEstadisticas($mescodi, $mes = null, $searchSunat = null, $onlyVenta = false)
   {
-    return (new CreateStats($mescodi, $mes, $consult ))->handle();
+    return (new CreateStats($mescodi, $mes, $onlyVenta, $searchSunat ))->handle();
   }
 
-  public static function getStadistics( $mescodi, $consult = false )
+  public static function getStadistics( $mescodi, $searchSunat = null )
   {
     $mes = self::findByMes($mescodi);
 
     if( $mes ){
-      return $mes->getOrCreateStadistics( $consult );
+      return $mes->getOrCreateStadistics($searchSunat);
     }
 
-    return self::crearEstadisticas($mescodi, null , $consult);
+    return self::crearEstadisticas($mescodi, null, $searchSunat);
   }
 
-
-  public function getStadisticsByFechas($fecha_desde, $fecha_hasta)
+  public static function getStadisticsByFechas($fecha_desde, $fecha_hasta)
   {
     return (new EstadisticaByFechas( $fecha_desde, $fecha_hasta ))->handle();
   }

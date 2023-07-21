@@ -35,7 +35,7 @@
                   <input type="text" data-format="Y-m-d" value="{{ date('Y-m-d') }}" name="fecha_desde" class="form-control flat input-sm datepicker no_br text-center">
                 </div>
                 <div class="col-md-6 no_p col-sm-6  col-xs-6">
-                  <input type="text" data-format="Y-m-d" value="{{ date('Y-m-d') }}" name="fecha_desde" class="form-control flat input-sm datepicker no_br text-center">
+                  <input type="text" data-format="Y-m-d" value="{{ date('Y-m-d') }}" name="fecha_final" class="form-control flat input-sm datepicker no_br text-center">
                 </div>
               </div>
             </div>
