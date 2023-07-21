@@ -129,7 +129,7 @@ class VentasMensualController extends Controller
           'total' => $data['total'],
           'nombre_empresa' => $empresa->EmpNomb,
           'ruc_empresa' => $empresa->EmpLin1,
-          'periodo' => Mes::find($request->mes)->mesnomb
+          'periodo' => $fecha_inicio . '-' . $fecha_final
         ]
       ]);
     }
@@ -139,7 +139,7 @@ class VentasMensualController extends Controller
 
       ob_end_clean();
       $nombreEmpresa =  $empresa->EmpLin1 . ' ' . $empresa->EmpNomb;
-      $excellExport = new VentaContableExcell($data, Mes::find($request->mes)->mesnomb, $nombreEmpresa);
+      $excellExport = new VentaContableExcell($data, $fecha_inicio . '-' . $fecha_final, $nombreEmpresa);
 
       $info = $excellExport
         ->generate()
