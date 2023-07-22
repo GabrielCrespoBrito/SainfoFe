@@ -6,7 +6,6 @@
 'assets' => ['libs' => ['datepicker','select2','datatable'],'js' => ['helpers.js','admin/empresa/index.js' ]]
 ])
 
-
 @push('js')
 <script>
   var url_consulta = "{{ route('admin.empresa.search') }}";
@@ -14,8 +13,6 @@
 
 @include('partials.errores')
 @endpush
-
-
 
 @slot('contenido')
 
@@ -49,6 +46,7 @@
       <td> RUC </td>
       <td> Estado </td>
       <td> Ambiente </td>
+      <td> Documentos </td>
       <td> Suscripción </td>
       <td> Acciones </td>
     </tr>

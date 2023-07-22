@@ -32,6 +32,7 @@ function getTipoDoc()
 
 function initDatable() {
 
+  const empresa_id = $('.datatable').attr('data-id');
   table = $('.datatable').DataTable({
     "searching":false,
     "pageLength": 50,
@@ -58,6 +59,7 @@ function initDatable() {
           "fecha_hasta": getFechaFinal(),
           "tipo": getTipoDoc(),
           "status": getStatus(),
+          "empresa_id" : empresa_id,
           "local": "todos",
         });
       }

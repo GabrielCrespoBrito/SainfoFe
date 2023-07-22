@@ -14,149 +14,175 @@ use App\Util\ExcellGenerator\VentaContableExcell;
 
 class VentasMensualController extends Controller
 {
+  use VentasMensualAbstractController;
+
   public function show()
   {
-    return view('reportes.ventas_mensual.form_new');
+    $routeData = route('reportes.ventas_mensual_getdata');
+    $routeDate = route('reportes.consult_date');
+    return view('reportes.ventas_mensual.form_new', compact('routeData', 'routeDate'));
   }
 
-  public function getData( Request $request )
+  public function getData(Request $request )
   {
-    $isFecha = $request->input('tipo') == "fecha";
-    $rules = [];
-    if( $isFecha ){
-      $rules['fecha_desde'] = 'required|date';
-      $rules['fecha_hasta'] = 'required|date|after_or_equal:fecha_hasta';
-    }
+    $routeReporte = $routeReporte ?? route('reportes.ventas_mensual_pdf');
 
-    $this->validate($request, $rules);
+    $routeVentaConsulta = route('ventas.consulta');
+    return $this->getDataHtml($request, $routeReporte, $routeVentaConsulta, null );
+  }
 
-    $searchSunat = null;
+  public function report( Request $request )
+  {
+    return $this->getReport( $request, get_empresa() );
+  }
 
-    if($request->input('consult') ){
-      ini_set('max_execution_time', '300');
-      (new ConsultDocs($request->fecha_desde, $request->fecha_hasta ))->handle();
-      $searchSunat = date('Y:m:d H:i:s'); 
+  public function consultDate(Request $request)
+  {
+    return $this->getConsultDate($request);
+  }
+
+  // public function getData( Request $request )
+  // {
+  //   $isFecha = $request->input('tipo') == "fecha";
+  //   $rules = [];
+  //   if( $isFecha ){
+  //     $rules['fecha_desde'] = 'required|date';
+  //     $rules['fecha_hasta'] = 'required|date|after_or_equal:fecha_hasta';
+  //   }
+
+  //   $this->validate($request, $rules);
+
+  //   $searchSunat = null;
+
+  //   if($request->input('consult') ){
+  //     ini_set('max_execution_time', '300');
+  //     (new ConsultDocs($request->fecha_desde, $request->fecha_hasta ))->handle();
+  //     $searchSunat = date('Y:m:d H:i:s'); 
       
-    }
+  //   }
 
-    $data = $isFecha ? 
-    Cierre::getStadisticsByFechas($request->fecha_desde, $request->fecha_hasta) : 
-    Cierre::getStadistics($request->mes, $searchSunat);
+  //   $data = $isFecha ? 
+  //   Cierre::getStadisticsByFechas($request->fecha_desde, $request->fecha_hasta) : 
+  //   Cierre::getStadistics($request->mes, $searchSunat);
 
-
-    // dd($request->fecha_desde, $request->fecha_hasta );
-    // exit();
     
-    return view('reportes.ventas_mensual.partials.data_complete', compact('data'));
-  }
+  //   return view('reportes.ventas_mensual.partials.data_complete', compact('data'));
+  // }
 
 
-  public function report(Request $request)
-  {
-    // dd( $request->all() );
-    // exit();
+  // public function report(Request $request)
+  // {
+  //   // dd( $request->all() );
+  //   // exit();
 
-    $empresa = get_empresa();
-    $formato = $request->formato;
-    $mescodi = $request->mes;
-    $estadoSunat = $request->estado_sunat;
-    $year = substr($mescodi, 0, 4);
-    $mes = substr($mescodi, 4, 6);
-    $fecha_inicio = $request->fecha_inicio;
-    $fecha_final =  $request->fecha_final;
-    // dd($estadoSunat);
-    // exit();
-    $report = new VentaContableReport( $fecha_inicio, $fecha_final, $request->tipo, $estadoSunat);
 
-    if ($request->cerrar_mes) {
-      Cierre::createIfNotExists($mescodi);
-    }
 
-    $data = $report
-      ->handle()
-      ->getData();
+  //   $empresa = get_empresa();
 
-    set_time_limit(0);
-    ini_set('memory_limit', '3000M'); //This might be too large, but depends on the data set
+  //   if ($request->empresa_id) {
+  //     empresa_bd_tenant($request->empresa_id);
+  //   }
 
-    // Formato PDF
-    if ($formato == "pdf") {
+  //   $formato = $request->formato;
+  //   $mescodi = $request->mes;
+  //   $estadoSunat = $request->estado_sunat;
+  //   $year = substr($mescodi, 0, 4);
+  //   $mes = substr($mescodi, 4, 6);
+  //   $fecha_inicio = $request->fecha_inicio;
+  //   $fecha_final =  $request->fecha_final;
+  //   // dd($estadoSunat);
+  //   // exit();
+  //   $report = new VentaContableReport( $fecha_inicio, $fecha_final, $request->tipo, $estadoSunat);
 
-      $pdf = new Pdf([
-        'commandOptions' => [
-          'useExec' => true,
-          'escapeArgs' => false,
-          'locale' => 'es_ES.UTF-8',
-          'procOptions' => [
-            // This will bypass the cmd.exe which seems to be recommended on Windows
-            'bypass_shell' => true,
-            // Also worth a try if you get unexplainable errors
-            'suppress_errors' => true,
-          ],
-        ],
-      ]);
+  //   if ($request->cerrar_mes) {
+  //     Cierre::createIfNotExists($mescodi);
+  //   }
 
-      $globalOptions = ['no-outline', 'page-size' => 'Letter', 'orientation' => 'landscape'];
+  //   $data = $report
+  //     ->handle()
+  //     ->getData();
 
-      $view = view('reportes.ventas_mensual.pdf', [
-        'ventas_group' => $data['items'],
-        'total' => $data['total'],
-        'nombre_empresa' => $empresa->EmpNomb,
-        'ruc_empresa' => $empresa->EmpLin1,
-        'periodo' => sprintf('%s - %s', $fecha_inicio, $fecha_final),
+  //   set_time_limit(0);
+  //   ini_set('memory_limit', '3000M'); //This might be too large, but depends on the data set
 
-        // 'periodo' => Mes::find($request->mes)->mesnomb
+  //   // Formato PDF
+  //   if ($formato == "pdf") {
 
-      ]);
+  //     $pdf = new Pdf([
+  //       'commandOptions' => [
+  //         'useExec' => true,
+  //         'escapeArgs' => false,
+  //         'locale' => 'es_ES.UTF-8',
+  //         'procOptions' => [
+  //           // This will bypass the cmd.exe which seems to be recommended on Windows
+  //           'bypass_shell' => true,
+  //           // Also worth a try if you get unexplainable errors
+  //           'suppress_errors' => true,
+  //         ],
+  //       ],
+  //     ]);
 
-      $pdf->setOptions($globalOptions);
-      $pdf->addPage($view);
-      $pdf->binary = getBinaryPdf();
+  //     $globalOptions = ['no-outline', 'page-size' => 'Letter', 'orientation' => 'landscape'];
 
-      if (!$pdf->send()) {
-        throw new \Exception('Could not create PDF: ' . $pdf->getError());
-      }
-    }
+  //     $view = view('reportes.ventas_mensual.pdf', [
+  //       'ventas_group' => $data['items'],
+  //       'total' => $data['total'],
+  //       'nombre_empresa' => $empresa->EmpNomb,
+  //       'ruc_empresa' => $empresa->EmpLin1,
+  //       'periodo' => sprintf('%s - %s', $fecha_inicio, $fecha_final),
 
-    if ($formato == "html") {
+  //       // 'periodo' => Mes::find($request->mes)->mesnomb
 
-      return view('reportes.ventas_mensual.form', [
-        'mes'     => $mescodi,
-        'formato' => $formato,
-        'estado_sunat' => $estadoSunat,
-        'data_reporte'     => [
-          'ventas_group' => $data['items'],
-          'total' => $data['total'],
-          'nombre_empresa' => $empresa->EmpNomb,
-          'ruc_empresa' => $empresa->EmpLin1,
-          'periodo' => $fecha_inicio . '-' . $fecha_final
-        ]
-      ]);
-    }
+  //     ]);
 
-    // excell 
-    if ($formato == "excell") {
+  //     $pdf->setOptions($globalOptions);
+  //     $pdf->addPage($view);
+  //     $pdf->binary = getBinaryPdf();
 
-      ob_end_clean();
-      $nombreEmpresa =  $empresa->EmpLin1 . ' ' . $empresa->EmpNomb;
-      $excellExport = new VentaContableExcell($data, $fecha_inicio . '-' . $fecha_final, $nombreEmpresa);
+  //     if (!$pdf->send()) {
+  //       throw new \Exception('Could not create PDF: ' . $pdf->getError());
+  //     }
+  //   }
 
-      $info = $excellExport
-        ->generate()
-        ->store();
+  //   if ($formato == "html") {
 
-      return response()->download($info['full'], $info['file']);
-    }
-  }
+  //     return view('reportes.ventas_mensual.form', [
+  //       'mes'     => $mescodi,
+  //       'formato' => $formato,
+  //       'estado_sunat' => $estadoSunat,
+  //       'data_reporte'     => [
+  //         'ventas_group' => $data['items'],
+  //         'total' => $data['total'],
+  //         'nombre_empresa' => $empresa->EmpNomb,
+  //         'ruc_empresa' => $empresa->EmpLin1,
+  //         'periodo' => $fecha_inicio . '-' . $fecha_final
+  //       ]
+  //     ]);
+  //   }
 
-  public function consultDate( Request $request )
-  {
-    $data =  Cierre::getFechaUpdate($request->data);
+  //   // excell 
+  //   if ($formato == "excell") {
+
+  //     ob_end_clean();
+  //     $nombreEmpresa =  $empresa->EmpLin1 . ' ' . $empresa->EmpNomb;
+  //     $excellExport = new VentaContableExcell($data, $fecha_inicio . '-' . $fecha_final, $nombreEmpresa);
+
+  //     $info = $excellExport
+  //       ->generate()
+  //       ->store();
+
+  //     return response()->download($info['full'], $info['file']);
+  //   }
+  // }
+
+  // public function consultDate( Request $request )
+  // {
+  //   $data =  Cierre::getFechaUpdate($request->data);
  
-    return response()->json([
-      'date' => $data,
-    ]);
-  }
+  //   return response()->json([
+  //     'date' => $data,
+  //   ]);
+  // }
 
 
 }

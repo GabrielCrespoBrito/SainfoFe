@@ -1,4 +1,10 @@
+@php
+  $empresa_id = $empresa_id ?? '';
+@endphp
+  
   <div class="row">
+
+  <input type="hidden" name="empresa_id_reporte" value="{{ $empresa_id }}">
 
     <div class="col-md-4 text-left">
       <span class="bg-gray date-update btn-sm btn-flat btn-block" style="display:none"> 
@@ -10,7 +16,7 @@
 
     <div class="col-md-8 text-right">
     Filtrar por:
-      <a href="#" data-url="{{ route('reportes.consult_date') }}" class="btn btn-xs btn-flat btn-default active btn-filtro-change" data-tipo="mes"> <span class="fa fa-calendar"></span> Mes</a>
+      <a href="#" data-url="{{ $routeDate }}" class="btn btn-xs btn-flat btn-default active btn-filtro-change" data-tipo="mes"> <span class="fa fa-calendar"></span> Mes</a>
       <a href="#" class="btn btn-xs btn-flat btn-default btn-filtro-change" data-tipo="fecha"> <span class="fa fa-calendar"></span> Por Fechas</a>
     </div>
   </div>
@@ -42,7 +48,7 @@
 
             <div class="col-md-3">
 
-              <a href="#" data-url="{{ route('reportes.ventas_mensual_getdata') }}" class="btn btn-flat btn-primary btn-flat btn-block search-consulta"> <span class="fa fa-search"></span> Consultar </a>
+              <a href="#" data-url="{{  $routeData }}" class="btn btn-flat btn-primary btn-flat btn-block search-consulta"> <span class="fa fa-search"></span> Consultar </a>
       
             </div>
 

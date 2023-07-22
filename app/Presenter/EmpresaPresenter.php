@@ -4,6 +4,15 @@ namespace App\Presenter;
 
 class EmpresaPresenter extends Presenter
 {
+  public function getDocumentosReporte()
+  {
+    $class_name = "btn-default";
+    $enlace = route('admin.empresas.reporte_documentos', ['id' => $this->model->id()]);
+    $name = "Documentos";
+    return sprintf('<a target="_blank class="btn btn-xs %s" href="%s">%s</a>', $class_name, $enlace, $name);
+  }
+
+
   public function getAmbiente()
   {
     $isProduccion = $this->model->produccion();

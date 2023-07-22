@@ -148,10 +148,10 @@ class DocumentoController extends Controller
       $request->input('search')['value'],
       $request->input('empresa_id', null),
       $request->input('local_id', null),
-      $request->input('estado_sunat', null),
+      $request->input('estado_sunat', null) ?? $request->input('status', null),
       $request->input('fecha_desde'),
       $request->input('fecha_hasta'),
-      $request->input('tipo_documento'),
+      $request->input('tipo_documento') ?? $request->input('tipo'),
       $request->input('estado_almacen')
     );
   }

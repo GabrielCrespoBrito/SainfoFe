@@ -1,3 +1,7 @@
+@php
+  $routeReporte = $routeReporte ?? route('reportes.ventas_mensual_pdf');
+@endphp
+
 <div class="reportes">
 
 <!-- Fechas -->
@@ -20,7 +24,7 @@
           </div>
 
           <div class="col-md-4 ">
-            <a href="#" data-url="{{ route('reportes.ventas_mensual_pdf') }}" class="btn btn-flat btn-success btn-flat btn-block generate-report"> <span class="fa fa-download"></span> Reporte </a>
+            <a href="#" data-url="{{ $routeReporte }}" class="btn btn-flat btn-success btn-flat btn-block generate-report"> <span class="fa fa-download"></span> Reporte </a>
           </div>
 
         </div>

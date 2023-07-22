@@ -20,10 +20,31 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::post('/documentos/change-date/{documento_id?}', 'Admin\DocumentoController@changeDate')->name('documentos.change_date');
 
       Route::get('empresa/index', "Admin\EmpresaController@index")->name('empresa.index');
+      
       Route::get('empresa/create',"Admin\EmpresaController@create")->name('empresa.create');
       Route::post('empresa/store',"Admin\EmpresaController@store")->name('empresa.store');
       Route::get('empresa/search',"Admin\EmpresaController@search")->name('empresa.search');
-      
+      Route::get('empresa/{id?}/reporte-documentos', "Admin\Reportes\ReporteMensualController@show")->name('empresas.reporte_documentos');
+
+
+      /// Reporte mensual
+      # Ventas mensual
+      Route::post('reporte-ventas-mensual-data/{id?}', 'Admin\Reportes\ReporteMensualController@getData')->name('reportes.ventas_mensual_getdata');
+
+      // Route::post('reporte-ventas-mensual-data/{id?}',  function($id){
+        // dd($id);
+        // exit();
+// 
+      // })->name('reportes.ventas_mensual_getdata');
+
+
+
+
+      Route::get('reporte-ventas-mensual-report/{id?}', 'Admin\Reportes\ReporteMensualController@report')->name('reportes.ventas_mensual_pdf');
+      Route::post('reporte-ventas-mensual-consult-date/{id?}', 'Admin\Reportes\ReporteMensualController@consultDate')->name('reportes.consult_date');
+
+      ///
+
 
       // SUBIR CERTIFICADO
       Route::get('empresa/subir_certificado/{id}', "Admin\EmpresaController@subirCertificado")->name('empresa.subirCertificado');

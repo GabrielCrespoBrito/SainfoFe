@@ -51,7 +51,8 @@ abstract class EmpresaMainController extends Controller
       ->addColumn('accion', 'admin.empresa.partials.column_accion')
       ->addColumn('fecha_vencimiento', 'admin.empresa.partials.column_fecha_vencimiento')
       ->addColumn('ambiente', 'admin.empresa.partials.column_ambiente')
-      ->rawColumns(['link', 'accion', 'estado', 'fecha_vencimiento', 'ambiente'])
+      ->addColumn('reporte_documentos', 'admin.empresa.partials.column_documentos')
+      ->rawColumns(['link', 'accion', 'estado', 'reporte_documentos', 'fecha_vencimiento', 'ambiente'])
       ->make(true);
   }
 

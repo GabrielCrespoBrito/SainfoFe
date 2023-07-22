@@ -24,6 +24,7 @@ function initDatable()
       { data:  'EmpLin1' },
       { data : 'estado' },      
       { data:  'ambiente' },
+      { data:  'reporte_documentos' },
       { data:  'fecha_vencimiento' },
       { data : 'accion' },
     ]
