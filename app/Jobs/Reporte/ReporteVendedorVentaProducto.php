@@ -78,6 +78,7 @@ class ReporteVendedorVentaProducto
     }
 
     return $query->select(
+      'ventas_cab.PCCOdi as codigo_cliente',
       'ventas_cab.VtaNume as numero',
       'ventas_cab.TidCodi as tipodocumento',
       'ventas_cab.VtaFMail as estado',
@@ -238,6 +239,7 @@ class ReporteVendedorVentaProducto
     // 931172985
     return [
       "tipodocumento" => $producto->tipodocumento,
+      "codigo_cliente" => $producto->codigo_cliente,
       "numero_documento" => $producto->numero,
       "producto_codigo" => $producto->producto_codigo,
       "unidad_nombre" => $producto->unidad_nombre,
