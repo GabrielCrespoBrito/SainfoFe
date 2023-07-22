@@ -14,7 +14,7 @@
       <td> {{ $producto['producto_nombre'] }}  </td>
       <td> {{ $producto['tipodocumento'] }}  </td>
       <td> {{ $producto['numero_documento'] }}  </td>
-      <td> {{ $producto['codigo_cliente'] }}  </td>
+      <td class="text-align-center"> {{ $producto['codigo_cliente'] }}  </td>
       <td class="text-align-right"> {{ $producto['marca_nombre'] }}  </td>
       <td class="text-align-right"> {{ decimal($producto['cantidad']) }} </td>
       <td class="text-align-right"> {{ decimal($producto['importe']) }}  </td>
