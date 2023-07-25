@@ -1,6 +1,10 @@
+{{-- @dd($locales) --}}
+
 @php
+$indexColumns = 0;
 $column_mov = $column_mov ?? false;
 $cant_locales = 8;
+$ver_costos = $ver_costos ?? true;
 @endphp
 
 <div class="modal modal-seleccion fade" id="modalSelectProducto">
@@ -15,7 +19,8 @@ $cant_locales = 8;
         <div class="botones_div">
           <div class="row">
             <div class="col-md-2 form-group overflow-hidden">
-              <a class="btn pull-left btn-block btn-success btn-flat elegir_elemento"> <span class="fa fa-check"> </span> Aceptar</a>
+              <a class="btn pull-left btn-block btn-success btn-flat elegir_elemento"> 
+              <span class="fa fa-check"> </span> Aceptar</a>
             </div>
             <!-- -- -->
             <div class="col-md-4">
@@ -43,32 +48,52 @@ $cant_locales = 8;
         </div>
 
         <div class="productos_select">
-          <table width="80%" class="table table-oneline table-bordered sainfo-table" id="datatable-productos">
+          <table data-costos="{{ (int) $ver_costos  }}" width="100%" class="table table-oneline table-bordered sainfo-table" id="datatable-productos">
             <thead>
               <tr>
-                <td> Código </td>
-                <td> Unidad </td>
-                <td width="200px" class="nombre_prod"> Nombre </td>
+                <td data-column="{{ $indexColumns }}"> Código </td>
+                <td data-column="{{ ++$indexColumns  }}"> Unidad </td>
+                <td data-column="{{ ++$indexColumns }}" width="200px" class="nombre_prod"> Nombre </td>
                 @if($column_mov)
-                <td> Mov </td>
+                <td data-column="{{ ++$indexColumns }}"> Mov </td>
                 @endif
-                <td> Marca </td>
-                <td> Costo ($)</td>
-                <td> Costo (S)</td>
-                <td> Margen</td>
-                <td> Prec. Vta </td>
-                <td> Stock Tot </td>
+                <td data-column="{{ ++$indexColumns  }}"> Marca </td>
+                @if($ver_costos)
+                <td data-column="{{ ++$indexColumns }}"> Costo ($)</td>
+                <td data-column="{{ ++$indexColumns }}"> Costo (S)</td>
+                <td data-column="{{ ++$indexColumns }}"> Margen</td>
+                @endif
+                <td data-column="{{ ++$indexColumns }} "> Prec. Vta </td>
+                <td data-column="{{ ++$indexColumns }}" class="show-total almacen-showhide" data-id="total" data-hide="1" data-main="0"> Stock Tot </td>
                 @if( isset($locales) )
                 @php
+                ++$indexColumns;
                 $locales = $locales->toArray();
                 @endphp
-                @for( $i = 0; $i < 8; $i++) 
+                @for( $i = 0; $i < 8; $i++, $indexColumns++) 
+                
                 @php 
-                  if( isset($locales[$i]) )
-                    { $local_id=substr($locales[$i]['local']['LocCodi'] , -1); $local_name=$locales[$i]['local']['LocNomb']; } else { continue; } 
-                  @endphp
-                  <td class="almacenes" data-id="{{ $local_id }}"> <span class="td-almacen-title"> Almacen </span> {{ $local_name }} </td>
-                  @endfor
+                  if( isset($locales[$i]) ){ 
+                    $local_id = substr($locales[$i]['local']['LocCodi'],-1);
+                    $local_main = $locales[$i]['defecto'];
+                    $local_name= $locales[$i]['local']['LocNomb']; 
+                    } else { continue; } 
+                @endphp
+                  
+                  <td data-column={{ $indexColumns }} class="almacenes {{ $local_main ? "" : "almacen-showhide" }} " data-hide="0"  data-main="{{ $local_main }}" data-id="{{ $local_id }}"> <span class="td-almacen-title"> Almacen </span> {{ $local_name }}
+                    
+                    @if($local_main)
+                    <a 
+                      data-hide="0"
+                      title="Ver Todos Los Almacenes" 
+                      href="#" 
+                      data-columns=""
+                      class="btn btn-flat btn-default btn-xs ver-mostrar-almacenes"> <span class="fa fa-eye"></span> 
+                    </a>
+                    @endif
+                  </td>
+                
+                @endfor
                   @else
                   <td class="almacenes" data-id="1"> <span class="td-almacen-title"> Almacen </span> 1 </td>
                   <td class="almacenes" data-id="2"> <span class="td-almacen-title"> Almacen </span> 2 </td>
@@ -80,11 +105,11 @@ $cant_locales = 8;
                   <td class="almacenes" data-id="8"> <span class="td-almacen-title"> Almacen </span> 8 </td>
                   @endif
                   {{-- <td> Properc </td> --}}
-                  <td> <span class="td-almacen-title"> Stock </span> Reserva  </td>
-                  <td> Peso </td>
-                  <td> Base IGV </td>
-                  <td> ISC </td>
-                  <td> TieCodi </td>
+                  <td data-column={{ ++$indexColumns }}> <span class="td-almacen-title"> Stock </span> Reserva  </td>
+                  <td data-column={{ ++$indexColumns }}> Peso </td>
+                  <td data-column={{ ++$indexColumns }}> Base IGV </td>
+                  <td data-column={{ ++$indexColumns }}> ISC </td>
+                  <td data-column={{ ++$indexColumns }}> TieCodi </td>
               </tr>
             </thead>
             <tbody></tbody>

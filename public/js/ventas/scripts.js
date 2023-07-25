@@ -1,4 +1,6 @@
 window.canjeIds = [];
+window.almacenVisualize = true;
+window.columns_alms_hide = [];
 window.isCanje = false;
 
 function poner_data_cliente(data) {
@@ -492,7 +494,7 @@ $(document).ready(function (e) {
     // info.percepcion = calc_percepcion(info.total_importe);
     info.percepcion = calc_percepcion(info.gravadas + info.inafectas + info.exoneradas);
 
-    console.log( "info" , info )
+    console.log("info", info)
 
     return info;
   }
@@ -573,7 +575,7 @@ $(document).ready(function (e) {
   };
 
 
-  function fixedNumber(v, codigo = false, decimals = 2 ) {
+  function fixedNumber(v, codigo = false, decimals = 2) {
     if (isNaN(v)) {
       return v;
     }
@@ -762,16 +764,16 @@ $(document).ready(function (e) {
       return false;
     }
 
-    const $inputPrecio =  $("[name=producto_precio]");
-    console.log("validand precio");      
+    const $inputPrecio = $("[name=producto_precio]");
+    console.log("validand precio");
 
     // if(isLimit){
-      const precioValue = Number($inputPrecio.val());
-      const minPrecio = Number($inputPrecio.attr('data-default'));
-      if( precioValue < minPrecio ){
-        notiYFocus("producto_precio", `El Precio ingresado no puede ser menor que el precio por defecto (${minPrecio})`);
-        return false;
-      }
+    const precioValue = Number($inputPrecio.val());
+    const minPrecio = Number($inputPrecio.attr('data-default'));
+    if (precioValue < minPrecio) {
+      notiYFocus("producto_precio", `El Precio ingresado no puede ser menor que el precio por defecto (${minPrecio})`);
+      return false;
+    }
     // }
 
     // 
@@ -841,20 +843,20 @@ $(document).ready(function (e) {
 
 
     if (cantidad > stock) {
-      if(modulo_restriccion_venta_por_stock){
-        notificaciones('La Cantidad suministrada supera al Stock Disponible','error');
+      if (modulo_restriccion_venta_por_stock) {
+        notificaciones('La Cantidad suministrada supera al Stock Disponible', 'error');
         $("[name=producto_cantidad]").focus().select();
         return false;
       }
 
       else {
-        if(modulo_manejo_stock){
+        if (modulo_manejo_stock) {
           if (!confirm("La Cantidad suministrada supera al Stock Disponible, desea continuar?")) {
             $("[name=producto_cantidad]").focus().select();
             return;
           }
         }
-      }     
+      }
     }
 
     let info;
@@ -1286,14 +1288,14 @@ $(document).ready(function (e) {
 
     const tipoGuiaSelected = $("[name=guia_tipo_asoc] option:selected");
 
-    if(tipo_documento.val() == "52"){
+    if (tipo_documento.val() == "52") {
 
       $("[name=guia_tipo_asoc] option[value=asociar]").prop('disabled', true)
       $("[name=guia_tipo_asoc] option[value=nueva_electronica]").prop('disabled', true)
     }
     else {
       $("[name=guia_tipo_asoc] option[value=asociar]").removeAttr('disabled')
-      $("[name=guia_tipo_asoc] option[value=nueva_electronica]").removeAttr('disabled')      
+      $("[name=guia_tipo_asoc] option[value=nueva_electronica]").removeAttr('disabled')
     }
 
     poner_codigo_documento();
@@ -1338,15 +1340,14 @@ $(document).ready(function (e) {
     // console.log( " poner_El tip ode cliente" , data );
   }
 
-  function poner_unidades(data, item = null)
-  {
+  function poner_unidades(data, item = null) {
     const unitSelected = item != null ? item.DetUni : null;
     const $productoUnidad = $("[name=producto_unidad]");
 
     $productoUnidad.empty();
     if (window.isCanje) {
       const option = `<option
-      ${unitSelected == item.UniCodi ? 'selected' : '' }
+      ${unitSelected == item.UniCodi ? 'selected' : ''}
       data-unidad="${item.DetUnid}" value="${item.UniCodi}">${item.DetUniNomb}</option>`;
       $productoUnidad.append(option)
     }
@@ -1361,19 +1362,19 @@ $(document).ready(function (e) {
           .attr('value', unit.Unicodi)
           .attr('data-unidad', unit.UniA)
           .text(unit.UniAbre);
-          // --------------------------------------------------------------------
-          if(item != null){
-            if (unitSelected == unit.Unicodi){
-              option.attr('selected', 'selected');
+        // --------------------------------------------------------------------
+        if (item != null) {
+          if (unitSelected == unit.Unicodi) {
+            option.attr('selected', 'selected');
 
-              console.log("unit" , unit );
-              
-              const unitPrecio = $("[name=moneda] option:selected").val() == '01' ? unit.UniPMVS : unit.UniPMVD;
+            console.log("unit", unit);
 
-              $("[name=producto_precio]")
-                .attr('data-default', unitPrecio)
-            }
-          }          
+            const unitPrecio = $("[name=moneda] option:selected").val() == '01' ? unit.UniPMVS : unit.UniPMVD;
+
+            $("[name=producto_precio]")
+              .attr('data-default', unitPrecio)
+          }
+        }
         $productoUnidad.append(option)
       }
     }
@@ -1394,22 +1395,22 @@ $(document).ready(function (e) {
       unidades = current_product_data.unidades;
     }
     // --------------------
-    else {      
+    else {
       // codigo_moneda = current_product_data.producto.moncodi;
-      codigo_moneda =  
-      $("[name=moneda] option:selected").val(); 
+      codigo_moneda =
+        $("[name=moneda] option:selected").val();
 
-      unidades = current_product_data.unidades || current_product_data.Unidades;      
+      unidades = current_product_data.unidades || current_product_data.Unidades;
     }
 
     let precio;
     let moneda = $("[name=moneda] option[value=" + codigo_moneda + "]").text();
-    
+
     let producto_unidad = $("[name=producto_unidad] option:selected");
     let unidad_select = null;
     let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
 
-    console.log({unidades});
+    console.log({ unidades });
 
 
     for (let i = 0; i < unidades.length; i++) {
@@ -1467,7 +1468,7 @@ $(document).ready(function (e) {
     $("[name=incluye_igv]").prop('checked', incluyeIGV);
     $("[name=icbper]").val(data.producto.icbper);
 
-    console.log("prducto", data.producto );
+    console.log("prducto", data.producto);
 
     window.poner_data_inputs(data.producto, funcs_agregar);
     // nextFocus("producto_nombre");
@@ -2306,8 +2307,7 @@ $(document).ready(function (e) {
     });
   }
 
-  function showPDF(path, prev = true)
-  {
+  function showPDF(path, prev = true) {
     if (/Android|iPhone/i.test(navigator.userAgent)) {
       $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
       $("#modalData").find('.modal-title').text('Prevializaciòn de documento');
@@ -2323,12 +2323,12 @@ $(document).ready(function (e) {
 
       let nombre = "";
 
-      if( prev ){
+      if (prev) {
         nombre = "Prevializaciòn de documento";
       }
       else {
         let path_arr = path.split('/');
-        nombre = path_arr[path_arr.length-1];
+        nombre = path_arr[path_arr.length - 1];
       }
 
       $("#modalData").find('.modal-title').text(nombre);
@@ -2532,8 +2532,8 @@ $(document).ready(function (e) {
 
 
   function successStore(show_window_print = true) {
-    
-    console.log("data_guardado" , window.data_guardado )
+
+    console.log("data_guardado", window.data_guardado)
 
     $("#modalData").on('hide.bs.modal', e => {
 
@@ -2565,7 +2565,7 @@ $(document).ready(function (e) {
     show_modal("hide", "#modalGuardarFactura");
     $("#guardarFactura").addClass('disabled');
     $("[data-de=nro_operacion]", "#modal").val(window.data_guardado.guia.nro_operacion);
-    
+
     // Show window print
     if (show_window_print) {
       showPDF(window.data_guardado.url, false);
@@ -3459,7 +3459,7 @@ $(document).ready(function (e) {
   function setInicialFocus() {
 
     if (cursor_inicial == "0") {
-      
+
       inicial_input_focus = $("[name=tipo_documento]");
     }
 
@@ -4289,7 +4289,7 @@ $(document).ready(function (e) {
         table_productos.draw();
       }
       else {
-    
+
         let data = {
           'id_grupo': id_grupo
         }
@@ -4318,11 +4318,10 @@ $(document).ready(function (e) {
   }
 
 
-  function cambiarUnidad()
-  {
+  function cambiarUnidad() {
     const unidad = $("[name=producto_unidad] option:selected").attr('data-unidad')
-      
-    if (unidad == "KGM" ){
+
+    if (unidad == "KGM") {
       $(".calculate-peso").removeClass('hide');
       return;
     }
@@ -4330,8 +4329,7 @@ $(document).ready(function (e) {
     $(".calculate-peso").addClass('hide');
   }
 
-  function showCalculatorPeso()
-  {
+  function showCalculatorPeso() {
     const $modal = $("#modalCalculoPeso");
 
     const $peso = $modal.find(".peso")
@@ -4353,8 +4351,7 @@ $(document).ready(function (e) {
   }
 
 
-  function calculatePeso(e)
-  {
+  function calculatePeso(e) {
     const $modal = $("#modalCalculoPeso");
     const $espesor = $modal.find("[name=espesor]")
     const $ancho = $modal.find("[name=ancho]")
@@ -4376,23 +4373,23 @@ $(document).ready(function (e) {
   }
 
   function setPrecioCalculo() {
-    
+
     const $modal = $("#modalCalculoPeso");
-    
+
     const utilidad_val = Number($modal.find("[name=utilidad]").val());
     const calculo_val = Number($modal.find("[name=calculo]").val());
-    
-    console.log("setPre", utilidad_val , calculo_val );
 
-    if (isNaN(calculo_val) || isNaN(utilidad_val)){
+    console.log("setPre", utilidad_val, calculo_val);
+
+    if (isNaN(calculo_val) || isNaN(utilidad_val)) {
       notificaciones('Revise los datos puestos', 'error');
       return;
     }
 
-    if( utilidad_val != 0 ){
+    if (utilidad_val != 0) {
       const precio = Number($("[name=producto_precio]").val())
 
-      const precio_new = precio + ((precio/100) * utilidad_val);
+      const precio_new = precio + ((precio / 100) * utilidad_val);
 
       $("[name=producto_precio]").val(precio_new)
     }
@@ -4409,22 +4406,48 @@ $(document).ready(function (e) {
     $("#modalCalculoPeso").modal('hide');
   }
 
-  function events()
-  {
-    $("#modalCalculoPeso").on('keyup', '.input-calculate' , calculatePeso )
+  function showHideAlmacenes() {
+    const getIndexs = () => {
+
+      if (window.columns_alms_hide.length) {
+        return window.columns_alms_hide;
+      }
+
+      $("#datatable-productos thead .almacen-showhide").each(function () {
+        window.columns_alms_hide.push($(this).attr('data-column'));
+      })
+
+    }
+
+    columns = getIndexs();
+
+    console.log("columna del indice", columns)
+
+    for (let index = 0; index < window.columns_alms_hide.length; index++) {
+      var column = table_productos.column(window.columns_alms_hide[index]);
+      column.visible(!column.visible());
+    }
+
+  }
+
+  function events() {
+
+    $("body").on('click', '.ver-mostrar-almacenes', showHideAlmacenes)
+
+    $("#modalCalculoPeso").on('keyup', '.input-calculate', calculatePeso)
 
     // Initialize with options
     onScan.attachTo(document, {
-      suffixKeyCodes: [13], 
+      suffixKeyCodes: [13],
       reactToPaste: false,
       onScan: scanDetectionAction,
       onKeyDetect: function (iKeyCode) {
       }
     });
 
-    $("#modalCalculoPeso").on('click', '#aceptarCalculo', setPrecioCalculo  );
+    $("#modalCalculoPeso").on('click', '#aceptarCalculo', setPrecioCalculo);
 
-    $(".calculate-peso").on('click', showCalculatorPeso )
+    $(".calculate-peso").on('click', showCalculatorPeso)
 
     $("#modalCondicionVenta .btn-example-toggle").on('click', function () {
       let isOpen = $(this).attr('data-open') == "true";
@@ -4711,7 +4734,7 @@ $(document).ready(function (e) {
       table_cotizacion.draw();
     }),
 
-    $("[name=guia_remision]").on('change', guiaRemisionShow);
+      $("[name=guia_remision]").on('change', guiaRemisionShow);
 
     $("[name=incluye_igv]").on('change', calcular_importe);
 
@@ -4804,6 +4827,15 @@ $(document).ready(function (e) {
 
     table_clientes.on('draw.dt', select_tabla_clientes);
     table_productos.on('draw.dt', select_tabla_productos);
+
+    table_productos.on('draw.dt', () => {
+      console.log("window.almacenVisualize", window.almacenVisualize)
+      if (window.almacenVisualize) {
+        window.almacenVisualize = false;
+        showHideAlmacenes();
+      }
+    });
+
     table_cotizacion.on('draw.dt', select_tabla_cotizacion);
 
     // table_facturas.on('draw.dt', select_tabla_facturas);
@@ -4873,8 +4905,8 @@ $(document).ready(function (e) {
 
     $("[name=moneda]").on("change", moneda_precio_change);
 
-    $("[name=producto_unidad]").on("change", set_precio );
-    $("[name=producto_unidad]").on("change", cambiarUnidad );
+    $("[name=producto_unidad]").on("change", set_precio);
+    $("[name=producto_unidad]").on("change", cambiarUnidad);
 
     $("[name=producto_cantidad] , [name=producto_precio] , [name=producto_dct], [name=producto_isc] ").on("keyup", calcular_importe);
 
@@ -4919,13 +4951,13 @@ $(document).ready(function (e) {
         7: { name: 'UniMarg', decimales: 2 },
         8: { name: 'UNIPUVS', decimales: window.decimales_soles },
       }
-     
 
-      if ( dataUnidadFirst ) {
+
+      if (dataUnidadFirst) {
         valOutput = dataUnidadFirst[columnsProperty[settings.col].name];
       }
 
-      return fixedNumber(valOutput, false, columnsProperty[settings.col].decimales );
+      return fixedNumber(valOutput, false, columnsProperty[settings.col].decimales);
     }
 
     function getRoute(id, url_movimiento = true) {
@@ -5006,28 +5038,33 @@ $(document).ready(function (e) {
       $button.button();
     });
 
-    // Tabla productos
+    // Table Productos
     let product_columns = [
       { data: 'ProCodi', searchable: false },
       { data: 'unpcodi', searchable: false },
       { data: 'ProNomb', className: 'nombre_producto', searchable: false },
       { data: 'ProCodi', render: addRouteToReporte, searchable: false },
       { data: 'marca_.MarNomb', searchable: false },
-      { data: 'ProPUCD', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProPUCS', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProMarg', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProPUVS', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProPUVS', className: 'text-right total-almacen', searchable: false, render: sumStock },
     ];
 
-    // ----------------------------------------------------------------------------------------------------------------------------------
+    const ver_costos = Number($("#datatable-productos").attr("data-costos"));
+    if (ver_costos) {
+      product_columns.push({ data: 'ProMarg', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+      product_columns.push({ data: 'ProPUCD', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+      product_columns.push({ data: 'ProPUCS', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+    }
+
+    product_columns.push({ data: 'ProPUVS', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+    product_columns.push({ data: 'ProPUVS', className: 'text-right total-almacen almacen-id-total', searchable: false, render: sumStock });
+
+    // -----------------------------------------------------------------------------------
     let cantidad_almacenes = $("#datatable-productos thead td.almacenes");
     for (let index = 0; index < cantidad_almacenes.length; index++) {
       let stock_number = $(cantidad_almacenes[index]).attr('data-id');
       let campo_id = 'prosto' + stock_number;
       product_columns.push({ data: campo_id, className: 'text-right ' + 'almacen-id-' + stock_number, searchable: false });
     }
-    // ----------------------------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------
     product_columns.push({ data: 'prosto10', className: 'text-right', searchable: false });
     product_columns.push({ data: 'ProPeso', className: 'text-right', searchable: false, formatNumber });
     product_columns.push({ data: 'BaseIGV', className: 'text-right', searchable: false });
@@ -5074,7 +5111,10 @@ $(document).ready(function (e) {
       "columns": product_columns
     });
 
+    // , visible: false
+
     table_productos.columns.adjust().draw();
+
 
     // table_facturas = $('#datatable-factura_select').DataTable({
     //   "processing": true,
@@ -5143,8 +5183,7 @@ $(document).ready(function (e) {
     }
   }
 
-  function addDocFromCanje(documentos)
-  {
+  function addDocFromCanje(documentos) {
     // |-------|--------|-------|-------|-------|-------|
     window.isCanje = true;
     let itemsToAdd = {}
@@ -5156,7 +5195,7 @@ $(document).ready(function (e) {
     for (const id in documentos) {
       const documento = documentos[id];
       window.canjeIds.push(id);
-      const items = documento.items; 
+      const items = documento.items;
       for (let index = 0; index < items.length; index++) {
         const item = items[index];
         const detCodi = item.DetCodi;
@@ -5169,7 +5208,7 @@ $(document).ready(function (e) {
 
           itemsToAdd[detCodi].DetCant += Number(item.DetCant) * Number(item.Detfact);
           itemsToAdd[detCodi].DetImpo += importe;
-        }        
+        }
         else {
           itemsToAdd[detCodi] = {
             TieCodi: item.Estado,
@@ -5186,7 +5225,7 @@ $(document).ready(function (e) {
             DetDcto: 0,
             DetIGVP: item.DetIGVP,
             DetImpo: Number(item.DetImpo),
-            DetCome : '',
+            DetCome: '',
             Unidades: {}
           }
         }
@@ -5195,7 +5234,7 @@ $(document).ready(function (e) {
 
     window.canjeIds = [...new Set(window.canjeIds)];
 
-    console.log( "itemsToAdd", itemsToAdd )
+    console.log("itemsToAdd", itemsToAdd)
 
     let first = true;
 
@@ -5203,7 +5242,7 @@ $(document).ready(function (e) {
 
       let clean = false;
 
-      if( first ){
+      if (first) {
         clean = true;
         first = false;
       }
@@ -5211,11 +5250,11 @@ $(document).ready(function (e) {
       // DavidGoggins-DavidGoggins
       const info = itemsToAdd[id];
 
-      if(info.incluye_igv){
+      if (info.incluye_igv) {
         info.DetPrec = fixedNumber(info.DetImpo / info.DetCant);
       }
       else {
-        info.DetPrec =  fixedNumber((info.DetImpo / item.DetIGVV) / info.DetCant);
+        info.DetPrec = fixedNumber((info.DetImpo / item.DetIGVV) / info.DetCant);
       }
 
       info.DetPrec = fixedNumber(info.DetImpo / info.DetCant);
@@ -5230,8 +5269,8 @@ $(document).ready(function (e) {
   }
   function init() {
     $("[data-toggle=tooltip]").tooltip();
-    headerAjax()
-    select2_init();
+    headerAjax(),
+      select2_init();
     initDatatables();
     events();
     setProductoInputSearchDefaultFocus();
@@ -5242,7 +5281,8 @@ $(document).ready(function (e) {
     poner_cliente_defecto();
     date();
     clearDataTable();
-    initialFocus();    
+    initialFocus();
+
     canjeAppNew.setProcessFunc(addDocFromCanje);
   };
   init();

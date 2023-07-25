@@ -37,7 +37,12 @@ class User extends Authenticatable
   const PLAN_REGISTER_CAMPO = "ususerf";
 
   protected $fillable = [ 'usucodi', 'usulogi', 'usucla2','User_FCrea', 'carcodi' , 'usutele', 'usudire', 'ususerf' , 'usunomb', 'usucla1', 'email', 'verificate', 'usercta' ];
-  protected $hidden = [ 'password', 'remember_token' ]; 
+  protected $hidden = [ 'password', 'remember_token' ];
+
+  public function checkPermissionTo_($permission, $guard = null)
+  {
+    return $this->isAdmin() ? true : $this->checkPermissionTo($permission, $guard);
+  }
 
 
   /**

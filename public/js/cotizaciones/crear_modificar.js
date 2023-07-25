@@ -1,5 +1,8 @@
 $(document).ready(function (e) {
 
+  window.almacenVisualize = true;
+  window.columns_alms_hide = [];
+
   var enter_accion = false;
   var tr_pago = {};
   // var IGV_VALUE = 1.18;
@@ -100,8 +103,7 @@ $(document).ready(function (e) {
 
 
   function sumStock(value, data, info) {
-    // console.log(arguments)
-    let sum = Number(info.prosto1) + Number(info.prosto2) + Number(info.prosto3) + Number(info.prosto4) + Number(info.prosto5) + Number(info.prosto6) + Number(info.prosto7) + Number(info.prosto8) + Number(info.prosto9) + Number(info.prosto10);
+    let sum = Number(info.prosto1) + Number(info.prosto2) + Number(info.prosto3) + Number(info.prosto4) + Number(info.prosto5) + Number(info.prosto6) + Number(info.prosto7) + Number(info.prosto8) + Number(info.prosto9);
     return fixedNumber(sum);
   }
 
@@ -453,12 +455,12 @@ $(document).ready(function (e) {
     let cantidad = Number($("[name=producto_cantidad]").val());
     let precio = Number($("[name=producto_precio]").val());
     let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
-    
+
     if (modulo_manejo_stock) {
       if (cantidad > stock) {
         if (!confirm("Stock disponible es menor que la cantidad requerida, desea continuar?")) {
-        $("[name=producto_cantidad]").focus().select();
-        return;
+          $("[name=producto_cantidad]").focus().select();
+          return;
         }
       }
     }
@@ -985,22 +987,22 @@ $(document).ready(function (e) {
     let unidad_select = null;
 
     let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
-    
+
     // 
     // console.log("unidades", current_product_data, unidades);
-    
+
     for (let i = 0; i < unidades.length; i++) {
       if (unidades[i].Unicodi == producto_unidad.val()) {
         unidad_select = unidades[i];
         break;
       }
     }
-    
+
     precio = is_sol ? unidad_select.UNIPUVS : unidad_select.UniPUVD;
     let precio_min = is_sol ? unidad_select.UniPMVS : unidad_select.UniPMVD;
     const decimales = is_sol ? window.decimales_soles : window.decimales_dolares;
 
-    $("[name=producto_precio]").val( fixedNumber(precio, false, decimales ));
+    $("[name=producto_precio]").val(fixedNumber(precio, false, decimales));
     $("[name=producto_precio]")
       .attr('data-default', fixedNumber(precio_min, false, decimales));
 
@@ -1694,19 +1696,19 @@ $(document).ready(function (e) {
 
 
 
-      console.log( "info" , info);
+      console.log("info", info);
 
-      let item_data =  {
-      'UniCodi' : info.UniCodi,
-      'DetCodi' : info.DetCodi,
-      'DetNomb' : info.DetNomb,
-      'DetCant' : info.DetCant,
-      'DetPrec' : info.DetPrec,
-      'DetDeta' : info.DetDeta,
-      'DetDcto': info.DetDcto,
-      'DetImpo': info.DetImpo,
-      'DetBase': info.DetBase,
-      'incluye_igv': info.incluye_igv,
+      let item_data = {
+        'UniCodi': info.UniCodi,
+        'DetCodi': info.DetCodi,
+        'DetNomb': info.DetNomb,
+        'DetCant': info.DetCant,
+        'DetPrec': info.DetPrec,
+        'DetDeta': info.DetDeta,
+        'DetDcto': info.DetDcto,
+        'DetImpo': info.DetImpo,
+        'DetBase': info.DetBase,
+        'incluye_igv': info.incluye_igv,
       }
 
       items.push(item_data);
@@ -2033,8 +2035,7 @@ $(document).ready(function (e) {
 
   }
 
-  function mostrar_condi_venta()
-  {
+  function mostrar_condi_venta() {
     $("#modalCondicionVenta").modal(true);
   }
 
@@ -2284,10 +2285,30 @@ $(document).ready(function (e) {
 
   }
 
+  function showHideAlmacenes() {
+    const getIndexs = () => {
+      if (window.columns_alms_hide.length) {
+        return window.columns_alms_hide;
+      }
+      $("#datatable-productos thead .almacen-showhide").each(function () {
+        window.columns_alms_hide.push($(this).attr('data-column'));
+      })
+    }
+    columns = getIndexs();
+    console.log("columna del indice", columns)
+    for (let index = 0; index < window.columns_alms_hide.length; index++) {
+      var column = table_productos.column(window.columns_alms_hide[index]);
+      column.visible(!column.visible());
+    }
+  }
+
+
+
   function events() {
 
     $("[name=grupo_filter]").on('change', consultar_grupo_filter);
 
+    $("body").on('click', '.ver-mostrar-almacenes', showHideAlmacenes)
 
     $("[name=familia_filter]").on('change', () => {
       table_productos.draw()
@@ -2400,6 +2421,15 @@ $(document).ready(function (e) {
 
     table_clientes.on('draw.dt', select_tabla_clientes);
     table_productos.on('draw.dt', select_tabla_productos);
+
+
+    table_productos.on('draw.dt', () => {
+      if (window.almacenVisualize) {
+        window.almacenVisualize = false;
+        showHideAlmacenes();
+      }
+    });
+
 
     $("#datatable-productos,#datatable-clientes,#table_pagos,#datatable-clientes, #datatable-factura_select").on('click', "tbody tr", seleccion_elemento);
 
@@ -2515,31 +2545,37 @@ $(document).ready(function (e) {
       $button.button();
     });
 
-    let columns = [
+    let product_columns = [
       { data: 'ProCodi', searchable: false },
       { data: 'unpcodi', searchable: false },
       { data: 'ProNomb', className: 'nombre_producto', searchable: false },
       { data: 'marca_.MarNomb', searchable: false },
-      { data: 'ProPUCD', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProPUCS', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProMarg', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProPUVS', className: 'text-right', searchable: false, render: dataUnidadPrincipal },
-      { data: 'ProPUVS', className: 'text-right', searchable: false, render: sumStock },
     ]
 
+    const ver_costos = Number($("#datatable-productos").attr("data-costos"));
 
+    if (ver_costos) {
+      product_columns.push({ data: 'ProMarg', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+      product_columns.push({ data: 'ProPUCD', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+      product_columns.push({ data: 'ProPUCS', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+    }
+
+    product_columns.push({ data: 'ProPUVS', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+    product_columns.push({ data: 'ProPUVS', className: 'text-right total-almacen almacen-id-total', searchable: false, render: sumStock });
+
+    // 
     let cantidad_almacenes = $("#datatable-productos thead td.almacenes");
     for (let index = 0; index < cantidad_almacenes.length; index++) {
       let stock_number = $(cantidad_almacenes[index]).attr('data-id');
       let campo_id = 'prosto' + stock_number;
-      columns.push({ data: campo_id, className: 'text-right', searchable: false });
+      product_columns.push({ data: campo_id, className: 'text-right ' + 'almacen-id-' + stock_number, searchable: false });
     }
 
-    columns.push({ data: 'prosto10', className: 'text-right', searchable: false });
-    columns.push({ data: 'ProPeso', className: 'text-right', searchable: false, render: formatNumber });
-    columns.push({ data: 'BaseIGV', className: 'text-right', searchable: false });
-    columns.push({ data: 'ISC', className: 'text-right', searchable: false });
-    columns.push({ data: 'tiecodi', searchable: false });
+    product_columns.push({ data: 'prosto10', className: 'text-right', searchable: false });
+    product_columns.push({ data: 'ProPeso', className: 'text-right', searchable: false, formatNumber });
+    product_columns.push({ data: 'BaseIGV', className: 'text-right', searchable: false });
+    product_columns.push({ data: 'ISC', className: 'text-right', searchable: false });
+    product_columns.push({ data: 'tiecodi', searchable: false });
 
     table_productos = $('#datatable-productos').DataTable({
 
@@ -2577,7 +2613,7 @@ $(document).ready(function (e) {
         { "width": "70px", "targets": 4 },
         { "width": "70px", "targets": 5 }
       ],
-      "columns": columns
+      "columns": product_columns
     });
 
     table_productos.columns.adjust().draw();

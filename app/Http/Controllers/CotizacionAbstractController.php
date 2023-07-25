@@ -11,6 +11,7 @@ use App\Cotizacion;
 use App\ListaPrecio;
 use App\TipoCliente;
 use App\PDFPlantilla;
+use PermissionSeeder;
 use App\EmpresaOpcion;
 use App\TipoDocumento;
 use App\CondicionVenta;
@@ -251,6 +252,7 @@ class CotizacionAbstractController extends Controller
       'is_orden' => false,
       'import' => false,
       'importHabilitado' => false,
+      'ver_costos' => auth()->user()->checkPermissionTo_(concat_space(PermissionSeeder::A_VERCOSTOS, PermissionSeeder::R_PRODUCTO)),
       'tipo' => $tipo,
       'lista_precios' => ListaPrecio::all(),
       'ruc' => "",

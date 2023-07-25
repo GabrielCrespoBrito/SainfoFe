@@ -71,6 +71,7 @@ class PermissionSeeder extends Seeder
   const A_REPORTE = "reporte";
   const A_REPORTE_INGRESO_EGRESO = 'reporte-movimientos';
   const A_TOMAINVENTARIO = "toma-inventario";
+  const A_VERCOSTOS = "ver-costos";
   const A_RECURSO = "recursos";
   const A_CUENTASPORCOBRAR = "cuentas-por-cobrar";
   const A_CUENTASPORPAGAR = "cuentas-por-pagar";
@@ -315,7 +316,8 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_UPDATEPRECIOS, self::R_PRODUCTO),
       concat_space(self::A_UPDATEPRECIOSMASIVE, self::R_PRODUCTO),
       concat_space(self::A_UPDATEPRECIOSTIPOCAMBIO, self::R_PRODUCTO),
-      concat_space(self::A_TOMAINVENTARIO, self::R_PRODUCTO),
+      concat_space(self::A_TOMAINVENTARIO, self::R_PRODUCTO),concat_space(self::A_VERCOSTOS, self::R_PRODUCTO),
+
     ], self::R_PRODUCTO,  false);
   }
 

@@ -14,6 +14,7 @@ use App\ErrorSunat;
 use App\GuiaSalida;
 use App\BancoEmpresa;
 use App\PDFPlantilla;
+use PermissionSeeder;
 use App\EmpresaOpcion;
 use App\CondicionVenta;
 use App\CotizacionItem;
@@ -289,6 +290,7 @@ class VentasController extends Controller
 
     if ($accion == "create") {
       $data['tipos_clientes'] = cacheHelper('tipocliente.all');
+      $data['ver_costos'] =  $user->checkPermissionTo_(concat_space(PermissionSeeder::A_VERCOSTOS, PermissionSeeder::R_PRODUCTO));
       $data['tipos_documentos_clientes'] = cacheHelper('tipodocumento.all');
       $data['departamentos'] = cacheHelper('departamento.all');
       $data['lista_precios'] = cacheHelper('listaprecio.all');

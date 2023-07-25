@@ -63,6 +63,7 @@ return [
   PermissionSeeder::A_UPDATEPRECIOSMASIVE => 'Actualizar Precios Masivamente',
   PermissionSeeder::A_UPDATEPRECIOSTIPOCAMBIO => 'Actualizar Precios Por Tipo de Cambio',
   PermissionSeeder::A_IMPRIMIR => 'Imprimir',
+  PermissionSeeder::A_VERCOSTOS => 'Ver Costos',
   PermissionSeeder::A_LIBERAR => 'Liberar',
   PermissionSeeder::A_ANULAR => 'Anular',
   PermissionSeeder::A_EMAIL => 'Email', // = "anular";

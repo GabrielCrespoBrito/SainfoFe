@@ -1,3 +1,5 @@
+
+
 <div class="col-md-12 col-xs-12 content_ventas div_table_content no_pl" style="overflow-x: scroll;">
 <table width="100%" data-id="{{ $empresa_id }}" class="table datatable sainfo-table sainfo-noicon oneline" data-url="{{  $routeVentaConsulta  }}">
 
