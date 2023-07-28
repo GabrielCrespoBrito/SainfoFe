@@ -20,6 +20,7 @@ use App\Jobs\Empresa\DeleteAllForFailCreation;
 use App\Http\Controllers\Empresa\CertificateTrait;
 use App\Http\Requests\Empresa\EmpresaUpdateRequest;
 use App\Http\Requests\Empresa\EmpresaUpdateParametroBasicRequest;
+use Carbon\Carbon;
 
 abstract class EmpresaMainController extends Controller
 {
@@ -44,7 +45,34 @@ abstract class EmpresaMainController extends Controller
   {
     $status = $request->input('status', 1);
     $busqueda = Empresa::where('active', $status);
-    //     
+    $today = date('Y-m-d');
+    $dias_vencimiento = config('app.recordatorio_venc_certificado');
+    
+    if( $tipo = $request->input('tipo') ){
+      $busqueda->where('tipo', $tipo);
+    }
+
+    if ($venc_cert = $request->input('venc_certificado')) {
+      
+      $fechaVencimiento = new Carbon();
+      $fechaVencimiento->addDays($dias_vencimiento);
+      $fechaVencimiento = $fechaVencimiento->format('Y-m-d');
+
+      if ($venc_cert == "vencidas") {
+        $busqueda->where('venc_certificado', '<',  $today );
+      }
+
+      else if($venc_cert == "por_vencer"){
+        $busqueda->where('venc_certificado', '<=', $fechaVencimiento)
+        ->where('venc_certificado', '>',  $today  );
+      }
+
+      else if( $venc_cert == "activas" ){
+        $busqueda->where('venc_certificado', '>', $fechaVencimiento );
+      }
+
+    }
+
     return DataTables::of($busqueda)
       ->addColumn('link', 'admin.empresa.partials.column_link')
       ->addColumn('estado', 'admin.empresa.partials.column_estado')
@@ -52,7 +80,9 @@ abstract class EmpresaMainController extends Controller
       ->addColumn('fecha_vencimiento', 'admin.empresa.partials.column_fecha_vencimiento')
       ->addColumn('ambiente', 'admin.empresa.partials.column_ambiente')
       ->addColumn('reporte_documentos', 'admin.empresa.partials.column_documentos')
-      ->rawColumns(['link', 'accion', 'estado', 'reporte_documentos', 'fecha_vencimiento', 'ambiente'])
+      ->addColumn('column_tipo', 'admin.empresa.partials.column_tipo')
+      ->addColumn('column_cert', 'admin.empresa.partials.column_cert')
+      ->rawColumns(['link', 'accion', 'estado', 'reporte_documentos', 'fecha_vencimiento', 'ambiente', 'column_tipo', 'column_cert'])
       ->make(true);
   }
 
@@ -68,9 +98,12 @@ abstract class EmpresaMainController extends Controller
 
   public function store(EmpresaCreateRequest $request)
   {
+    _dd($request->all());
+    exit();
+
     $message = 'Se ha creado exitosamente la empresa';
     $type = "success";
-    $route = route('usuarios.mantenimiento');
+    $route = route('admin.empresas.index');
     $success = true;
     $status = 200;
     $empresa = null;
@@ -84,7 +117,6 @@ abstract class EmpresaMainController extends Controller
       $success = false;
       $status = 400;
       $type = "error";
-      $route = "aaa";
       $message = "Error al Guardar " . $th->getMessage();
       DeleteAllForFailCreation::dispatchNow($empresa);
     }

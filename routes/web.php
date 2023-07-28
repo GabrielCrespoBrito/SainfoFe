@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 # Pagina de inicio
 include('routes_web/landing.php');
 include('routes_web/test.php');
+include('routes_web/ubigeo.php');
 
 # Area Administrativa
 include('routes_web/admin.php');

@@ -8,7 +8,6 @@
 
 @slot('titulo_small')
 
-{{-- ooooooo AWS ooooooo --}}
 @if( $empresa->isActive() )
   <small class="label pull-right bg-green">Activa</small>
 @else
@@ -19,9 +18,19 @@
 
 @slot('contenido')
 
+@if( $empresa->isWeb() )
+
 @include('partials.errors_html')
 
 @include('admin.empresa.partials.form', [ 'form_sunat' => true, 'form_visualizacion' => true, 'form_parametros' => true, 'form_acciones' => true, 'form_certificado' => true, 'form_tienda' => true ])
+
+@else
+
+@include('admin.empresa.partials.form_web', [ 'form_sunat' => true, 'form_visualizacion' => true, 'form_parametros' => true, 'form_acciones' => true, 'form_certificado' => true, 'form_tienda' => true ])
+
+
+@endif
+
 
 @endslot
 @endview_data

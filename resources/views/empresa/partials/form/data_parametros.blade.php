@@ -89,10 +89,6 @@
   </div>
 </div>
 
-
-
-
-
   <div class="form">
     <div class="form-group col-md-8">    
       <div class="input-group">

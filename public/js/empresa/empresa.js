@@ -50,20 +50,6 @@ function sendForm(e)
 
 	var formData = new FormData( document.querySelector('#form-create-empresa') );
 
-	// var formData = $form.serialize();
-	// formData.append('id_grupo', id_grupo);
-	// formData.append('id_grupo', id_grupo);
-
-	console.log("formData" , formData);
-
-	// $.each(inputs, function (obj, v) {
-	// 	var file = v.files[0];
-	// 	var filename = $(v).attr("data-filename");
-	// 	var name = $(v).attr("id");
-	// 	formData.append(name, file, filename);
-				
-	// });
-	
 	$.ajax({
 		type: 'post',
 		url: url,
@@ -85,8 +71,78 @@ function sendForm(e)
 }
 
 
+function buscarRuc(e)
+{
+  e.preventDefault();
+  const ruc = $("[name=ruc]").val();
+  const url =  $(".search-ruc").attr('data-url');
+
+  $("#load_screen").show();
+
+  if( ruc.length == 0 ){
+    notificaciones('Introducir el ruc por favor');
+    return;  
+  }
+
+  const data = {
+    numero: ruc
+  }
+
+  const funcs = {
+    success: function(data){
+
+      if( data.success ){
+        $("[name=nombre_empresa]").val(data.data.razon_social);
+        $("[name=nombre_comercial]").val(data.data.razon_social);
+        $("[name=direccion]").val(data.data.direccion);
+        $("[name=ubigeo]").val(data.data.ubigeo);
+
+        if(data.data.ubigeo){
+          
+          
+          
+          let ubigeos = data.data.ubigeo_nombre.split('-');
+          
+          console.log(ubigeos);
+
+          let departamento = ubigeos[1]
+          let distrito = ubigeos[2]
+          let provincia = ubigeos[3];
+
+
+          $("[name=ubigeo]").val(data.data.ubigeo);
+          $("[name=departamento]").val(departamento);
+          $("[name=distrito]").val(distrito);
+          $("[name=provincia]").val(provincia);
+
+        }
+
+
+        // ubigeo
+      }
+    },
+    complete: function (data) {
+      $("#load_screen").hide();
+
+    }
+  }
+
+  ajaxs(data, url, funcs)
+
+    // $.ajax({
+    //   type: 'post',
+    //   url: url,
+    //   data: {
+    //     numero : ruc
+    //   },
+    // });
+}
+
 function events()
 {
+  $(".search-ruc").on('click', buscarRuc )
+
+
 	$("[name=facturacion]").on('change' , bloquear_facturacion_electronica )
 	$("[name=tipo_envio_servicio]").on('change' , cambiar_url )
 	$(".c-input").on('click' , change_type_input )

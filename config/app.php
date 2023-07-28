@@ -144,6 +144,9 @@ return [
   // Cantidad de dias ANTES del vencimiento de la suscripción para notificar al usuario
   'recordatorio_suscripcion_porvencerse' => env('DIAS_RECORDATORIO_SUSCRIPCION_PORVENCER', 15),
 
+  // Cantidad de dias ANTES del vencimiento de la suscripción para notificar al usuario
+  'recordatorio_venc_certificado' => env('DIAS_RECORDATORIO_VENC_CERTIFICADO', 15),
+
   // Cantidad de dias DESPUES del vencimiento de la suscripción para notificar al usuario
   'recordatorio_suscripcion_porvencida' => env('DIAS_RECORDATORIO_SUSCRIPCION_VENCIDA', 3),
 

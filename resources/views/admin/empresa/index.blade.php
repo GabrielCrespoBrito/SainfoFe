@@ -22,6 +22,7 @@
 </form>
 
 <div class="row">
+  
   <div class="col-md-3">
     <div class="form-group">
       <select name="status" class="form-control">
@@ -30,9 +31,34 @@
       </select>
     </div>
   </div>
-  <div class="col-md-9">
+
+  <div class="col-md-3">
+    <div class="form-group">
+      <select name="venc_certificado" class="form-control">
+        <option value="" selected> -- Todos -- </option>
+        <option value="activas"> Activas </option>
+        <option value="por_vencer"> Por Vencer </option>
+        <option value="vencidas"> Vencidas </option>
+      </select>
+    </div>
+  </div>
+
+
+    <div class="col-md-3">
+    <div class="form-group">
+      <select name="tipo" class="form-control">
+        <option value="" selected> -- Todos -- </option>
+        <option value="web"> Web </option>
+        <option value="escritorio"> Escritorio </option>
+      </select>
+    </div>
+  </div>
+
+
+
+  <div class="col-md-3">
     <div class="acciones-div">
-      <a href="{{ route('empresa.create') }}" class="btn btn-primary btn-flat pull-right crear-nuevo-usuario"> <span class="fa fa-plus"></span> Nuevo </a>
+      <a href="{{ route('admin.empresa.create') }}" class="btn btn-primary btn-flat pull-right crear-nuevo-usuario"> <span class="fa fa-plus"></span> Nuevo </a>
     </div>
   </div>
 
@@ -47,6 +73,8 @@
       <td> Estado </td>
       <td> Ambiente </td>
       <td> Documentos </td>
+      <td> Tipo </td>
+      <td> Fech. Cert </td>
       <td> Suscripción </td>
       <td> Acciones </td>
     </tr>

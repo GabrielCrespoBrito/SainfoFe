@@ -3,7 +3,8 @@ var accion;
 function initDatable()
 {
   let $selectStatus = $("[name=status]");
-
+  let $selectTipo = $("[name=tipo]");
+  let $selectVencCertificado = $("[name=venc_certificado]");
   table = $('#datatable').DataTable({
     "pageLength": 10,
     "responsive" : true,
@@ -14,7 +15,9 @@ function initDatable()
       "url": url_consulta,
       "data": function (d) {
         return $.extend({}, d, {
-          "status":  $selectStatus.val(),
+          "status": $selectStatus.val(),
+          "tipo": $selectTipo.val(),
+          "venc_certificado": $selectVencCertificado.val(),
         });
       }
     },
@@ -24,7 +27,9 @@ function initDatable()
       { data:  'EmpLin1' },
       { data : 'estado' },      
       { data:  'ambiente' },
-      { data:  'reporte_documentos' },
+      { data: 'reporte_documentos' },
+      { data: 'column_tipo' },
+      { data: 'column_cert' },
       { data:  'fecha_vencimiento' },
       { data : 'accion' },
     ]
@@ -69,7 +74,7 @@ function activarFormEliminarUsuario()
 
 function events()
 {
-  $("[name=status]").on('change' , function(){
+  $("[name=status],[name=tipo],[name=venc_certificado]").on('change' , function(){
     table.draw();
   })
 

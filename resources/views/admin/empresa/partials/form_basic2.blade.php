@@ -1,8 +1,14 @@
 @php
 
-$route = $area_admin ? 
-route('admin.empresa.update_basic', $empresa->empcodi) : 
-route('empresa.update_basic', $empresa->empcodi);
+$campo_escritorio = $campo_escritorio ?? false;
+
+
+if(!isset($route)){
+  $route =  $area_admin ? 
+  route('admin.empresa.update_basic', $empresa->empcodi) : 
+  route('empresa.update_basic', $empresa->empcodi);
+}
+
 
 @endphp
 
@@ -113,6 +119,10 @@ route('empresa.update_basic', $empresa->empcodi);
     </div>
   </div>
 </div>
+
+  @if($campo_escritorio)
+    @include('empresa.partials.form.campos_escritorio',[ 'select_tipo' => false ])
+  @endif
 
     @include('empresa.partials.principal.botones')
   </form>

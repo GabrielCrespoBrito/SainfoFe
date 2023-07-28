@@ -20,7 +20,10 @@
   <div class="form-group {{ $errors->has('ruc') ? 'has-error' : '' }} col-md-5">  
     <div class="input-group">
       <span class="input-group-addon">RUC</span>
-        <input class="form-control input-sm" placeholder="11111111111"  name="ruc" type="text" required value="{{ old('ruc') }}">     
+        <input class="form-control input-sm" name="ruc" type="text" required value="{{ old('ruc') }}">
+      <span class="input-group-addon">
+        <a href="#" data-url="{{ route('consulta_ruc') }}" class="search-ruc btn btn-xs btn-flat btn-default"> <span class="fa fa-search"></span> </a>
+      </span>
     </div>
   </div>
   <div class="form-group {{ $errors->has('nombre_comercial') ? 'has-error' : '' }} col-md-7">  
@@ -91,7 +94,7 @@
   </div>
 </div>
 
-<div class="row">  
+{{-- <div class="row">  
 
 
   <div class="form-group {{ $errors->has('logo_principal') ? 'has-error' : '' }} col-md-6">  
@@ -109,7 +112,7 @@
         <input class="form-control input-sm" name="logo_secundario" type="file" value="">     
     </div>
 
-  </div>
+  </div> --}}
 
 </div>
 

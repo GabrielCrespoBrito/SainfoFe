@@ -20,7 +20,6 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::post('/documentos/change-date/{documento_id?}', 'Admin\DocumentoController@changeDate')->name('documentos.change_date');
 
       Route::get('empresa/index', "Admin\EmpresaController@index")->name('empresa.index');
-      
       Route::get('empresa/create',"Admin\EmpresaController@create")->name('empresa.create');
       Route::post('empresa/store',"Admin\EmpresaController@store")->name('empresa.store');
       Route::get('empresa/search',"Admin\EmpresaController@search")->name('empresa.search');
@@ -72,6 +71,8 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
 
       Route::get('empresa/{id?}/edit', "Admin\EmpresaController@edit")->name('empresa.edit_basic');      
       Route::post('empresa/{id?}/update', "Admin\EmpresaController@updateDataBasic")->name('empresa.update_basic');
+      Route::post('empresa/{id?}/update-basic-escritorio', "Admin\EmpresaController@updateDataBasicEscritorio")->name('empresa.update_basic_escritorio');
+      
       Route::post('empresa/{id?}/update-sunat', "Admin\EmpresaController@updateSunat")->name('empresa.update_sunat');
       Route::post('empresa/{id?}/update-visual', "Admin\EmpresaController@updateVisual")->name('empresa.update_visual');
       Route::post('empresa/{id?}/update-cert', "Admin\EmpresaController@storeCertificado")->name('empresa.update_certs');

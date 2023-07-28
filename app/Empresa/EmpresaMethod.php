@@ -2,12 +2,14 @@
 
 namespace App\Empresa;
 
+use App\Cargo;
 use App\Empresa;
 use Carbon\Carbon;
 use App\Jobs\Empresa\TokenHandler;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\Empresa\GetOrGenerateGuiaTokenApi;
 use App\Jobs\Empresa\CambiarAplicacionIgvProductos;
+use App\Jobs\Empresa\SaveWeb;
 
 trait EmpresaMethod
 {
@@ -23,7 +25,13 @@ trait EmpresaMethod
     return $this->FE_CLIENT_ID;
   }
 
-  public function getClienteGuiaKey()
+  public static function saveWeb($data)
+  {
+    (new SaveWeb($data))->handle();
+  }
+
+
+  public static function getClienteGuiaKey()
   {
     return $this->FE_CLIENT_KEY;
   }
@@ -35,6 +43,43 @@ trait EmpresaMethod
   
   public function generateTokenApi()
   {
+  }
+
+  public function isEscritorio()
+  {
+    return $this->tipo == "escritorio";
+  }
+
+  public function hasFechaCert()
+  {
+    return $this->venc_certificado != null;
+  }
+
+  public function  fechaCertVencido()
+  {
+    $carbon = new Carbon($this->venc_certificado);
+    $today = new Carbon();
+
+    return $carbon->isSameDay($today) || $carbon->isBefore($today);
+  }
+
+  public function fechaCertPorVencer()
+  {
+    $carbon = new Carbon($this->venc_certificado);
+    $carbon->subDays(config('app.recordatorio_venc_certificado'));
+    $today = new Carbon();
+    return $today->isAfter($carbon);
+  }
+
+  public function getFechaSuscripcion()
+  {
+    $date = explode( ' ', $this->end_plan );
+    return $date[0];
+  }
+
+  public function isWeb()
+  {
+    return !$this->isEscritorio();
   }
 
   public function saveTokenApi($tokenData)

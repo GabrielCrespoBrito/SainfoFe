@@ -2,6 +2,8 @@
 
 namespace App\Presenter;
 
+use Carbon\Carbon;
+
 class EmpresaPresenter extends Presenter
 {
   public function getDocumentosReporte()
@@ -9,7 +11,57 @@ class EmpresaPresenter extends Presenter
     $class_name = "btn-default";
     $enlace = route('admin.empresas.reporte_documentos', ['id' => $this->model->id()]);
     $name = "Documentos";
-    return sprintf('<a target="_blank class="btn btn-xs %s" href="%s">%s</a>', $class_name, $enlace, $name);
+    return sprintf('<a target="_blank" class="btn btn-flat btn-xs %s" href="%s"> <span class="fa fa-file-text-o"></span> %s</a>', $class_name, $enlace, $name);
+  }
+
+  public function getColumnCert()
+  {
+    $fc = $this->model->venc_certificado; 
+    $name  = "";    
+
+    if( $fc == null ){
+      $className = "btn-default";
+      $name = "S/F";
+    }
+
+    else if( $this->model->fechaCertVencido() ){
+      $className = "btn-danger";
+      $name = "Vencido";
+    }
+
+    else if($this->model->fechaCertPorVencer() ){
+      $className = "btn-warning";
+      $name = "Por Vencer";
+    }
+
+    else {
+      $className = "btn-success";
+      $name = "Activo";
+    }
+
+    return sprintf('<a class="btn btn-flat btn-xs %s" href="#"> <span class="fa  fa-calendar"></span> %s %s</a>', $className, $fc,  $name);
+  }
+
+
+  public function getTipoColumn()
+  {
+    // _dd($this->model->isWeb());
+    // exit();
+    logger(sprintf('Empresa (%s) (%s) ', $this->model->empcodi, $this->model->isWeb() ) );
+
+    if( $this->model->isWeb() ){
+      $icon = "fa-cloud";
+      $class_name = "btn-default";
+      $name = "Web";
+    }
+    else {
+      $icon = "fa-desktop";
+      $class_name = "btn-primary";
+      $name = "Escritorio";
+    }
+ 
+
+    return sprintf('<a class="no-pointer btn btn-flat btn-xs %s" href="#"> <span class="fa %s"></span> %s</a>', $class_name, $icon, $name);
   }
 
 
