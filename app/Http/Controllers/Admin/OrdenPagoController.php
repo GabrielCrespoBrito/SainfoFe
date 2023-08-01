@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Empresa;
 use App\Events\OrdenhasPay;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Suscripcion\OrdenPago;
 use App\Util\PDFGenerator\PDFGenerator;
 use App\Models\Suscripcion\PlanDuracion;
+use App\Notifications\OrdenPagoHasProcess;
 use App\Http\Requests\Suscripcion\OrdenPagoStoreRequest;
 
 class OrdenPagoController extends Controller
@@ -50,6 +52,30 @@ class OrdenPagoController extends Controller
     event(new OrdenPagoHasCreated($orden_pago));
 
     return redirect()->route('suscripcion.ordenes.index');
+  }
+
+  public function storeEscritorio(Request $request, $empresa_id)
+  {
+    $empresa = Empresa::find($empresa_id);
+    $planduracion = PlanDuracion::findOrfail($request->plan);
+    $user = $empresa->userOwner();
+    $isPagada = $request->estatus == "pagada"; 
+
+    $orden_pago = OrdenPago::createFromPlanDuracion($planduracion, empcodi(), $user->id(),  $isPagada, $request->all() );
+
+    event(new OrdenPagoHasCreated($orden_pago));
+
+    if($isPagada){
+      $orden_pago->createSuscripcion( $request->input('fecha_final'));
+      $user->notify(new OrdenPagoHasProcess($orden_pago, $empresa));
+    }
+    else {
+      $orden_pago->fecha_vencimiento = $request->input('fecha_final');
+      $orden_pago->save();
+    }
+
+    noti()->success('Orden Creada Satisfactoriamente');
+    return back();
   }
 
   public function show($id)

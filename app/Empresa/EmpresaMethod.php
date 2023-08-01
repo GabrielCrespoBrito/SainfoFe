@@ -27,7 +27,7 @@ trait EmpresaMethod
 
   public static function saveWeb($data)
   {
-    (new SaveWeb($data))->handle();
+    return (new SaveWeb($data))->handle();
   }
 
 

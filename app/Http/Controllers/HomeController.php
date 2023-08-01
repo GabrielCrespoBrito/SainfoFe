@@ -105,7 +105,6 @@ class HomeController extends Controller
     $hostExists = Hostname::where('fqdn', $fqdn)->exists();
     $puerto = env('SERVER_PORT');
     $port = $request->server('SERVER_PORT') == $puerto ? ":{$puerto}" : '';
-
     if ($hostExists) {
       session()->put('empresa', $empresa->empcodi);
       session()->put('empresa_ruc', $ruc);

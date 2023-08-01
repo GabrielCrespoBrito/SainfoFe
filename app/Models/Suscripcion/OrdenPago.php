@@ -12,6 +12,7 @@ use Hyn\Tenancy\Traits\UsesSystemConnection;
 class OrdenPago extends Model
 {
   use UsesSystemConnection;
+
   protected $table = "suscripcion_system_ordenes_pago";
   protected $fillable = [
     'duracion_id',
@@ -40,7 +41,7 @@ class OrdenPago extends Model
     return $this->estatus == self::PENDIENTE;
   }
 
-  public static function createFromPlanDuracion(PlanDuracion $planduracion, $empresa_id,  $user_id, $status_pagada = null)
+  public static function createFromPlanDuracion(PlanDuracion $planduracion, $empresa_id,  $user_id, $status_pagada = null, $dataOrden = [])
   {
     $data = $planduracion->toArray();
 
@@ -53,6 +54,23 @@ class OrdenPago extends Model
     $data['duracion_id'] = $planduracion->id;
     $data['empresa_id'] = $empresa_id;
     $data['user_id'] = $user_id;
+
+    if( isset($dataOrden['descuento_value']) ){
+      $data['descuento_value'] = $dataOrden['descuento_value'];
+    }
+
+    if (isset($dataOrden['igv'])) {
+      $data['igv'] = $dataOrden['igv'];
+    }
+
+    if (isset($dataOrden['base'])) {
+      $data['base'] = $dataOrden['base'];
+    }
+
+    if (isset($dataOrden['total'])) {
+      $data['total'] = $dataOrden['total'];
+    }
+
 
     if($status_pagada ){
       $data['estatus'] = OrdenPago::PAGADA;
@@ -170,11 +188,10 @@ class OrdenPago extends Model
   }
 
 
-  public function createSuscripcion()
+  public function createSuscripcion($fechaFinal = null)
   {
-    CreateSuscripcion::dispatchNow($this);
+    CreateSuscripcion::dispatchNow($this, $fechaFinal);
   }
-
 
   public function empresaRequiredConfigIsNecesary()
   {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
 use App\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class EmpresaController extends EmpresaMainController
     $empresa->EmpLin5 = $data['nombre_comercial'];
     $empresa->EmpLin6 = $data['rubro'];
     $empresa->venc_certificado = $data['venc_certificado'];
-    $empresa->end_plan = $data['fecha_suscripcion'];
+    // $empresa->end_plan = $data['fecha_suscripcion'];
     if(isset($data['ubigeo'])){
       $empresa->setUbigeo($data['ubigeo']);
     }
@@ -44,17 +45,20 @@ class EmpresaController extends EmpresaMainController
   public function store(EmpresaCreateRequest $request)
   {
 
+    // _dd( $request->all() );
+    // exit();
+
     $message = 'Se ha creado exitosamente la empresa';
     $type = "success";
-    $route =  route('admin.empresa.index');
-      // route('usuarios.mantenimiento');
+    // route('usuarios.mantenimiento');
     $success = true;
     $status = 200;
     $empresa = null;
     try {
       DB::beginTransaction();
       $empresa = Empresa::saveWeb($request->all());
-      // event(new EmpresaHasCreated($empresa));
+      $user = User::find( $request->usuario );
+      $user->asociateToEmpresa($empresa->empcodi, false);
       DB::commit();
     } catch (\Exception | \Throwable $th) {
       throw $th;
@@ -69,7 +73,8 @@ class EmpresaController extends EmpresaMainController
       DB::commit();
       notificacion('', $message, $type);
     }
-
+    
+    $route =  route('admin.empresa.edit_basic', ['id' => $empresa->id()]);
     return response()->json(['message' => $message, 'route' => $route], $status);
   }
 

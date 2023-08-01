@@ -51,12 +51,7 @@ class CreatePlanes
           $orden_pago = OrdenPago::createFromPlanDuracion($plan_duracion_empresa, $empresa_id, $user_owner_id, true);
           $orden_pago->createSuscripcion();
           $needRegisterSuscription = false;
-
         }
-
-        
-
-
 
 
       }

@@ -718,6 +718,8 @@ class Empresa extends Model
   public function setUbigeo($ubigeo_id)
   {
     $ubigeo = Ubigeo::find($ubigeo_id);
+    // _dd( $ubigeo );
+    // exit();
     if ($ubigeo) {
       $this->FE_DEPA = $ubigeo->departamento->depnomb;
       $this->FE_PROV = $ubigeo->provincia->provnomb;

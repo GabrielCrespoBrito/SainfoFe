@@ -40,8 +40,9 @@ function sendForm(e)
 	let $form = $("#form-create-empresa");
 	let url = $form.attr('action');
 	let success = function(data){
-		// console.log("EXITO AJAX", data);
-	let href = $(".link-salir").attr('href');
+		console.log("EXITO AJAX", data);
+	// let href = $(".link-salir").attr('href');
+	let href = data.route;
 	location.href = href;
 		// $(".block_elemento").show();
 	} 
@@ -165,11 +166,85 @@ function events()
     $("[name=distrito]").val(distrito);
   })
 
+
+
+  $("[name=plan]").on('click', function (e) {
+    ponerDataPlan();
+    ponerFecha();
+  })
+
 }
+
+
+function ponerFecha() {
+  let text = $("[name=plan] option:selected").text();
+
+  let mesCantidad = text.includes('1MES') ? 1 : 12; 
+
+  let $fecha = $("[name=fecha_final]");
+
+  var date = new Date(); // current date
+  date.setMonth(date.getMonth() + mesCantidad); // add one month
+  const mes = date.getMonth() < 10 ? "0".concat(date.getMonth()) : date.getMonth()
+  const dia = date.getDate() < 10 ? "0".concat(date.getDate()) : date.getDate()
+  const fechaNueva = date.getFullYear() + "-" + mes + '-' + dia ;
+  console.log( date , fechaNueva );
+
+  $fecha.val(fechaNueva);
+}
+
+function ponerDataPlan()
+{
+  let $option = $("[name=plan] option:selected");
+
+  let data = JSON.parse($option.attr('data-info'));
+
+  const descuento_value = data.descuento_value;
+  const base = data.base;
+  const igv = data.igv;
+  const total = data.total;
+
+  $("[name=descuento_value]").val(descuento_value);
+  $("[name=base]").val(base);
+  $("[name=igv]").val(igv);
+  $("[name=total]").val(total);
+}
+
+$("[name=total],[name=base]").on('keyup', calcular );
+
+function calcular(e)
+{
+  const $ele = $(e.target);
+  const value = Number(e.target.value);
+  const $base = $('[name=base]');
+  const $igv = $('[name=igv]');
+  const $total = $('[name=total]');
+
+  console.log(value, $ele.is($total))
+
+  if( $ele.is($total) ){
+    const baseValue = value / 1.18;
+    $base.val(baseValue.toFixed(2));
+    $igv.val( (value-baseValue).toFixed(2)  )
+  }
+  
+  else {
+    const importeValue = value * 0.18;
+    $total.val(importeValue.toFixed(2));
+    $igv.val((importeValue - value).toFixed(2) )
+  }
+
+
+
+
+
+}
+
 
 
 init(
 	events,
 	bloquear_facturacion_electronica,
-	cambiar_url
+	cambiar_url,
+  ponerFecha
 );

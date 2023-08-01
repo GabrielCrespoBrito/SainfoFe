@@ -9,6 +9,8 @@
     <li> <a href="#sunat" data-toggle="tab" aria-expanded="false"> Sunat </a></li>
     @endif
 
+    <li> <a href="#ordenes" data-toggle="tab" aria-expanded="false"> Ordenes Pago. </a></li>
+
   </ul>
 
   <!-- .tab-content -->
@@ -23,6 +25,10 @@
       @include('empresa.partials.parametros.sunat')
     </div>
     @endif
+
+    <div class="tab-pane" style="overflow:hidden" id="ordenes">
+      @include('empresa.partials.parametros.ordenes')
+    </div>
 
   </div>
   <!-- /.tab-content -->

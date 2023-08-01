@@ -18,15 +18,17 @@ class CreateSuscripcion implements ShouldQueue
   use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
   public $ordenPago;
+  public $fechaFinal;
 
   /**
    *      * Create a new job instance.
    *
    * @return void
    */
-  public function __construct(OrdenPago $ordenPago)
+  public function __construct(OrdenPago $ordenPago, $fechaFinal = null)
   {
     $this->ordenPago = $ordenPago;
+    $this->fechaFinal = $fechaFinal;
   }
 
   /**
@@ -42,9 +44,25 @@ class CreateSuscripcion implements ShouldQueue
     $lapso = $this->ordenPago->planduracion->duracion->duracion;
 
     // Si el tipo de duración es diaria, agregar dias, de lo contrario meses
-    $fecha_final = $this->ordenPago->planduracion->isDiario() ?
-      $now->copy()->addDays($lapso)->endOfDay() :
-      $now->copy()->addMonths($lapso)->endOfDay();
+    
+    if( $this->fechaFinal ){
+      $fecha_final = $this->fechaFinal;
+    }
+    else {
+
+      if( $this->ordenPago->fecha_vencimiento ){
+        $fecha_final = $this->ordenPago->fecha_vencimiento;
+      }
+
+      else {
+        $fecha_final = $this->ordenPago->planduracion->isDiario() ?
+        $now->copy()->addDays($lapso)->endOfDay() :
+        $now->copy()->addMonths($lapso)->endOfDay();
+      }
+    }
+
+    // dd( $this->fechaFinal, $fecha_final );
+    // exit();
 
     # Crear la suscripción
     $data = [

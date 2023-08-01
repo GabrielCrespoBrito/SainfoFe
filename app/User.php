@@ -273,4 +273,9 @@ class User extends Authenticatable
     return $this->hasMany(GuiaSalida::class, 'usucodi',  'usucodi');
   }
 
+  public function completeName()
+  {
+    return $this->id() . ' - ' . $this->usulogi;
+  }
+
 }

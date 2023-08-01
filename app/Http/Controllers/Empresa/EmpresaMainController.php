@@ -98,9 +98,6 @@ abstract class EmpresaMainController extends Controller
 
   public function store(EmpresaCreateRequest $request)
   {
-    _dd($request->all());
-    exit();
-
     $message = 'Se ha creado exitosamente la empresa';
     $type = "success";
     $route = route('admin.empresas.index');

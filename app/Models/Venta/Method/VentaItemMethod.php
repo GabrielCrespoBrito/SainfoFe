@@ -274,7 +274,7 @@ trait VentaItemMethod
    */
   public function getDataUtilidadProducto($convert = true)
   {
-    if( $this->parent->isAnulada() || $this->parent->isRechazado()  ){
+    if( $this->parent->isAnulada() || $this->parent->isRechazado()){
       return [
         'venta_soles' => 0,
         'venta_dolar' => 0,
@@ -287,7 +287,8 @@ trait VentaItemMethod
     
     $convertToNegative = $convert ? $this->parent->isNotaCredito() : false;
 
-    return [
+    $v = [
+      'id' => $this->VtaOper,
       'venta_soles' => convertNegativeIfTrue($this->DetVSol , $convertToNegative ),
       'venta_dolar' => convertNegativeIfTrue($this->DetVDol , $convertToNegative ),
       'costo_soles' => convertNegativeIfTrue($this->DetCSol , $convertToNegative ),
@@ -295,6 +296,10 @@ trait VentaItemMethod
       'utilidad_soles' => convertNegativeIfTrue( $this->DetVSol - $this->DetCSol, $convertToNegative ),
       'utilidad_dolar' => convertNegativeIfTrue( $this->DetVDol - $this->DetCSol, $convertToNegative ),
     ];
+  
+    logger($v);
+
+    return $v;
   }
   
   /**

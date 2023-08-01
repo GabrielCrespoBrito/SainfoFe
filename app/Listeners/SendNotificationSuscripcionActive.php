@@ -28,7 +28,6 @@ class SendNotificationSuscripcionActive
   public function handle($event)
   {
     $empresa = $event->orden_pago->empresa;
-    $suscripcion = $event->orden_pago->suscripcion;
     try {
       $empresa->userOwner()->notify(new OrdenPagoHasProcess($event->orden_pago, $empresa));
     } catch (\Throwable $th) {

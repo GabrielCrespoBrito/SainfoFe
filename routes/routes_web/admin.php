@@ -103,6 +103,9 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::get('ordenes/{orden_id}/show', 'Admin\OrdenPagoController@show')->name('suscripcion.ordenes.show');
       Route::get('ordenes/{orden_id}/activar', 'Admin\OrdenPagoController@activar')->name('suscripcion.ordenes.activar');
       Route::get('ordenes/{orden_id}/pdf', 'Suscripcion\OrdenPagoController@pdf')->name('suscripcion.ordenes.pdf');
+      Route::post('ordenes/{empresa_id}/create', 'Admin\OrdenPagoController@storeEscritorio')->name('suscripcion.ordenes.store_escritorio');
+
+
 
       # -------------------- Planes ---------------------
 

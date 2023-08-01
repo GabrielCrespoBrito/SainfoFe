@@ -22,7 +22,7 @@
 
 @include('partials.errors_html')
 
-@include('admin.empresa.partials.form', [ 'form_sunat' => true, 'form_visualizacion' => true, 'form_parametros' => true, 'form_acciones' => true, 'form_certificado' => true, 'form_tienda' => true ])
+@include('admin.empresa.partials.form', [ 'routeSalir' => 'xxx',  'form_sunat' => true, 'form_visualizacion' => true, 'form_parametros' => true, 'form_acciones' => true, 'form_certificado' => true, 'form_tienda' => true ])
 
 @else
 
