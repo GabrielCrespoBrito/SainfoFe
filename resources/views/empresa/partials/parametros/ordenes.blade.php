@@ -51,28 +51,28 @@ $plan_default = $planes->last();
     <div class="form-group col-md-3 ">
       <div class="input-group">
         <span class="input-group-addon">Descuento</span>
-        <input class="form-control input-sm" name="descuento_value" value="{{ $plan_default->descuento_value }}"  type="number">
+        <input class="form-control input-sm" name="descuento_value" value="{{ $plan_default->descuento_value }}"  type="text">
       </div>
     </div>
   
     <div class="form-group col-md-3">
       <div class="input-group">
         <span class="input-group-addon">Base</span>
-        <input class="form-control input-sm" required name="base" value="{{ $plan_default->base }}" type="number">
+        <input class="form-control input-sm" required name="base" value="{{ $plan_default->base }}" type="text">
       </div>
     </div>
 
     <div class="form-group col-md-3">
       <div class="input-group">
         <span class="input-group-addon">Igv</span>
-        <input class="form-control input-sm" required name="igv" value="{{ $plan_default->igv }}" type="number">
+        <input class="form-control input-sm" required name="igv" value="{{ $plan_default->igv }}" type="text">
       </div>
     </div>
 
     <div class="form-group col-md-3">
       <div class="input-group">
         <span class="input-group-addon">Total</span>
-        <input class="form-control input-sm" required name="total" value="{{ $plan_default->total }}" type="number">
+        <input class="form-control input-sm" required name="total" value="{{ $plan_default->total }}" type="text">
       </div>
     </div>
 
