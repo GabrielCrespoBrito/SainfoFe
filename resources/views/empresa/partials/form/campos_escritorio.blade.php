@@ -36,7 +36,7 @@
 
       @else
 
-      <input disabled class="form-control input-sm" name="fecha_suscripcion" value="{{ $empresa->userOwner()->completeName() }}">
+      <input disabled class="form-control input-sm" name="fecha_suscripcion" value="{{ optional($empresa->userOwner())->completeName() }}">
 
       @endif
 
