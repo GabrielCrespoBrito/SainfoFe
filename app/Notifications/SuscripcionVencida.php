@@ -37,7 +37,7 @@ class SuscripcionVencida extends Notification
     $rucEmpresa = $this->empresa->ruc();
     $fechaVencimiento = $this->empresa->end_plan;
 
-    $descripcion = sprintf('La suscripción de la empresa <strong>%s %s </strong>, <span style="color:red"> ha vencido el dia de hoy: <strong> %s </strong></span>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento);
+    $descripcion = new HtmlString(sprintf('La suscripción de la empresa <strong>%s %s </strong>, <span style="color:red"> ha vencido el dia de hoy: <strong> %s </strong></span>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
 
     $this->info = (object)  [
       'subject' => 'SAINFO - Suscripción Vencida',

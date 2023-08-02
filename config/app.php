@@ -25,7 +25,7 @@ return [
     | Parametros adicionales
     |
     */
-  'logo_url' => env('APP_LOGO', 'http://sainfo.pe/wp-content/uploads/2018/12/cropped-logoSainfo2018_54x164.png'),
+  'logo_url' => env('APP_LOGO', 'https://sainfo.pe/page/images/logo.png'),
 
   /*
     |--------------------------------------------------------------------------
