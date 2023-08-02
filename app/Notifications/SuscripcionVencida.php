@@ -41,7 +41,7 @@ class SuscripcionVencida extends Notification
 
     $this->info = (object)  [
       'subject' => 'SAINFO - Suscripción Vencida',
-      'titulo' => 'Suscripción Vencida',
+      'titulo' => new HtmlString('<h1>Suscripción Vencida </h1> <hr/>'),
       'descripcion' => $descripcion,
       'empresa_id' => $this->empresa->empcodi,
     ];
