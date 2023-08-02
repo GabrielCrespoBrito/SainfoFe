@@ -69,7 +69,10 @@ function crear_editar_usuario(e)
   console.log("data update" , data );
 
 	var funcs = {
-		success : success_modal_save,
+    success: success_modal_save,
+    complete : () => {
+      $("#load_screen").hide();
+    },
 	};
 
   let url = accion == "create" ? url_store : url_update;
@@ -234,6 +237,9 @@ function events()
 	$(".crear-nuevo-usuario").on('click' , mostrar_modal_crear_usuario );
   */
   $(".crear-nuevo-usuario, .modificar-usuario").on('click', showModalCreateEdit);
+  
+  
+  $("body").on('click', '.modificar-usuario', showModalCreateEdit);
 
   $("#modalData").on('submit', '#form-usuario', enviarFormulario );
   

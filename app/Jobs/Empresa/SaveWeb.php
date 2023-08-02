@@ -26,9 +26,8 @@ class SaveWeb
     $empresa->EmpLin5 = $this->data['nombre_empresa'];
     $empresa->tipo = 'escritorio';
     //  $this->data['tipo'];
+    $empresa->emis_certificado = $this->data['emis_certificado'];
     $empresa->venc_certificado = $this->data['venc_certificado'];
-    // $empresa->end_plan = $this->data['fecha_suscripcion'];
-    
 
     if (isset($this->data['ubigeo'])) {
       $empresa->setUbigeo($this->data['ubigeo']);

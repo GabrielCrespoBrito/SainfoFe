@@ -16,7 +16,7 @@ class EmpresaPresenter extends Presenter
 
   public function getColumnCert()
   {
-    $fc = $this->model->venc_certificado; 
+    $fc = $this->model->emis_certificado . ' - ' . $this->model->venc_certificado; 
     $name  = "";    
 
     if( $fc == null ){
@@ -39,7 +39,7 @@ class EmpresaPresenter extends Presenter
       $name = "Activo";
     }
 
-    return sprintf('<a class="btn btn-flat btn-xs %s" href="#"> <span class="fa  fa-calendar"></span> %s %s</a>', $className, $fc,  $name);
+    return sprintf('<a class="btn btn-flat btn-xs %s" href="#"> <span class="fa  fa-calendar"></span> %s <strong>%s</strong></a>', $className, $fc,  $name);
   }
 
 

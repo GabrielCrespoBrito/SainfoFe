@@ -11,6 +11,9 @@
 
     <li> <a href="#ordenes" data-toggle="tab" aria-expanded="false"> Ordenes Pago. </a></li>
 
+    <li> <a href="#acciones" data-toggle="tab" aria-expanded="false"> Acciones </a></li>
+
+
   </ul>
 
   <!-- .tab-content -->
@@ -28,6 +31,10 @@
 
     <div class="tab-pane" style="overflow:hidden" id="ordenes">
       @include('empresa.partials.parametros.ordenes')
+    </div>
+
+    <div class="tab-pane" style="overflow:hidden" id="acciones">
+      @include('admin.empresa.partials.acciones')
     </div>
 
   </div>

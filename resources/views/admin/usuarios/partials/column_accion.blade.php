@@ -7,7 +7,7 @@
     <li><a href="{{ route('admin.usuario-empresa.create' , $usucodi ) }}"> <span class="fa fa-building"></span> Agregar Empresa </a></li>
 
 
-    <li><a href="#" class="modificar-usuario"> <span class="fa fa-pencil"></span> Modificar </a></li>
+    <li><a href="{{ route('admin.usuarios.form_edit' , [ 'id' => $usucodi] ) }}"  class="modificar-usuario"> <span class="fa fa-pencil"></span> Modificar </a></li>
     
     <li><a href="{{ route('admin.usuario-permisos.edit' , $usucodi ) }}"> <span class="fa fa-unlock-alt"></span> Permisos </a></li>
 

@@ -85,25 +85,16 @@ class UserController extends Controller
     return view('admin.usuarios.mantenimiento', compact('roles'));
   }
 
-  // public function roles($id_user)
-  // {
-  //   $user = User::find($id_user);
-  //   $roles = Role::all();
-  //   return view('usuarios.assign_role', compact('user', 'roles'));
-  // }
-
-  // public function roles_store(Request $request, $id_user)
-  // {
-  //   $user = User::find($id_user);
-  //   $user->syncRoles($request->roles);
-  //   notificacion('Roles asignados', 'Se ha agregado/remove los roles al usuario correctamente', 'success');
-  //   return redirect()->route('usuarios.mantenimiento');
-  // }
+  public function showForm( Request $request, $id = null )
+  {
+    $model = $id ? User::find($id) : new User();
+    $create = is_null($id);
+    return view('users.form_admin', compact('model', 'create'));
+  }
 
 
   public function create()
   {
-    $users = User::all();
     return view('usuarios.create');
   }
 
@@ -131,14 +122,6 @@ class UserController extends Controller
     $user->active  = "0";
     $user->UDelete = "";
     $user->save();
-
-    if ($request->roles) {
-      foreach ($request->roles as $role) {
-        $user->assignRole($role);
-      }
-    }
-
-    // $url = route('usuarios.empresa.create', $user->usucodi);
     return ['redirect' => true, 'url' => back()->getTargetUrl() ];
   }
 
@@ -252,19 +235,6 @@ class UserController extends Controller
     $user->usudire = $request->direccion;
     $user->email   = $request->email;
     $user->save();
-
-    // $user->assignRole()
-    if ($user->roles->count()) {
-      foreach ($user->roles as $rol) {
-        $user->removeRole($rol->id);
-      }
-    }
-
-    if (!is_null($request->roles)) {
-      foreach ($request->roles as $rol) {
-        $user->assignRole($rol);
-      }
-    }
 
     return $user;
   }

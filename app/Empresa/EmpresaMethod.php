@@ -2,14 +2,19 @@
 
 namespace App\Empresa;
 
+use App\User;
 use App\Cargo;
 use App\Empresa;
 use Carbon\Carbon;
+use App\Jobs\Empresa\SaveWeb;
 use App\Jobs\Empresa\TokenHandler;
 use Illuminate\Support\Facades\Log;
+use App\Notifications\SuscripcionVencida;
+use App\Notifications\SuscripcionPorVencer;
+use App\Notifications\SuscripcionVencidaHoy;
 use App\Jobs\Empresa\GetOrGenerateGuiaTokenApi;
 use App\Jobs\Empresa\CambiarAplicacionIgvProductos;
-use App\Jobs\Empresa\SaveWeb;
+use App\Notifications\NotifyAdminUserSuscripcionPorVencer;
 
 trait EmpresaMethod
 {
@@ -120,6 +125,22 @@ trait EmpresaMethod
     return $this->{Empresa::CAMPO_TIPO_CAJA} == Empresa::TIPO_CAJA_LOCAL;
   }
 
+
+  public function sendEmailVencSuscripcion()
+  {
+    $userOwner =  $this->userOwner();
+    $user_soporte = User::getUserSoporte();
+    $userOwner->notify(new SuscripcionVencidaHoy($this));
+    $user_soporte->notify(new SuscripcionVencida($this));
+  }
+  
+  public function sendEmailPorVencSuscripcion()
+  {
+    $userOwner =  $this->userOwner();
+    $user_soporte = User::getUserSoporte();
+    $userOwner->notify(new SuscripcionPorVencer($this));
+    $user_soporte->notify(new NotifyAdminUserSuscripcionPorVencer($this, $userOwner));
+  }
 
 
 }

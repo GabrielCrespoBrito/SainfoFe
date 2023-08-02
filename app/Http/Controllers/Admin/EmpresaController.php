@@ -25,13 +25,14 @@ class EmpresaController extends EmpresaMainController
   public function updateDataBasicEscritorio(UpdateBasicRequest $request, $id)
   {
     $empresa = Empresa::find($id);
-    $data = $request->only('nombre_comercial', 'direccion', 'ubigeo', 'departamento', 'provincia', 'distrito', 'email', 'telefonos', 'rubro', 'active', 'venc_certificado', 'fecha_suscripcion');
+    $data = $request->only('nombre_comercial', 'direccion', 'ubigeo', 'departamento', 'provincia', 'distrito', 'email', 'telefonos', 'rubro', 'active', 'venc_certificado', 'emis_certificado', 'fecha_suscripcion');
     $empresa->EmpLin2 = $data['direccion'];
     $empresa->EmpLin3 = $data['email'];
     $empresa->EmpLin4 = $data['telefonos'];
     $empresa->EmpLin5 = $data['nombre_comercial'];
     $empresa->EmpLin6 = $data['rubro'];
     $empresa->venc_certificado = $data['venc_certificado'];
+    $empresa->emis_certificado = $data['emis_certificado'];
     // $empresa->end_plan = $data['fecha_suscripcion'];
     if(isset($data['ubigeo'])){
       $empresa->setUbigeo($data['ubigeo']);
@@ -85,4 +86,21 @@ class EmpresaController extends EmpresaMainController
 
     return view('admin.reportes.ventas_mensual', ['empresa_id' => $empresa_id]);
   }
+
+  public function sendEmailVenc($id)
+  {
+    $empresa = Empresa::find($id);
+    $empresa->sendEmailVencSuscripcion();
+    noti()->success( 'Accion Exitosa','Email Enviado Satisfactoriamente');
+    return back();
+  }
+
+  public function sendEmailPorVenc($id)
+  {
+    $empresa = Empresa::find($id);
+    $empresa->sendEmailPorVencSuscripcion();
+    noti()->success('Accion Exitosa', 'Email Enviado Satisfactoriamente');
+    return back();
+  }
+
 }

@@ -29,7 +29,7 @@ class SuscripcionVencidaHoy extends Notification
     $rucEmpresa = $this->empresa->ruc();
     $fechaVencimiento = $this->empresa->end_plan;
 
-    return new HtmlString(sprintf('Te informamos que la suscripción de tu empresa <strong>%s %s </strong>, <span style="color:red"> vence el dia de hoy <strong> %s </strong></span>, para evitar la suspesión y puedas continuar disfrutrando el servicio, ingrese al sistema y diríjase a <strong>Menu del usuario > Gestionar Plan </strong> y escoge el plan de tu conveniencia.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
+    return new HtmlString(sprintf('Te informamos que la suscripción de tu empresa <strong>%s %s </strong>, <span style="color:red"> vence <strong> %s </strong></span>, para evitar la suspesión y puedas continuar disfrutrando el servicio, ingrese al sistema y diríjase a <strong>Menu del usuario > Gestionar Plan </strong> y escoge el plan de tu conveniencia.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
 
   }
 

@@ -14,7 +14,7 @@
 </form>
 
 <div class="acciones-div">
-  <a href="#" class="btn btn-primary btn-flat pull-right crear-nuevo-usuario"> <span class="fa fa-plus"></span> Nuevo </a>
+  <a data-url="{{ route('admin.usuarios.form', ['id' => 'XXX']) }}"  href="{{ route('admin.usuarios.form') }}" class="btn btn-primary btn-flat pull-right crear-nuevo-usuario"> <span class="fa fa-plus"></span> Nuevo </a>
 </div>
 
 <table data-url="{{ route('admin.usuarios.search') }}" class="table table-bordered table-hover sainfo-table user-table" id="datatable">
@@ -31,6 +31,7 @@
 </table>
 
 @include('admin.usuarios.partials.modal_usuario', ['roles' => $roles])
+
 @include('admin.usuarios.partials.modal_eliminar_usuario')
 
 @endslot
