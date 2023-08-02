@@ -131,7 +131,6 @@ trait EmpresaMethod
   {
     $userOwner =  $this->userOwner();
     $user_soporte = User::getUserSoporte();
-    
     $userOwner->notify(new SuscripcionVencida($this, $userOwner ));
     // $user_soporte->notify(new NotifyAdminUserSuscripcionVencida($this, $userOwner));
   }

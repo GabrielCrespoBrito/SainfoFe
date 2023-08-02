@@ -23,7 +23,7 @@ class SuscripcionVencida extends Notification
   public function __construct(Empresa $empresa, $userOwner)
   {
     $this->empresa = $empresa;
-    $this->userOwner = $empresa;
+    $this->userOwner = $userOwner;
     $this->generateInfo();
   }
 
@@ -38,15 +38,22 @@ class SuscripcionVencida extends Notification
     $rucEmpresa = $this->empresa->ruc();
     $fechaVencimiento = $this->empresa->end_plan;
 
-    $descripcion_titulo = new HtmlString('<h1 style="color:red">Suscripción Vencida </h1> <hr/>');
+    $descripcion_titulo = new HtmlString('<h1 style="font-size:30px"> Suscripción Vencida </h1> <hr/>');
 
     $name = $this->userOwner->getNombre();
+
+    $lineaSaludo = new HtmlString(sprintf('<p style="color:black">Hola %s</p>', $name ));
+
+    $descripcion = new HtmlString(sprintf('<p style="color:black">La suscripción de la empresa <strong>%s %s </strong>, ha vencido en fecha: (<strong> %s </strong>) </p>', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
     
-    $lineaSaludo = new HtmlString(sprintf('<p>Hola %s</p>', $name ));
+    $lineaPasos = new HtmlString(sprintf(' <hr/> <p style="color:black">Para renovar su suscripción, ingrese al sistema y dirigete a <strong>Menu del usuario > Gestionar Plan </strong> y escoge el plan de tu conveniencia.</p> <hr/>', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
 
-    $descripcion = new HtmlString(sprintf('<p>La suscripción de la empresa <strong>%s %s </strong>, <span style="color:red"> ha vencido en fecha: <strong> %s </strong></span></p>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
+    $lineaAdvertencia = new HtmlString(sprintf('<p style="color:black">Renueve su suscripción para continuar disfrutando del servicio.</p>', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
 
-    $lineaAdvertencia = new HtmlString(sprintf('<p>Renueve su suscripción para continuar disfrutando del servicio.</p>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
+    $numero = get_setting('numero_soporte', config('app.phones.contacto'));
+    $correo = get_setting('sistema_email', config('app.mail.pagos'));
+    $lineaContacto = new HtmlString("<p style='color:black'>Para cualquier consulta puedes comunicarte con nosotros al número telefono (WhatApps) <strong>{$numero}</strong> o por el correo electronico <strong> {$correo} </strong> </p>");
+
 
 
     $this->info = (object)  [
@@ -55,7 +62,9 @@ class SuscripcionVencida extends Notification
       'descripcion_titulo' => $descripcion_titulo,
       'descripcion' => $descripcion,
       'lineaSaludo' => $lineaSaludo,
+      'lineaPasos' => $lineaPasos,
       'lineaAdvertencia' => $lineaAdvertencia,
+      'lineaContacto' => $lineaContacto,
       'empresa_id' => $this->empresa->empcodi,
     ];
   }
@@ -71,7 +80,7 @@ class SuscripcionVencida extends Notification
     $rucEmpresa = $this->empresa->ruc();
     $fechaVencimiento = $this->empresa->end_plan;
 
-    return new HtmlString(sprintf('La suscripción de la empresa <strong>%s %s </strong>, <span style="color:red"> ha vencido el dia <strong> %s </strong></span>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));    
+    return new HtmlString(sprintf('<p>La suscripción de la empresa <strong>%s %s </strong>, ha vencido el dia <strong> %s </strong>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));    
   }
 
   public function toMail($notifiable)
@@ -80,8 +89,9 @@ class SuscripcionVencida extends Notification
       ->subject(  $this->info->subject  )
       ->line($this->info->descripcion_titulo)
       ->line($this->info->lineaSaludo)
-      ->line($this->info->descripcion )
-      ->line($this->info->lineaAdvertencia );
+      ->line($this->info->descripcion)
+      ->line($this->info->lineaPasos)
+      ->line($this->info->lineaContacto);
   }
 
   public function toDatabase($notifiable)
