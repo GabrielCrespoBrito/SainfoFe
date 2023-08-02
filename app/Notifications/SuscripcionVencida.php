@@ -28,7 +28,7 @@ class SuscripcionVencida extends Notification
 
   public function via($notifiable)
   {
-    return [ 'database' ];
+    return [ 'mail', 'database' ];
   }
 
   public function generateInfo()
