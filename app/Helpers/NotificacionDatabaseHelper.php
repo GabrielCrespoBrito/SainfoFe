@@ -39,7 +39,9 @@ class NotificacionDatabaseHelper
   public static function getFormat( $notificacion )
   {
     $data = $notificacion->data;
-    $iconData = self::ICON_DATA[$data['code']];
+    $code = $data['code'] ?? self::EMPRESA_REGISTRO;
+
+    $iconData = self::ICON_DATA[$code];
 
     return [
       'id' => $notificacion->id,
