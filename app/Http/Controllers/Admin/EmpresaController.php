@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Events\Empresa\EmpresaHasCreated;
 use App\Http\Requests\EmpresaCreateRequest;
+use App\Http\Requests\Empresa\DeleteRequest;
 use App\Jobs\Empresa\DeleteAllForFailCreation;
 use App\Http\Requests\Empresa\UpdateBasicRequest;
 use App\Http\Controllers\Empresa\EmpresaMainController;
@@ -103,4 +104,29 @@ class EmpresaController extends EmpresaMainController
     return back();
   }
 
+
+  public function delete(DeleteRequest $request,  $empresa_id)
+  {
+    // _dd("aja");
+    // exit();
+    
+    ini_set('max_execute_time', 240);
+    $empresa = Empresa::find($empresa_id);
+    DB::beginTransaction();
+    try {
+      $empresa->deleteInfoInDatabasePrincipal();
+      $empresa->deleteForceDatabase();
+      $empresa->delete();
+      DB::commit();
+    } catch (\Throwable $th) {
+      DB::rollback();
+      noti()->error('Error', "Hubo un inconveniente borrando la información de la empresa: {$th->getMessage()}");
+      return redirect()->back();
+    }
+
+    noti()->success('Accion Exitosa', 'Empresa Eliminada Exitosamente');
+    return redirect()->back();
+  }
+
 }
+

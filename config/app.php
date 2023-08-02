@@ -500,7 +500,7 @@ return [
     ]
   ],
 
-  'password_delete_empresa' => "79@xGocCD5UhZLg7U",
+  'password_delete_empresa' => env('EMPRESA_BORRADO_PASSWORD', "79@xGocCD5UhZLg7U") ,
 
   "aws_url_bucket" => env('AWS_URL_ABSOLUTE_BUCKET', null),
 

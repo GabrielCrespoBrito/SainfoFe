@@ -80,13 +80,10 @@ function events()
 
   $("*").on('click' , '.delete-empresa',  function(){
 
-
     let url =  $("#form-delete-empresa").attr('data-url');
-    let id = $(this).parents('tr').find('td:eq(0)').text();
-
-    console.log("delete", url , id );
-
-    $("#form-delete-empresa").attr('action', url.replace('@@', id)  );
+    let id =  $(this).parents('tr').find('td:eq(0)').text().trim();
+    // console.log("delete", url, url.replace('XXX', id) , id );
+    $("#form-delete-empresa").attr('action', url.replace('XXX', id)  );
   })
 
 }

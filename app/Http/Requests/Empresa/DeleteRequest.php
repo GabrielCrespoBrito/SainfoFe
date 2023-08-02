@@ -42,7 +42,6 @@ class DeleteRequest extends FormRequest
 					return;
 				}
 
-
 				if( config('app.password_delete_empresa') !== $this->password ){
 					$validator->errors()->add( 'id' , 'La contraseña es incorrecta' );
 					return;

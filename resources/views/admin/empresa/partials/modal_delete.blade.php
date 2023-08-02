@@ -12,7 +12,7 @@
         <p> Se eliminaran todos los registros asociados a esta empresa, ventas, productos, etc</p>
       </div>
       <div class="modal-footer">
-        <form id="form-delete-empresa" data-url="{{ route('empresa.delete','@@') }}" method="post" action="#">
+        <form id="form-delete-empresa" data-url="{{ route('admin.empresa.delete','XXX') }}" method="post" action="#">
           @csrf
           <div class="row form-group">
             <div class="col-md-12">
