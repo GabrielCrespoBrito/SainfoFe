@@ -38,9 +38,10 @@ class SuscripcionVencida extends Notification
     $rucEmpresa = $this->empresa->ruc();
     $fechaVencimiento = $this->empresa->end_plan;
 
-    $descripcion_titulo = new HtmlString('<h1 style="color:red">Suscripción Vencida </h1>');
+    $descripcion_titulo = new HtmlString('<h1 style="color:red">Suscripción Vencida </h1> <hr/>');
 
     $name = $this->userOwner->getNombre();
+    
     $lineaSaludo = new HtmlString(sprintf('<p>Hola %s</p>', $name ));
 
     $descripcion = new HtmlString(sprintf('<p>La suscripción de la empresa <strong>%s %s </strong>, <span style="color:red"> ha vencido en fecha: <strong> %s </strong></span></p>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
