@@ -278,4 +278,9 @@ class User extends Authenticatable
     return $this->id() . ' - ' . $this->usulogi;
   }
 
+  public function getNombre()
+  {
+    return $this->usunomb ? $this->usunomb : $this->usulogi;
+  }
+
 }

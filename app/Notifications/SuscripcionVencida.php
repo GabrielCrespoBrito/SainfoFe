@@ -16,13 +16,14 @@ class SuscripcionVencida extends Notification
 
   use Queueable;
 
-  
   public $empresa;
+  public $userOwner;
   public $info;
 
-  public function __construct(Empresa $empresa)
+  public function __construct(Empresa $empresa, $userOwner)
   {
     $this->empresa = $empresa;
+    $this->userOwner = $empresa;
     $this->generateInfo();
   }
 
@@ -39,13 +40,21 @@ class SuscripcionVencida extends Notification
 
     $descripcion_titulo = new HtmlString('<h1 style="color:red">Suscripción Vencida </h1>');
 
-    $descripcion = new HtmlString(sprintf('La suscripción de la empresa <strong>%s %s </strong>, <span style="color:red"> ha vencido el dia de hoy: <strong> %s </strong></span>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
+    $name = $this->userOwner->getNombre();
+    $lineaSaludo = new HtmlString(sprintf('<p>Hola %s</p>', $name ));
+
+    $descripcion = new HtmlString(sprintf('<p>La suscripción de la empresa <strong>%s %s </strong>, <span style="color:red"> ha vencido en fecha: <strong> %s </strong></span></p>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
+
+    $lineaAdvertencia = new HtmlString(sprintf('<p>Renueve su suscripción para continuar disfrutando del servicio.</p>.', $nombreEmpresa, $rucEmpresa, $fechaVencimiento));
+
 
     $this->info = (object)  [
       'subject' => 'SAINFO - Suscripción Vencida',
       'titulo' => 'Suscripción Vencida',
       'descripcion_titulo' => $descripcion_titulo,
       'descripcion' => $descripcion,
+      'lineaSaludo' => $lineaSaludo,
+      'lineaAdvertencia' => $lineaAdvertencia,
       'empresa_id' => $this->empresa->empcodi,
     ];
   }
@@ -68,8 +77,10 @@ class SuscripcionVencida extends Notification
   {
     return (new MailMessage)
       ->subject(  $this->info->subject  )
-      ->line($this->info->descripcion_titulo )
-      ->line($this->info->descripcion );
+      ->line($this->info->descripcion_titulo)
+      ->line($this->info->lineaSaludo)
+      ->line($this->info->descripcion )
+      ->line($this->info->lineaAdvertencia );
   }
 
   public function toDatabase($notifiable)
