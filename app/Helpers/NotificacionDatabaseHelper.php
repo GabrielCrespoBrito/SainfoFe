@@ -46,9 +46,9 @@ class NotificacionDatabaseHelper
     return [
       'id' => $notificacion->id,
       'iconData' => $iconData,
-      'type' => $data['type'],
-      'titulo' => $data['titulo'],
-      'descripcion' => $data['descripcion'],
+      'type' => $data['type'] ?? self::TIPO_INFO ,
+      'titulo' => $data['titulo'] ?? '',
+      'descripcion' => $data['descripcion'] ?? '',
       'route' => route('admin.notificaciones.show', $notificacion->id ),
       'date' => $notificacion->created_at,
       'date_read' => $notificacion->read_at,
