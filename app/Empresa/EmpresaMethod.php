@@ -15,6 +15,7 @@ use App\Notifications\SuscripcionVencidaHoy;
 use App\Jobs\Empresa\GetOrGenerateGuiaTokenApi;
 use App\Jobs\Empresa\CambiarAplicacionIgvProductos;
 use App\Notifications\NotifyAdminUserSuscripcionPorVencer;
+use App\Notifications\NotifyAdminUserSuscripcionVencida;
 
 trait EmpresaMethod
 {
@@ -130,8 +131,9 @@ trait EmpresaMethod
   {
     $userOwner =  $this->userOwner();
     $user_soporte = User::getUserSoporte();
-    $userOwner->notify(new SuscripcionVencidaHoy($this));
-    $user_soporte->notify(new SuscripcionVencida($this));
+    
+    $userOwner->notify(new SuscripcionVencida($this));
+    $user_soporte->notify(new NotifyAdminUserSuscripcionVencida($this, $userOwner));
   }
   
   public function sendEmailPorVencSuscripcion()
