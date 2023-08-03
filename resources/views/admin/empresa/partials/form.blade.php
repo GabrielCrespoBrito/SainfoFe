@@ -36,7 +36,7 @@
   <div class="tab-content">
 
     <div class="tab-pane active" id="informacion-basica">
-      @include('admin.empresa.partials.form_basic2' )
+      @include('admin.empresa.partials.form_basic2', ['campo_escritorio' => true] )
     </div>
 
     @if($form_sunat)
