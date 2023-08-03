@@ -1209,10 +1209,18 @@ class Empresa extends Model
 
       $suscripcion = $orden->suscripcion;
 
-      foreach ($suscripcion->usos as $uso) {
-        $uso->delete();
-      }
 
+      if( $suscripcion ){
+
+        
+        if( $suscripcion->usos ){
+          
+          foreach ($suscripcion->usos as $uso) {
+            $uso->delete();
+          }
+        }
+      }
+        
       $suscripcion->delete();
       $orden->delete();
     }
