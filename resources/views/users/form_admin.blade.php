@@ -11,10 +11,6 @@ $routeUpdate = route('admin.usuarios.update');
 
 @include('users.partials.form.basic')
 
-@if($create)
-  @include('users.partials.form.permisos')
-@endif
-
 <div class="row mt-x10">
 <div class="col-xs-12">
   {{-- <a class="btn btn-primary btn-flat send_user_info"> <span class="fa fa-save"></span> Guardar</a> --}}
