@@ -55,6 +55,8 @@ class CreateStats
 
   public function handle()
   {
+    // dd($this->lastUpdates->ventas);
+    // exit();
     try {
       if($this->onlyVenta){
         $ventaStats  =   (new VentaStats($this->lastUpdates->ventas, $this->mescodi ))->handle();

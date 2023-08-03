@@ -83,7 +83,7 @@ class VentaStats
         'ventas_cab.Moncodi as moneda'
       ])
       ->get()
-      ->groupBy(['TidCodi', 'VtaFvta']);
+      ->groupBy(['tipodocumento', 'fecha']);
   }
 
   public function setData()
@@ -171,6 +171,8 @@ class VentaStats
     foreach ($q as $dias) {
       foreach ($dias as $dia) {
         foreach ($dia as $documento) {
+          // _dd($documento);
+          // exit();
           $this->calculator->setDoc($documento);
         }
       }
@@ -186,7 +188,7 @@ class VentaStats
 
   public function handle()
   {
-    $this->setData();
+    // $this->setData();
 
     if( $search = $this->needSearch() ){
       $this->processData();
