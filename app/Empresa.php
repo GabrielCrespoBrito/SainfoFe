@@ -1221,8 +1221,8 @@ class Empresa extends Model
         }
       }
         
-      $suscripcion->delete();
-      $orden->delete();
+      optional($suscripcion)->delete();
+      optional($orden)->delete();
     }
   }
 
