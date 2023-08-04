@@ -45,10 +45,6 @@ class EmpresaPresenter extends Presenter
 
   public function getTipoColumn()
   {
-    // _dd($this->model->isWeb());
-    // exit();
-    logger(sprintf('Empresa (%s) (%s) ', $this->model->empcodi, $this->model->isWeb() ) );
-
     if( $this->model->isWeb() ){
       $icon = "fa-cloud";
       $class_name = "btn-default";

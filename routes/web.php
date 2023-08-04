@@ -177,6 +177,9 @@ Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
         # guia_remision
         include('routes_web/toma_inventario.php');
 
+        # produccion
+        include('routes_web/produccion.php');
+
         # reportes
         include('routes_web/reportes.php');
   

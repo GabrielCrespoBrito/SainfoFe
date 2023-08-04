@@ -17,5 +17,7 @@
 
     <li><a href="{{ route('toma_inventario.index') }}"><i class="fa fa-list-alt"></i> Toma de inventario </a></li>
 
+    <li><a href="{{ route('produccion.index') }}"><i class="fa fa-inbox"></i> Producción </a></li>
+
   </ul> 
 </li>

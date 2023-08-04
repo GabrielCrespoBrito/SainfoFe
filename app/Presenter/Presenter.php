@@ -5,6 +5,11 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class Presenter
 {
+  use 
+  RouteTrait,
+  LinkTrait,
+  InfoTrait;
+
 	protected $model;
 	protected $args;
 	
@@ -13,4 +18,7 @@ abstract class Presenter
 		$this->model = $model ;
 		$this->args = $args;
 	}
+
+
+
 }
