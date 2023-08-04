@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Util\Import\Excell;
+namespace App\Util\Import\Excell\Producto;
 
 use Exception;
 use Throwable;
