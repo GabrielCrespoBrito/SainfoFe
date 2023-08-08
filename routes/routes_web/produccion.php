@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 # Toma de inventario
 Route::resource('produccion', 'ProduccionController', ['name'=> 'produccion']);
+Route::post('produccion/{id}/cambiarEstado', 'ProduccionController@cambiarEstado')->name('produccion.cambiarEstado');
 // Route::post('toma-inventario/update-stocks', 'TomaInventarioController@updateStocks')->name('toma_inventario.update-stocks');
 // Route::post('toma-inventario/exportExcellProducto', 'TomaInventarioController@exportExcellProducto')->name('toma_inventario.export_excell');
 // Route::post('toma-inventario/importExcellProducto', 'TomaInventarioController@importExcellProducto')->name('toma_inventario.import_excell');

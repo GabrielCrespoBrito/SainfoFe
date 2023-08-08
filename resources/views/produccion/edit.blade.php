@@ -1,12 +1,13 @@
 @view_data([
-  'layout' => 'layouts.master' , 
-  'title'  => $compra->CpaOper,
-  'titulo_pagina'  => $compra->CpaOper, 
-  'bread'  => [ ['Compras', route('compras.index')] , ['Modificar'] ],
-  'assets' => ['libs' => ['datatable','select2','datepicker'],'js' => ['helpers.js','compras/mix/crud_mod.js', 'clientes/scripts.js']]
+  'layout' => 'layouts.master',
+  'title'  =>  $produccion->manId,
+  'titulo_pagina' => $produccion->manId,
+  'bread'  => [ ['Producción Manual', route('produccion.index')] , [$produccion->manId] ],
+  'assets' => ['libs' => ['datepicker','select2','datatable'],'js' => ['helpers.js', 'produccion/script.js']]
 ])
+
 @slot('contenido')
-  @include('compras.partials.form.form', ['accion' => 'edit' ])
-@endslot
+  @include('produccion.partials.form.form', ['accion' => 'edit' ])
+@endslot  
 
 @endview_data

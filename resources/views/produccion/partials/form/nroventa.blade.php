@@ -2,34 +2,30 @@
 
   <div class="form-group col-md-3 no_pr">    
     <div class="input-group">
-      <span class="input-group-addon">Nro venta</span>
-        <input class="form-control input-sm keyjump" name="CpaOperNext" type="text" readonly="readonly" value="{{ $create ? $compra->CpaOperNext : $compra->CpaOper }}">     
+      <span class="input-group-addon">Nro</span>
+        <input class="form-control input-sm keyjump" name="CpaOperNext" type="text" readonly="readonly" value="{{ $create ? $produccion->getNextId() : $produccion->manId }}">     
     </div>
   </div>
 
-  <div class="form-group col-md-4 no_pr">  
+  <div class="form-group col-md-3">    
     <div class="input-group">
-    <span class="input-group-addon">Tipo documento</span>
-        <select name="TidCodi" {{ setInputState($show) }} class="form-control input-sm keyjump">          
-          <option value="01" {{  setSelectedOption( $compra->TidCodi , "01")  }}> FACTURA </option>
-          <option value="03" {{  setSelectedOption( $compra->TidCodi , "03")  }}> BOLETA </option>
-          <option value="07" {{  setSelectedOption( $compra->TidCodi , "07")  }}> NOTA DE CREDITO </option>
-          <option value="40" {{  setSelectedOption( $compra->TidCodi , "40")  }}> COMPRA LIBRE </option>
-        </select>
+      <span class="input-group-addon">Estado</span>
+        <input class="form-control input-sm keyjump" name="" type="text" readonly="readonly" value="{{ $create ? '' : $produccion->presenter()->getReadEstado() }}">     
     </div>
   </div>
 
-  <div class="form-group col-md-5">  
-    <div class="input-group">
-      <span class="input-group-addon">Nro documento</span>
-      <span class="input-group-addon padding-none">
-        <input name="CpaSerie" placeholder="Serie" maxlength="4" {{ setInputState($show) }} class="form-control  text-uppercase input-sm keyjump" value="{{ $compra->CpaSerie }}">
-      </span>
-      
-      <span class="input-group-addon padding-none">
-        <input name="CpaNumee" placeholder="Correlativo" maxlength="8" {{ setInputState($show) }} class="form-control text-uppercase input-sm keyjump" value="{{ $compra->CpaNumee }}">
-      </span>
+    <div class="form-group col-md-3">  
+      <div class="input-group">
+        <span class="input-group-addon">Fecha Emisión </span>
+      <input name="manFechEmis" data-fecha_inicial="{{ $produccion->manFechEmis }}" {{ setInputState($show) }} required="required" value="{{  $create ? date('Y-m-d') : $produccion->manFechEmis  }}" class="form-control input-sm" type="date">              
+      </div>
     </div>
-  </div>
+
+    <div class="form-group col-md-3">  
+      <div class="input-group">
+        <span class="input-group-addon">Fecha Vencimiento </span>
+      <input name="manFechVenc" data-fecha_inicial="{{ $produccion->manFechVenc }}" {{ setInputState($show) }} required="required" value="{{  $create ? date('Y-m-d') : $produccion->manFechVenc }}" class="form-control input-sm" type="date">              
+      </div>
+    </div>
 
 </div>

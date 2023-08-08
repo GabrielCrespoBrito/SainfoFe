@@ -20,7 +20,7 @@
 
   @include('pdf.documents.partials.info_empresa', [
   'class_name' => 'col-12 text-center',
-  'nombre' => $empresa['EmpNomb'],
+  'nombre' => $empresa['EmpLin5'],
   'rubro' => $empresa['EmpLin6'],
   'nombre_text_class' => 'bold',
   'rubro_text_class' => 'bold',

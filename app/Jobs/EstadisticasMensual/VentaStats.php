@@ -45,6 +45,9 @@ class VentaStats
       return true;
     }
 
+    // dd("aqui", $this->lastSearchUpdate);
+    // exit();
+
     return DB::connection('tenant')
     ->table('ventas_cab')
     ->where('MesCodi', $this->mescodi)
@@ -162,7 +165,8 @@ class VentaStats
 
   public function process()
   {
-    $q = $this->query;    
+    $q = $this->query;
+    
     if (!$q->count()) {
       return;
     }
@@ -171,8 +175,6 @@ class VentaStats
     foreach ($q as $dias) {
       foreach ($dias as $dia) {
         foreach ($dia as $documento) {
-          // _dd($documento);
-          // exit();
           $this->calculator->setDoc($documento);
         }
       }
@@ -188,13 +190,14 @@ class VentaStats
 
   public function handle()
   {
-    // $this->setData();
-
     if( $search = $this->needSearch() ){
       $this->processData();
     }
 
-    
+      // dd($this->calculator->stats_dias);
+      // exit();
+
+
     return [
       'data' => [
         'calculos' => $this->calculator->stats_calculo,

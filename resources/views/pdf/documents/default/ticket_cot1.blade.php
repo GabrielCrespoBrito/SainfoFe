@@ -18,7 +18,7 @@
 
   @include('pdf.documents.partials.info_empresa', [ 
   'class_name' => 'col-12 text-center border-bottom-style-dotted border-width-1 mb-x4 pb-x3',
-  'nombre' => $empresa['EmpNomb'],
+  'nombre' => $empresa['EmpLin5'],
   'nombre_text_class' => 'h5 bold',
   'direccion_div_class' => '',
   'correo_text_class' => '',

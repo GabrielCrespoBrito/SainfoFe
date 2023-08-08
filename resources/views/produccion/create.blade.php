@@ -1,13 +1,13 @@
 @view_data([
   'layout' => 'layouts.master',
-  'title'  => 'Compras',
-  'titulo_pagina' => 'Compras',
-  'bread'  => [ ['Compras', route('compras.index')] , ['Crear'] ],
-  'assets' => ['libs' => ['datepicker','select2','datatable'],'js' => ['helpers.js','compras/mix/crud_mod.js', 'clientes/scripts.js'  ]]
+  'title'  => 'Producción Manual - Nueva',
+  'titulo_pagina' => 'Producción Manual - Nueva',
+  'bread'  => [ ['Producción Manual', route('produccion.index')] , ['Crear'] ],
+  'assets' => ['libs' => ['datepicker','select2','datatable'],'js' => ['helpers.js', 'produccion/script.js']]
 ])
 
 @slot('contenido')
-  @include('compras.partials.form.form', ['accion' => 'create' ])
+  @include('produccion.partials.form.form', ['accion' => 'create' ])
 @endslot  
 
 @endview_data

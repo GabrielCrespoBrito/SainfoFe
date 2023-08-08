@@ -106,23 +106,26 @@ class CalculatorEstadistica
     $this->stats_calculo[$index]['icbper'] += $calculo->icbper;
   }
 
-  public function sumToDias($doc)
+  public function sumToDias($doc, $calculo)
   {
     ////
     # Sumar una a la cantida de documentos totales
     $dia = (int) last(explode('-', $doc->fecha));
 
+    
     # Sumatoria al dia
     $isNC = $doc->tipodocumento == TipoDocumentoPago::NOTA_CREDITO;
     $soles = $doc->moneda == Moneda::SOL_ID ? $doc->importe : 0;
     $dolares = $doc->moneda == Moneda::DOLAR_ID ? $doc->importe : 0;
     $soles =  convertNegativeIfTrue($soles, $isNC);
     $dolares =  convertNegativeIfTrue($dolares, $isNC);
-
+    
     # Sumar al total general
     $this->stats_dias[$dia]['cant'] += 1;
     $this->stats_dias[$dia]['01'] = $this->stats_dias[$dia]['01'] + $soles;
     $this->stats_dias[$dia]['02'] = $this->stats_dias[$dia]['02'] + $dolares;
+    
+    logger([ $dia , $doc->id ]);
 
     $this->lastSearch = $doc->fecha_modificacion > $this->lastSearch ? $doc->fecha_modificacion : $this->lastSearch;
   }
@@ -176,10 +179,6 @@ class CalculatorEstadistica
     return convertNegativeIfTrue($monto * $tc , $isNc);
   }
 
-
-
-
-
   public function setDoc($doc)
   {
     $calculo = $this->generateCalculo($doc);
@@ -188,16 +187,13 @@ class CalculatorEstadistica
     $this->sumCalculoTo('total', $calculo);
     $this->sumCalculoTo($doc->tipodocumento, $calculo);
     
-    // dd( $this->stats_estados );
-    // exit();
-
     // Agregar a los estados 
     $this->sumEstadoTo('total', $doc->estado, $calculo);
     $this->sumEstadoTo($doc->tipodocumento, $doc->estado, $calculo);
 
     // Agregar a los dias
     if( $this->calculateDias ){
-      $this->sumToDias($doc);
+      $this->sumToDias($doc, $calculo);
     }
 
   }

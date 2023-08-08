@@ -2,43 +2,42 @@
 	$create = $accion == "create";
 	$edit 	= $accion == "edit";
 	$show 	= $accion == "show";
-	$active_form = $create || $edit;
-	$url = "";
-	$url = $create ? route('compras.store') : route('compras.update', $compra->CpaOper );
+	$active_form 	= $create || $edit;
+	$url = $create ? route('produccion.store') : route('produccion.update', $produccion->manId );
 @endphp
 
-@if($active_form)
-	@include('clientes.partials.modal_clientes_proveedores', ['title' => 'Crear Proveedor', 'defaultEntity' => 'P' ])
-  @include('components.specific.modal_productos', ['nuevo_producto' => false])
-  
-@endif
+@include('produccion.partials.form.producto_plantilla', [
+  'plantilla' => true,
+  'deleteBtn' => true,   
+  'nameInputProducto' => 'producto_insumo_id[]', 
+  'nameInputCantidad' => 'producto_insumo_cantidad[]'])
 
-@include('components.block_elemento')
+<form class="form_principal factura_div focus-green" method="post" action="{{ $url }}" id="form_principal">		
 
-<form class="form_principal factura_div focus-green" id="form_principal" data-url="{{ $url }}">		
-	
-	@include('compras.partials.form.botones' , compact('create','edit','show','active_form') )
+  @if($edit)
+    @method('put')
+  @endif
 
-	@include('compras.partials.form.nroventa', compact('create','edit','show','active_form') ) 
-	@include('compras.partials.form.cliente' , compact('create','edit','show','active_form') )
+  @include('produccion.partials.form.nroventa', compact('create','edit','show', 'active_form'))
 
-	@include('compras.partials.form.toggle_info')
-	<div id="info_adicional" class="collapse">
-		@include('compras.partials.form.fechas'  , compact('create','edit','show','active_form') )
-		@include('compras.partials.form.moneda'  , compact('create','edit','show','active_form') )
-	</div>
+	@include('produccion.partials.form.descripcion', compact('create','edit','show', 'active_form')) 
+
+  <hr/>
+  @include('produccion.partials.form.producto_final', compact('create','edit','show', 'active_form')) 
+
+  <hr/>
+  @include('produccion.partials.form.producto_insumos', compact('create','edit','show', 'active_form')) 
+
+  <div class="row pt-x10">
+    <div class="col-md-12">
+    @if($show)
+        <a href="{{ route('produccion.edit', $produccion->manId) }}" class="btn btn-flat btn-primary">Modificar</a>
+
+    @else
+        <button class="btn btn-flat btn-primary" type="submit"> Guardar </button>
+    @endif
+        <a href="{{ route('produccion.index') }}" class="btn btn-flat btn-danger pull-right salir-btn">Salir</a>
+    </div>
+    
+  </div>
 </form>
-
-@include('compras.partials.form.producto', compact('create','edit','show','active_form')) 
-@include('compras.partials.form.table', compact('create','edit','show','active_form')) 
-@include('compras.partials.form.totales', compact('create','edit','show','active_form')) 
-
-@if( $show )
-	@include('ventas.partials.modal_pagos_comp', ['type' => 'compra'])
-	@include('ventas.partials.modal_pago' , ['type' => 'compra'] )
-@endif
-
-
-@if( $create )
-	@include('compras.partials.modal_importacion', ['type' => 'compra'])
-@endif

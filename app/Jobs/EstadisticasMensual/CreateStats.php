@@ -55,8 +55,6 @@ class CreateStats
 
   public function handle()
   {
-    // dd($this->lastUpdates->ventas);
-    // exit();
     try {
       if($this->onlyVenta){
         $ventaStats  =   (new VentaStats($this->lastUpdates->ventas, $this->mescodi ))->handle();
@@ -90,10 +88,9 @@ class CreateStats
       if ($ventasData['search']) {
         // $dataFinal['docs'] = $ventasData['data']['docs'];
         // $dataFinal['ventas'] = $ventasData['data']['ventas'];
-        
         $dataFinal['docs'] = $ventasData['data']['estados'];
         $dataFinal['calculos'] = $ventasData['data']['calculos'];
-        // $dataFinal['ventas'] = $ventasData['data']['ventas'];
+        $dataFinal['ventas'] = $ventasData['data']['dias'];
       }
           
       if ($guiasData['search']) {
