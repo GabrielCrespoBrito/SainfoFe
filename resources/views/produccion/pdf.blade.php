@@ -1,162 +1,228 @@
-@extends('layouts.pdf.master')
-@section('title_pagina', $nombre_reporte)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <title>Reporte</title>
+  <style>
+    body {
+      font-family: 'Arial Narrow' !important;
+      /* font-size: .6em; */
+      font-style: normal;
+      font-weight: normal;
+      margin: 0;
+    }
 
-@section('content')
+    table {
+      width: 100% !important;
+      page-break-inside: avoid;
+    }
+
+    /* ---------- header ---------- */
+
+    .header {
+      width: 100%;
+    }
+
+    .container {
+      /*outline: 3px solid blue;  */
+      width: 100%;
+    }
+
+    .header td {
+      padding: 0 10px;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    /* titulo */
+    .header .titulo {
+      font-size: 1.5em;
+      color: #000;
+      text-align: left;
+      border-bottom: 1px solid #000;
+      padding: 3px 0;
+      font-weight: bold;
+    }
+
+    .header .campo {
+      font-weight: bold;
+    }
+
+    /* ---------- /header ---------- */
+
+    /* ---------- items ---------- */
+
+    .div_items {
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .div_items table {}
+
+    .div_items .table_items {
+      border-collapse: collapse;
+    }
+
+    .table_items .thead {}
+
+    .table_items .tr-header td {
+      border: 2px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .table_items .tr-subheader td {
+      border-bottom: 2px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
 
 
-  @component('components.reportes.reporte_basico.pdf', [
-    'nombre_reporte' => $nombre_reporte,
-    'ruc' => $ruc,
-    'nombre_empresa' => $nombre_empresa,
-    ])
+    .border-left {
+      border-left: 2px solid #000;
+    }
+
+    .border-right {
+      border-right: 2px solid #000;
+    }
 
 
+    .table_items .tr_producto {
 
-  {{-- Filtros --}}
-  @slot('filtros')
+      background-color: #cccccc
+    }
 
-    <table class="table-header-informacion" width="100%">
-      <tr>
-        <td with="15%"> 
-          <span class="bold">Fecha desde: </span> <span> {{ $fecha_desde }}</span> 
-        </td>
 
-        <td with="15%">
-          <span class="bold">Fecha hasta: </span> <span> {{ $fecha_hasta }}</span>
-        </td>
+    .table_items .tr_producto .td_info {
+      padding-top: 10px;
+    }
 
-        <td with="40%">
-          <span class="bold">Proveedor: </span> <span> {{ $proveedor }}</span>
-        </td>
+    .table_items .tr_producto .value {
+      font-weight: bold;
+    }
 
-        <td with="30%">
-          <span class="bold tipocambio">Tipo: </span> <span> {{ $tipodocumento }}</span>
-        </td>      
+    .table_items .tr_producto .propiedad {}
 
-      </tr>    
-    </table> 
-    @endslot
-    {{-- /Filtros --}}
+    .table_items .tr_descripcion td {
+      text-align: center;
+    }
 
-  @slot('content')
+    .table_items .tr_descripcion td {
+      border-bottom: 1px dashed #999;
+    }
 
-    @php
-      $subTotal = 0;
-      $igv = 0;
-      $total = 0;
-    @endphp
+    .table_items .tr_descripcion.total td {
+      border-bottom: 1px solid #000;
+      border-top: 1px solid #000;
+      padding: 5px 0;
+      font-weight: bold
+    }
 
-    <table class="table-contenido" width="100%">
-      <thead>
-        @if( $withProducts )
-        <tr> 
-          <td> Fecha  </td>
-          <td> TD  </td>
-          <td> Proveedor  </td>
-          <td> Unidad  </td>
-          <td> Cantidad </td>
-          <td> Mon </td>
-          <td> Precio  </td>
-        </tr> 
-        @else
-        <tr> 
-          <td> Fecha  </td>
-          <td> N° Oper.  </td>
-          <td> N° Doc.  </td>
-          <td> RUC/DNI  </td>
-          <td> Razón Social </td>
-          <td> Mon </td>
-          <td> Valor  </td>
-          <td> IGV </td>
-          <td> Total </td>
-          <td> Perc </td>
-          <td> Total S/ </td>
-          <td> T.C  </td>
-        </tr> 
-        @endif
+    .table_items .thead {}
+
+    .table_items .tr-header td {
+      border: 2px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .table_items .tr-subheader td {
+      border-bottom: 2px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+
+
+    .border-left {
+      border-left: 2px solid #000;
+    }
+
+    .border-right {
+      border-right: 2px solid #000;
+    }
+
+
+    .table_items .tr_producto {
+
+      background-color: #cccccc
+    }
+
+
+    .table_items .tr_producto .td_info {
+      padding-top: 10px;
+    }
+
+    .table_items .tr_producto .value {
+      font-weight: bold;
+    }
+
+    .table_items .tr_producto .propiedad {}
+
+    .table_items .tr_descripcion td {
+      text-align: center;
+    }
+
+    .table_items .tr_descripcion td {
+      border-bottom: 1px dashed #999;
+    }
+
+    .table_items .tr_descripcion.total td {
+      border-bottom: 1px solid #000;
+      border-top: 1px solid #000;
+      padding: 5px 0;
+      font-weight: bold
+    }
+
+    .item-totales td {
+      border-top: 1px solid black;
+      font-weight: bold;
+    }
+
+    tr.total {
+      background-color: #cccccc
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" style="font-family: 'Arial Narrow' !important">
+
+    <table>
+      <thead class="header">
+        <tr>
+          <td>ORDEN</td>
+          <td>CODIGO</td>
+          <td>PRODUCTO</td>
+          <td class="text-right">CANT.</td>
+          <td>EMITIDO</td>
+          <td>CULMINADO</td>
+          <td>USUARIO</td>
+          <td>RESP.</td>
+          <td>ESTADO</td>
+        </tr>
       </thead>
-
       <tbody>
-        @if($withProducts)
-
-        @else
-
-          @php
-            $nombresDocuentos = ['01' => 'FACTURA' , '03' => 'BOLETA', '07' => 'NOTA CREDITO', '08' => 'NOTA DEBITO', '40' => 'COMPRA LIBRE' ];
-          @endphp
-
-        @foreach( $items_group as $key => $items )
-
-          {{-- Sub total del documento --}}
-          @php
-            $subTotalGroup = 0.00;
-            $igvGroup = 0.00;
-            $totalGroup = 0.00;
-          @endphp
-
-          <tr>
-            <td> <strong> {{ $key }}  </strong></td>
-            <td> <strong> {{ $nombresDocuentos[$key] }} </strong></td>
-          </tr>            
-
-        @foreach( $items as $item )
-
-          @php            
-            $tCambio = $item->MonCodi == "01" ? '-' : $item->CpaTcam;
-            $subTotalGroup += $item->MonCodi == "01" ? $item->Cpabase : $item->Cpabase * $item->CpaTcam;
-            $igvGroup += $item->MonCodi == "01" ? $item->CpaIGVV : $item->CpaIGVV * $item->CpaTcam;
-            $totalGroup += $totalSoles = $item->MonCodi == "01" ? $item->Cpatota : $item->Cpatota * $item->CpaTcam;
-          @endphp
-          <tr>
-            <td>{{ $item->CpaFCpa }}</td>
-            <td>{{ $item->CpaOper }}</td>
-            <td>{{ $item->CpaNume }}</td>
-            <td>{{ $item->PCRucc }}</td>
-            <td>{{ $item->PCNomb }}</td>
-            <td>{{ $item->monnomb }}</td>
-            <td style="text-align: right;">{{ math()->addDecimal($item->Cpabase) }}</td>
-            <td style="text-align: right;">{{ math()->addDecimal($item->CpaIGVV) }}</td>
-            <td style="text-align: right;">{{ math()->addDecimal($item->Cpatota) }}</td>
-            <td style="text-align: right;"> 0.00 </td> {{-- Percepción --}}
-            <td style="text-align: right;">{{ $totalSoles }} </td>
-            <td style="text-align: right;">{{  $tCambio }}</td>
-          </tr>
-          @endforeach
-
-          @php
-            $subTotal += $subTotalGroup;
-            $igv += $igvGroup;
-            $total += $totalGroup;
-          @endphp
-
-          {{-- Subtotal --}}
-         <tr class="totales">
-            <td style="border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> SubTotal Valor Cpa S./ </td> 
-            <td style="text-align: right;border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> <strong> {{ math()->addDecimal($subTotalGroup) }} </strong> </td> 
-            <td style="text-align: center; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> SubTotal IGV S./:  </td> 
-            <td style="text-align: right; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> <strong> {{ math()->addDecimal($igvGroup) }} </strong> </td> 
-            <td style="text-align: center; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> SubTotal S./: </td> 
-            <td style="text-align: right; text-align: right;  border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> <strong> {{ math()->addDecimal($totalGroup) }} </strong> </td> 
-            <td colspan="6" style="text-align: right; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";>  </td>
-          </tr>
-          
-          @endforeach
-        @endif
+        @foreach( $producciones as $produccion )
+        <tr>
+          <td>{{ $produccion->manId  }} </td>
+          <td>{{ $produccion->manCodi  }} </td>
+          <td>{{ $produccion->manNomb  }} </td>
+          <td class="text-right;" style="padding-right:3px">{{ $produccion->manCant  }} .</td>
+          <td>{{ $produccion->manFechEmis  }} .</td>
+          <td>{{ $produccion->manFechCulm  }} </td>
+          <td>{{ $produccion->USER_CREA  }} </td>
+          <td>{{ $produccion->manResp  }} </td>
+          <td>{{ $produccion->presenter()->getReadEstado() }} </td>
+        </tr>
+        @endforeach
       </tbody>
-      <tfoot>
-         <tr class="totales" style=" border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> 
-            <td style=" border-top: 1px dotted #333333; border-bottom: 1px dotted #333333;"> Total Valor Cpa S./:</td>
-            <td style="text-align: right;  border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> <strong> {{ math()->addDecimal($subTotal) }} </strong></td>
-            <td style=" text-align: center; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> Total IGV S./:  </td>
-            <td style=" text-align: right; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> <strong> {{ math()->addDecimal($igv) }} </strong> </td>
-            <td style="text-align: center;  border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> Total S./:  </td>
-            <td style="text-align: right; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";> <strong> {{ math()->addDecimal($total) }} </strong> </td>
-            <td colspan="6" style="text-align: right; border-top: 1px dotted #333333; border-bottom: 1px dotted #333333";";>  </td>
-          </tr>
-      </tfoot>
 
-      </table>
-    @endslot
+    </table>
 
-  @endcomponent
-@endsection
+  </div>
+</body>
+
+</html>

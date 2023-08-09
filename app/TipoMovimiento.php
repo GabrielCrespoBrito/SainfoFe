@@ -22,6 +22,9 @@ class TipoMovimiento extends Model
   const INGRESO_INVENTARIO = "I001";
   const INVENTARIO_SALIDA = "S005";
 
+  const INGRESO_PRODUCCION = "I007";
+  const SALIDA_PRODUCCION = "S007";
+
   // 'I001', 'INVENTARIO INGRESO', 'N', 'I', 'S', 'S', 'N', 'S', NULL
   // 'I002', 'COMPRAS', 'S', 'I', 'S', 'S', 'N', 'S', '02'
   // 'I003', 'DEVOLUCION DE VENTA', 'S', 'I', 'S', 'N', 'S', 'S', NULL

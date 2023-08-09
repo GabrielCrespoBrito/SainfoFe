@@ -4,6 +4,7 @@ namespace App\Jobs\Produccion;
 
 use App\GuiaSalida;
 use App\GuiaSalidaItem;
+use App\Models\Produccion\Produccion;
 use App\Models\TomaInventario\TomaInventarioDetalle;
 
 class CreateDetalleFromProduccionDetalle
@@ -13,23 +14,23 @@ class CreateDetalleFromProduccionDetalle
   public $guiaIngreso;
 
   //
-  public $index_ingreso = 1;
-  public $index_salida = 1;
+  public $indexIngreso = 1;
+  public $indexSalida = 1;
   //
-  public function __construct($produccion, $guiaSalida, $guiaIngreso)
+  public function __construct( Produccion $produccion, GuiaSalida $guiaSalida, GuiaSalida $guiaIngreso)
   {
     $this->produccion = $produccion;
     $this->guiaSalida = $guiaSalida;
     $this->guiaIngreso = $guiaIngreso;
   }
 
-  public function getIndex()
+  public function getIndex($isIngreso)
   {
     // Obtener indice 
-    $index = $this->is_ingreso ? $this->index_ingreso : $this->index_salida;
+    $index = $isIngreso ? $this->indexIngreso : $this->indexSalida;
 
     // Aumentar el indice
-    $this->is_ingreso ? $this->index_ingreso++ : $this->index_salida++;
+    $isIngreso ? $this->indexIngreso++ : $this->indexSalida++;
 
     // Devolverlo en el formato correcto
     return $index  < 10 ? "0" .  $index : $index;
@@ -42,17 +43,17 @@ class CreateDetalleFromProduccionDetalle
     $cantidad_relativa = convertNegativeIfTrue($cantidad, !$isIngreso);
     $unidad = $producto->unidadPrincipal();
     $guiaItem = new GuiaSalidaItem;
-    $guiaItem->DetItem = $this->getIndex();
+    $guiaItem->DetItem = $this->getIndex($isIngreso);
     $guiaItem->GuiOper = $guia->GuiOper;
     $guiaItem->Linea   = agregar_ceros(GuiaSalidaItem::lastId(), 8, 1);
-    $guiaItem->UniCodi =  $unidad->Unicodi();
+    $guiaItem->UniCodi =  $unidad->Unicodi;
     $guiaItem->DetNomb = $producto->ProNomb;
     $guiaItem->MarNomb = $producto->marca->MarNomb;
     $guiaItem->Detcant = $cantidad;
     $guiaItem->DetPrec = 0;
     $guiaItem->DetPeso = 0;
-    $guiaItem->DetDct1 = null;
-    $guiaItem->DetDct2 = null;
+    $guiaItem->DetDct1 = 0;
+    $guiaItem->DetDct2 = 0;
     $guiaItem->CpaVtaCant = $cantidad_relativa;
     $guiaItem->DetImpo = 0;
     $guiaItem->DetUnid = $producto->UniAbre;
@@ -78,6 +79,11 @@ class CreateDetalleFromProduccionDetalle
 
   public function createDetallesSalida()
   {
+    $items = $this->produccion->items;
+    
+    foreach( $items as $item ){
+      $this->createItem($this->guiaSalida, $item->producto, $item->mandetCant);
+    }
   }
 
   public function handle()

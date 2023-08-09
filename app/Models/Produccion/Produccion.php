@@ -3,6 +3,7 @@
 namespace App\Models\Produccion;
 
 use App\Jobs\CreateMovs;
+use App\Jobs\SetCostos;
 use App\Presenter\ProduccionPresenter;
 use App\Producto;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,10 @@ class Produccion extends Model
   protected $descripcionKey = "manId";
   protected $keyType = "string";
   protected $table = "produccion_manual";
-  public $fillable = ['manEsta'];
+  public $fillable = [
+    'manEsta',
+    'manFechCulm'
+  ];
 
   const ESTADO_ANULAD = "ANUL.";
   const ESTADO_CULMINADO = "CULM.";
@@ -66,9 +70,21 @@ class Produccion extends Model
     return $this->hasMany(ProduccionDetalle::class, 'manId', 'manId');
   }
 
+  public function  updateEstado($estado)
+  {
+    $data = ['manEsta' => $estado];
+
+    if( $estado == self::ESTADO_CULMINADO ){
+      $data['manFechCulm'] = datePeru('Y-m-d H:i:s');
+    }
+
+    $this->update($data);
+  }
+
+
   public function producto()
   {
-    return $this->belongsTo(Producto::class, 'ProCodi', 'manCodi');
+    return $this->belongsTo(Producto::class, 'manCodi', 'ProCodi');
   }
 
   public function getNextId()
@@ -92,14 +108,14 @@ class Produccion extends Model
 
     if ($this->isEstadoAsignado()) {
       return [
-        self::ESTADO_ANULAD => self::ESTADO_ANULAD_NOMBRE,
         self::ESTADO_PRODUCCION => self::ESTADO_PRODUCCION_NOMBRE,
+        self::ESTADO_ANULAD => self::ESTADO_ANULAD_NOMBRE,
       ];
     }
 
     return [
-      self::ESTADO_ANULAD => self::ESTADO_ANULAD_NOMBRE,
       self::ESTADO_CULMINADO => self::ESTADO_CULMINADO_NOMBRE,
+      self::ESTADO_ANULAD => self::ESTADO_ANULAD_NOMBRE,
     ];
   }
 
@@ -112,4 +128,13 @@ class Produccion extends Model
   {
     return (new CreateMovs($this))->handle();
   }
+
+
+  public function setCostos()
+  {
+    return (new SetCostos($this))->handle();
+  }
+
+  
+
 }

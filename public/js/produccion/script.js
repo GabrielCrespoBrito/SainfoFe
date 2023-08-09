@@ -40,7 +40,7 @@ function enviarFormulario(e) {
     success : (data) => {
       notificaciones('Accion Exitosa', 'success');
       setTimeout(() => {
-        location.href = $(".salir-btn").attr('href')
+        // location.href = $(".salir-btn").attr('href')
       }, 1500)    
     },
     complete: (data) => {

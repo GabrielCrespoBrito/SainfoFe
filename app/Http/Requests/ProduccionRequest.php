@@ -30,8 +30,8 @@ class ProduccionRequest extends FormRequest
       'manFechVenc' => 'required|gte:manFechEmis',
       'producto_final_id' => 'required',
       'producto_final_cantidad' => 'required',
-      'manResp' => 'required|max:50',
-      'manDeta' => 'required|max:200',
+      'manResp' => 'sometimes|max:50',
+      'manDeta' => 'sometimes|max:200',
       'producto_insumo_id.*' => 'required',
       'producto_insumo_cantidad.*' => 'required|numeric|min:0|integer',
     ];

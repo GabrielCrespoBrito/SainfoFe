@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProduccionRequest;
+use App\PDFPlantilla;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Produccion\Produccion;
+use App\Util\PDFGenerator\PDFGenerator;
+use App\Http\Requests\ProduccionRequest;
 use App\Repositories\ProduccionRepository;
 use Codexshaper\WooCommerce\Facades\Product;
 
@@ -19,21 +22,29 @@ class ProduccionController extends Controller
 
   public function index()
   {
-    $producciones = Produccion::orderByDesc('USER_FCREA')->get();  
+    $producciones = Produccion::orderByDesc('USER_FCREA')->get();
     $estados = Produccion::getEstados();
-    return view('produccion.index', compact('producciones','estados'));
+    return view('produccion.index', compact('producciones', 'estados'));
   }
 
   public function cambiarEstado(Request $request, $id)
   {
     $produccion = Produccion::find($id);
-    $produccion->update(['manEsta' => $request->estado]);
-
-    if( $produccion->isEstadoCulminado() ){
-      $produccion->createGuias();
+    DB::connection('tenant')->beginTransaction();
+    try {
+      $produccion->updateEstado($request->estado);
+      if ($produccion->isEstadoCulminado()) {
+        $produccion->createGuias();
+        $produccion->setCostos();
+      }
+    } catch (\Throwable $th) {
+      DB::connection('tenant')->rollBack();
+      noti()->error('Error', $th->getMessage());
+      return redirect()->route('produccion.index');
     }
 
-    noti()->success('Accion Exitosa', 'Estado Cambiado Exitosamente');
+    DB::connection('tenant')->commit();
+    noti()->success('Accion Exitosa', 'Se ha cambiado el estado correctamente');
     return redirect()->route('produccion.index');
   }
 
@@ -46,7 +57,7 @@ class ProduccionController extends Controller
   public function store(ProduccionRequest $request)
   {
     $produccion = $this->repository->create($request->all());
-    return response()->json(['data' => $produccion ]);
+    return response()->json(['data' => $produccion]);
   }
 
   public function show($id)
@@ -77,14 +88,55 @@ class ProduccionController extends Controller
   public function destroy($id)
   {
     $produccion = Produccion::find($id);
-    
-    if($produccion->isEstadoCulminado()){
+
+    if ($produccion->isEstadoCulminado()) {
       noti()->error('No se Puede eliminar una Producción Culminada');
-      return redirect()->route('produccion.index');      
+      return redirect()->route('produccion.index');
     }
 
     $this->repository->delete($id);
     noti()->success('Accion Exitosa', 'Se ha eliminado correctamente el registro');
     return redirect()->route('produccion.index');
   }
+
+  public function pdf()
+  {
+    ///
+    // public function generatePDF(
+    //   $formato = PDFPlantilla::FORMATO_A4,
+    //   $generator = PDFGenerator::HTMLGENERATOR,
+    //   $mostrar_igv = true,
+    //   $saveTemp = true,
+    //   $save = false
+    // ) {
+
+    // $this->refresh();
+    // $empresa = get_empresa();
+    // $plantilla  = $this->getPlantilla($formato);
+    // $data = $this->dataPdf($formato, $mostrar_igv);
+    $producciones = Produccion::with('items')->get();
+
+    $pdf = new PDFGenerator(view('produccion.pdf', compact('producciones')), PDFGenerator::HTMLGENERATOR);
+    // $namePDF = $this->nameFile('.pdf', true);
+    
+    $pdf->generator->setGlobalOptions(PDFGenerator::getSetting(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR));
+    // 
+
+    return $pdf->generator->generate();
+
+    // if ($save) {
+    //   FileHelper($empresa->EmpLin1)->save_pdf($namePDF, $pdf->generator->toString());
+    // }
+
+    // if ($saveTemp) {
+    //   $tempPath = file_build_path('temp', $namePDF);
+    //   $pdf->save($tempPath);
+    //   return $tempPath;
+    // }
+  // }
+///
+
+
+  }
+
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 # Toma de inventario
+Route::get('produccion/pdf', 'ProduccionController@pdf')->name('produccion.pdf');
 Route::resource('produccion', 'ProduccionController', ['name'=> 'produccion']);
 Route::post('produccion/{id}/cambiarEstado', 'ProduccionController@cambiarEstado')->name('produccion.cambiarEstado');
 // Route::post('toma-inventario/update-stocks', 'TomaInventarioController@updateStocks')->name('toma_inventario.update-stocks');

@@ -25,16 +25,19 @@ class ProduccionRepository implements RepositoryInterface
     $produccion->manNomb = $producto->ProNomb;
     $produccion->manResp = $data['manResp'];
     $produccion->manDeta = $data['manDeta'];
-    $produccion->manEsta = Produccion::ESTADO_ASIGNADO;
+    // $produccion->manEsta = Produccion::ESTADO_ASIGNADO;
+    $produccion->manEsta = Produccion::ESTADO_PRODUCCION;
     $produccion->manCostTota = $costoTotal;
     $produccion->manCostUnit = $costoUnitario;
     $produccion->manFechEmis = $data['manFechEmis'];
-    $produccion->manFechVenc = $data['manFechVenc'];
+    $produccion->manFechCulm = $data['manFechVenc'];
     $produccion->mesCodi = date('Ym');
     $produccion->USER_ECREA = $equipo = gethostname();
     $produccion->USER_CREA = $user = auth()->user()->usulogi;
     $produccion->save();
     $itemsLen =  count($data['producto_insumo_id']);
+
+    logger($produccionId);
 
     for ( $i = 0; $i < $itemsLen; $i++ ) {
       $item_id = $data['producto_insumo_id'][$i];
@@ -51,7 +54,7 @@ class ProduccionRepository implements RepositoryInterface
       $dataItem['mandetImpo'] = $importeItem;
       $dataItem['USER_CREA'] = $user;
       $dataItem['USER_ECREA'] = $equipo;
-      $produccion->items()->create($dataItem);
+      ProduccionDetalle::create($dataItem);
     }
 
     return $produccion;

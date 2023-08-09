@@ -440,8 +440,6 @@ function ayer()
   return date('Y-m-d', strtotime('-1 days'));
 }
 
-
-
 function implode_prueba1()
 {
   $arr =  config('app.path_archivos.xml_data');

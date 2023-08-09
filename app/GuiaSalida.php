@@ -28,7 +28,8 @@ use App\Models\TomaInventario\TomaInventario;
 use App\Models\Guia\Traits\GuiaInteractWithCompra;
 use App\Util\XmlInformation\XmlInformationResolver;
 use App\Http\Controllers\Util\Xml\dos_uno\GuiaRemision_2_1Api;
-
+use App\Jobs\Guia\CreateFromProduccionManual;
+use App\Models\Produccion\Produccion;
 
 class GuiaSalida extends Model
 {
@@ -718,6 +719,10 @@ class GuiaSalida extends Model
 
   public function dataPdf($formato = PDFPlantilla::FORMATO_A4)
   {
+
+    logger([$this->GuiOper,  $this->isSalida()]);
+    // exit();
+
     $guia = $this->toArray();
     $firma = $this->dataQR($this->isSalida());
     $e = $this->empresa;
@@ -1285,6 +1290,13 @@ class GuiaSalida extends Model
   {
     return (new CreateFromToma($tomaInventario, GuiaSalida::SALIDA))->handle();
   }
+
+  public static function createFromProduccionManual(Produccion $produccion, $isIngreso = true)
+  {
+    return (new CreateFromProduccionManual($produccion, $isIngreso))->handle();
+  }
+
+
 
   public function deletePdf($recreate, $ruc = null)
   {

@@ -31,12 +31,12 @@
   <div class="row pt-x10">
     <div class="col-md-12">
     @if($show)
-        <a href="{{ route('produccion.edit', $produccion->manId) }}" class="btn btn-flat btn-primary">Modificar</a>
+        <a href="{{ route('produccion.edit', $produccion->manId) }}" class="btn btn-flat btn-primary"><span class="fa fa-pencil"></span> Modificar</a>
 
     @else
-        <button class="btn btn-flat btn-primary" type="submit"> Guardar </button>
+        <button class="btn btn-flat btn-primary" type="submit"> <span class="fa fa-save"></span> Guardar </button>
     @endif
-        <a href="{{ route('produccion.index') }}" class="btn btn-flat btn-danger pull-right salir-btn">Salir</a>
+        <a href="{{ route('produccion.index') }}" class="btn btn-flat btn-default pull-right salir-btn">Salir</a>
     </div>
     
   </div>
