@@ -3,7 +3,7 @@
 
   <tr>
     <td class="bold border-bottom-solid pt-x2 pb-x2"> {{ $item['info']['id'] }} </td>
-    <td class="bold border-bottom-solid pt-x2 pb-x2" colspan="8"> {{ $item['info']['nombre_complete'] }} </td>
+    <td class="bold border-bottom-solid pt-x2 pb-x2" colspan="10"> {{ $item['info']['nombre_complete'] }} </td>
   </tr>
 
     @foreach( $item['items'] as $producto )
@@ -14,6 +14,7 @@
       <td> {{ $producto['producto_nombre'] }}  </td>
       <td> {{ $producto['tipodocumento'] }}  </td>
       <td> {{ $producto['numero_documento'] }}  </td>
+      <td> {{ $producto['fecha_emision'] }}  </td>
       <td class="text-align-center"> {{ $producto['codigo_cliente'] }}  </td>
       <td class="text-align-right"> {{ $producto['marca_nombre'] }}  </td>
       <td class="text-align-right"> {{ decimal($producto['cantidad']) }} </td>
