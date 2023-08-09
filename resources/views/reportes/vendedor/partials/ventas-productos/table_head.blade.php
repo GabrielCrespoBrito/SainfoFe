@@ -1,7 +1,7 @@
 <thead class="no-font-weight font-size-7">
   <tr>
     <td width="10%"> Código </td>
-    <td width="10%"> Unidad </td>
+    <td width="6%"> Unidad </td>
     <td> Descripción </td>
     <td> T.D </td>
     <td width="20%"> N° Doc </td>
