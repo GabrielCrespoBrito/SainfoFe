@@ -1,7 +1,7 @@
 <style>
 
   body {
-    font-family: 'Arial Narrow', 'Arial'  !important; 
+    font-family: serif, 'Arial' !important; 
     font-size: .8em;
     font-style: normal;
     font-weight: normal;

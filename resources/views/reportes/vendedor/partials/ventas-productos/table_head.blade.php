@@ -4,7 +4,7 @@
     <td width="10%"> Unidad </td>
     <td> Descripción </td>
     <td> T.D </td>
-    <td> N° Doc </td>
+    <td width="20%"> N° Doc </td>
     <td> Cod. Cliente </td>
     <td class="text-align-right" width="10%"> Marca </td>
     <td class="text-align-right" width="10%"> Cantidad </td>
