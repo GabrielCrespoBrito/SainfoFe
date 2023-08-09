@@ -20,6 +20,7 @@ class PermissionSeeder extends Seeder
   const A_UPDATEPRECIOSMASIVE = "actualizar-precios-masivamente";
   const A_UPDATEPRECIOSTIPOCAMBIO = "actualizar-precios-por-tipocambio";
   const A_IMPRIMIR = "imprimir";
+  const A_PRODUCCIONMANUAL = "produccion-manual";
   const A_LIBERAR = "liberar";
   const A_ANULAR = "anular";
   const A_EMAIL = "email";
@@ -316,6 +317,7 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_UPDATEPRECIOS, self::R_PRODUCTO),
       concat_space(self::A_UPDATEPRECIOSMASIVE, self::R_PRODUCTO),
       concat_space(self::A_UPDATEPRECIOSTIPOCAMBIO, self::R_PRODUCTO),
+      concat_space(self::A_PRODUCCIONMANUAL, self::R_PRODUCTO),
       concat_space(self::A_TOMAINVENTARIO, self::R_PRODUCTO),concat_space(self::A_VERCOSTOS, self::R_PRODUCTO),
 
     ], self::R_PRODUCTO,  false);
