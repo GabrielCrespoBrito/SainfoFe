@@ -101,42 +101,11 @@ class ProduccionController extends Controller
 
   public function pdf()
   {
-    ///
-    // public function generatePDF(
-    //   $formato = PDFPlantilla::FORMATO_A4,
-    //   $generator = PDFGenerator::HTMLGENERATOR,
-    //   $mostrar_igv = true,
-    //   $saveTemp = true,
-    //   $save = false
-    // ) {
-
-    // $this->refresh();
-    // $empresa = get_empresa();
-    // $plantilla  = $this->getPlantilla($formato);
-    // $data = $this->dataPdf($formato, $mostrar_igv);
     $producciones = Produccion::with('items')->get();
-
-    $pdf = new PDFGenerator(view('produccion.pdf', compact('producciones')), PDFGenerator::HTMLGENERATOR);
-    // $namePDF = $this->nameFile('.pdf', true);
-    
+    $empresa = get_empresa();
+    $pdf = new PDFGenerator(view('produccion.pdf', compact('producciones', 'empresa')), PDFGenerator::HTMLGENERATOR);
     $pdf->generator->setGlobalOptions(PDFGenerator::getSetting(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR));
-    // 
-
     return $pdf->generator->generate();
-
-    // if ($save) {
-    //   FileHelper($empresa->EmpLin1)->save_pdf($namePDF, $pdf->generator->toString());
-    // }
-
-    // if ($saveTemp) {
-    //   $tempPath = file_build_path('temp', $namePDF);
-    //   $pdf->save($tempPath);
-    //   return $tempPath;
-    // }
-  // }
-///
-
-
   }
 
 }

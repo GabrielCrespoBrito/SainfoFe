@@ -60,9 +60,9 @@
       margin-top: 10px;
     }
 
-    .div_items table {}
+    table {}
 
-    .div_items .table_items {
+    .table_items {
       border-collapse: collapse;
     }
 
@@ -189,19 +189,37 @@
 
 <body>
   <div class="container" style="font-family: 'Arial Narrow' !important">
+    
+    {{--  --}}
+    <table width="100%" style="padding-bottom: 10px; margin-bottom:20px">
+      
+      <tr>
+        <td class="text-right"> {{ date('Y-m-s') }} </td>
+      </tr>
 
-    <table>
+      <tr>
+        <td> EMPRESA: <strong> {{ $empresa->EmpNomb }} </strong> </td>
+      </tr>
+
+      <tr>
+        <td> RUC: <strong> {{ $empresa->EmpLin1 }} </strong> </td>
+      </tr>
+
+    </table>
+    {{--  --}}
+    
+    <table class="table_items">
       <thead class="header">
-        <tr>
-          <td>ORDEN</td>
-          <td>CODIGO</td>
-          <td>PRODUCTO</td>
+        <tr class="tr-header">
+          <td class="">ORDEN</td>
+          <td class="">CODIGO</td>
+          <td class="">PRODUCTO</td>
           <td class="text-right">CANT.</td>
-          <td>EMITIDO</td>
-          <td>CULMINADO</td>
-          <td>USUARIO</td>
-          <td>RESP.</td>
-          <td>ESTADO</td>
+          <td class="">EMITIDO</td>
+          <td class="text-center">CULMINADO</td>
+          <td class="">USUARIO</td>
+          <td class="">RESP.</td>
+          <td class="text-right">ESTADO</td>
         </tr>
       </thead>
       <tbody>
@@ -210,12 +228,12 @@
           <td>{{ $produccion->manId  }} </td>
           <td>{{ $produccion->manCodi  }} </td>
           <td>{{ $produccion->manNomb  }} </td>
-          <td class="text-right;" style="padding-right:3px">{{ $produccion->manCant  }} .</td>
-          <td>{{ $produccion->manFechEmis  }} .</td>
-          <td>{{ $produccion->manFechCulm  }} </td>
+          <td class="text-right" style="padding-right:10px"> {{ $produccion->manCant  }} </td>
+          <td>{{ $produccion->manFechEmis  }} </td>
+          <td class="text-center">{{ $produccion->manFechCulm  }} </td>
           <td>{{ $produccion->USER_CREA  }} </td>
           <td>{{ $produccion->manResp  }} </td>
-          <td>{{ $produccion->presenter()->getReadEstado() }} </td>
+          <td class="text-right" style="text-transform:uppercase"> {{ $produccion->presenter()->getReadEstado() }} </td>
         </tr>
         @endforeach
       </tbody>
