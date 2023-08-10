@@ -37,7 +37,7 @@ trait EmpresaMethod
   }
 
 
-  public static function getClienteGuiaKey()
+  public function getClienteGuiaKey()
   {
     return $this->FE_CLIENT_KEY;
   }

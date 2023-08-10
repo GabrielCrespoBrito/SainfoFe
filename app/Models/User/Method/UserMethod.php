@@ -276,6 +276,15 @@ trait UserMethod
     $this->syncPermissions($permissions);
   }
 
+
+  public function hasLocalDefecto()
+  {
+    return $this->locales->where('defecto', 1)->count();
+
+  }
+
+
+
   public function setDefaultLocal($loccodi = null)
   {
     $locales = $this->locales;

@@ -211,7 +211,11 @@ function enviarFormulario(e) {
     setInterval(() => {
       location.reload();
     }, 1000);
-  }})
+  },
+  complete : () => {
+    $("#load_screen").hide();
+  }
+})
 
 }
 

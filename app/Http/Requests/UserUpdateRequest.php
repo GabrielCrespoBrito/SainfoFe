@@ -26,7 +26,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'id' => 'required',
             'nombre' => 'required|min:4|max:140',
-            'telefono' => 'required',
+            'telefono' => 'sometimes|nullable|numeric',
             'direccion' => 'nullable|max:140',
             'password' => 'nullable|sometimes|confirmed',
             'email' => 'required',

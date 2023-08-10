@@ -100,7 +100,13 @@ class UserLocal extends Model
 
   public function setDefecto()
   {
-    $this->setDefault( $this->usucodi , $this->loccodi, $this->empcodi );
+    // _dd("defecto_", $this);
+    // exit();
+    $this->update([
+      'defecto' => 1
+    ]);
+
+    // $this->setDefault( $this->usucodi , $this->loccodi, $this->empcodi );
   }
 
   public function deleteShort()

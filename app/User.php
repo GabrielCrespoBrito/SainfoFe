@@ -89,6 +89,7 @@ class User extends Authenticatable
     ->first();
   }
 
+
   public function codeLocal()
   {
     return substr($this->local_()->loccodi,-1);

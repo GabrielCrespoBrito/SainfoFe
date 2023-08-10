@@ -44,8 +44,7 @@ class RegisterLocales
   public function cleanAll()
   {
     // Eliminar local asociado
-    $user_locales = $this->user_locales;
-    foreach( $user_locales as $user_local ){
+    foreach($this->user_locales as $user_local ){
       $user_local->delete();
     }
 
@@ -91,10 +90,11 @@ class RegisterLocales
         continue;
       }
 
-      UserLocal::create_($this->user->usucodi, $local, $this->empcodi, 0);
+      
+      UserLocal::create_($this->user->usucodi, $local, $this->empcodi, $this->user->hasLocalDefecto() ? 0 : 1 );
       $this->createSeries($local);
     }
-  
+    
     $this->user->setDefaultLocal();
   }
 

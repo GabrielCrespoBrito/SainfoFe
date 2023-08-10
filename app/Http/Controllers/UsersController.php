@@ -279,6 +279,9 @@ class UsersController extends Controller
     $user->email   = $request->email;
     $user->save();
  
+    // _dd( $request->alocal );
+    // exit();
+
     $user->registerLocales($request->local, true);
     
     return $user;
