@@ -5,6 +5,10 @@ route('empresa.update_visual', $empresa->empcodi )
 
 @endphp
 
+<form id="form-delete" method="post" style="display: none" action="#">   
+  @method('DELETE') @csrf
+</form>
+
 <form action="{{ $route }}" method="post" enctype="multipart/form-data">
 
   {{ csrf_field() }}

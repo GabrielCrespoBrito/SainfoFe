@@ -2,6 +2,7 @@
   $modulo_canje_nv = $empresa->getDataAditional('modulo_canje_nv');
   $modulo_manejo_stock = $empresa->getDataAditional('modulo_manejo_stock');
   $modulo_precio_unico = $empresa->getDataAditional('modulo_precio_unico');
+  $modulo_produccion_manual = $empresa->getDataAditional('modulo_produccion_manual');
   $modulo_restriccion_venta_por_stock = $empresa->getDataAditional('modulo_restriccion_venta_por_stock');
   
 @endphp
@@ -19,20 +20,24 @@
 
     <div class="row">
     
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="modulo_canje_nv" class="oneline"> <input id="modulo_canje_nv" value="1" {{ $modulo_canje_nv ? 'checked=checked' : '' }} type="checkbox" name="modulo_canje_nv" />  Canje de Notas de Ventas   </label>
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="modulo_manejo_stock" class="oneline"> <input id="modulo_manejo_stock" value="1" {{ $modulo_manejo_stock ? 'checked=checked' : '' }} type="checkbox" name="modulo_manejo_stock" />  Manejo de Stocks  </label>
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-4">
       <label for="modulo_restriccion_venta_por_stock" class="oneline"> <input id="modulo_restriccion_venta_por_stock" value="1" {{ $modulo_restriccion_venta_por_stock ? 'checked=checked' : '' }} type="checkbox" name="modulo_restriccion_venta_por_stock" /> Restringir Por Falta de Stock  </label>
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="modulo_precio_unico" class="oneline"> <input id="modulo_precio_unico" value="1" {{ $modulo_precio_unico ? 'checked=checked' : '' }} type="checkbox" name="modulo_precio_unico" />  Precio Unico  </label>
+    </div>
+
+    <div class="form-group col-md-2">
+      <label for="modulo_produccion_manual" class="oneline"> <input id="modulo_produccion_manual" value="1" {{ $modulo_produccion_manual ? 'checked=checked' : '' }} type="checkbox" name="modulo_produccion_manual" />  Producción Manual  </label>
     </div>
 
 

@@ -72,12 +72,14 @@ class EmpresaOpcion extends Model
   const MODULO_MANEJO_STOCK =  'modulo_manejo_stock';
   const MODULO_PRECIO_UNICO =  'modulo_precio_unico';
   const MODULO_RESTRICCION_VENTA_STOCK =  'modulo_restriccion_venta_por_stock';
+  const MODULO_PRODUCCION_MANUAL =  'modulo_produccion_manual';
   
   const MODULOS = [
     self::MODULO_CANJE,
     self::MODULO_MANEJO_STOCK,
     self::MODULO_PRECIO_UNICO,
-    self::MODULO_RESTRICCION_VENTA_STOCK
+    self::MODULO_RESTRICCION_VENTA_STOCK,
+    self::MODULO_PRODUCCION_MANUAL,
   ];
 
   const FIELDS_MODIFY = [

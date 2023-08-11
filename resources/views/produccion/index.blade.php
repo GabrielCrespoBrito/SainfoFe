@@ -1,8 +1,8 @@
 @view_data([
   'layout' => 'layouts.master' , 
-  'title'  => 'Produccion',
-  'titulo_pagina'  => 'Produccion', 
-  'bread'  => [ ['Produccion'] ],
+  'title'  => 'Produccion Manual',
+  'titulo_pagina'  => 'Produccion Manual', 
+  'bread'  => [ ['Produccion Manual'] ],
   'assets' => ['libs' => ['datatable'],'js' => ['helpers.js','produccion/index.js']]
 ])
 

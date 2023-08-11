@@ -145,7 +145,8 @@ class UsersController extends Controller
     $user->usutele = $request->telefono;
     $user->usudire = $request->direccion;
     $user->email   = $request->email;
-    $user->active  = "0";
+    $user->active  = "1";
+    $user->verificate  = "1";
     $user->UDelete = "";
     $user->save();
     $user->asociateToEmpresa(empcodi(), false, [], false);
@@ -307,9 +308,6 @@ class UsersController extends Controller
 
 
     $user->registerLocales($request->locales, true);
-    _dd("hola mundo owner");
-    exit();
-
     return $user;
   }
 
@@ -335,8 +333,6 @@ class UsersController extends Controller
   {
     $user = User::findOrfail($user_id);
     $user->syncPermissions($request->permisos);
-    // notificacion('Permisos asignados', "Se ha establecido exitosamente los permisos para el usuario {$user->nombre()}");
-    noti()->success('Permisos asignados', "Se ha establecido exitosamente los permisos para el usuario {$user->nombre()}");
     return redirect()->route('usuarios.index');
   }
 

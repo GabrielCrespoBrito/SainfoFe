@@ -92,6 +92,8 @@ class Kernel extends HttpKernel
       'verifiy.config' =>  \App\Http\Middleware\VerifiyConfigEmpresa::class, 
       'check.consumo' =>  \App\Http\Middleware\CheckConsumoEmpresa::class,
       'empresa.active' =>  \App\Http\Middleware\EmpresaIsActiveMiddleware::class,
+      'modulo_activo' =>  \App\Http\Middleware\ModuloActiveMiddleware::class,
+    
       
       // Acceso solo a los dueños de la empresa 
       'acceso_owner' =>  \App\Http\Middleware\OwnerAccess::class,       

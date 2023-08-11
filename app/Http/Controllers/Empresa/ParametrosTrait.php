@@ -60,8 +60,12 @@ trait ParametrosTrait
 
   public function update_modulos(EmpresaUpdateModuloRequest $request, $id)
   {
+
     $empresa = Empresa::find($id);
     $data = $request->only(EmpresaOpcion::MODULOS);
+    // dd($data);
+    // exit();
+
     $empresa->updateModulos($data);
     $empresa->cleanCache();
     noti()->success( 'Acciòn exitosa' , 'Se han guardado exitosamente las configuraciones de la empresa' );
