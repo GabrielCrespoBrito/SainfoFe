@@ -137,7 +137,7 @@ class Produccion extends Model
 
   public function getSerieGuia($ingreso)
   {
-    return 'PM0' . $ingreso ? 'I' : 'S';
+    return 'PM0' . ($ingreso ? 'I' : 'S');
   }
 
   public function getNumeroGuia()
