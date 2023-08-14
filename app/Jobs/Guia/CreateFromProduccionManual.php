@@ -45,8 +45,8 @@ class CreateFromProduccionManual
     $guia->PanAno  = $fechas->year;
     $guia->PanPeri = $fechas->month;
     $guia->EntSal  = TipoMovimiento::getByCode($idTipoMovimiento);;
-    $guia->GuiSeri  = "0000";
-    $guia->GuiNumee = "000000";
+    $guia->GuiSeri  = $this->produccion->getSerieGuia($this->isIngreso);
+    $guia->GuiNumee = $this->produccion->getNumeroGuia();
     $guia->GuiNume = $produccionId;
     $guia->GuiUni = null;
     $guia->GuiFemi = $this->produccion->manFechCulm;

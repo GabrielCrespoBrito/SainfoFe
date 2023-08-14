@@ -83,7 +83,9 @@ class ProductosController extends Controller
           $q->whereIn('LisCodi', $listas);
         },
         'unidades_.lista'
-      ]);
+      ])->whereHas('unidades_', function($q) use($listas) {
+          $q->whereIn('LisCodi', $listas);
+      });
 
 
     if ($campo == "codigo") {

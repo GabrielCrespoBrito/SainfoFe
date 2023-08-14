@@ -135,6 +135,13 @@ class Produccion extends Model
     return (new SetCostos($this))->handle();
   }
 
-  
+  public function getSerieGuia($ingreso)
+  {
+    return 'PM0' . $ingreso ? 'I' : 'S';
+  }
 
+  public function getNumeroGuia()
+  {
+    return substr($this->manId, 2);
+  }
 }

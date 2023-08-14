@@ -42,7 +42,7 @@ class GuiaSalidaController extends GuiaController
   {
     $this->tipo = Guia::SALIDA;
     $this->model = new GuiaSalida;
-    $this->middleware('guia.seriecreada')->only('create', 'edit', 'store');    
+    $this->middleware('guia.seriecreada')->only('create', 'edit', 'store', 'pdf');    
     $this->middleware(p_midd('A_GUIA', 'R_REPORTE'))->only('reporte');
     $this->middleware(p_midd('A_INDEX', 'R_GUIASALIDA'))->only('index');
     $this->middleware(p_midd('A_CREATE', 'R_GUIASALIDA'))->only('create' , 'store', 'createSimply', 'storeSimply');
@@ -215,7 +215,6 @@ class GuiaSalidaController extends GuiaController
       }
       else {
         if( $guia->fe_rpta != "0" ){
-
           // noti()->warning('Para imprimir La Guia de Remisión tiene que estar enviado a la sunat');
           // return redirect()->route('guia.pendientes');
         }
