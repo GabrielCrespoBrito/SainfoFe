@@ -252,7 +252,7 @@ class GuiaRemision_2_1Api extends XmlHelperNew
             ["id_item_guia", $i],
             ["id_item_documento", $i],
             ["unidad", $item->DetUnid],
-            ["cantidad", (int) $item->Detcant],
+            ["cantidad", $item->Detcant],
             ["nombre_producto", $item->DetNomb . ' ' . $item->DetDeta],
             ["id_producto", $item->DetCodi],
           ],
