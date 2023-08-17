@@ -32,6 +32,14 @@ class Transportista extends Model
     static::addGlobalScope('empresa', function ($query) {
       return $query->where( 'EmpCodi' , empcodi() );
     });
+
+  //
+    static::addGlobalScope('noEliminados', function ($query) {
+      return $query->whereNot('UDelete', '=', '1');
+    });
+//
+
+    
 	}
 
 	public function scopeDescripcion($query, $term)
