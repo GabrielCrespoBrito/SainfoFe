@@ -23,29 +23,29 @@ class VentasPagosController extends Controller
   }
 
   /**
-  * Ver los pagos que se han hecho a una venta
-  * 
-  * @return array
-  */
-  public function pagos( Request $request )
+   * Ver los pagos que se han hecho a una venta
+   * 
+   * @return array
+   */
+  public function pagos(Request $request)
   {
-    $this->authorize(p_name('A_INDEX','R_PAGO', 'R_VENTA'));
+    $this->authorize(p_name('A_INDEX', 'R_PAGO', 'R_VENTA'));
 
-    $venta = Venta::find( $request->id_factura );
+    $venta = Venta::find($request->id_factura);
     $data = $venta->getDataPayments();
     return response()->json($data);
   }
-  
+
   public function paymentStatus(Request $request)
   {
     $this->authorize(p_name('A_CREATE', 'R_PAGO', 'R_VENTA'));
-    
+
     $venta = Venta::find($request->id_factura);
     $data = $venta->getDataPayment();
     return $data;
   }
 
-  public function show( Request $request , $id)
+  public function show(Request $request, $id)
   {
     $this->authorize(p_name('A_SHOW', 'R_PAGO', 'R_VENTA'));
 
@@ -53,9 +53,7 @@ class VentasPagosController extends Controller
     $data = $pago->toArray();
     $venta = $pago->venta;
 
-    if( $nota_credito = $data['nota_credito'] ){
-
-      // $nota_credito
+    if ($nota_credito = $data['nota_credito']) {
 
       $id = $nota_credito['VtaOper'];
 
@@ -63,19 +61,20 @@ class VentasPagosController extends Controller
       $documento_cliente = $data['nota_credito']['cliente_with']['PCRucc'];
       $nombre_cliente = $data['nota_credito']['cliente_with']['PCNomb'];
 
-      $text = sprintf('%s (%s) (%s %s) %s',
+      $text = sprintf(
+        '%s (%s) (%s %s) %s',
         $data['nota_credito']['VtaNume'],
         $monto,
         $documento_cliente,
         $nombre_cliente,
-        $pago['nota_credito']['VtaFvta']     
+        $pago['nota_credito']['VtaFvta']
       );
 
       $data['nota_credito'] = [];
       $data['nota_credito']['id'] = $id;
-      $data['nota_credito']['text'] = $text; 
+      $data['nota_credito']['text'] = $text;
     }
-    
+
     $data['correlative'] = $data['PagBoch'];
     $data['fecha'] = $venta->VtaFvta;
     $data['saldo'] = $venta->VtaSald;
@@ -83,17 +82,16 @@ class VentasPagosController extends Controller
     $data['moncodi'] = $data['MonCodi'];
     $data['tipocambio'] = $data['PagTCam'];
     $data['importe'] = $data['PagImpo'];
-    
-    /* fecha_pago */    
+
+    /* fecha_pago */
     $data['id'] = $data['VtaOper'];
     $data['moneda'] = Moneda::getAbrev($data['MonCodi']);
     $data['por_pagar'] = $venta->VtaSald;
     $data['total'] = $venta->VtaImpo;
     return $data;
-  
   }
 
-  public function dataPago( Request $request )
+  public function dataPago(Request $request)
   {
     $this->authorize(p_name('A_SHOW', 'R_PAGO', 'R_VENTA'));
 
@@ -101,29 +99,29 @@ class VentasPagosController extends Controller
     $pago_data = $pago->toArray();
     $pago_data['VtaImpo'] = $pago->venta->VtaImpo;
     return $pago;
-  } 
+  }
 
-  public function checkPago( Request $request )
+  public function checkPago(Request $request)
   {
-    $venta = Venta::find( $request->id_factura );
+    $venta = Venta::find($request->id_factura);
     $data['venta'] = $venta;
     $data['pago'] = $venta->needPago();
-    if( $data['pago'] ){
+    if ($data['pago']) {
       $data['PagOper'] = VentaPago::lastId();
       $data['moneda'] = $venta->moneda->monnomb;
-      $data['is_efectivo'] = $venta->isFactura();    
+      $data['is_efectivo'] = $venta->isFactura();
       $data['guia_data'] = GuiaSalida::getDataCreacion($venta);
     }
     return $data;
   }
 
-	public function update(PagoUpdateRequest $request, $id)
-	{
+  public function update(PagoUpdateRequest $request, $id)
+  {
     $this->authorize(p_name('A_EDIT', 'R_PAGO', 'R_VENTA'));
     $pago = VentaPago::findOrfail($id);
     $pago->updateInfo($request);
     return response()->json(['message' => 'Pago modificado exitosamente']);
-	}
+  }
 
 
   public function savePago(VentaPagoStoreRequest $request)
@@ -133,19 +131,19 @@ class VentasPagosController extends Controller
     $venta_pago = VentaPago::createPago($request);
     $venta_data = $venta_pago->toArray();
     $venta_data['moneda_abbre'] = $venta_pago->moneda_abbre();
-    if(!$venta_pago->isTipoCredito()){
+    if (!$venta_pago->isTipoCredito()) {
       $tipoIngreso = in_array($request->tipopago,  TipoPago::getTipoBanco()) ? 'banco' : 'venta';
       $tipo_mov = $venta->isNotaCredito() ? 'S' : 'I';
-      CajaDetalle::registrarIngreso($venta_pago, $tipoIngreso, $venta_pago['CajNume'], $request->all(), $tipo_mov );
+      CajaDetalle::registrarIngreso($venta_pago, $tipoIngreso, $venta_pago['CajNume'], $request->all(), $tipo_mov);
     }
-    
+
     return  [
       'guia_data' => GuiaSalida::getDataCreacion($venta),
       'por_pagar' => $venta_pago->venta->VtaSald,
       'pago' => $venta_data,
     ];
   }
-      
+
   public function removePago(VentaPagoDestroyRequest $request)
   {
     $this->authorize(p_name('A_DELETE', 'R_PAGO', 'R_VENTA'));
@@ -157,8 +155,7 @@ class VentasPagosController extends Controller
     optional($nota_credito)->updateDeudaByPagoNotaCredito();
 
     return $venta
-    ->updatedDeuda()
-    ->saldo;
+      ->updatedDeuda()
+      ->saldo;
   }
-
 }

@@ -9,7 +9,7 @@ if ($complete_tds_spaces) {
     ;
     if ($cant_items < 24) {
       $complete_tds_spaces = true;
-      $cant_tds_to_add = ($venta2->isNotaVenta() ? 43 : 38) - $cant_items;
+      $cant_tds_to_add = ($venta2->isNotaVenta() ? 43 : 35) - $cant_items;
     }
   }
 }

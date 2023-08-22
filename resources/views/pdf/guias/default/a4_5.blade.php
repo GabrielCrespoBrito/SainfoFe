@@ -105,7 +105,7 @@
 
 @include('pdf.guias.partials.table', [
 'complete_tds' => true,
-'cant_tds'     => 40,
+'cant_tds'     => 35,
 'class_name'   => 'col-12 mt-x5',
 'class_name_table' => 'col-md-12 col-10 border-style-solid border-color-blue-light border-width-2',
 'thead_class'  => 'bg-blue-light c-white border-bottom-style-solid border-left-style-solid border-width-2 pl-x3 pt-x3 pb-x3 text-uppercase text-left border-color-blue-light' ,
