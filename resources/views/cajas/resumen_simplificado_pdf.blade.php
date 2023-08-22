@@ -259,6 +259,15 @@
 
       <tr class="tr-bottom">
         <td>
+          <h2> PAGOS OTROS DIAS </h2>
+          <h2 class="no-bold">S/. {{ decimal($pago_cobranza, 2) }}</h2>
+        </td>
+      </tr>
+
+      
+
+      <tr class="tr-bottom">
+        <td>
           <h2> SALDO </h2>
           <h2 class="no-bold">S/. {{ decimal($saldo, 2) }}</h2>
         </td>

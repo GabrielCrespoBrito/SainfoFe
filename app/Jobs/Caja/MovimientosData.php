@@ -16,6 +16,7 @@ class MovimientosData
   public $tipo_cambio = null;
   public $caja;
   public $total_venta = 0;
+  public $pago_cobranza = 0;
   public $saldo_apertura = 0;
   public $ingresos = 0;
   public $salidas = 0;
@@ -82,7 +83,7 @@ class MovimientosData
     if ($caja) {
       $movs->where('caja_detalle.CajNume', '=', $this->caja->CajNume);
     }
-        
+
     else {
       $movs
         ->where('caja_detalle.MocFech', '=', $this->caja->CajFech)
@@ -101,6 +102,7 @@ class MovimientosData
         'caja_detalle.MonCodi as moneda',
         'caja_detalle.ANULADO as tipo_movimiento',
         'caja_detalle.CtoCodi as clase_movimiento',
+        'caja_detalle.MOTIVO as motivo',
         'ventas_pago.TpgCodi as tipo_pago'
       )->get();
   }
@@ -184,6 +186,11 @@ class MovimientosData
         $monto = $this->getMontoMovimiento($movimiento, true);
 
         if( $caja ){
+
+          if( strpos(strtolower($movimiento->motivo),'cobranza') !== -1 ){
+            $this->pago_cobranza += $monto;
+          }
+
           $this->pago_efectivo += $monto;
         }
 
@@ -236,6 +243,7 @@ class MovimientosData
       'salidas' => $this->salidas,
       'total_ventas' => $this->total_venta,
       'pago_efectivo' => $this->pago_efectivo,
+      'pago_cobranza' => $this->pago_cobranza,
       'saldo' => $this->saldo,
       'metodos_pagos' => $this->metodos_pagos,
     ];

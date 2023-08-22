@@ -26,6 +26,9 @@ class ReporteCajaSimplificado
 
     $cajaMovimientos = $this->caja->getDataMovimientos();
 
+    // dd( $cajaMovimientos );
+    // exit();
+
     $data = [
       'reporte_titulo' => 'Reporte de Caja Simplificado',
       'caja_nombre'    => $this->caja->CajNume,
@@ -39,6 +42,7 @@ class ReporteCajaSimplificado
       'salidas' => $cajaMovimientos->salidas,
       'total_ventas' => $cajaMovimientos->total_ventas,
       'pago_efectivo' => $cajaMovimientos->pago_efectivo,
+      'pago_cobranza' => $cajaMovimientos->pago_cobranza,
       'saldo' => $cajaMovimientos->saldo,
       'metodos_pagos' => $cajaMovimientos->metodos_pagos,
     ];
