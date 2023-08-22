@@ -68,7 +68,7 @@
 @php
 $cant_items = $items->count();
 
-$footerBreak =($cant_items >= 20 && $cant_items <= 45) || ($cant_items>= 88 && $cant_items <= 105) || ($cant_items>= 131);
+$footerBreak =($cant_items >= 25 && $cant_items <= 45) || ($cant_items>= 88 && $cant_items <= 105) || ($cant_items>= 131);
 
 $classFooter = '';
 @endphp
