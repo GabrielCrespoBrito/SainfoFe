@@ -55,7 +55,10 @@ class Caja extends Model
   public function dataReporte()
   {
     // $detalles = Caja::detallesByTipo($this->CajNume);
-    $detalles = $this->detalles;
+    $detalles = $this->detalles->load('venta_pago');
+
+    // dd( $detalles );
+    // exit();
 
     #      Ingresos totales
     $total_ingreso_sol = $detalles->where('ANULADO', self::INGRESO )->sum('CANINGS');
@@ -82,6 +85,7 @@ class Caja extends Model
         'nombre' =>  $detalle->MocNomb,
         'ingreso_sol' => $detalle->CANINGS,
         'egreso_sol' =>  $detalle->CANEGRS,
+        'fecha' =>  optional($detalle->venta_pago)->VtaFVta ?? $detalle->MocFech,
         'tipo_cambio'   => $detalle->tipoCambioIsNeeded(),
         'ingreso_dolar' =>  $detalle->CANINGD,
         'egreso_dolar' => $detalle->CANEGRD,

@@ -12,6 +12,7 @@
     </tr>    
     <tr class="tr_item-head">
       <td><strong>N° Documento </strong></td>
+      <td><strong>Fecha </strong></td>
       <td><strong> Motivo </strong></td>
       <td><strong> Nombre </strong></td>
       <td class="text-right"> <strong> Ingreso S/ </strong> </td>
@@ -23,6 +24,7 @@
     @foreach( $items as $item )
       <tr class="tr_item-elemento with-border-bottom">
         <td> {{ $item['nro_documento'] }} </td>
+        <td> {{ $item['fecha'] }} </td>
         <td> {{ $item['motivo'] }} </td>
         <td> {{ $item['nombre'] }} </td>
         <td class="text-right"> {{ $item['ingreso_sol'] }} </td>
