@@ -86,7 +86,6 @@ class LocalController extends Controller
     ini_set('memory_limit', '4000M');
     ini_set('max_execution_time', '600');
 
-
     $this->authorize(p_name('A_CREATE', 'R_LOCAL'));
     $fields = $request->only($this->fieldsUpdatedAbles);
     $fields['SerLetra'] = $request->serie;
@@ -117,6 +116,8 @@ class LocalController extends Controller
   {
     $empresa = get_empresa();
     $usuarios = $empresa->users->load('locales');
+    // dd($usuarios);
+    // exit();
     $local = Local::with('ubigeo')->findOrfail($id);
     $series = $local->getSeries();
     $listas = $local->listas;

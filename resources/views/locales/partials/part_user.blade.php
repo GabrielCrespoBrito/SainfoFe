@@ -11,7 +11,7 @@
         @endphp
 
         @if( $usuario->isAdmin() or $usuario->isOwner() )
-        @continue
+          @continue
         @endif
         
         <div class="checkbox">

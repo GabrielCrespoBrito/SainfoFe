@@ -187,7 +187,7 @@ class MovimientosData
 
         if( $caja ){
 
-          if( strpos(strtolower($movimiento->motivo),'cobranza') !== -1 ){
+          if( strpos(strtolower($movimiento->motivo),'cobranza') !== false ){
             $this->pago_cobranza += $monto;
           }
 
