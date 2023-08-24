@@ -57,7 +57,9 @@ Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
 
 
   // Consultar ruc de la empresa
-  Route::post('consult-ruc', "ClienteProveedor\ConsultDocumentController@consultRUC")->name('consulta_ruc');
+  Route::post('consult-ruc', "ClienteProveedor\ConsultDocumentController@consultRUC")
+  ->name('consulta_ruc')
+  ->middleware('cors');
 
   // Route::post('consult-ruc', 'ClienteProveedor\ConsultDocumentController@consultRUC')->name('clientes.consult_ruc');
 

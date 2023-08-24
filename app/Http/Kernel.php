@@ -93,8 +93,8 @@ class Kernel extends HttpKernel
       'check.consumo' =>  \App\Http\Middleware\CheckConsumoEmpresa::class,
       'empresa.active' =>  \App\Http\Middleware\EmpresaIsActiveMiddleware::class,
       'modulo_activo' =>  \App\Http\Middleware\ModuloActiveMiddleware::class,
-    
-      
+      'cors' =>  \App\Http\Middleware\Cors::class,
+
       // Acceso solo a los dueños de la empresa 
       'acceso_owner' =>  \App\Http\Middleware\OwnerAccess::class,       
     ];
