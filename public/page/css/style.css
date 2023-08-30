@@ -12569,12 +12569,52 @@ html:not(.ie-11):not(.ios) .parallax-disabled {
   z-index: 999999999;
 }
 
+.simple-chat-buttons {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  width: 50px;
+  height: 46px;
+  text-align: center;
+  line-height: 3;
+}
+
+.simple-chat-buttons:hover {
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.04);
+}
+
+.simple-chat-buttons svg {
+  width: 2.5em;
+  fill: white;
+}
+
+.simple-chat-buttons.button-phone {
+  background-color: #b4b9be;
+}
+
+.simple-chat-buttons.button-whatapp {
+  background-color: #25d366;
+}
+
+.simple-chat-buttons.button-mail {
+  background-color: #ea4335;
+}
+
+.simple-chat-buttons.button-facebook {
+  background-color: #3b5998
+}
+
+
+/* ---  */
 #simple-chat-button--button {
   display: block;
   position: relative;
   text-decoration: none;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   transition: all 0.2s ease-in-out;
   transform: scale(1);
