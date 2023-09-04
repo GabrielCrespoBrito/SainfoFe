@@ -64,6 +64,7 @@
 
 </div>
 
+<div class="col-md-12 col-xs-12 content_ventas div_table_content no_pl" style="overflow-x: scroll;">
 <table class="table table-bordered table-hover sainfo-table user-table" id="datatable">
   <thead>
     <tr>
@@ -80,6 +81,7 @@
     </tr>
   </thead>
 </table>
+</div>
 
 @include('usuarios.partials.modal_usuario')
 @include('usuarios.partials.modal_eliminar_usuario')
