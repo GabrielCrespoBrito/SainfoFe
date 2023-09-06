@@ -201,7 +201,6 @@ $(document).ready(function (e) {
 
 
   function guiaSalida(data = false) {
-    console.log("guiaSalida", data);
     setTipoGuia();
     show_modal("hide", "#modalSunatConfirmacion");
 
@@ -294,7 +293,6 @@ $(document).ready(function (e) {
     let opciones = "deuda caja almacen";
 
     if (opciones.indexOf(ventana) !== -1) {
-      console.log("error, opciones ventana", opciones, ventana);
     }
     if (ventana == "deuda") {
       return verificar_deudas == "1";
@@ -493,9 +491,6 @@ $(document).ready(function (e) {
     info.total_documento = info.total_importe;
     // info.percepcion = calc_percepcion(info.total_importe);
     info.percepcion = calc_percepcion(info.gravadas + info.inafectas + info.exoneradas);
-
-    console.log("info", info)
-
     return info;
   }
 
@@ -697,7 +692,6 @@ $(document).ready(function (e) {
 
     else {
       let newDate = addDays(new Date(fecha_actual), dias + 1);
-      console.log("newDate", newDate);
       $("[name=fecha_referencia]").datepicker("update", newDate);
     }
   }
@@ -765,7 +759,6 @@ $(document).ready(function (e) {
     }
 
     const $inputPrecio = $("[name=producto_precio]");
-    console.log("validand precio");
 
     // if(isLimit){
     const precioValue = Number($inputPrecio.val());
@@ -1409,9 +1402,6 @@ $(document).ready(function (e) {
     let producto_unidad = $("[name=producto_unidad] option:selected");
     let unidad_select = null;
     let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
-
-    console.log({ unidades });
-
 
     for (let i = 0; i < unidades.length; i++) {
       if (unidades[i].Unicodi == producto_unidad.val()) {
@@ -2478,20 +2468,15 @@ $(document).ready(function (e) {
 
   a = preguntar_sunat;
 
-  function imprimir(data) {
-
-
-
-  }
-
-
   function guardar_factura(data) {
     window.documento_guardado = true;
     window.data_guardado = data;
 
+      console.log( "guardar_factura", data );
+
     if (data.imprecion_data.impresion_directa) {
+      console.log("aqui estamos 2")
       try {
-        imprimir(data);
 
         function impresionExitosa() {
           successStore(true)
@@ -2512,28 +2497,23 @@ $(document).ready(function (e) {
 
         ticketPrint.errorFunc = function (data) {
           successStore(true);
-
         }.bind(ticketPrint);
-
+        
+        
         ticketPrint.print();
 
       } catch (error) {
-        successStore(true);
-
+        console.log("error_print", error)
       }
 
     }
 
-    else {
-      successStore(data, true);
-    }
+    successStore(data, true);
 
   }
 
 
   function successStore(show_window_print = true) {
-
-    console.log("data_guardado", window.data_guardado)
 
     $("#modalData").on('hide.bs.modal', e => {
 
@@ -2639,12 +2619,7 @@ $(document).ready(function (e) {
       });
     }
 
-
-    console.log("guias agregadas", guias);
-
     let dcto_global_porc = $('[name=descuento_global]').is(':disabled') ? 0 : $('[name=descuento_global]').val();
-
-    console.log("canjeIds", canjeIds)
 
     let data = {
       canje: Number(window.isCanje),
@@ -2924,7 +2899,6 @@ $(document).ready(function (e) {
 
   function initialFocus() {
 
-    console.log("initialFocus", cursor_inicial, inicial_input_focus)
     inicial_input_focus.focus();
 
 
@@ -3153,8 +3127,6 @@ $(document).ready(function (e) {
     $(`[name=vendedor] option[value=${data.vendedor}]`).prop('selected', true);
     $("[name=nro_pedido]").val(data.nume);
 
-    console.log("data importacion", data);
-
     let items = data.items;
     let table = data.table;
 
@@ -3304,7 +3276,6 @@ $(document).ready(function (e) {
   function ver_pagos() {
     AppPagosIndex.init();
     AppPagosIndex.tipo_pago_default = $("[name=medio_pago]").attr('data-id');
-    console.log("medio_pago", AppPagosIndex.tipo_pago_default);
     AppPago.set_callback(AppPagosIndex.show_notopenmodal.bind(AppPagosIndex));
     AppPagosIndex.set_id($("[name=codigo_venta]").val());
     AppPagosIndex.show_openmodal();
@@ -3338,7 +3309,6 @@ $(document).ready(function (e) {
     notificaciones(data.message, "success");
     $(".block_elemento").hide();
     $(".anular_documento").addClass('disabled');
-    console.log("verificacion_Exitsa", data);
   }
 
   function verificar_ticket(preguntar) {
@@ -3401,12 +3371,10 @@ $(document).ready(function (e) {
    */
   // function establecerCursorInicial()
   // {
-  // console.log({ window.inicial_focus })
   // window.inicial_focus.focus();
   // }
 
   function crear_cliente() {
-    // console.log({ ultimo_codigo_cliente });
     table_clientes.search(ultimo_codigo_cliente);
     window.open($(this).data('url'));
   }
@@ -3558,11 +3526,8 @@ $(document).ready(function (e) {
     descuento_global(true);
   }
 
-  // console.log("loquesea");
-
 
   function guiaAction() {
-    console.log("guiaAction", guiaNeedShow());
     // 
     // viewGuia();
     // 
@@ -3621,7 +3586,6 @@ $(document).ready(function (e) {
         if (isSistema) {
           // Abrir modal ....
           if (!verifiy_factura_number()) return;
-          console.log("abrir modal sistema");
         }
       }
 
@@ -3635,14 +3599,12 @@ $(document).ready(function (e) {
 
           // Abrir modal ....
           if (!verifiy_factura_number()) return;
-          console.log("abrir modal sistema");
 
 
           // Desabilitar
           $(".group_ref").prop('disabled', true);
 
           // Limpiar
-          console.log("limpiar los valores");
           $(".group_ref").val("");
 
         }
@@ -3732,10 +3694,6 @@ $(document).ready(function (e) {
   }
 
   function fechaEmisionActions() {
-    // console.log(
-    //   "fechaEmisionActions",
-    //   $("[name=forma_pago] option:selected").data('dias')
-    // );
 
     if ($("[name=forma_pago] option:selected").data('dias') > 0) {
       setFechasPagos();
@@ -3743,7 +3701,6 @@ $(document).ready(function (e) {
   }
 
   function getFecha(fecha_actual, dias_agregar) {
-    console.log(fecha_actual, dias_agregar);
     let date_js = addDays(new Date(fecha_actual), dias_agregar + 1);
     let year = date_js.getFullYear();
     let month = date_js.getMonth() + 1;
@@ -3759,7 +3716,6 @@ $(document).ready(function (e) {
 
     $(".pago-fecha-item", "#modalFP").each(function (index, dom) {
       let $this = $(this);
-      console.log("this", $this)
       let cantidad_dias = Number($this.find('[name=pago_dias]').val())
 
       let fecha_dia = getFecha(fecha_actual, cantidad_dias);
@@ -3771,7 +3727,6 @@ $(document).ready(function (e) {
   function setMontosPagos() {
     let $option = $("[name=forma_pago] option:selected");
     let dias = Number($option.data('dias'));
-    // console.log("setMonosPagos" , dias);
     let total_pagos = 0;
 
     if (dias) {
@@ -3781,7 +3736,6 @@ $(document).ready(function (e) {
 
 
       partes.forEach(element => {
-        console.log(partes)
         total_pagos += element
       });
 
@@ -3811,7 +3765,6 @@ $(document).ready(function (e) {
 
     let partes = totalIsValid ? getFraccionPagos(total, total_dias) : [];
 
-    console.log(fecha_actual, total, total_dias, totalIsValid);
 
     let $dia_element = $(
       `<div class='row row-header'>
@@ -4001,7 +3954,6 @@ $(document).ready(function (e) {
 
 
   function addProductoToTable(data) {
-    console.log("addProductoToTable", data)
     let unidad = data.unidades[0];
     let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
     let precio = is_sol ? unidad.UNIPUVS : unidad.UNIPUVD;
@@ -4064,7 +4016,6 @@ $(document).ready(function (e) {
         let data = JSON.parse($tr.attr('data-info'));
         if (data.ProCodi1 == codigo) {
           $items.removeClass('seleccionando');
-          console.log("findTrToAddQuantity", index, $tr)
           editProductoToTable($tr);
           result = true;
           return false;
@@ -4082,9 +4033,6 @@ $(document).ready(function (e) {
 
   function scanDetectionAction(codigo, cantidad) {
     codigo = codigo.toUpperCase();
-
-    console.log("codigo_buscar", codigo);
-
     let result = searchProductoByCodigoBarra(codigo);
 
 
@@ -4176,7 +4124,6 @@ $(document).ready(function (e) {
       }
 
       else if (tipo_cargo_value == "retencion") {
-        console.log("retencion")
 
       }
 
@@ -4214,8 +4161,6 @@ $(document).ready(function (e) {
   function addNewSelectGuiaToAsociate() {
     let $boxContainer = $(".box-guias");
     let $select_guia = $(".plantilla-select-guia").clone(true);
-
-    console.log("$select_guia", $select_guia);
 
     // plantilla-select-guia
     $select_guia.removeClass('plantilla-select-guia');
@@ -4267,8 +4212,6 @@ $(document).ready(function (e) {
 
   //
   function consultar_grupo_filter() {
-    console.log("consultando grupo familias")
-
     table_productos.search('');
 
 
@@ -4344,7 +4287,6 @@ $(document).ready(function (e) {
     $alto.val(0);
     $utilidad.val(0);
     $calculo.val(0);
-    console.log(current_product_data)
     $peso.text(current_product_data.producto.ProPeso)
 
     $("#modalCalculoPeso").modal(true);
@@ -4378,8 +4320,6 @@ $(document).ready(function (e) {
 
     const utilidad_val = Number($modal.find("[name=utilidad]").val());
     const calculo_val = Number($modal.find("[name=calculo]").val());
-
-    console.log("setPre", utilidad_val, calculo_val);
 
     if (isNaN(calculo_val) || isNaN(utilidad_val)) {
       notificaciones('Revise los datos puestos', 'error');
@@ -4420,8 +4360,6 @@ $(document).ready(function (e) {
     }
 
     columns = getIndexs();
-
-    console.log("columna del indice", columns)
 
     for (let index = 0; index < window.columns_alms_hide.length; index++) {
       var column = table_productos.column(window.columns_alms_hide[index]);
@@ -4469,13 +4407,11 @@ $(document).ready(function (e) {
         return true;
       }
 
-      // console.log("event cerrar modal" , e);
       let $condicion_textarea = $("#modalCondicionVenta [name=condicion_venta]");
       let is_proforma = $("[name=tipo_documento] option:selected").val() == "50";
       let condicion_save = is_proforma ? $condicion_textarea.attr('data-con_cot') : $condicion_textarea.attr('data-con_ven');
       let condicion_current = $condicion_textarea.val();
       let has_changes = condicion_save != condicion_current;
-      console.log({ condicion_save, condicion_current })
 
       if (!has_changes) {
         return true;
@@ -4545,7 +4481,6 @@ $(document).ready(function (e) {
         let optionsLen = $(".select2-results__option--highlighted").length;
 
         if ($("#cliente_documento").val()) {
-          console.log($("#cliente_documento").val());
           $(".btn-add-cliente").remove();
           return;
         }
@@ -4554,7 +4489,6 @@ $(document).ready(function (e) {
         if (isDni(value) || rucValido(value) && !optionsLen) {
 
           addButtonSelect2Cliente();
-          console.log("Dni o ruc valido", value);
           return;
         }
 
@@ -4623,7 +4557,6 @@ $(document).ready(function (e) {
       let data_doc_anticipo = data.params.args.data.data;
       $input_total_anticipo.val(data_doc_anticipo.total);
       putInputAnticipoValue();
-      console.log("documento seleccionado", data_doc_anticipo);
     })
 
 
@@ -4657,8 +4590,6 @@ $(document).ready(function (e) {
       else {
 
         let tipo_documento_id = $("[name=tipo_documento]").val();
-
-        console.log("tipo_documento_id", tipo_documento_id, tipo_documento_id != "01");
 
         if (tipo_documento_id != "01") {
           notificaciones('Solo se puede hacer factura como documento con anticipo', 'error');
@@ -4829,7 +4760,6 @@ $(document).ready(function (e) {
     table_productos.on('draw.dt', select_tabla_productos);
 
     table_productos.on('draw.dt', () => {
-      console.log("window.almacenVisualize", window.almacenVisualize)
       if (window.almacenVisualize) {
         window.almacenVisualize = false;
         showHideAlmacenes();
@@ -5233,8 +5163,6 @@ $(document).ready(function (e) {
     }
 
     window.canjeIds = [...new Set(window.canjeIds)];
-
-    console.log("itemsToAdd", itemsToAdd)
 
     let first = true;
 

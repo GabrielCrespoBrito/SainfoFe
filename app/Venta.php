@@ -1199,7 +1199,7 @@ class Venta extends Model
     if ($saveTemp) {
       $tempPath = file_build_path('temp', $namePDF);
       $pdf->save($tempPath);
-      return $tempPath;
+      // return $tempPath;
     }
 
     return [

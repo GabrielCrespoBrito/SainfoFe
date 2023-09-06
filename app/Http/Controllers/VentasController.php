@@ -412,14 +412,15 @@ class VentasController extends Controller
         $save = $formato == PDFPlantilla::FORMATO_A4;
         $documento->fresh()->saveXML();
         $serie = $request->serie;
-        $result = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
+        $pdfResult = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
+        $result = $pdfResult['tempPath'];
+        $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);
       }
     else {
       $result = $documento->generatePDF(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR, get_empresa()->hasImpresionIGV(), true, true);
       }
 
       $documento->updateSeries();
-
 
       if ($request->canje) {
         $documento->updateNotaVentaByCanje($request->canjeQuery);
@@ -437,7 +438,7 @@ class VentasController extends Controller
       $empresa->sumarConsumo(Caracteristica::COMPROBANTES);
     }
 
-    // $url = str_replace('\\', '/', asset($result));
+
     $url = asset($result);
     $needFactura =  $isFacturacion ? $documento->needFactura()  : false;
     $needPago = $request->canje ? false : ($isTableVentas ?  $documento->needPago() : false);

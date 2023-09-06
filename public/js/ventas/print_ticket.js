@@ -18,7 +18,7 @@ class printTicket {
     this.func_success_print = func_success_print;
     this.func_error_print = func_error_print;
 
-    this.conector = new ConectorPlugin();
+    this.conector = new ConectorPluginV3();
   }
 
 
@@ -87,7 +87,6 @@ class printTicket {
           text_rest += text_part;
         }
 
-        console.log({ text_parts, text_rest });
         return text_rest;
 
       }
@@ -100,18 +99,18 @@ class printTicket {
    */
   makeEmpresaData() {
     this.conector
-      .establecerJustificacion(ConectorPlugin.Constantes.AlineacionCentro)
-      .imagenDesdeUrl(this.data['empresa_logo_path'] )
-      .establecerTamanioFuente(2, 1)
-      .establecerEnfatizado(1)
-      .textoConSalto(this.data['empresa_nombre'])
-      .establecerEnfatizado(0)
-      .establecerTamanioFuente(1, 1)
-      .textoConSalto(this.data['empresa_direccion'])
-      .textoConSalto(this.data['empresa_ruc'])
-      .textoConSalto(this.data['empresa_telefonos'])
-      .textoConSalto(this.data['empresa_correos'])
-      .texto(this.getLineaSeparadora())
+      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+      .DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path'], ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL, 160)
+      .EstablecerTamañoFuente(2, 1)
+      .EstablecerEnfatizado(1)
+      .EscribirTextoFeed(this.data['empresa_nombre'])
+      .EstablecerEnfatizado(0)
+      .EstablecerTamañoFuente(1, 1)
+      .EscribirTextoFeed(this.data['empresa_direccion'])
+      .EscribirTextoFeed(this.data['empresa_ruc'])
+      .EscribirTextoFeed(this.data['empresa_telefonos'])
+      .EscribirTextoFeed(this.data['empresa_correos'])
+      .EscribirTexto(this.getLineaSeparadora())
   }
 
   /**
@@ -120,12 +119,12 @@ class printTicket {
    */
   makeDocumentoId() {
     this.conector
-      .establecerEnfatizado(1)
-      .establecerTamanioFuente(2, 1)
-      .textoConSalto(this.data['documento_nombre'])
-      .textoConSalto(this.data['documento_id'])
-      .establecerTamanioFuente(1, 1)
-      .establecerEnfatizado(0)
+      .EstablecerEnfatizado(1)
+      .EstablecerTamañoFuente(2, 1)
+      .EscribirTextoFeed(this.data['documento_nombre'])
+      .EscribirTextoFeed(this.data['documento_id'])
+      .EstablecerTamañoFuente(1, 1)
+      .EstablecerEnfatizado(0)
   }
 
   /**
@@ -134,11 +133,11 @@ class printTicket {
    */
   makeClienteData() {
     this.conector
-      .establecerJustificacion(ConectorPlugin.Constantes.AlineacionIzquierda)
-      .textoConSalto(this.data['cliente_razon_social'])
-      .textoConSalto(this.data['cliente_documento'])
-      .textoConSalto(this.data['cliente_direccion'])
-      .texto(this.getLineaSeparadora())
+      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA)
+      .EscribirTextoFeed(this.data['cliente_razon_social'])
+      .EscribirTextoFeed(this.data['cliente_documento'])
+      .EscribirTextoFeed(this.data['cliente_direccion'])
+      .EscribirTexto(this.getLineaSeparadora())
   }
 
 
@@ -148,8 +147,8 @@ class printTicket {
    */
   makeObservacion() {
     this.conector
-      .textoConSalto(this.data['documento_observacion'])
-      .texto(this.getLineaSeparadora())
+      .EscribirTextoFeed(this.data['documento_observacion'])
+      .EscribirTexto(this.getLineaSeparadora())
   }
 
 
@@ -160,13 +159,13 @@ class printTicket {
   makeInformacionDocumento() {
     // 22-25
     this.conector
-      .textoConSalto(this.getTextoSize('Fecha:', 22) + this.getTextoSize(this.data['documento_fecha'], this.line_width - 22))
-      .textoConSalto(this.getTextoSize('Vendedor:', 22) + this.getTextoSize(this.data['documento_vendedor'], this.line_width - 22))
-      .textoConSalto(this.getTextoSize('Forma de Pago:', 22) + this.getTextoSize(this.data['documento_forma_pago'], this.line_width - 22))
-      .textoConSalto(this.getTextoSize('Guia/s:', 22) + this.getTextoSize(this.data['documento_guias'], this.line_width - 22, true, true ))
-      .textoConSalto(this.getTextoSize('Responsable:', 22) + this.getTextoSize(this.data['documento_responsable'], this.line_width - 22))
-      .textoConSalto(this.getTextoSize('Ord.Compra:', 22) + this.getTextoSize(this.data['documento_orden_compra'], this.line_width - 22))
-      .texto(this.getLineaSeparadora())
+      .EscribirTextoFeed(this.getTextoSize('Fecha:', 22) + this.getTextoSize(this.data['documento_fecha'], this.line_width - 22))
+      .EscribirTextoFeed(this.getTextoSize('Vendedor:', 22) + this.getTextoSize(this.data['documento_vendedor'], this.line_width - 22))
+      .EscribirTextoFeed(this.getTextoSize('Forma de Pago:', 22) + this.getTextoSize(this.data['documento_forma_pago'], this.line_width - 22))
+      .EscribirTextoFeed(this.getTextoSize('Guia/s:', 22) + this.getTextoSize(this.data['documento_guias'], this.line_width - 22, true, true))
+      .EscribirTextoFeed(this.getTextoSize('Responsable:', 22) + this.getTextoSize(this.data['documento_responsable'], this.line_width - 22))
+      .EscribirTextoFeed(this.getTextoSize('Ord.Compra:', 22) + this.getTextoSize(this.data['documento_orden_compra'], this.line_width - 22))
+      .EscribirTexto(this.getLineaSeparadora())
   }
 
   /**
@@ -177,83 +176,80 @@ class printTicket {
 
     // Cabecera de la tabla
     this.conector
-      .establecerEnfatizado(1)
-      .textoConSalto(
-        this.getTextoSize('Unid', 7) + 
+      .EstablecerEnfatizado(1)
+      .EscribirTextoFeed(
+        this.getTextoSize('Unid', 7) +
         this.getTextoSize('Descripcion', this.line_width - 7))
-      .textoConSalto(
-        this.getTextoSize( 'Cant.', 15) +
-        this.getTextoSize( 'P.Unit.', 18) +
-        this.getTextoSize( 'Importe', 14 , false, true )
+      .EscribirTextoFeed(
+        this.getTextoSize('Cant.', 15) +
+        this.getTextoSize('P.Unit.', 18) +
+        this.getTextoSize('Importe', 14, false, true)
       )
-      .establecerEnfatizado(0)
-      .texto(this.getLineaSeparadora())
+      .EstablecerEnfatizado(0)
+      .EscribirTexto(this.getLineaSeparadora())
 
 
     // Productos
-    for (let index = 0;  index < this.data['items'].length; index++) {
-        let item = this.data['items'][index];
+    for (let index = 0; index < this.data['items'].length; index++) {
+      let item = this.data['items'][index];
 
-        this.conector
-          .textoConSalto(
-            this.getTextoSize(item.unidad, 7) + 
-            this.getTextoSize(item.descripcion , this.line_width - 7, true , false, 7)
-          )
-          .textoConSalto(
-            this.getTextoSize(String(item.cantidad) , 15) +
-            this.getTextoSize(String(item.precio_unitario)   , 18) +
-            this.getTextoSize(String(item.importe)  , 14, false, true)
-          )
-          .texto(this.getLineaSeparadora())
-      }
+      this.conector
+        .EscribirTextoFeed(
+          this.getTextoSize(item.unidad, 7) +
+          this.getTextoSize(item.descripcion, this.line_width - 7, true, false, 7)
+        )
+        .EscribirTextoFeed(
+          this.getTextoSize(String(item.cantidad), 15) +
+          this.getTextoSize(String(item.precio_unitario), 18) +
+          this.getTextoSize(String(item.importe), 14, false, true)
+        )
+        .EscribirTexto(this.getLineaSeparadora())
+    }
   }
 
   /**
    * El total en texto
    */
-  makeInfoAnexo(){
-
-
-    console.log(this.data);
+  makeInfoAnexo() {
 
     // Productos
     for (let index = 0; index < this.data['infos_adicional'].length; index++) {
       let info = this.data['infos_adicional'][index];
       this.conector
-        .textoConSalto(info.descripcion)
-        .texto(this.getLineaSeparadora())
+        .EscribirTextoFeed(info.descripcion)
+        .EscribirTexto(this.getLineaSeparadora())
     }
 
 
     // Monto
     this.conector
-      .establecerEnfatizado(1)
-      .textoConSalto(this.data['monto_letra'])
-      .texto(this.getLineaSeparadora())
-      .establecerEnfatizado(0)
+      .EstablecerEnfatizado(1)
+      .EscribirTextoFeed(this.data['monto_letra'])
+      .EscribirTexto(this.getLineaSeparadora())
+      .EstablecerEnfatizado(0)
   }
 
   /**
    * Informacion del totales
    * @return
    */
-  makeTotals() {    
+  makeTotals() {
 
-    this.conector.establecerEnfatizado(1)
+    this.conector.EstablecerEnfatizado(1)
 
     for (let index = 0; index < this.data['totals'].length; index++) {
       const total = this.data['totals'][index];
 
-        this.conector.textoConSalto(
-          this.getTextoSize( total.descripcion, 25) +
-          this.getTextoSize( this.data['moneda_abbreviatura'], 5) +
-          this.getTextoSize( total.value, 17, false, false)
-        )
+      this.conector.EscribirTextoFeed(
+        this.getTextoSize(total.descripcion, 25) +
+        this.getTextoSize(this.data['moneda_abbreviatura'], 5) +
+        this.getTextoSize(total.value, 17, false, false)
+      )
     }
 
     this.conector
-    .establecerEnfatizado(0)
-    .texto(this.getLineaSeparadora())
+      .EstablecerEnfatizado(0)
+      .EscribirTexto(this.getLineaSeparadora())
   }
 
   /**
@@ -263,18 +259,18 @@ class printTicket {
   makeCuentas() {
 
     this.conector
-      .establecerEnfatizado(1)
-      .textoConSalto('CUENTAS')
-      .establecerEnfatizado(0);
-      
+      .EstablecerEnfatizado(1)
+      .EscribirTextoFeed('CUENTAS')
+      .EstablecerEnfatizado(0);
+
     // Cuentas
     for (let index = 0; index < this.data['bancos'].length; index++) {
       let cuenta = this.data['bancos'][index];
       let cuenta_str = cuenta.banco_nombre + ' ' + cuenta.banco_moneda + cuenta.banco_cuenta;
-      this.conector.textoConSalto(cuenta_str);
+      this.conector.EscribirTextoFeed(cuenta_str);
     }
 
-    this.conector.texto(this.getLineaSeparadora())
+    this.conector.EscribirTexto(this.getLineaSeparadora())
   }
 
   /**
@@ -283,12 +279,11 @@ class printTicket {
    */
   makeQr() {
     let informacion_qr = this.data['qr_data'];
-    
-    this.conector
-    .establecerJustificacion(ConectorPlugin.Constantes.AlineacionCentro)
-    .qrComoImagen(informacion_qr)
-    .establecerJustificacion(ConectorPlugin.Constantes.AlineacionIzquierda);
 
+    this.conector
+      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+      .ImprimirCodigoQr(informacion_qr, 160, ConectorPluginV3.RECUPERACION_QR_MEJOR, ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL)
+      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA);
   }
 
   /**
@@ -301,17 +296,18 @@ class printTicket {
     let consulta = 'Esta puede ser consultada en:';
 
     this.conector
-    .textoConSalto( 'Resumen: ' +  this.data['documento_hash'] )
-    .textoConSalto( 'Hora: ' + this.data['documento_hora'] )
-    .textoConSalto( 'Peso: ' + this.data['documento_peso'] + ' Kgs.' )
-    .textoConSalto( representacion_impresora)
-    .establecerEnfatizado(1)
-    .textoConSalto(this.data['documento_nombre'])
-    .establecerEnfatizado(0)
-    .textoConSalto(consulta)
-    .establecerEnfatizado(1)
-    .textoConSalto( $.trim(this.data['direccion_consulta']))
-    .establecerEnfatizado(0)
+      .Iniciar()
+      .EscribirTextoFeed('Resumen: ' + this.data['documento_hash'])
+      .EscribirTextoFeed('Hora: ' + this.data['documento_hora'])
+      .EscribirTextoFeed('Peso: ' + this.data['documento_peso'] + ' Kgs.')
+      .EscribirTextoFeed(representacion_impresora)
+      .EstablecerEnfatizado(1)
+      .EscribirTextoFeed(this.data['documento_nombre'])
+      .EstablecerEnfatizado(0)
+      .EscribirTextoFeed(consulta)
+      .EstablecerEnfatizado(1)
+      .EscribirTextoFeed($.trim(this.data['direccion_consulta']))
+      .EstablecerEnfatizado(0)
   }
 
   /**
@@ -340,43 +336,46 @@ class printTicket {
     this.ticket_ready = true;
   }
 
-  errorFunc(e)
-  {
-    console.log( "errorFunc" , this);
-    // if (this.func_error_print) {
-      // this.func_error_print(this.data, e);
-    // }
-   }
+  errorFunc(e) {
+    console.log("errorFunc", this);
+  }
 
-  printTicket()
-  {   
-    this.conector.imprimirEn( this.nombre_impresora )
-        .then(responsePrint => {
-          console.log({ responsePrint });
+  printTicket() {
+    this.conector.imprimirEn(this.nombre_impresora)
+      .then(responsePrint => {
+        if (responsePrint === true) {
+          console.log("Print Success");
+          if (this.func_success_print) {
+            this.func_success_print(this.data);
+          }
+        }
+        else {
+          console.log("Print Error " + responsePrint);
+          if (this.func_error_print) {
+            this.func_error_print(this.data, responsePrint);
+          }
+        }
+      })
+      .catch(this.errorFunc)
 
-          if (responsePrint === true) {
-            console.log("Print Success");
-            if (this.func_success_print) {
-              this.func_success_print(this.data);
-            }
-          }
-          else {
-            console.log("Print Error " + responsePrint);
-            if (this.func_error_print) {
-              this.func_error_print(this.data, responsePrint);
-            }
-          }
-        })
-        .catch(this.errorFunc)
+    // ---
+    // console.log("Imprimiendo")
+
+    // const resp =  this.conector.imprimirEn(this.nombre_impresora)
+    // console.log(resp);
+
+    // return resp;
   }
 
   // Print
   print() {
 
+    console.log("print", this.copy_qty)
+
     this.makeTicket();
 
     for (let index = 0; index < this.copy_qty; index++) {
-      if(this.printTicket() == false){
+      if (this.printTicket() == false) {
         return false;
       }
     }

@@ -181,7 +181,7 @@ $(document).ready(function()
 
 
   const obtenerListaDeImpresoras = () => {
-    ConectorPlugin.obtenerImpresoras()
+    ConectorPluginV3.obtenerImpresoras()
       .then(listaDeImpresoras => {
         listaDeImpresoras.forEach(nombreImpresora => {
           console.log( "nombreImpresora", nombreImpresora );

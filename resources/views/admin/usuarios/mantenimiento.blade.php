@@ -17,6 +17,8 @@
   <a data-url="{{ route('admin.usuarios.form', ['id' => 'XXX']) }}"  href="{{ route('admin.usuarios.form') }}" class="btn btn-primary btn-flat pull-right crear-nuevo-usuario"> <span class="fa fa-plus"></span> Nuevo </a>
 </div>
 
+<div class="col-md-12 col-xs-12 content_ventas div_table_content no_pl" style="overflow-x: scroll;">
+
 <table data-url="{{ route('admin.usuarios.search') }}" class="table table-bordered table-hover sainfo-table user-table" id="datatable">
   <thead>
     <tr>
@@ -29,6 +31,7 @@
     </tr>
   </thead>
 </table>
+</div>
 
 @include('admin.usuarios.partials.modal_usuario', ['roles' => $roles])
 

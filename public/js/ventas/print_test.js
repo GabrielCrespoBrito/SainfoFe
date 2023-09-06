@@ -19,7 +19,7 @@ class PrintTest {
     this.func_success_print = func_success_print;
     this.func_error_print = func_error_print;
 
-    this.conector = new ConectorPlugin();
+    this.conector = new ConectorPluginV3();
   }
 
 
@@ -101,18 +101,18 @@ class PrintTest {
    */
   makeEmpresaData() {
     this.conector
-      .establecerJustificacion(ConectorPlugin.Constantes.AlineacionCentro)
-      .imagenDesdeUrl(this.data['empresa_logo_path'])
-      .establecerTamanioFuente(2, 1)
-      .establecerEnfatizado(1)
-      .textoConSalto(this.data['empresa_nombre'])
-      .establecerEnfatizado(0)
-      .establecerTamanioFuente(1, 1)
-      .textoConSalto(this.data['empresa_direccion'])
-      .textoConSalto(this.data['empresa_ruc'])
-      .textoConSalto(this.data['empresa_telefonos'])
-      .textoConSalto(this.data['empresa_correos'])
-      .texto(this.getLineaSeparadora())
+      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+      // .DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path']);
+      // .establecerTamanioFuente(2, 1)
+      // .establecerEnfatizado(1)
+      // .textoConSalto(this.data['empresa_nombre'])
+      // .establecerEnfatizado(0)
+      // .establecerTamanioFuente(1, 1)
+      // .textoConSalto(this.data['empresa_direccion'])
+      // .textoConSalto(this.data['empresa_ruc'])
+      // .textoConSalto(this.data['empresa_telefonos'])
+      // .textoConSalto(this.data['empresa_correos'])
+      // .texto(this.getLineaSeparadora())
   }
 
 
@@ -123,10 +123,10 @@ class PrintTest {
   makeMessage() {
 
     this.conector
-      .establecerTamanioFuente(2, 1)
-      .textoConSalto('PRUEBA DE IMPRESIÒN: ')
-      .textoConSalto('IMPRESORA: ' + this.nombre_impresora )
-      .establecerTamanioFuente(1, 1)
+      .EstablecerTamañoFuente(2, 1)
+      .EscribirTexto('PRUEBA DE IMPRESIÒN: ')
+      .EscribirTexto('IMPRESORA: ' + this.nombre_impresora );
+      // .establecerTamanioFuente(1, 1)
   }
 
   /**
@@ -140,9 +140,9 @@ class PrintTest {
     }
 
     // this.conector.cortar(); 
-    this.makeEmpresaData();
+    // this.makeEmpresaData();
     this.makeMessage();
-    this.conector.cortar();
+    // this.conector.cortar();
     this.ticket_ready = true;
   }
 
@@ -156,9 +156,6 @@ class PrintTest {
   printTicket() {
     this.conector.imprimirEn(this.nombre_impresora)
       .then(responsePrint => {
-        // --------------------------------------------------------------------------------------------------------------------------------
-        console.log({ responsePrint });
-        // --------------------------------------------------------------------------------------------------------------------------------
         if (responsePrint === true) {
           notificaciones('Al parecer se ha realizado la impresiòn correctamente, por favor revisar confirmar en su impresora', 'success');
         }
