@@ -38,7 +38,7 @@ class UsuarioAsignarDocumentoStoreRequest extends FormRequest
         // }),
         
         'impresion_directa' => 'required|in:0,1',
-        'cantidad_copias'   => 'nullable|integer',
+        'cantidad_copias'   => 'nullable|min:0|integer',
         'nombre_impresora'  => 'nullable|sometimes|max:255',
       ];
     }

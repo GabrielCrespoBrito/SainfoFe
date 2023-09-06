@@ -36,7 +36,7 @@ $(document).ready(function()
       'ticket_plantilla_id': $(".row-tipo:visible").find(".formato_ticket option:selected").val(),
       // ----------------------------------------------------------------------
       'impresion_directa' : $('[name=impresion_directa] option:selected').val(),
-      'cantidad_copias' : $('[name=cantidad_copias] option:selected').val(),
+      'cantidad_copias' : $('[name=cantidad_copias]').val(),
       'nombre_impresora' : $('[name=nombre_impresora]').val(),
     }
     

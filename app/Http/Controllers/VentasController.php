@@ -130,10 +130,6 @@ class VentasController extends Controller
         'moneda.monabre'
       );
 
-
-      // dd($request->all());
-      // exit();
-
     if ($status != null) {
       $busqueda->where('ventas_cab.VtaFMail', '=', $status);
     }

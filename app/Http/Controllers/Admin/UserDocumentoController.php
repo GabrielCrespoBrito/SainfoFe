@@ -79,7 +79,7 @@ class UserDocumentoController extends Controller
     $data['a5_plantilla_id'] = $request->input('a5_plantilla_id', null);
     $data['ticket_plantilla_id'] = $request->input('ticket_plantilla_id', null);
     $data['impresion_directa'] = $request->input('impresion_directa');
-    $data['cantidad_copias'] = $request->input('cantidad_copias');
+    $data['cantidad_copias'] = $request->input('cantidad_copias', 1);
     $data['nombre_impresora'] = $request->input('nombre_impresora');
     
     SerieDocumento::create($data);
