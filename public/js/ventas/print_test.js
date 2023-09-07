@@ -123,6 +123,7 @@ class PrintTest {
   makeMessage() {
 
     this.conector
+      .Iniciar()
       .EstablecerTamañoFuente(2, 1)
       .EscribirTexto('PRUEBA DE IMPRESIÒN: ')
       .EscribirTexto('IMPRESORA: ' + this.nombre_impresora );
@@ -153,8 +154,8 @@ class PrintTest {
     // }
   }
 
-  printTicket() {
-    this.conector.imprimirEn(this.nombre_impresora)
+  async printTicket() {
+    await this.conector.imprimirEn(this.nombre_impresora)
       .then(responsePrint => {
         if (responsePrint === true) {
           notificaciones('Al parecer se ha realizado la impresiòn correctamente, por favor revisar confirmar en su impresora', 'success');
