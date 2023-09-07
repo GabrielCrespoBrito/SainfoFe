@@ -100,8 +100,13 @@ class printTicket {
   makeEmpresaData() {
     this.conector
       .Iniciar()
-      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
-      .DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path'], ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL, 160)
+     .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+     
+    if (this.data['empresa_logo_path']){
+      this.conector.DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path'], ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL, 160)
+    }
+  
+    this.conector
       .EstablecerTamañoFuente(2, 1)
       .EstablecerEnfatizado(1)
       .EscribirTextoFeed(this.data['empresa_nombre'])
@@ -112,7 +117,7 @@ class printTicket {
       .EscribirTextoFeed(this.data['empresa_telefonos'])
       .EscribirTextoFeed(this.data['empresa_correos'])
       .EscribirTexto(this.getLineaSeparadora())
-  }
+    }
 
   /**
    * Informacion del documento
