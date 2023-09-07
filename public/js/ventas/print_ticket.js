@@ -103,7 +103,7 @@ class printTicket {
      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
      
     if (this.data['empresa_logo_path']){
-      this.conector.DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path'], ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL, 160)
+      // this.conector.DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path'], ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL, 160)
     }
   
     this.conector
