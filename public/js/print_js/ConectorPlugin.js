@@ -77,8 +77,7 @@ const ConectorPluginV3 = (() => {
     }
     EscribirTextoFeed(texto, lineas = 1)
     {
-      this.EscribirTexto(texto);
-      this.Feed(lineas);
+      this.EscribirTexto(texto + "\n");
       return this;
     }
     EstablecerAlineacion(alineacion) {

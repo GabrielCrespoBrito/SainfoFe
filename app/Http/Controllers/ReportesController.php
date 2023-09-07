@@ -306,17 +306,16 @@ class ReportesController extends Controller
     $tipo_str = $tipo === "detalle" ? '01' : "02";
     $local_tipo_str = $local_str . $tipo_str;
 
-    // Nombre del Archivo
+    # Nombre del Archivo
     $namePDF = sprintf(
       "%s_%s_%s_%s.%s",
       'kardexvalorizado',
       $ruc,
       $mes,
       $local_tipo_str,
-      $formato_file
-    );
+      $formato_file );
 
-    if (!$reprocesar) {
+    if ( ! $reprocesar ) {
       $pathTemp = file_build_path('temp', $namePDF);
       if ($fileHelper->pdfExist($namePDF)) {
         \File::put(public_path($pathTemp), $fileHelper->getPdf($namePDF));

@@ -296,7 +296,6 @@ class printTicket {
     let consulta = 'Esta puede ser consultada en:';
 
     this.conector
-      .Iniciar()
       .EscribirTextoFeed('Resumen: ' + this.data['documento_hash'])
       .EscribirTextoFeed('Hora: ' + this.data['documento_hora'])
       .EscribirTextoFeed('Peso: ' + this.data['documento_peso'] + ' Kgs.')
@@ -369,9 +368,6 @@ class printTicket {
 
   // Print
   print() {
-
-    console.log("print", this.copy_qty)
-
     this.makeTicket();
 
     for (let index = 0; index < this.copy_qty; index++) {

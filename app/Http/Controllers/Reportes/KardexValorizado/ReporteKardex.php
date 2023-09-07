@@ -9,6 +9,10 @@ use App\Util\PDFGenerator\PDFGenerator;
 
 class ReporteKardex
 {
+  protected $local = null;
+  protected $mes = null;
+  protected $empresa = null;
+  
   # Información items
   protected $infoItems = [];
   #Item actual

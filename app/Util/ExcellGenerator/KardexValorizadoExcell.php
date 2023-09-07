@@ -154,7 +154,7 @@ class KardexValorizadoExcell extends ExcellGenerator
     return [
       'ingreso_cantidad' => $total_ingreso_cantidad,
       'ingreso_total' => $total_ingreso_total,
-      'egreso_cantidad' => $total_egreso_cantidad,
+       'egreso_cantidad' => $total_egreso_cantidad,
       'egreso_total' => $total_egreso_total,
     ];
   }
