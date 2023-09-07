@@ -108,9 +108,9 @@ class printTicket {
   
     this.conector
       .EstablecerTamañoFuente(2, 1)
-      .EstablecerEnfatizado(1)
+      .EstablecerEnfatizado(true)
       .EscribirTextoFeed(this.data['empresa_nombre'])
-      .EstablecerEnfatizado(0)
+      .EstablecerEnfatizado(false)
       .EstablecerTamañoFuente(1, 1)
       .EscribirTextoFeed(this.data['empresa_direccion'])
       .EscribirTextoFeed(this.data['empresa_ruc'])
@@ -125,12 +125,12 @@ class printTicket {
    */
   makeDocumentoId() {
     this.conector
-      .EstablecerEnfatizado(1)
+      .EstablecerEnfatizado(true)
       .EstablecerTamañoFuente(2, 1)
       .EscribirTextoFeed(this.data['documento_nombre'])
       .EscribirTextoFeed(this.data['documento_id'])
       .EstablecerTamañoFuente(1, 1)
-      .EstablecerEnfatizado(0)
+      .EstablecerEnfatizado(false)
   }
 
   /**
@@ -182,7 +182,7 @@ class printTicket {
 
     // Cabecera de la tabla
     this.conector
-      .EstablecerEnfatizado(1)
+      .EstablecerEnfatizado(true)
       .EscribirTextoFeed(
         this.getTextoSize('Unid', 7) +
         this.getTextoSize('Descripcion', this.line_width - 7))
@@ -191,7 +191,7 @@ class printTicket {
         this.getTextoSize('P.Unit.', 18) +
         this.getTextoSize('Importe', 14, false, true)
       )
-      .EstablecerEnfatizado(0)
+      .EstablecerEnfatizado(false)
       .EscribirTexto(this.getLineaSeparadora())
 
 
@@ -229,10 +229,10 @@ class printTicket {
 
     // Monto
     this.conector
-      .EstablecerEnfatizado(1)
+      .EstablecerEnfatizado(true)
       .EscribirTextoFeed(this.data['monto_letra'])
       .EscribirTexto(this.getLineaSeparadora())
-      .EstablecerEnfatizado(0)
+      .EstablecerEnfatizado(false)
   }
 
   /**
@@ -241,7 +241,7 @@ class printTicket {
    */
   makeTotals() {
 
-    this.conector.EstablecerEnfatizado(1)
+    this.conector.EstablecerEnfatizado(true)
 
     for (let index = 0; index < this.data['totals'].length; index++) {
       const total = this.data['totals'][index];
@@ -254,7 +254,7 @@ class printTicket {
     }
 
     this.conector
-      .EstablecerEnfatizado(0)
+      .EstablecerEnfatizado(false)
       .EscribirTexto(this.getLineaSeparadora())
   }
 
@@ -265,9 +265,9 @@ class printTicket {
   makeCuentas() {
 
     this.conector
-      .EstablecerEnfatizado(1)
+      .EstablecerEnfatizado(true)
       .EscribirTextoFeed('CUENTAS')
-      .EstablecerEnfatizado(0);
+      .EstablecerEnfatizado(false);
 
     // Cuentas
     for (let index = 0; index < this.data['bancos'].length; index++) {
@@ -306,13 +306,13 @@ class printTicket {
       .EscribirTextoFeed('Hora: ' + this.data['documento_hora'])
       .EscribirTextoFeed('Peso: ' + this.data['documento_peso'] + ' Kgs.')
       .EscribirTextoFeed(representacion_impresora)
-      .EstablecerEnfatizado(1)
+      .EstablecerEnfatizado(true)
       .EscribirTextoFeed(this.data['documento_nombre'])
-      .EstablecerEnfatizado(0)
+      .EstablecerEnfatizado(false)
       .EscribirTextoFeed(consulta)
-      .EstablecerEnfatizado(1)
+      .EstablecerEnfatizado(true)
       .EscribirTextoFeed($.trim(this.data['direccion_consulta']))
-      .EstablecerEnfatizado(0)
+      .EstablecerEnfatizado(false)
   }
 
   /**
