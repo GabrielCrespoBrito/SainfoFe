@@ -339,8 +339,8 @@ class printTicket {
     console.log("errorFunc", this);
   }
 
-  printTicket() {
-    this.conector.imprimirEn(this.nombre_impresora)
+  async printTicket() {
+    await this.conector.imprimirEn(this.nombre_impresora)
       .then(responsePrint => {
         if (responsePrint === true) {
           console.log("Print Success");
@@ -356,14 +356,6 @@ class printTicket {
         }
       })
       .catch(this.errorFunc)
-
-    // ---
-    // console.log("Imprimiendo")
-
-    // const resp =  this.conector.imprimirEn(this.nombre_impresora)
-    // console.log(resp);
-
-    // return resp;
   }
 
   // Print
