@@ -478,9 +478,12 @@ class VentasController extends Controller
       } else {
         $pathTemp = $venta->generatePDF($formato, true, true, false, PDFGenerator::HTMLGENERATOR);
       }
-    } else {
+    } 
+    
+    else {
       $generator = $formato == PDFPlantilla::FORMATO_A5 ? PDFGenerator::HTMLGENERATOR : PDFGenerator::HTMLGENERATOR;
-      $pathTemp = $venta->generatePDF($formato, false, true, false, $generator);
+      $pdfData = $venta->generatePDF($formato, false, true, false, $generator);
+      $pathTemp = $pdfData['tempPath'];
     }
 
     // Si es mobil, descargar
