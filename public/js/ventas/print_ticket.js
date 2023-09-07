@@ -313,6 +313,7 @@ class printTicket {
       .EstablecerEnfatizado(true)
       .EscribirTextoFeed($.trim(this.data['direccion_consulta']))
       .EstablecerEnfatizado(false)
+      .Corte(1)
   }
 
   /**

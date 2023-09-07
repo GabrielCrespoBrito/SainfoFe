@@ -126,7 +126,8 @@ class PrintTest {
       .Iniciar()
       .EstablecerTamañoFuente(2, 1)
       .EscribirTexto('PRUEBA DE IMPRESIÒN: ')
-      .EscribirTexto('IMPRESORA: ' + this.nombre_impresora );
+      .EscribirTexto('IMPRESORA: ' + this.nombre_impresora )
+      .Corte(1);
       // .establecerTamanioFuente(1, 1)
   }
 
