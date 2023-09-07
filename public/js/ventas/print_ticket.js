@@ -99,6 +99,7 @@ class printTicket {
    */
   makeEmpresaData() {
     this.conector
+      .Iniciar()
       .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
       .DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path'], ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL, 160)
       .EstablecerTamañoFuente(2, 1)
