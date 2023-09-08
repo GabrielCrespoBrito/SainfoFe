@@ -1458,8 +1458,6 @@ $(document).ready(function (e) {
     $("[name=incluye_igv]").prop('checked', incluyeIGV);
     $("[name=icbper]").val(data.producto.icbper);
 
-    console.log("prducto", data.producto);
-
     window.poner_data_inputs(data.producto, funcs_agregar);
     // nextFocus("producto_nombre");
     $("[name=producto_nombre]")
@@ -2199,7 +2197,6 @@ $(document).ready(function (e) {
     // tipo documento factura
     let tdf = $(".box-body [name=tipo_documento] option:selected").val();
 
-    console.log("tdc y tdf", tdc, tdf);
     // El cliente con RUC, no puede hacer una compra con boleta
     if (tdf != "52" && tdf != "50") {
       if (tdc == "RUC" && tdf == "03") {
@@ -2472,12 +2469,10 @@ $(document).ready(function (e) {
     window.documento_guardado = true;
     window.data_guardado = data;
 
-      console.log( "guardar_factura", data );
-
     if (data.imprecion_data.impresion_directa) {
-      console.log("aqui estamos 2")
+      
       try {
-
+        
         function impresionExitosa() {
           successStore(true)
         }
@@ -2492,10 +2487,12 @@ $(document).ready(function (e) {
           data.imprecion_data.cantidad_copias,
           impresionExitosa,
           impresionError
-        );
+          );
 
-
+        console.log( ticketPrint )
+          
         ticketPrint.errorFunc = function (data) {
+          console.log( "errorFunc", data )
           successStore(true);
         }.bind(ticketPrint);
         

@@ -36,7 +36,7 @@ class PrepareDataVentaForJavascriptPrint
     $this->convert_data['documento_observacion'] = 'Observaciòn: ' .  $this->data['venta']['VtaObse'] ?? '-';
     $this->convert_data['documento_fecha'] = $this->data['venta']['VtaFvta'];
     $this->convert_data['documento_forma_pago'] = $this->data['forma_pago']->connomb;
-    $this->convert_data['documento_vendedor'] = $this->data['venta']['Vencodi'];
+    $this->convert_data['documento_vendedor'] = $this->data['vendedor_nombre'];
     $this->convert_data['documento_guias'] = implode(',', $this->data['guias']);
     $this->convert_data['documento_responsable'] = $this->data['venta']['User_Crea'];
     $this->convert_data['documento_orden_compra'] = $this->data['venta']['VtaPedi'] ?? '';

@@ -234,3 +234,5 @@ const ConectorPluginV3 = (() => {
   }
   return ConectorPlugin;
 })();
+
+window.ConectorPluginV3 = ConectorPluginV3;

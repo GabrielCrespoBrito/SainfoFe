@@ -346,7 +346,7 @@ class printTicket {
     console.log("errorFunc", this);
   }
 
-  async printTicket() {
+  async printExe() {
     await this.conector.imprimirEn(this.nombre_impresora)
       .then(responsePrint => {
         if (responsePrint === true) {
@@ -370,7 +370,7 @@ class printTicket {
     this.makeTicket();
 
     for (let index = 0; index < this.copy_qty; index++) {
-      if (this.printTicket() == false) {
+      if (this.printExe() == false) {
         return false;
       }
     }
@@ -378,3 +378,6 @@ class printTicket {
     return true;
   }
 }
+
+
+window.printTicket = printTicket; 

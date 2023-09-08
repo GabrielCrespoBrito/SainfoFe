@@ -6,7 +6,16 @@ mix.webpackConfig({
   },
 });
 
+
+
+{/* <script type="text/javascript" src="{{ asset(mix('mix/print_js/ConectorPlugin.js'))}}"></script> */}
+{/* <script type="text/javascript" src="{{ asset(mix('mix/ventas/print_ticket.js'))}}"></script> */}
+// { { -- < script type = "text/javascript" src = "{{ asset(mix('js/print_js/ConectorPlugin.js'))}}" ></script > --} }
+// { { -- < script type = "text/javascript" src = "{{ asset(mix('js/ventas/print_ticket.js'))}}" ></script > --} }
+
 mix
+  .js('public/js/print_js/ConectorPlugin.js', 'public/js/mix/')
+  .js('public/js/ventas/print_ticket.js', 'public/js/mix/')
   .js('public/js/helpers.js', 'public/js/mix/')
   .js('public/js/ventas/scripts.js', 'public/js/ventas/mix/')
   .js('public/js/dashboard.js', 'public/js/mix/')
