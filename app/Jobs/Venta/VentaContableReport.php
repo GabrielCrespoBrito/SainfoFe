@@ -51,6 +51,7 @@ class VentaContableReport
         'prov_clientes.PCRucc',
         'prov_clientes.TDocCodi',
         'ventas_cab.VtaExon',
+        'ventas_cab.VtaDcto',
         'ventas_cab.VtaInaf',
         'ventas_cab.VtaISC',
         'ventas_cab.VtaIGVV',
@@ -164,6 +165,7 @@ class VentaContableReport
       $venta->VtaIGVV = convertNegative($venta->VtaIGVV);
       $venta->icbper  = convertNegative($venta->icbper);
       $venta->VtaImpo = convertNegative($venta->VtaImpo);
+      $venta->VtaDcto = convertNegative($venta->VtaDcto);
     }
 
     return (object) [
@@ -171,7 +173,7 @@ class VentaContableReport
       'exonerada' => $isSol ? $venta->VtaExon : $venta->VtaExon * $tc,
       'inafecta' => $isSol ? $venta->VtaInaf : $venta->VtaInaf * $tc,
       'isc' => $isSol ? $venta->VtaISC : $venta->VtaISC * $tc,
-      // 'igv' => $isSol ? $venta->VtaIGVV : $venta->CpaIGVV * $tc,
+      'dcto' => $isSol ? $venta->VtaDcto : $venta->VtaDcto * $tc,
       'igv' => $isSol ? $venta->VtaIGVV : $venta->VtaIGVV * $tc,
       'tc' => $tc,
       'icbper' => $isSol ? $venta->icbper : $venta->icbper * $tc,

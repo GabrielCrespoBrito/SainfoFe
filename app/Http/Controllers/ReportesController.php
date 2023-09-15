@@ -478,6 +478,8 @@ class ReportesController extends Controller
 
   public function utilidades_ventas()
   {
+    dd(1);
+    exit();
     return view('reportes.utilidades_ventas.form');
   }
 

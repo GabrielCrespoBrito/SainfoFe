@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reportes;
 
+use App\Grupo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reporte\GananciaRequest;
@@ -48,7 +49,8 @@ class UtilidadesController extends Controller
    */
   public function create()
   {
-    return view('reportes.ganancias.create');
+    $grupos = Grupo::all();    
+    return view('reportes.ganancias.create', compact('grupos'));
   }
 
   /**

@@ -6,8 +6,6 @@ mix.webpackConfig({
   },
 });
 
-
-
 {/* <script type="text/javascript" src="{{ asset(mix('mix/print_js/ConectorPlugin.js'))}}"></script> */}
 {/* <script type="text/javascript" src="{{ asset(mix('mix/ventas/print_ticket.js'))}}"></script> */}
 // { { -- < script type = "text/javascript" src = "{{ asset(mix('js/print_js/ConectorPlugin.js'))}}" ></script > --} }

@@ -7,21 +7,18 @@ use Illuminate\Http\Request;
 use mikehaertl\wkhtmlto\Pdf;
 use App\Jobs\Venta\ConsultDocs;
 use App\Http\Controllers\Controller;
+use App\Jobs\Reportes\VentaContableSireTxt;
 use App\Jobs\Venta\VentaContableReport;
+use App\Mes;
 use App\Util\ExcellGenerator\VentaContableExcell;
 
-trait VentasMensualAbstractController 
+trait VentasMensualAbstractController
 {
 
-  public function getDataHtml(Request $request, $routeReporte, $routeVentaConsulta, $empresa_id = null )
+  public function getDataHtml(Request $request, $routeReporte, $routeVentaConsulta, $empresa_id = null)
   {
     $isFecha = $request->input('tipo') == "fecha";
     $rules = [];
-    // if ($isFecha) {
-      // $rules['fecha_desde'] = 'required|date';
-      // $rules['fecha_hasta'] = 'required|date|after_or_equal:fecha_hasta';
-    // }
-    // $this->validate($request, $rules);
 
     $searchSunat = null;
 
@@ -31,17 +28,18 @@ trait VentasMensualAbstractController
       $searchSunat = date('Y:m:d H:i:s');
     }
 
+
+
     $data = $isFecha ?
       Cierre::getStadisticsByFechas($request->fecha_desde, $request->fecha_hasta) :
       Cierre::getStadistics($request->mes, $searchSunat);
 
-    return view('reportes.ventas_mensual.partials.data_complete', compact('data', 'routeReporte', 'routeVentaConsulta', 'empresa_id' ));
+    return view('reportes.ventas_mensual.partials.data_complete', compact('data', 'isFecha', 'routeReporte', 'routeVentaConsulta', 'empresa_id'));
   }
 
 
-  public function getReport(Request $request, $empresa )
+  public function getReport(Request $request, $empresa)
   {
-
     $formato = $request->formato;
     $mescodi = $request->mes;
     $estadoSunat = $request->estado_sunat;
@@ -59,6 +57,8 @@ trait VentasMensualAbstractController
       ->handle()
       ->getData();
 
+
+    ob_start();
     set_time_limit(0);
     ini_set('memory_limit', '3000M'); //This might be too large, but depends on the data set
 
@@ -129,6 +129,34 @@ trait VentasMensualAbstractController
         ->store();
 
       return response()->download($info['full'], $info['file']);
+    }
+
+
+    if ($formato == "txt_sire") {
+
+      $dateInfo = get_date_info($request->fecha_inicio);
+
+      $txtSireExport = new VentaContableSireTxt($empresa, $dateInfo->mescodi, $data);
+      $txtSireExport->handle();
+
+
+      Cierre::findByMes($dateInfo->mescodi)->cerrar();
+
+      $fileName = $txtSireExport->getFileName();
+      $path = fileHelper()->saveTemp($txtSireExport->getContent(), $fileName);
+      return response()->download(
+        $path,
+        $fileName,
+        [
+          'Content-Type' => 'text/plain',
+          'Cache-Control' => 'no-store, no-cache',
+          'Content-Disposition' => sprintf('attachment; filename="%s"', $fileName)
+        ]
+      );
+
+
+
+
     }
   }
 

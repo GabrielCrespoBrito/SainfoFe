@@ -130,9 +130,7 @@ class VentasMensualController extends Controller
   //       'nombre_empresa' => $empresa->EmpNomb,
   //       'ruc_empresa' => $empresa->EmpLin1,
   //       'periodo' => sprintf('%s - %s', $fecha_inicio, $fecha_final),
-
   //       // 'periodo' => Mes::find($request->mes)->mesnomb
-
   //     ]);
 
   //     $pdf->setOptions($globalOptions);

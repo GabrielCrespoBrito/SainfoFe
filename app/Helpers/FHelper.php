@@ -108,6 +108,8 @@ class FHelper
   public function saveTemp($content, $name = "documento.pdf")
   {
     $path = $this->getTempPath($name);
+    // dd($path);
+    // exit();
     \File::put($path, $content);
     return $path;
   }

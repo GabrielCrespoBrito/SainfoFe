@@ -1,4 +1,6 @@
-<table class="table">
+<div class="col-md-12 col-xs-12 content_ventas div_table_content no_pl" style="overflow-x: scroll;">
+
+<table width="100%" class="table">
 
 <thead>
   <tr>
@@ -63,7 +65,8 @@
     @if($documento['total']['cantidad'])
     <span class="btn btn-default btn-xs show-totales" data-codi="{{ $docCodi }}" style="margin-left:10px"> <span class="fa  fa-calculator"></span>  Totales  </span> 
     @endif
-     </td>
+
+    </td>
 
     {{-- Total --}}
     @include('reportes.ventas_mensual.partials.table_principal_slot_data', ['status' => 'all', 'cant' => $documento['total']['cantidad'], 'total' => $documento['total']['total'] ])
@@ -127,3 +130,5 @@
 
 </tfoot>
 </table>
+
+</div>

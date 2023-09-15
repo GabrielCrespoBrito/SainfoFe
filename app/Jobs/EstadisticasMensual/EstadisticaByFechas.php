@@ -16,7 +16,8 @@ class EstadisticaByFechas
     {
       $this->fecha_desde = $fecha_desde;
       $this->fecha_hasta = $fecha_hasta;
-      $this->calculator = new CalculatorEstadistica();
+      $dateInfo = get_date_info($this->fecha_desde);
+      $this->calculator = new CalculatorEstadistica([], [], true, $dateInfo->mescodi);
     }
 
     public function query()

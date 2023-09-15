@@ -115,6 +115,12 @@ class Cierre extends Model
     $cierre->fecha_cierre = $conFechaCierre ? date('Y-m-d H:i:s') : null;
     $cierre->save();
   }
+  
+  public function cerrar()
+  {
+    $this->fecha_cierre = date('Y-m-d H:i:s');
+    $this->save();
+  }
 
   public function hasFechaCerrado()
   {
