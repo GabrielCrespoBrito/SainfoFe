@@ -30,10 +30,16 @@ class VentaContableSireTxt
   {
     $itemsGroup = $this->data['items'];
     
+    $first = false;
     
     foreach ($itemsGroup as $itemGroup) {
       foreach ($itemGroup['items'] as $id => $item) {
-        $this->content .= $this->getItemData($item, $id);
+        if($first){
+          $this->content = $this->getItemData($item, $id);
+        }
+        else {
+          $this->content .= $this->getItemData($item, $id);
+        }
       }
     }
   }
@@ -179,7 +185,7 @@ class VentaContableSireTxt
     $ruc = $this->empresa->ruc();
     $mes = $this->mescodi;
     $rvie = 1;
-    $identificadorDelLibro = " 140400";
+    $identificadorDelLibro = "140400";
     $codigoOportunidadPresentacion = "02";
     $indicadorDeOperaciones = 1;
     $indicadorContenidoDelLibro = 1;
@@ -187,7 +193,7 @@ class VentaContableSireTxt
     $indicadorLibroGeneradoPorMigeIGV = 2;
     $correlativoPorAsjute = "";
 
-    return sprintf(
+    $nameFile =  sprintf(
       '%s%s%s%s%s%s%s%s%s%s%s.txt',
       $le,
       $ruc,
@@ -201,6 +207,10 @@ class VentaContableSireTxt
       $indicadorLibroGeneradoPorMigeIGV,
       $correlativoPorAsjute
     );
+
+    logger($nameFile);
+    return $nameFile;
+    
   }
 
   public function handle()

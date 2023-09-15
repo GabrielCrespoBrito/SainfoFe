@@ -57,10 +57,8 @@ trait VentasMensualAbstractController
       ->handle()
       ->getData();
 
-
-    ob_start();
     set_time_limit(0);
-    ini_set('memory_limit', '3000M'); //This might be too large, but depends on the data set
+    ini_set('memory_limit', '3000M'); 
 
     // Formato PDF
     if ($formato == "pdf") {
@@ -87,15 +85,11 @@ trait VentasMensualAbstractController
         'nombre_empresa' => $empresa->EmpNomb,
         'ruc_empresa' => $empresa->EmpLin1,
         'periodo' => sprintf('%s - %s', $fecha_inicio, $fecha_final),
-
-        // 'periodo' => Mes::find($request->mes)->mesnomb
-
       ]);
 
       $pdf->setOptions($globalOptions);
       $pdf->addPage($view);
       $pdf->binary = getBinaryPdf();
-
       if (!$pdf->send()) {
         throw new \Exception('Could not create PDF: ' . $pdf->getError());
       }
@@ -134,29 +128,18 @@ trait VentasMensualAbstractController
 
     if ($formato == "txt_sire") {
 
-      $dateInfo = get_date_info($request->fecha_inicio);
+      ob_end_clean();
 
+      $dateInfo = get_date_info($request->fecha_inicio);
       $txtSireExport = new VentaContableSireTxt($empresa, $dateInfo->mescodi, $data);
       $txtSireExport->handle();
-
 
       Cierre::findByMes($dateInfo->mescodi)->cerrar();
 
       $fileName = $txtSireExport->getFileName();
       $path = fileHelper()->saveTemp($txtSireExport->getContent(), $fileName);
-      return response()->download(
-        $path,
-        $fileName,
-        [
-          'Content-Type' => 'text/plain',
-          'Cache-Control' => 'no-store, no-cache',
-          'Content-Disposition' => sprintf('attachment; filename="%s"', $fileName)
-        ]
-      );
 
-
-
-
+      return response()->download("C:\\xampp\\htdocs\\sainfo2\\public\\temp\\LE103230137602023091140400021112.txt", $fileName );
     }
   }
 
