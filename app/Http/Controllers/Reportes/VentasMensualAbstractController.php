@@ -139,7 +139,7 @@ trait VentasMensualAbstractController
       $fileName = $txtSireExport->getFileName();
       $path = fileHelper()->saveTemp($txtSireExport->getContent(), $fileName);
 
-      return response()->download("C:\\xampp\\htdocs\\sainfo2\\public\\temp\\LE103230137602023091140400021112.txt", $fileName );
+      return response()->download( $path, $fileName );
     }
   }
 
