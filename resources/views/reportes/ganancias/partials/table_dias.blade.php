@@ -13,6 +13,10 @@ $class_table .= ' table-utilidades utilidad-fecha';
 
   @foreach( $data['items'] as $fecha => $data_fecha )
 
+  @if( $data_fecha['total']['venta_soles'] == 0 && $data_fecha['total']['venta_dolar'] == 0 )
+    @continue
+  @endif
+
   <tr class="tr-dias {{ $data_fecha['info']['positive'] ? 'is-positive' : 'is-negative' }}">
     <td class="text-right">{{ $fecha }}</td>
     <td class="text-right">{{ decimal($data_fecha['total']['venta_soles']) }}</td>
@@ -22,7 +26,7 @@ $class_table .= ' table-utilidades utilidad-fecha';
     @if($tableInHtml)
       <td class="text-right"> 
         <a target="_blank"  href="#" class="btn btn-default btn-xs btn-flat span-info"> <span class="fa fa-eye"></span></a>
-        <a target="_blank" href="{{ route('reportes.utilidades.pdf_fecha', ['fecha' => $fecha , 'local' => $local ]) }}" class="btn btn-default btn-xs btn-flat"> <span class="fa fa-file-pdf-o" title="Reporte de los documentos del dia"></span></a>
+        <a target="_blank" href="{{ route('reportes.utilidades.pdf_fecha', ['fecha' => $fecha , 'local' => $local, 'grupo' => $grupo ]) }}" class="btn btn-default btn-xs btn-flat"> <span class="fa fa-file-pdf-o" title="Reporte de los documentos del dia"></span></a>
       </td>
     @endif
   </tr>

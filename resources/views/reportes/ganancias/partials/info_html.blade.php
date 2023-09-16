@@ -11,7 +11,8 @@ $tableInHtml = $tableInHtml ?? false;
       href="{{ route('reportes.utilidades.pdf_complete', [
       'fecha_desde' => $fecha_desde,
       'fecha_hasta' => $fecha_hasta,
-      'local' => $local ]) }}"> 
+      'local' => $local,
+      'grupo' => $grupo ]) }}"> 
         <span class="fa fa-file-pdf-o"> </span> Ver en PDF </a>
   </div>
 </div>

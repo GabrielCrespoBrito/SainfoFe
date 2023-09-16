@@ -12,7 +12,7 @@
 <script type="text/javascript">
   var table;
   var fecha_actual = '{{ date('Y-m-d') }}';
-  var url_reporte = "{{route('reportes.productos_mas_vendidos.pdf', ['fecha_hasta' => 'fecha_hasta', 'fecha_desde' => 'fecha_desde' , 'local' => 'local']) }}";
+  var url_reporte = "{{route('reportes.productos_mas_vendidos.pdf', ['fecha_hasta' => 'fecha_hasta', 'fecha_desde' => 'fecha_desde' , 'local' => 'local' , 'grupo' => 'grupo' ]) }}";
 
 </script>
 <script src="{{ asset(mix('js/mix/helpers.js')) }}"></script>

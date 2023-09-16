@@ -29,6 +29,7 @@ class GananciaRequest extends FormRequest
           'fecha_desde' => 'required|date',
           'fecha_hasta' => 'required|date',
           'local' => 'required',
+          'grupos' => 'required',
         ];
     }
 

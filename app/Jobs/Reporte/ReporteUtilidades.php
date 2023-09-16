@@ -16,17 +16,19 @@ class ReporteUtilidades
   protected $fecha_desde;
   protected $fecha_hasta;
   protected $local;
+  protected $grupo;
 
   /**
    * Create a new job instance.
    *
    * @return void
    */
-  public function __construct( $fecha_desde, $fecha_hasta, $local )
+  public function __construct( $fecha_desde, $fecha_hasta, $local, $grupo )
   {
     $this->fecha_desde = $fecha_desde;
     $this->fecha_hasta = $fecha_hasta;
     $this->local = strtolower($local) == "todos" ? null : $local;
+    $this->grupo = strtolower($grupo) == "todos" ? null : $grupo;
     $this->handle();
   }
 
@@ -36,16 +38,42 @@ class ReporteUtilidades
    */
   public function getQuery()
   {
-    $query = Venta::with([ 'cliente_with' => function($query){
-      $query->where('TipCodi', 'C');
-    }, 'items.producto'])
-    ->whereBetween('VtaFvta',[ $this->fecha_desde , $this->fecha_hasta ]);
+    $grupo = $this->grupo;
+    // $query = Venta::with([ 'cliente_with' => function($query){
+    //   $query->where('TipCodi', 'C');
+    // }, 'items.producto'  => function($query) use ($grupo) {
+      
+    //   // exit();
+    //   if( $grupo ){
+    //     logger( $grupo );
+    //     $query->where('grucodi', '=' ,  $grupo);
+    //   }
+    // } ])
+    // ->whereBetween('VtaFvta',[ $this->fecha_desde , $this->fecha_hasta ]);
     
+
+        $query = Venta::with([ 'cliente_with' => function($query){
+      $query->where('TipCodi', 'C');
+    }, 'items.producto'  => function($query) use ($grupo) {
+      
+      // exit();
+      if( $grupo ){
+        logger( $grupo );
+        $query->where('grucodi', '=' ,  $grupo);
+      }
+
+      
+    } ])
+    ->whereBetween('VtaFvta',[ $this->fecha_desde , $this->fecha_hasta ]);
+
+
     if( $this->local ){
       $query->where('LocCodi', $this->local );
     }
 
-
+    // dd( $query->get()->first() );
+    // exit();
+      
     return
     $query
     ->orderBy('TidCodi')
@@ -111,6 +139,10 @@ class ReporteUtilidades
   {
     $items  = $venta->items;
     foreach ( $items as $item ) {
+      if( $item->producto == null ){
+        continue;
+      }
+
       $add = &$arrAdd['items'][$item->Linea];
       $this->addToData($add, $this->getInfoItem($item) , false);
       $total_item = &$add['total'];      

@@ -23,17 +23,22 @@ class UtilidadesController extends Controller
    * @return array
    */
 
-  public function getReporte( $fecha_desde, $fecha_hasta, $local )
+  public function getReporte( $fecha_desde, $fecha_hasta, $local, $grupo )
   {
-    $reporte = new ReporteUtilidades($fecha_desde, $fecha_hasta, $local);
+    $reporte = new ReporteUtilidades($fecha_desde, $fecha_hasta, $local, $grupo);
     $data = $reporte->getData();
     return $data;
   }
 
-  public function generatePDF( $fecha_desde, $fecha_hasta, $local, $titulo, $view )
+  public function generatePDF( $fecha_desde, $fecha_hasta, $local, $grupo, $titulo, $view )
   {
-    $data = $this->getReporte($fecha_desde, $fecha_hasta, $local);
-    $pdfGenerator = new PDFGenerator(view($view , compact('data', 'fecha_desde', 'fecha_hasta', 'local', 'titulo')),  PDFGenerator::HTMLGENERATOR);
+    $data = $this->getReporte($fecha_desde, $fecha_hasta, $local, $grupo);
+
+    if( $grupo != 'todos' ){
+      $grupo = Grupo::find($grupo)->GruNomb;
+    }
+
+    $pdfGenerator = new PDFGenerator(view($view , compact('data', 'fecha_desde', 'fecha_hasta', 'local', 'grupo', 'titulo')),  PDFGenerator::HTMLGENERATOR);
     $pdfGenerator->generator->setGlobalOptions([
       'no-outline',
       'page-size' => 'Letter',
@@ -49,7 +54,7 @@ class UtilidadesController extends Controller
    */
   public function create()
   {
-    $grupos = Grupo::all();    
+    $grupos = Grupo::all();   
     return view('reportes.ganancias.create', compact('grupos'));
   }
 
@@ -59,9 +64,9 @@ class UtilidadesController extends Controller
    * 
    * @return HtmlPDFGenerator
    */
-  public function pdfComplete($fecha_desde , $fecha_hasta, $local )
+  public function pdfComplete($fecha_desde , $fecha_hasta, $local, $grupo )
   {
-    $this->generatePDF($fecha_desde, $fecha_hasta, $local, "REPORTES DE UTILIDADES POR FECHA" , 'reportes.ganancias.pdf_complete');
+    $this->generatePDF($fecha_desde, $fecha_hasta, $local, $grupo, "REPORTES DE UTILIDADES POR FECHA" , 'reportes.ganancias.pdf_complete');
   }
 
   /**
@@ -70,22 +75,24 @@ class UtilidadesController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function pdfByFecha($fecha, $local)
+  public function pdfByFecha($fecha, $local, $grupo)
   {
-    $this->generatePDF($fecha, $fecha, $local, "REPORTES DE UTILIDADES DE FECHA {$fecha}", 'reportes.ganancias.pdf_fecha');   
+    $this->generatePDF($fecha, $fecha, $local, $grupo, "REPORTES DE UTILIDADES DE FECHA {$fecha}", 'reportes.ganancias.pdf_fecha');   
   }
 
   public function show(GananciaRequest $request)
   {
     $this->authorize(p_name('A_UTILIDADESVENTAS', 'R_REPORTE'));
 
-    $data = $this->getReporte($request->fecha_desde, $request->fecha_hasta, $request->local);
+    $data = $this->getReporte($request->fecha_desde, $request->fecha_hasta, $request->local, $request->grupos );
+    
     return view('reportes.ganancias.partials.info_html', [
       'tableInHtml' => true,
       'data' => $data, 
       'fecha_desde' => $request->fecha_desde, 
       'fecha_hasta' => $request->fecha_hasta, 
-      'local' => $request->local
+      'local' => $request->local,
+      'grupo' => $request->grupos,
       ]);
   }  
 }

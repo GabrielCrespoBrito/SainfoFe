@@ -15,6 +15,10 @@
 
 @foreach( $data['items'] as $data_venta )
 
+  @if( $data_venta['total']['venta_soles'] == 0 )
+    @continue
+  @endif
+
   <tr class="tr-venta {{ $data_venta['info']['positive'] ? 'is-positive' : 'is-negative' }}">
 
     @if(!$tableInHtml)

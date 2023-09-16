@@ -1,6 +1,16 @@
 @php
   $local = $local ?? null;
-  $colspan = $local ? 3 : 2;
+  $grupo = $grupo ?? null;
+  $colspan = 2;
+  
+  if($local){
+    $colspan++;
+  }
+
+  if($grupo){
+    $colspan++;
+  }
+
 @endphp
 
 <div class="container header">
@@ -11,6 +21,9 @@
       <td><span class="campo"> Hasta:</span> {{ $fecha_hasta }}</td>    
       @if($local)
       <td><span class="campo"> Local:</span> {{ $local }}</td>
+      @endif
+      @if($grupo)
+      <td><span class="campo"> Grupo:</span> {{ $grupo }}</td>
       @endif
     </tr>
   </table>
