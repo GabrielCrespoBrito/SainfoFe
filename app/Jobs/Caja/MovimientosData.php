@@ -147,8 +147,6 @@ class MovimientosData
       $monto = (float) $movimiento->egreso_soles;
       $moneda = Moneda::SOL_ID;
 
-      Log::info( sprintf("%s - %s" , $movimiento->id, $movimiento->egreso_soles));
-
       if (!$monto) {
         $monto = (float) $movimiento->egreso_dolares;
         $moneda = Moneda::DOLAR_ID;

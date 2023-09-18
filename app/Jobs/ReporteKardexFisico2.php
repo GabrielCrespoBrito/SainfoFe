@@ -170,8 +170,6 @@ class ReporteKardexFisico2
     $calculo_item = $this->getItemMov($item, $stock);
     $movimientos[] = $this->getInfoItem($item, $calculo_item);
 
-    // CpaVtaCant
-    Log::info([$item->Linea, $calculo_item ]);
     # Agregar a los totales
     $totales['ingreso'] += $calculo_item['ingreso'];
     $totales['salida'] += $calculo_item['salida'];

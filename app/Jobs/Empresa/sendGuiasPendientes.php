@@ -27,7 +27,7 @@ class sendGuiasPendientes
       try {
         $guia->sendApi();
       } catch (\Throwable $th) {
-        Log::info(sprintf('@ERROR GUIA-PENDIENTE %s - %s' , $guia->GuiOper, $th->getMessage()));
+        Log::error(sprintf('@ERROR GUIA-PENDIENTE %s - %s' , $guia->GuiOper, $th->getMessage()));
       }
     }
   }

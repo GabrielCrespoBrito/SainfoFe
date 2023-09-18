@@ -25,9 +25,9 @@ class UpdateGuiaDetalleCampoCantAbs
         try {
           empresa_bd_tenant($empresa->id());
           $this->processEmpresaGuias($empresa);
-          Log::info(sprintf("@SUCCESS (UpdateGuiaDetalleCampoCantAbs) EMPRESA (%s)", $empresa->id()));
+          sprintf("@SUCCESS (UpdateGuiaDetalleCampoCantAbs) EMPRESA (%s)", $empresa->id());
         } catch (\Throwable $th) {
-          Log::info(sprintf("@ERROR (UpdateGuiaDetalleCampoCantAbs) Empresa (%s) Error (%s)", $empresa->id() , $th->getMessage() ));
+          sprintf("@ERROR (UpdateGuiaDetalleCampoCantAbs) Empresa (%s) Error (%s)", $empresa->id() , $th->getMessage() );
         }
       }
     }
@@ -60,14 +60,13 @@ class UpdateGuiaDetalleCampoCantAbs
         $cantidad_absoluta = convertNegativeIfTrue($cantidad_absoluta, $isIngreso == false);
 
 
-        
-        Log::info(DB::connection('tenant')->table('guia_detalle')
+        DB::connection('tenant')->table('guia_detalle')
 
         ->where('Linea', '=', $detalle->id )
         ->update([
             'CpaVtaCant' => $cantidad_absoluta,
             'DetTipo' => $isIngreso ? GuiaSalidaItem::TIPO_COMPRA : GuiaSalidaItem::TIPO_VENTA
-        ]));
+        ]);
       }
     });
   }
