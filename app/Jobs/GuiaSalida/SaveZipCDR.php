@@ -84,7 +84,7 @@ class SaveZipCDR
       }
       //code...
     } catch (\Throwable $th) {
-      Log::info($th->getMessage());
+      Log::error($th->getMessage());
     }
 
     return $data;

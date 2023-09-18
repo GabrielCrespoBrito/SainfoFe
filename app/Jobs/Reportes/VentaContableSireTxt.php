@@ -11,6 +11,7 @@ class VentaContableSireTxt
 {
   public $empresa = null;
   public $mescodi = null;
+  public $fileName = null;
   public $data = null;
   public $content = "";
 
@@ -177,7 +178,7 @@ class VentaContableSireTxt
   // (N) opcional - Correlativo de los ajustes posteriores 
 
 
-  public function getFileName()
+  public function createFileName()
   {
     $le = "LE";
     $ruc = $this->empresa->ruc();
@@ -191,8 +192,8 @@ class VentaContableSireTxt
     $indicadorLibroGeneradoPorMigeIGV = 2;
     $correlativoPorAsjute = "";
 
-    $nameFile =  sprintf(
-      '%s%s%s%s%s%s%s%s%s%s%s.txt',
+    $this->fileName =  sprintf(
+      '%s%s%s%s%s%s%s%s%s%s%s',
       $le,
       $ruc,
       $mes,
@@ -205,12 +206,20 @@ class VentaContableSireTxt
       $indicadorLibroGeneradoPorMigeIGV,
       $correlativoPorAsjute
     );
+  }
+
+  public function getFileName( $ext = "" )
+  {
+    return $this->fileName . $ext;
+
+ 
 
     return $nameFile;
   }
 
   public function handle()
   {
+    $this->createFileName();
     $this->generateContent();
   }
 }

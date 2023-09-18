@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Reportes;
 
+use App\Mes;
 use App\Models\Cierre;
+use Chumper\Zipper\Zipper;
 use Illuminate\Http\Request;
 use mikehaertl\wkhtmlto\Pdf;
 use App\Jobs\Venta\ConsultDocs;
 use App\Http\Controllers\Controller;
-use App\Jobs\Reportes\VentaContableSireTxt;
 use App\Jobs\Venta\VentaContableReport;
-use App\Mes;
+use App\Jobs\Reportes\VentaContableSireTxt;
 use App\Util\ExcellGenerator\VentaContableExcell;
 
 trait VentasMensualAbstractController
@@ -127,19 +128,30 @@ trait VentasMensualAbstractController
 
 
     if ($formato == "txt_sire") {
-
+      
+      
       ob_end_clean();
 
       $dateInfo = get_date_info($request->fecha_inicio);
       $txtSireExport = new VentaContableSireTxt($empresa, $dateInfo->mescodi, $data);
       $txtSireExport->handle();
-
+      
       Cierre::findByMes($dateInfo->mescodi)->cerrar();
 
-      $fileName = $txtSireExport->getFileName();
-      $path = fileHelper()->saveTemp($txtSireExport->getContent(), $fileName);
+      $nameTxt = $txtSireExport->getFileName('.txt');
+      // $path = fileHelper()->saveTemp($txtSireExport->getContent(), $fileName);
 
-      return response()->download( $path, $fileName );
+      // 
+      $nameZip =  $txtSireExport->getFileName('.zip');
+      $pathTempZip = getTempPath($nameZip);
+
+      $zipper = new Zipper;
+      $zipper
+      ->make($pathTempZip)
+      ->addString( $nameTxt,$txtSireExport->getContent())
+      ->close();
+
+      return response()->download($pathTempZip, $nameZip );
     }
   }
 
