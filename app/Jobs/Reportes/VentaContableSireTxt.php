@@ -38,7 +38,7 @@ class VentaContableSireTxt
           $this->content = $this->getItemData($item, $id);
         }
         else {
-          $this->content .= $this->getItemData($item, $id);
+          $this->content .= $this->getItemData($item, $id) . "\n";
         }
       }
     }
@@ -63,8 +63,6 @@ class VentaContableSireTxt
 
   public function getItemData($item, $id)
   {
-    // dd( $item );
-    // exit();
     $total = (object) $item['total'];
     $info = (object) $item['info'];
 
@@ -208,9 +206,7 @@ class VentaContableSireTxt
       $correlativoPorAsjute
     );
 
-    logger($nameFile);
     return $nameFile;
-    
   }
 
   public function handle()
