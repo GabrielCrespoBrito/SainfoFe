@@ -39,30 +39,13 @@ class ReporteUtilidades
   public function getQuery()
   {
     $grupo = $this->grupo;
-    // $query = Venta::with([ 'cliente_with' => function($query){
-    //   $query->where('TipCodi', 'C');
-    // }, 'items.producto'  => function($query) use ($grupo) {
-      
-    //   // exit();
-    //   if( $grupo ){
-    //     logger( $grupo );
-    //     $query->where('grucodi', '=' ,  $grupo);
-    //   }
-    // } ])
-    // ->whereBetween('VtaFvta',[ $this->fecha_desde , $this->fecha_hasta ]);
-    
 
-        $query = Venta::with([ 'cliente_with' => function($query){
+    $query = Venta::with([ 'cliente_with' => function($query){
       $query->where('TipCodi', 'C');
     }, 'items.producto'  => function($query) use ($grupo) {
-      
-      // exit();
       if( $grupo ){
-        logger( $grupo );
         $query->where('grucodi', '=' ,  $grupo);
       }
-
-      
     } ])
     ->whereBetween('VtaFvta',[ $this->fecha_desde , $this->fecha_hasta ]);
 

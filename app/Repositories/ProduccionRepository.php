@@ -37,7 +37,6 @@ class ProduccionRepository implements RepositoryInterface
     $produccion->save();
     $itemsLen =  count($data['producto_insumo_id']);
 
-    logger($produccionId);
 
     for ( $i = 0; $i < $itemsLen; $i++ ) {
       $item_id = $data['producto_insumo_id'][$i];

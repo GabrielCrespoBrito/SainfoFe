@@ -117,15 +117,15 @@ class Producto extends Model
     return self::where('ProCodi', $procodi)->first();
   }
 
+  public function isEliminado()
+  {
+    return $this->UDelete == "*";
+  }
+
+
   public static function UltimoID($empcodi = null)
   {
-    // $empcodi = $empcodi ?? empcodi();
-
-    // if (Producto::withoutGlobalScope('noEliminados')->count()) {
-    // return agregar_ceros(Producto::withoutGlobalScope('noEliminados')->max('ID'), 6, 1);
     return agregar_ceros(Producto::withoutGlobalScope('noEliminados')->max('id'), 6, 1);
-    // }
-    // return 100000;
   }
 
   public function setIDAttribute($value)

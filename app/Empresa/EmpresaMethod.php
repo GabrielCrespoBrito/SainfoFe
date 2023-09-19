@@ -101,6 +101,20 @@ trait EmpresaMethod
     return $tokenData['access_token'];
   }
 
+  public function saveTokenApiSire( $tokenData )
+  {
+    $tokenData = (array) $tokenData;
+    $tokenData['expires_date'] = Carbon::now()->addSeconds($tokenData['expires_in'])->format('Y-m-d H:i:s');
+
+    $this->opcion->update([
+      'LogArti' => json_encode($tokenData)
+    ]);
+
+    $this->cleanCache();
+    return $tokenData['access_token'];
+  }
+
+
   public function userSolComplete()
   {
     return $this->EmpLin1 . $this->FE_USUNAT;

@@ -38,6 +38,5 @@ class LogMessage extends Command
    */
   public function handle()
   {
-    Log::info("Test Log " . date('H:i:s'));
   }
 }

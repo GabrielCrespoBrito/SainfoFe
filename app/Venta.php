@@ -1183,9 +1183,6 @@ class Venta extends Model
     $empresa = $this->empresa;
 
     $plantilla  = $this->getPlantilla($formato);
-    Log::info( '@PLANTILLA ' . $plantilla->id . '-' .  $plantilla->vista);
-    // _dd($plantilla);
-    // exit();
     $data = $this->dataPdf($formato, $impresion_directa, $items);
     $tempPath = '';
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);

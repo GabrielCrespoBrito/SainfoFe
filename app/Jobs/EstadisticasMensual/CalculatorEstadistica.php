@@ -124,8 +124,6 @@ class CalculatorEstadistica
     $this->stats_dias[$dia]['cant'] += 1;
     $this->stats_dias[$dia]['01'] = $this->stats_dias[$dia]['01'] + $soles;
     $this->stats_dias[$dia]['02'] = $this->stats_dias[$dia]['02'] + $dolares;
-    
-    logger([ $dia , $doc->id ]);
 
     $this->lastSearch = $doc->fecha_modificacion > $this->lastSearch ? $doc->fecha_modificacion : $this->lastSearch;
   }

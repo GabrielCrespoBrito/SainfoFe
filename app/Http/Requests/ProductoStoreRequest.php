@@ -101,8 +101,12 @@ class ProductoStoreRequest extends FormRequest
 					$validator->errors()->add('codigo', 'El codigo no esta correctamente escrito');
 				}
 
-				if( ! is_null(Producto::findByProCodi($this->numero_operacion)) ){				
-					$validator->errors()->add('numero_operacion', "El codigo de producto {$this->numero_operacion} esta siendo usado por otro producto");
+
+        $producto = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $this->numero_operacion)->first();
+
+        if($producto){
+          $message = $producto->isEliminado() ? "El Codigo {$this->numero_operacion} ya esta utilizado por un producto eliminado" : "El Codigo {$this->numero_operacion} ya esta utilizado por un producto" ;
+					$validator->errors()->add('numero_operacion', $message );
 				}
 
         // Buscar por codigo de barra

@@ -100,6 +100,9 @@ Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
         # clientes 
         include('routes_web/clientes.php');
 
+        # Sire
+        include('routes_web/sire.php');
+
         # usuarios  
         include('routes_web/tienda.php');
         

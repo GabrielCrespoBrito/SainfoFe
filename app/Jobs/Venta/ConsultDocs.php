@@ -29,8 +29,6 @@ class ConsultDocs
       
       foreach( $models as $model ){
         $rpta = $model->searchSunatGetStatus(true);
-        logger($model->VtaOper);
-        logger($rpta);
       }
 
       // _dd($this->fecha_desde, $this->fecha_hasta, $models);

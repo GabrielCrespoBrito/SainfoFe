@@ -48,8 +48,6 @@ class TiendaController extends Controller
       'status' => $status =  $request->input('status', 'ywraq-new')
     ];
 
-    // logger('@STATUS ' . $status );
-
     // 
     // rest_invalid_param
     // // <select id="order_status" name="order_status" >

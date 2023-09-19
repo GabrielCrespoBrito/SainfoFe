@@ -719,10 +719,6 @@ class GuiaSalida extends Model
 
   public function dataPdf($formato = PDFPlantilla::FORMATO_A4)
   {
-
-    logger([$this->GuiOper,  $this->isSalida()]);
-    // exit();
-
     $guia = $this->toArray();
     $firma = $this->dataQR($this->isSalida());
     $e = $this->empresa;
