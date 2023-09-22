@@ -154,11 +154,14 @@ let AppCajaIngreso =
   send : function(){   
 
     let data = this.get_data();
+    $("#load_screen").show();
+
     // console.log("data", data );
     let funcs =  {
       success : function(data){
       notificaciones('Acción Exitosa', "success");
         window.table_movimientos.draw();
+        $("#load_screen").hide();
 
         this.down(function(){
           setTimeout(function(){

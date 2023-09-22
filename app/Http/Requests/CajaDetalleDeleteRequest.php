@@ -31,7 +31,7 @@ CajaDetalleDeleteRequest extends FormRequest
 				
 				$caja = $caja_detalle->caja;
 
-				if( $caja->EmpCodi !== empcodi() || $caja->UsuCodi !== usucodi() ){
+				if( $caja->EmpCodi !== empcodi() ){
 					$validator->errors()->add('caja' , 'No puede eliminar un registro de otra caja');
 					return;
 				}

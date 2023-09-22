@@ -13,6 +13,7 @@ function deleteSuccess(data)
 function guardar_modificar_movimiento(e)
 {
   let data = $("#form-movimiento").serialize();
+  $("#load_screen").show();
   let funcs = {
     success : (data) => { 
       notificaciones("Se ha guardado exitosamente exitosamente",  "success"); 

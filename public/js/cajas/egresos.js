@@ -83,8 +83,12 @@ let AppCajaEgreso = {
   },
 
   delete : function(id = null, url ){
+    $("#load_screen").show();
+
     let data = { 'id_movimiento' : id  };
-    let funcs = { success : this.successCallbackDelete.bind(this) };
+    let funcs = { success : this.successCallbackDelete.bind(this), complete : () => {
+      $("#load_screen").hide();
+    } };
     console.log("data url" , data , url )
     ajaxs( data , url , funcs  );
   },
@@ -164,13 +168,17 @@ let AppCajaEgreso = {
 
   send : function(){   
 
+    $("#load_screen").show();
+
     let data = this.get_data();
     let funcs =  {
       success : function(data){
         notificaciones('Acciòn Exitosa', "success");
         this.down(function(){
           setTimeout(function(){
-            window.location.reload();                      
+            window.location.reload(); 
+            $("#load_screen").hide();
+
           },1500)
         });
       }.bind(this),

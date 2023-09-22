@@ -20,7 +20,7 @@ class EmpresaOpcion extends Model
   "logrent", 
   "AfPerc", 
   "PrecImp", 
-  "CostImp", 
+  "CostImp",
   "venCodi", 
   "zoncodi", 
   "tpgCodi", 

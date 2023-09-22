@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Util\Sire\GenerateTokenSire;
+use App\Util\Sire\ConsultarYearPeriodoSire;
+use App\Util\Sire\DescargarPropuestaSire;
 use Illuminate\Http\Request;
 
 class SireController extends Controller
@@ -14,10 +15,23 @@ class SireController extends Controller
      */
     public function index()
     {
-      $generator = new GenerateTokenSire(get_empresa());
-      $generator->handle();
-      return _dd( $generator->getResult());
+    // $generator = new GenerateTokenSire(get_empresa());
+    // $generator->handle();
 
+    // $res = (new ConsultarYearPeriodoSire(get_empresa(), false, ['periodo' => "140000"]))
+    //   ->handle()
+    //   ->getResult();
+
+      // $res = (new DescargarPropuestaSire(get_empresa(), false, ['periodo' => "202305", 'codTipoArchivo' => 0]))
+      // ->handle()
+      // ->getResult();
+
+
+
+      _dd("aqui",  $res);
+      exit();
+      
+      return;
     }
 
     /**
@@ -83,6 +97,5 @@ class SireController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
 }

@@ -16,6 +16,7 @@ use App\Jobs\Empresa\GetOrGenerateGuiaTokenApi;
 use App\Jobs\Empresa\CambiarAplicacionIgvProductos;
 use App\Notifications\NotifyAdminUserSuscripcionPorVencer;
 use App\Notifications\NotifyAdminUserSuscripcionVencida;
+use App\Util\Sire\GenerateTokenSire;
 
 trait EmpresaMethod
 {
@@ -25,6 +26,15 @@ trait EmpresaMethod
       ->handle()
       ->getResult();
   }
+
+
+  public function getOrGenerateSireTokenApi()
+  {
+    return (new GenerateTokenSire($this))
+      ->handle()
+      ->getResult();
+  }
+
 
   public function getClienteGuiaId()
   {
@@ -42,9 +52,9 @@ trait EmpresaMethod
     return $this->FE_CLIENT_KEY;
   }
 
-  public function getTokenData(): TokenHandler
+  public function getTokenData($tokenCampo = "Logfond"): TokenHandler
   {
-    return new TokenHandler(json_decode(get_option('Logfond')));
+    return new TokenHandler(json_decode(get_option($tokenCampo)));
   }
   
   public function generateTokenApi()
@@ -111,6 +121,7 @@ trait EmpresaMethod
     ]);
 
     $this->cleanCache();
+
     return $tokenData['access_token'];
   }
 
