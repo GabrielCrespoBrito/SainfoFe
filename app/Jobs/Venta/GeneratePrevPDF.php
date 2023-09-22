@@ -21,6 +21,6 @@ class GeneratePrevPDF
     $documento = Venta::createFactura($request, false, $request->total_documento, false);
     $items = VentaItem::createItem( $documento->VtaOper, $request->items, false, $request->totales_items, $request->placa_vehiculo, false);
     $items = collect($items);
-    return $documento->generatePDF(PDFPlantilla::FORMATO_A4, false, true, $request->serie->impresion_directa, $generator = PDFGenerator::HTMLGENERATOR, $items);
+    return $documento->generatePDF(PDFPlantilla::FORMATO_A4, false, true, $request->serie->impresion_directa, PDFGenerator::HTMLGENERATOR, $items);
   }
 }

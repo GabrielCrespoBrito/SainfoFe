@@ -4,12 +4,7 @@ namespace App\Util\Sire;
 
 class DescargarPropuestaSire extends SireApi
 {
-  // const URL = "https://api-sire.sunat.gob.pe/v1/contribuyente/migeigv/libros/rvie/propuesta/web/propuesta/%s/exportapropuesta?mtoTotalDesde=%s&mtoTotalHasta=%s&fecDocumentoDesde=%s&fecDocumentoHasta=%s&numRucAdquiriente=%s&numCarSunat=%s&codTipoCDP=%s&codTipoInconsistencia=%s&codTipoArchivo=%s"; 
-  
   const URL = "https://api-sire.sunat.gob.pe/v1/contribuyente/migeigv/libros/rvie/propuesta/web/propuesta/202307/exportapropuesta?mtoTotalDesde=&mtoTotalHasta=&fecDocumentoDesde=&fecDocumentoHasta=&numRucAdquiriente=&numCarSunat=&codTipoCDP=&codTipoInconsistencia=&codTipoArchivo=0";
-
-
- 
 
 //   https://apisire.sunat.gob.pe/v1/contribuyente/migeigv/libros/rvie/propuesta/web/propuesta/{perPer
 // iodoTributario}/exportapropuesta?mtoTotalDesde={mtoTotalDesde}&mtoTotalHasta={mto

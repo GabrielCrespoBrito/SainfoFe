@@ -22,9 +22,9 @@ class SireController extends Controller
     //   ->handle()
     //   ->getResult();
 
-      // $res = (new DescargarPropuestaSire(get_empresa(), false, ['periodo' => "202305", 'codTipoArchivo' => 0]))
-      // ->handle()
-      // ->getResult();
+      $res = (new DescargarPropuestaSire(get_empresa(), false, ['periodo' => "202305", 'codTipoArchivo' => 0]))
+      ->handle()
+      ->getResult();
 
 
 
