@@ -6,6 +6,7 @@ class DescargarPropuestaSire extends SireApi
 {
   const URL = "https://api-sire.sunat.gob.pe/v1/contribuyente/migeigv/libros/rvie/propuesta/web/propuesta/202307/exportapropuesta?mtoTotalDesde=&mtoTotalHasta=&fecDocumentoDesde=&fecDocumentoHasta=&numRucAdquiriente=&numCarSunat=&codTipoCDP=&codTipoInconsistencia=&codTipoArchivo=0";
 
+
 //   https://apisire.sunat.gob.pe/v1/contribuyente/migeigv/libros/rvie/propuesta/web/propuesta/{perPer
 // iodoTributario}/exportapropuesta?mtoTotalDesde={mtoTotalDesde}&mtoTotalHasta={mto
 // TotalHasta}&fecDocumentoDesde={fecDocumentoDesde}&fecDocumentoHasta={fecDocumentoHasta}&numRucAdquiriente={numRucAdquiriente}&numCarSunat={numCarSunat}&

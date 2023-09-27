@@ -100,9 +100,9 @@ class User extends Authenticatable
     return 'T00' . $this->codeLocal();
   }
 
-  public function getSerieGuiaRemision($tidCodi = GuiaSalida::TIPO_GUIA_REMISION)
+  public function getSerieGuiaRemision($tidCodi = GuiaSalida::TIPO_GUIA_REMISION, $loccodi = false)
   {
-    return $this->getDocumento($tidCodi)->first();
+    return $this->getDocumento($tidCodi, false , $loccodi )->first();
   }
 
   
@@ -195,12 +195,16 @@ class User extends Authenticatable
     return $this->active;
   }
 
-  public function getDocumento($tidcodi, $serie = false)
+  public function getDocumento($tidcodi, $serie = false, $local = false)
   {
     $documentos = $this->documentos->where('tidcodi', $tidcodi);
 
     if($serie){
       $documentos = $documentos->where('sercodi' , $serie);
+    }
+
+    if($local){
+      $documentos = $documentos->where('loccodi' , $local);
     }
 
     return $documentos;

@@ -16,6 +16,7 @@ abstract class SireApi
   public $parameters;
   public $token;
   public $isPost;
+  public $isJsonResponse = true;
 
   public function __construct( Empresa $empresa, bool $isPost, array $parameters = [])
   {
@@ -24,6 +25,13 @@ abstract class SireApi
     $this->isPost = $isPost;
   }
 
+
+  public function setIsJsonResponse( $res = true)
+  {
+    $this->isJsonResponse = $res;
+
+    return $this;
+  }
 
   public function generateToken()
   {
@@ -60,18 +68,23 @@ abstract class SireApi
 
   public function processErrorClient( ClientException $th )
   {
-    dd( $th );
-    exit();
-
+    
     $infoError = json_decode($th->getResponse()->getBody()->getContents());
+    $errors_message = "";
     if (property_exists($infoError, 'error_description')) {
       $cod = $infoError->error;
       $msg = $infoError->error_description;
     } else {
       $cod = $infoError->cod;
       $msg = $infoError->msg;
+      $errors = optional($infoError)->errors;
+      if(is_array($errors)){
+        foreach( $errors as $error ){
+          $errors_message .=  sprintf('[Cod: %s - Mensj: %s]', $error->cod, $error->msg ); 
+        }
+      }
     }
-    $this->setError(sprintf('Cod: %s | %s', $cod, $msg));
+    $this->setError(sprintf('Cod: %s | %s %s', $cod, $msg, $errors_message));
   }
 
   public function getUrl()
@@ -96,7 +109,9 @@ abstract class SireApi
       $client->post($this->getUrl(), $this->getOption()) : 
       $client->get($this->getUrl(), $this->getOption());
 
-      $content = json_decode($res->getBody()->getContents());
+      // _dd($res->getBody()->getContents());
+      // exit();
+      $content = $this->isJsonResponse ? json_decode($res->getBody()->getContents()) : $res->getBody()->getContents();
       $this->setSuccess($content);
     } catch (ClientException $th) {
       $this->processErrorClient($th);
