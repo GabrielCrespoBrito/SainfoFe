@@ -14,7 +14,7 @@ class SyncWithMainTable
   {
     $this->empresa = $empresa;
     $this->tipos_pagos = $tipos_pagos;
-    empresa_bd_tenant($this->empresa->id());
+    empresa_bd_tenant($this->empresa->empcodi);
   }
 
   public function handle()
