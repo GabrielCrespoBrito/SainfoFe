@@ -93,6 +93,7 @@ trait VerificateUser
       $user->setAllPermissions();
       $empresa->createPlanes(true);
       empresa_bd_tenant($empresa->empcodi);
+      logger($empresa->empcodi);
       $empresa->syncMedioPagos();
       $empresa->subirCertificadoPrueba();
       Notification::send(User::first(), new EmpresaRegister($empresa));
