@@ -16,6 +16,7 @@ class ActiveEmpresaTenant
   {
     $connection = app(Connection::class);
     $connection->set($this->empresa->getWebsite());
-    session()->put('empresa', $this->empresa->id());
+    logger($this->empresa->getWebsite());
+    session()->put('empresa', $this->empresa->empcodi);
   }
 }
