@@ -11,11 +11,15 @@
     </div>
 
     @if( config('auth.register_user') )
-    <div class="row box-register-cuenta">
+    <div class="row box-register-cuenta"
       <div class="col-md-12 ">
         <p href="#">¿No tienes cuenta?</p>
         <a class="register" href="{{ route('register') }}">CREA <strong>UNA CUENTA GRATIS!<strong></a>
       </div>
     </div>
     @endif
+
+
 @endsection
+
+

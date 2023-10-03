@@ -16,7 +16,7 @@ class UserLocal extends Model
 
 	protected $table = "usuario_local";
 	protected $connection = "mysql";
-	protected $primaryKey = 'usucodi';
+	protected $primaryKey = 'id';
   public $incrementing = false;
   protected $keyType = "string";  	
 	public $timestamps = false;

@@ -18,6 +18,7 @@ class TenantExists
 	{
 		$fqdn = $request->getHost();		
 
+    
 		if (!$this->tenantExists($fqdn)) {
 			auth()->logout();
 			abort(404, 'Nope.');
@@ -25,7 +26,7 @@ class TenantExists
 		}
 
 		if( !$this->tenantValid($fqdn) ){
-			auth()->logout();
+      auth()->logout();
 			abort(404, 'Cliente errorneo.');
 			return;
 		}

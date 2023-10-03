@@ -44,15 +44,6 @@ class HomeController extends Controller
 
   public function index()
   {
-    // $woocommerce = new Client('https://www.imduper.com', 
-    //   'ck_89941cbcd53214b4f7c1a9a9a3fd4d6d302fa0d7',
-    //   'cs_392dc7134731b65fc6644d61523970a345b2a27b',
-    //   ['version' => 'wc/v3']
-    // );
-
-    // return _dd($woocommerce->get('orders'));
-    // return Order::all();
-
     $user  = auth()->user();
     if ($user->isContador()) {
       return view('contador.index');
@@ -65,12 +56,17 @@ class HomeController extends Controller
           $empresa->guardarEstadoSeHaGuardadoInformacionPorDefecto();
           $empresa->cleanCache();
         } catch (\Throwable $th) {
+          dd($th);
+          exit();
           $empresa->DeleteAllInfoUser();
+          logger('@ERROR ERROR REGISTRANDO INFORMACIÒN POR DEFECTO DE EMPRESA');
           noti()->error('No se pudo crear su informaciòn por defecto para acceder, intente de nuevo');
           Auth::logout();
           return back();
         }
       }
+      // dd("aja");
+      // exit();
       return view('dashboard', [
         // 'data' => $data,
         'sidebar' => false,
@@ -105,6 +101,8 @@ class HomeController extends Controller
     $hostExists = Hostname::where('fqdn', $fqdn)->exists();
     $puerto = env('SERVER_PORT');
     $port = $request->server('SERVER_PORT') == $puerto ? ":{$puerto}" : '';
+
+    
     if ($hostExists) {
       session()->put('empresa', $empresa->empcodi);
       session()->put('empresa_ruc', $ruc);
@@ -113,13 +111,15 @@ class HomeController extends Controller
       session()->flash('elegida_empresa', true);
       // http://
       $url = ($request->secure() ? 'https://' : 'http://') .
-        // 208576552.localhost
-        $fqdn .
-        // :8001 | :8000 |  
-        $port .
-        // home
-        '/home';
-
+      // 208576552.localhost
+      $fqdn .
+      // :8001 | :8000 |  
+      $port .
+      // home
+      '/home';
+      
+      // dd( $url );
+      // exit();
       return redirect($url);
     } else {
       Auth::logout();

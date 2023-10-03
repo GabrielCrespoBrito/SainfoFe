@@ -1108,11 +1108,17 @@ class Empresa extends Model
 
     // Usuario Local
     $users_locals = UserLocal::withoutGlobalScope('empresa')->where('empcodi', $this->empcodi)->get();
+
+
+    
     if ($users_locals->count()) {
       foreach ($users_locals as $user_local) {
         $user_local->delete();
       }
     }
+    
+    dd( $users_locals );
+    exit();
 
     // usuario_empr
     $users_empresa = $this->empresa_usuarios;
@@ -1131,6 +1137,7 @@ class Empresa extends Model
     }
 
     // Borrar hostnames y website
+    optional($this->opcion())->delete();
     optional($this->getWebsite())->delete();
     optional($this->getHost())->delete();
 
