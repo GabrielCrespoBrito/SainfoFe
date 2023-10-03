@@ -8,11 +8,13 @@ use App\Cotizacion;
 use GuzzleHttp\Client;
 use App\SerieDocumento;
 use Illuminate\Console\Command;
+use App\Models\UserLocal\UserLocal;
 use Illuminate\Support\Facades\Log;
 use App\Notifications\EmpresaRegister;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\EmpresaDocPendientePorEnviar;
 use App\Http\Controllers\Util\SummaryContigence\SummaryContigence;
+use Exception;
 
 class ExeCode extends Command
 {
@@ -52,6 +54,8 @@ class ExeCode extends Command
     switch ($code) {
       case 'api-guia':
         $this->apiGuia();
+      case 'user-local':
+        $this->addUserLocal();
         break;
       default:
         break;
@@ -84,6 +88,24 @@ class ExeCode extends Command
     // return json_decode($response->getBody())->success;
 
   }
+
+  public function addUserLocal()
+  {
+      $empresas = Empresa::all(); 
+      
+      foreach( $empresas as $empresa ){
+          try {
+          empresa_bd_tenant($empresa->empcodi);
+          $locales = $empresa->locales; 
+          foreach( $locales as $local ){
+              UserLocal::create_( '01', $local->LocCodi, $empresa->empcodi );
+            }
+          }
+            catch( Exception $th ){
+            logger('@ERROR ExeCode AddUserLocal ' . $th->getMessage());
+      }
+  }
+}
 
 
   public function addSeriesToUsers()
