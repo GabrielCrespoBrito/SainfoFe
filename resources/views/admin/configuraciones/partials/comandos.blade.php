@@ -5,30 +5,32 @@ Establecer todos los archivos de configuración
 </p> --}}
 
 {{-- <p>
-	<a href="{{ route('admin.comandos', 'verificardatabase') }}#" class="btn btn-primary"> Verificar base de datos </a>
+	<a href="{{ route('admin.comandos', 'verificardatabase') }}" class="btn btn-primary"> Verificar base de datos </a>
 Agregar todos los campos y tablas en la base de datos que hagan falta
 </p> --}}
 
 <p>
-  <a href="{{ route('admin.comandos', 'parametros') }}#" class="btn btn-primary"> Valores de Configuraciones </a>
+  <a href="{{ route('admin.comandos', 'parametros') }}" class="btn btn-primary"> Valores de Configuraciones </a>
   Agregar nuevos parametros de configuración si existen
 </p>
 
 <p>
-  <a href="{{ route('admin.comandos', 'eliminar_temporales') }}#" class="btn btn-primary"> Archivos temporales</a>
+  <a href="{{ route('admin.comandos', 'eliminar_temporales') }}" class="btn btn-primary"> Archivos temporales</a>
   Eliminar los archivos temporales de la carpeta temp
 </p>
 
 <p>
-  <a href="{{ route('admin.comandos', 'barradebug') }}#" class="btn btn-primary"> Quitar barra de debug</a>
+  <a href="{{ route('admin.comandos', 'barradebug') }}" class="btn btn-primary"> Quitar barra de debug</a>
 </p>
 
 <p>
-  <a href="{{ route('admin.comandos', 'permisos') }}#" class="btn btn-primary"> Registrar Nuevos Permisos </a> Registros Permisos Recientes que se halla agregado y asignarselo a usuarios principales
+  <a href="{{ route('admin.comandos', 'permisos') }}" class="btn btn-primary"> Registrar Nuevos Permisos Solo a Usuario Principal</a> 
+  <a href="{{ route('admin.comandos', 'permisos_all') }}" class="btn btn-primary"> Registrar Nuevos Permisos A todos los Usuarios</a> 
+  Registros Permisos Recientes que se halla agregado y asignarselo a usuarios 
 </p>
 
 <p>
-  <a href="{{ route('admin.comandos', 'medios_pagos') }}#" class="btn btn-primary"> Sincronizar Medios de Pago  </a> Registros A Empresas las Nuevas formas de pagos registradas en el sistema
+  <a href="{{ route('admin.comandos', 'medios_pagos') }}" class="btn btn-primary"> Sincronizar Medios de Pago  </a> Registros A Empresas las Nuevas formas de pagos registradas en el sistema
 </p>
 
 <p>

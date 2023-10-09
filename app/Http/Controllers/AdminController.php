@@ -37,7 +37,7 @@ class AdminController extends Controller
 			break;
         
 			case 'verificardatabase':
-	  		Artisan::call('verificar:database');
+	  		Artisan::call('verificar:database', ['onlyOwner' => $request->input('onlyOwner', false) ]);
 			break;
 
 			case 'parametros':
@@ -46,6 +46,11 @@ class AdminController extends Controller
 	
       case 'permisos':
         Artisan::call('system_task:add_permisos');
+        break;
+
+      case 'permisos_all':
+        ini_set('max_execution_time', '300');
+        Artisan::call('system_task:add_permisos', ['all_user' => 1]);
         break;
 
 			case 'eliminar_temporales':
@@ -73,16 +78,6 @@ class AdminController extends Controller
       break;        
 
       case 'respaldar_base_datos':
-
-        // "_token" => "n0ogEtLcmb3toZjv7quASB1UHSlyJCW3WVXRrFvs"
-        // "enviar" => null
-        // "basedatos" => "sada"
-        // "descargar" => "1"
-        // "guardar_amazon" => "1"
-        // _dd( $request->all() );
-        // exit();
-
-
         Artisan::call('db:respaldo', ['database' => $request->input('basedatos'), 'guardar_amazon' => $request->input('guardar_amazon', 1)  ]);
 
         _dd("Respaldando");
@@ -91,13 +86,7 @@ class AdminController extends Controller
         if( $request->input('descargar') ){
           $pathFileToCompress = getTempPath('backup');
           $pathFileCompress = getTempPath('backup.rar');
-          // _dd($pathFileCompress, $pathFileToCompress);
-          // exit();
-          // $compress = new CompressRar($pathFileToCompress, $pathFileCompress);
         }
-          
-        // $resp = (new CompressBackupFolder())->handle();
-
 
         _dd("todo_listo");
         exit();

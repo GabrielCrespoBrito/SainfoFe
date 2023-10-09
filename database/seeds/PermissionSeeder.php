@@ -28,6 +28,7 @@ class PermissionSeeder extends Seeder
   const A_CONTINGENCIA = "contingencia";
   const A_CONSULTARDOCUMENTO = "consultar_documentos";
   const A_MODIFICAR_PRECIO = "modificar-precios";
+  const A_VER_NOTAS_VENTA = "ver-notas-venta";
   const A_DESPACHO = "despacho";
   const A_TRASLADO = "traslado";
   const A_PAGOS = "pagos";
@@ -119,6 +120,7 @@ class PermissionSeeder extends Seeder
   const CAJA_CREATE = 'create caja';
   const CAJA_DELETE = 'delete caja';
   const CAJA_PENDIENTES = 'pendientes caja';
+  const CAJA_VER_MONTOS = 'ver-montos';
 
   protected $data;
 
@@ -421,6 +423,7 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_DELETE, self::R_PAGO, self::R_VENTA),
       concat_space(self::A_CONSULTARDOCUMENTO, self::R_VENTA),
       concat_space(self::A_MODIFICAR_PRECIO, self::R_VENTA),
+      concat_space(self::A_VER_NOTAS_VENTA, self::R_VENTA),
     ], self::R_VENTA,  false);
   }
 
@@ -529,6 +532,7 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_MOVIMIENTOS, self::R_CAJA),
       concat_space(self::A_CREATE_MOVIMIENTOS, self::R_CAJA),
       concat_space(self::A_EDIT_MOVIMIENTOS, self::R_CAJA),
+      concat_space(self::CAJA_VER_MONTOS, self::R_CAJA),
     ], self::R_CAJA,  false);
   }
 

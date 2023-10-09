@@ -46,10 +46,6 @@ class EmpresaController extends EmpresaMainController
 
   public function store(EmpresaCreateRequest $request)
   {
-
-    // _dd( $request->all() );
-    // exit();
-
     $message = 'Se ha creado exitosamente la empresa';
     $type = "success";
     // route('usuarios.mantenimiento');
@@ -107,9 +103,6 @@ class EmpresaController extends EmpresaMainController
 
   public function delete(DeleteRequest $request,  $empresa_id)
   {
-    // _dd("aja");
-    // exit();
-    
     ini_set('max_execute_time', 240);
     $empresa = Empresa::find($empresa_id);
     DB::beginTransaction();

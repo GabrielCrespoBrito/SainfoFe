@@ -72,6 +72,11 @@ return [
   PermissionSeeder::A_CONTINGENCIA => 'Contingencia', // = "contingencia";
   PermissionSeeder::A_CONSULTARDOCUMENTO => 'Consultar Documentos', // = "consultar_documentos";
   PermissionSeeder::A_DESPACHO => 'Despacho', // = "despacho";
+  PermissionSeeder::CAJA_VER_MONTOS => 'Ver Montos',
+  'produccion-manual' => 'Producción Manual',
+
+  
+
   // Vendedor
   PermissionSeeder::A_VENDEDORVENTAS => 'Vendedor - Ventas', // = "despacho";
   PermissionSeeder::A_VENDEDORESTADISTICA => 'Vendedor - Estadisticas', // = "despacho";
@@ -89,6 +94,7 @@ return [
   PermissionSeeder::A_CONTABLEVENTASMENSUAL => 'Ventas Mensual', // "contable-ventas-mensual";
   PermissionSeeder::A_CONTABLECOMPRASMENSUAL => 'Compras Mensual', // "contable-compras-mensual";
   PermissionSeeder::A_VENTA => 'Ventas', // "ventas";
+  PermissionSeeder::A_VER_NOTAS_VENTA => 'Ver Listado de Notas de Venta', // "ventas";
   PermissionSeeder::A_COMPRA => 'Compras', // "compras";
   PermissionSeeder::A_DETRACCION => 'Detracción', // "detraccion";
   PermissionSeeder::A_LISTAPRECIO => 'Lista de Precios', // "listaprecio";

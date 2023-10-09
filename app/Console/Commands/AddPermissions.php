@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\User;
+use Exception;
 use App\Permission;
 use PermissionSeeder;
 use Illuminate\Console\Command;
@@ -43,48 +44,59 @@ class AddPermissions extends Command
    */
   public function handle()
   {
-    app()['cache']->forget('spatie.permission.cache');
-    Schema::enableForeignKeyConstraints();
+    DB::connection()->beginTransaction();
+    try {
+      // 
+      app()['cache']->forget('spatie.permission.cache');
+      Schema::enableForeignKeyConstraints();
+      $permissions_register = Permission::all()->pluck('name');
+      $permissions_new_ = collect((new PermissionSeeder())->getPermissions());
+      $permissions_new = $permissions_new_->pluck('name');
 
-    $permissions_register = Permission::all()->pluck('name');
-    $permissions_new_ = collect((new PermissionSeeder())->getPermissions());
-    $permissions_new = $permissions_new_->pluck('name');
 
-    
-    //
-    $permissions_add = $permissions_new->diff($permissions_register);
-    $permissions_delete = $permissions_register->diff($permissions_new);
-    
-    if ( $permissions_add->count() === 0 && $permissions_delete->count() === 0) {
-      return;
-    }
-    
-    if($this->argument('all_user')){
-      $users_group = User::get()->chunk(50);
-    }
-    else {
-      $users_group = User::where('carcodi', User::TIPO_DUENO )->get()->chunk(50);
-    }
-    
-    foreach ($permissions_add as $permission_add) {
-      
-      $permission_added = Permission::create([
-        'name' => $permission_add,
-        'descripcion' =>   __('messages.' . $permission_add),
-        'group' => $permissions_new_->where('name', $permission_add)->first()['group'],
-      ]);
+      //
+      $permissions_add = $permissions_new->diff($permissions_register);
+      $permissions_delete = $permissions_register->diff($permissions_new);
 
-      foreach ($users_group as $users) {
-        foreach ($users as $user) {
-          $user->givePermissionTo($permission_added);
+      if ($permissions_add->count() === 0 && $permissions_delete->count() === 0) {
+        return;
+      }
+
+      if ($this->argument('all_user')) {
+        $users_group = User::get()->chunk(50);
+      } else {
+        $users_group = User::where('carcodi', User::TIPO_DUENO)->get()->chunk(50);
+      }
+
+
+      foreach ($permissions_add as $permission_add) {
+
+        $permission_added = Permission::create([
+          'name' => $permission_add,
+          'descripcion' =>   __('messages.' . $permission_add),
+          'group' => $permissions_new_->where('name', $permission_add)->first()['group'],
+        ]);
+
+        foreach ($users_group as $users) {
+          foreach ($users as $user) {
+            $user->givePermissionTo($permission_added);
+          }
         }
       }
+
+      // Eliminar Permisos
+      DB::table(config('permission.table_names.permissions'))
+        ->whereIn('name', $permissions_delete->toArray())
+        ->delete();
+      // 
+      DB::connection()->commit();
+    } catch (\Throwable $th) {
+      throw new Exception("Error Processing Request", 1);
+      // noti()->error('Error', $th->getMessage());
+      DB::connection()->rollBack();
+      return back();
     }
 
 
-    // eliminar permisos
-    DB::table(config('permission.table_names.permissions'))
-      ->whereIn('name', $permissions_delete->toArray())
-      ->delete();
   }
 }

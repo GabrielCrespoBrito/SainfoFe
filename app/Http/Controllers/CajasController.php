@@ -10,9 +10,9 @@ use App\Control;
 use App\TipoPago;
 use App\CajaDetalle;
 use App\PDFPlantilla;
+use PermissionSeeder;
 use App\Mail\MailDeudas;
 use App\ClienteProveedor;
-use App\Http\Controllers\Caja\ReporteSimplificadoTrait;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Models\MedioPago\MedioPago;
@@ -30,9 +30,10 @@ use App\Http\Requests\CajaEgresoStoreRequest;
 use App\Http\Requests\ReaperturarCajaRequest;
 use App\Http\Requests\CajaDetalleDeleteRequest;
 use App\Http\Requests\CajaDineroAperturaRequest;
-use App\Util\ExcellGenerator\CuentaPorPagarExcell;
-use App\Http\Requests\CajaDetalle\CajaDetalleIngresoUpdateRequest;
 use App\Util\ExcellGenerator\CajaMovimientoExcell;
+use App\Util\ExcellGenerator\CuentaPorPagarExcell;
+use App\Http\Controllers\Caja\ReporteSimplificadoTrait;
+use App\Http\Requests\CajaDetalle\CajaDetalleIngresoUpdateRequest;
 
 class CajasController extends Controller
 {
@@ -44,6 +45,7 @@ class CajasController extends Controller
     $this->middleware(p_midd('A_CREATE', 'R_CAJA'))->only('reaperturar', 'dinero_apertura');
     $this->middleware(p_midd('A_MOVIMIENTOS', 'R_CAJA'))->only('movimientos');
     $this->middleware(p_midd('A_REPORTE_COMPRA_VENTA', 'R_CAJA'))->only('reporteVenta');
+    $this->middleware(p_midd('A_SHOW', 'R_CAJA'))->only('resumen');
     $this->middleware(p_midd('A_REPORTE_INGRESO_EGRESO', 'R_CAJA'))->only('reporteDetallado');
   }
 
@@ -73,9 +75,17 @@ class CajasController extends Controller
       $busqueda->where('User_Crea', $request->usuario);
     }
 
+    $showMonto = auth()->user()->checkPermissionTo_(concat_space(PermissionSeeder::CAJA_VER_MONTOS, PermissionSeeder::R_CAJA));
+
     return datatables()->of($busqueda)
       ->addColumn('column_link', 'banco.partials.column_link')
-      ->rawColumns(['column_link'])
+      ->addColumn('CajSalS', function($model) use($showMonto) {
+        return  $showMonto ? $model->CajSalS  : '<span class="fa fa-eye-slash"></span>';
+      })
+      ->addColumn('CajSalD', function($model) use($showMonto) {
+        return  $showMonto ? $model->CajSalD  : '<span class="fa fa-eye-slash"></span>';
+      })
+      ->rawColumns(['column_link', 'CajSalS', 'CajSalD'])
       ->toJson();
   }
 

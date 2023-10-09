@@ -142,6 +142,12 @@ class VentasController extends Controller
       // $busqueda = $busqueda->where('ventas_cab.TidCodi', '!=' , TipoDocumentoPago::NOTA_VENTA );
       $busqueda = $busqueda->whereNotIn('ventas_cab.TidCodi', [TipoDocumentoPago::NOTA_VENTA, 50]);
     } else {
+
+      if ($request->input("tipo") == TipoDocumentoPago::NOTA_VENTA) {
+        if (!auth()->user()->checkPermissionTo_(concat_space(PermissionSeeder::A_VER_NOTAS_VENTA, PermissionSeeder::R_VENTA))) {
+          throw new Exception("Error No tiene permitido ver este tipo de documentos", 1);
+        }
+      } 
       $busqueda = $busqueda->where('ventas_cab.TidCodi', '=', $request->input("tipo"));
     }
 
@@ -270,7 +276,7 @@ class VentasController extends Controller
       "verificar_almacen" => get_option('DesAuto'),
       "descuento_defecto" => get_option('ImpDcto'),
       "inicial_focus" => $empresa->SoftEsta,
-      
+
       EmpresaOpcion::MODULO_MANEJO_STOCK => $empresa->getDataAditional(EmpresaOpcion::MODULO_MANEJO_STOCK),
 
       EmpresaOpcion::MODULO_RESTRICCION_VENTA_STOCK => $empresa->getDataAditional(EmpresaOpcion::MODULO_RESTRICCION_VENTA_STOCK),
@@ -411,9 +417,8 @@ class VentasController extends Controller
         $pdfResult = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
         $result = $pdfResult['tempPath'];
         $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);
-      }
-    else {
-      $result = $documento->generatePDF(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR, get_empresa()->hasImpresionIGV(), true, true);
+      } else {
+        $result = $documento->generatePDF(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR, get_empresa()->hasImpresionIGV(), true, true);
       }
 
       $documento->updateSeries();
@@ -478,9 +483,7 @@ class VentasController extends Controller
       } else {
         $pathTemp = $venta->generatePDF($formato, true, true, false, PDFGenerator::HTMLGENERATOR);
       }
-    } 
-    
-    else {
+    } else {
       $generator = $formato == PDFPlantilla::FORMATO_A5 ? PDFGenerator::HTMLGENERATOR : PDFGenerator::HTMLGENERATOR;
       $pdfData = $venta->generatePDF($formato, false, true, false, $generator);
       $pathTemp = $pdfData['tempPath'];
