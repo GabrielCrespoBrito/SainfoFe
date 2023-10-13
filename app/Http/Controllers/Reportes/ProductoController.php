@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Util\PDFGenerator\PDFGenerator;
 use App\Jobs\Producto\ProductoMasVendidoReport;
+use App\Grupo;
 
 class ProductoController extends Controller
 {
@@ -17,7 +18,7 @@ class ProductoController extends Controller
 
   public function create()
   {
-    return view('reportes.productos_mas_vendidos.form');
+    return view('reportes.productos_mas_vendidos.form', ['grupos' => Grupo::all()]);
   }
 
   public function showPDF(Request $request)
