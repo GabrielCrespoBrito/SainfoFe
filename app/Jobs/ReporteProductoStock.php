@@ -53,10 +53,12 @@ class ReporteProductoStock
       ->where('productos.famcodi', $this->familiaId);
     }
 
+    // dd( $this->grupoId, $this->familiaId, $this->marcaId, $this->localId, $this->stockMinimo, $query->get() );
+    // exit();
+
     if ($this->marcaId) {
       $query->where('productos.marcodi', $this->marcaId);
     }
-
     if ($this->stockMinimo) {
 
       $query->where('productos.ProSTem', '1');            
@@ -83,6 +85,7 @@ class ReporteProductoStock
     }
 
     return $query
+    ->orderBy( 'productos.ProCodi', 'asc')
     ->orderBy('productos.marcodi', 'asc')
     ->orderBy('productos.ProCodi', 'desc')
       ->select(
