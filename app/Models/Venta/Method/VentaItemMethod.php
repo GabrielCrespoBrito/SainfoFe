@@ -294,9 +294,9 @@ trait VentaItemMethod
       'costo_soles' => convertNegativeIfTrue($this->DetCSol , $convertToNegative ),
       'costo_dolar' => convertNegativeIfTrue($this->DetCDol , $convertToNegative ),
       'utilidad_soles' => convertNegativeIfTrue( $this->DetVSol - $this->DetCSol, $convertToNegative ),
-      'utilidad_dolar' => convertNegativeIfTrue( $this->DetVDol - $this->DetCSol, $convertToNegative ),
+      'utilidad_dolar' => convertNegativeIfTrue( $this->DetVDol - $this->DetCDol, $convertToNegative ),
     ];
-    
+
     return $v;
   }
   

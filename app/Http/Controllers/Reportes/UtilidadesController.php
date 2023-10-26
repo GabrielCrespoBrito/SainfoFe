@@ -32,8 +32,10 @@ class UtilidadesController extends Controller
 
   public function generatePDF( $fecha_desde, $fecha_hasta, $local, $grupo, $titulo, $view )
   {
+    // Explicame este codigo
     $data = $this->getReporte($fecha_desde, $fecha_hasta, $local, $grupo);
-
+    // dd($data);
+    // exit();
     if( $grupo != 'todos' ){
       $grupo = Grupo::find($grupo)->GruNomb;
     }

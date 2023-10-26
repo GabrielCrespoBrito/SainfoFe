@@ -144,20 +144,33 @@ class ReporteUtilidades
   {
     $data_utilidad = (object) $item->getDataUtilidadProducto();
 
-    $this->addToTotal( $total_reporte, $data_utilidad );
+    // dd($item, $data_utilidad);
+    // exit();
+    // logger($total_reporte);
+    $this->addToTotal( $total_reporte, $data_utilidad, true );
     $this->addToTotal( $total_dia, $data_utilidad );
     $this->addToTotal( $total_venta, $data_utilidad );
     $this->addToTotal( $total_item, $data_utilidad) ;
   }
 
-  public function addToTotal( &$total, $data_utilidad )
+  public function addToTotal( &$total, $data_utilidad, $total_reporte = false )
   {
+    $viene = $total_reporte;
+
     $total['costo_soles'] += $data_utilidad->costo_soles;
     $total['costo_dolar'] += $data_utilidad->costo_dolar;
     $total['venta_soles'] += $data_utilidad->venta_soles;
     $total['venta_dolar'] += $data_utilidad->venta_dolar;
     $total['utilidad_soles'] += $data_utilidad->utilidad_soles;
-    $total['utilidad_dolar'] += $data_utilidad->utilidad_dolar;    
+    $total['utilidad_dolar'] += $data_utilidad->utilidad_dolar;
+
+    if ($total_reporte) {
+      logger("--------------------------- TOTAL REPORTE ---------------------------");
+      logger( (array) $data_utilidad);
+      logger($total);
+      logger("----------------------------------------------------------------------");
+    }
+
   }
 
   /**
