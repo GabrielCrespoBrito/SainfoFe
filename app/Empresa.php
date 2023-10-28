@@ -130,8 +130,6 @@ class Empresa extends Model
     "end_plan",
   ];
 
-
-
   public function getImgBigAttribute()
   {
     return 'logo.png';
@@ -169,6 +167,11 @@ class Empresa extends Model
   public function hasImpresionIGV()
   {
     return (bool) $this->getDataAditional('proforma_igv');
+  }
+
+  public function hasVentaRapida()
+  {
+    return (bool) $this->getDataAditional('modulo_venta_rapida');
   }
 
   public function getImgFooterAttribute()

@@ -23,6 +23,9 @@ class UpdateModulos
       $dataUpdate[ $modulo ] = $this->data[ $modulo ] ?? 0;
     }
 
+    // dd( $dataUpdate );
+    // exit();
+
     $this->empresa->updateDataAdicional($dataUpdate);
     return;
   }

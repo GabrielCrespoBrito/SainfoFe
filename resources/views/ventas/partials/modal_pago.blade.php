@@ -1,6 +1,7 @@
 @php
   $id = $compra->CpaOper ?? 'XXX';
   $type = $type ?? 'venta';
+  $showButtonsSalir = $showButtonsSalir ?? true;
   $isVenta = $type == "venta";
   $urlSearchNC = $isVenta ? route('ventas.nota_credito.topay',1) : route('ventas.nota_credito.topay',0);
   $urlPaymentStatus = $isVenta ? route('ventas.paymentStatus') : route('compras.paymentStatus', $id );

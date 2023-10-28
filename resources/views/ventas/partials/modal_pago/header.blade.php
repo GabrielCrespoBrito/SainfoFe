@@ -1,9 +1,14 @@
+@php
+  $showButtonsSalir = $showButtonsSalir ?? true;
+@endphp
         <div class="botones_div">
 
           <a class="btn btn-success btn-flat" id="pay_factura">  
             <span class="fa fa-check" > </span> Aceptar</a>
-            
+
+          @if( $showButtonsSalir )
           <a class="btn btn-danger btn-flat" id="salir_pago"> Salir</a>
+          @endif
 
         </div>     
 

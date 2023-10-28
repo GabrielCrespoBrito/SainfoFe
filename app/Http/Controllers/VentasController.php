@@ -271,6 +271,7 @@ class VentasController extends Controller
       "condicion_cot" => $condicion_repository->find(CondicionVenta::ID_COTIZACION)->CcvDesc,
       'decimales_dolares' => $decimales->dolares,
       'decimales_soles' => $decimales->soles,
+      'venta_rapida' =>  (int) $empresa->hasVentaRapida(),
       "verificar_deudas" => get_option('ImpSald'),
       "verificar_caja" => get_option('OpcConta'),
       "verificar_almacen" => get_option('DesAuto'),
@@ -414,9 +415,21 @@ class VentasController extends Controller
         $save = $formato == PDFPlantilla::FORMATO_A4;
         $documento->fresh()->saveXML();
         $serie = $request->serie;
-        $pdfResult = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
-        $result = $pdfResult['tempPath'];
-        $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);
+        
+        if($empresa->hasVentaRapida()){
+          // $tempPath = file_build_path('temp', $documento->nameFile('.pdf'));
+          // $pdfResult = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
+          $result = file_build_path('temp', $documento->nameFile('.pdf'));
+          // Todavia no se usa, impresion directa de la impresora con venta rapida
+          $data_impresion = [];
+        }
+
+        else {
+          $pdfResult = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
+          $result = $pdfResult['tempPath'];
+          $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);
+        }
+
       } else {
         $result = $documento->generatePDF(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR, get_empresa()->hasImpresionIGV(), true, true);
       }
@@ -453,6 +466,7 @@ class VentasController extends Controller
       'need_pago' => $needPago,
       'imprecion_data' => [
         'impresion_directa' => $request->serie->impresion_directa,
+        'venta_directa' => $request->serie->impresion_directa,
         'cantidad_copias' => $request->serie->cantidad_copias,
         'nombre_impresora' => $request->serie->nombre_impresora,
         'data_impresion' => $data_impresion
@@ -494,6 +508,9 @@ class VentasController extends Controller
       $realPath = file_build_path($pathTemp);
       return response()->download($realPath, $namePDF);
     }
+
+    // dd( $pathTemp );
+    // exit();
 
     $path = asset($pathTemp);
     $pathJs = str_replace('\\', '/', $path);

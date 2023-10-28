@@ -1118,4 +1118,15 @@ trait VentaMethod
     (new UpdateNotaVentaByCanje($this, $canjeQuery))->handle();
   }
 
+  // public function getSerie()
+  // {
+  //   return SerieDocumento::findSerie(
+  //     $this->EmpCodi,
+  //     $this->VtaSeri,
+  //     $this->TidCodi,
+  //     $this->LocCodi,
+  //     $this->UsuCodi
+  //   )->first();
+  // }
+
 }

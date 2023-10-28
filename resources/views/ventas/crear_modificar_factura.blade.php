@@ -45,6 +45,7 @@
   var accion_default = "edit";
   var ruc_crear = "{{ $ruc }}";
   var incluyeIGV = {{ $incluyeIgv }};  
+  var venta_rapida = {{ $venta_rapida ?? 0 }};  
   var igvPorc = {{ $igvEmpresa->igvPorc }};
   var igvBaseCero = {{ $igvEmpresa->igvBaseCero }};
   var igvBaseUno = {{ $igvEmpresa->igvBaseUno }};
@@ -175,9 +176,8 @@ Documento <span class="caja_number"> {{ $venta->VtaNume }} </span>
 
 @include('ventas.partials.modal_confirmacion_guardado')
 
-
 @if(get_option('OpcConta'))
-@include('ventas.partials.modal_pago', ['tiposPagos' => $medios_pagos])
+@include('ventas.partials.modal_pago', ['tiposPagos' => $medios_pagos, 'showButtonsSalir' => !$venta_rapida ])
 @include('ventas.partials.modal_pagos_comp')
 @if( !$create )
 @endif

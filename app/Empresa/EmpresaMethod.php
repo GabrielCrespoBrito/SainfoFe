@@ -60,7 +60,7 @@ trait EmpresaMethod
   public function generateTokenApi()
   {
   }
-
+  
   public function isEscritorio()
   {
     return $this->tipo == "escritorio";

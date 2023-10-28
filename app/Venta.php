@@ -1046,6 +1046,7 @@ class Venta extends Model
       'title' => $this->nameFile('.pdf'),
       'venta' => $venta,
       'venta2' => $this,
+      'venta_rapida' => $e->hasVentaRapida(),
       'empresa' => $empresa,
       'igvPorc' => $opciones->Logigv . '%',
       'isPreventa' => false,

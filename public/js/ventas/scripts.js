@@ -2,7 +2,7 @@ window.canjeIds = [];
 window.almacenVisualize = true;
 window.columns_alms_hide = [];
 window.isCanje = false;
-
+// venta_rapida
 function poner_data_cliente(data) {
   // 
   $("[name=cliente_documento]").select2('destroy')
@@ -2357,7 +2357,15 @@ $(document).ready(function (e) {
         console.log("creando modal pagos");
         AppPago.is_static_modal = true;
         AppPago.set_id($("[name=codigo_venta]").val());
-        AppPago.set_callback(go_listado);
+        AppPago.set_callback(function () {
+          if (venta_rapida) {
+            showPDF(window.data_guardado.url)
+          }
+          else {
+            go_listado();
+          }
+        });
+
         AppPago.create($("[name=medio_pago] option:selected").val());
         show_modal("hide", "#modalSunatConfirmacion");
       }, 1000);
@@ -2384,7 +2392,12 @@ $(document).ready(function (e) {
   function respuesta_sunat(data) {
     // console.log("Succes respuesta de la sunat" , data )
     ms(data.data, 200);
-    eje_pago();
+    if (venta_rapida) {
+      go_listado(1000);
+    }
+    else {
+      eje_pago();
+    }
   }
 
 
@@ -2427,7 +2440,7 @@ $(document).ready(function (e) {
       let funcs = {
         success: respuesta_sunat,
         complete: function (data) {
-          eje_pago(data);
+          // eje_pago(data);
         },
         error: function (data) {
           ms(data.responseJSON.data, 500);
@@ -2440,19 +2453,17 @@ $(document).ready(function (e) {
     else {
 
       if (openVentana("caja")) {
-        eje_pago();
+        if( venta_rapida ){
+          go_listado(500);
+        }
+        else {
+          eje_pago();
+        }
       }
 
       else {
         go_listado(500);
         return;
-
-        if (openVentana("almacen")) {
-          guiaSalida();
-        }
-        else {
-          go_listado(500);
-        }
       }
 
     }
@@ -2470,9 +2481,9 @@ $(document).ready(function (e) {
     window.data_guardado = data;
 
     if (data.imprecion_data.impresion_directa) {
-      
+
       try {
-        
+
         function impresionExitosa() {
           successStore(true)
         }
@@ -2487,16 +2498,16 @@ $(document).ready(function (e) {
           data.imprecion_data.cantidad_copias,
           impresionExitosa,
           impresionError
-          );
+        );
 
-        console.log( ticketPrint )
-          
+        console.log(ticketPrint)
+
         ticketPrint.errorFunc = function (data) {
-          console.log( "errorFunc", data )
+          console.log("errorFunc", data)
           successStore(true);
         }.bind(ticketPrint);
-        
-        
+
+
         ticketPrint.print();
 
       } catch (error) {
@@ -2504,13 +2515,11 @@ $(document).ready(function (e) {
       }
 
     }
-
     successStore(data, true);
-
   }
 
 
-  function successStore(show_window_print = true) {
+  function setModalEvent() {
 
     $("#modalData").on('hide.bs.modal', e => {
 
@@ -2520,7 +2529,12 @@ $(document).ready(function (e) {
 
       else {
         if (need_pago) {
-          eje_pago();
+          if (venta_rapida) {
+            go_listado();
+          }
+          else {
+            eje_pago();
+          }
         }
         else {
           go_listado();
@@ -2529,7 +2543,13 @@ $(document).ready(function (e) {
 
 
     })
+  }
 
+  function successStore(show_window_print = true) {
+
+    console.log("successStore", show_window_print)
+
+    setModalEvent();
 
     // Div Guardar
     $(".div_esperando").hide();
@@ -2545,27 +2565,14 @@ $(document).ready(function (e) {
 
     // Show window print
     if (show_window_print) {
-      showPDF(window.data_guardado.url, false);
+
+      if (venta_rapida) {
+        eje_pago();
+      }
+      else {
+        showPDF(window.data_guardado.url, false);
+      }
     }
-
-
-    // Anterior
-
-    // if (window.data_guardado.need_factura) {
-    //   setTimeout(preguntar_sunat, 500);
-    // }
-
-    // else {
-    //   if (need_pago) {
-    //     eje_pago();
-    //   }
-    //   else {
-    //     go_listado();
-    //   }
-    // }
-
-
-
   }
 
 
@@ -2718,9 +2725,7 @@ $(document).ready(function (e) {
 
 
   function aceptar_guardado(e) {
-
     e.preventDefault();
-
 
     if (window.executing_ajax) {
       return false;
@@ -3349,18 +3354,16 @@ $(document).ready(function (e) {
   }
 
   function salir_pago_accion() {
-    go_listado();
-    return;
 
-    if (create) {
-      // show_modal("hide", AppPago.paren);
-      // show_modal("hide", AppPago.paren);      
-      $(AppPago.parent).modal('hide');
-      guiaSalida();
+    $("#modalPago").modal('hide');
+
+    if (venta_rapida) {
+      showPDF(window.data_guardado.url)
     }
     else {
-      show_modal("hide", "#modalGuiaSalida");
+      go_listado();
     }
+    return;
   }
 
   /**

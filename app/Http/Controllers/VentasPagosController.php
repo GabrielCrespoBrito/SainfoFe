@@ -8,6 +8,7 @@ use App\TipoPago;
 use App\VentaPago;
 use App\GuiaSalida;
 use App\CajaDetalle;
+use App\PDFPlantilla;
 use Illuminate\Http\Request;
 use App\Http\Requests\Pago\PagoUpdateRequest;
 use App\Http\Requests\VentaPago\VentaPagoStoreRequest;
@@ -135,6 +136,15 @@ class VentasPagosController extends Controller
       $tipoIngreso = in_array($request->tipopago,  TipoPago::getTipoBanco()) ? 'banco' : 'venta';
       $tipo_mov = $venta->isNotaCredito() ? 'S' : 'I';
       CajaDetalle::registrarIngreso($venta_pago, $tipoIngreso, $venta_pago['CajNume'], $request->all(), $tipo_mov);
+    }
+
+    $empresa = get_empresa();
+    if( $empresa->hasVentaRapida() && $request->input('create_pdf', false) ){
+      $formato = $request->input('formato_impresion', 'a4');
+      $save = $formato == PDFPlantilla::FORMATO_A4;
+      $serie = $venta->getSerie();
+      $venta->generatePDF($formato, $save, true, $serie->impresion_directa);
+      // $venta->update(['VtaEsta' => 'P']);
     }
 
     return  [
