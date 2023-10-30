@@ -60,6 +60,7 @@ class GetDataForVenta extends GetDataPDFAbstract
       'empresa' => $empresa,
       'isPreventa' => false,
       'bancos' => $bancos,
+      'venta_rapida' => $e->hasVentaRapida(),
       'hasFormato' => true,
       'logoDocumento'  => $logoDocumento,
       'logoMarcaAgua' => $logoMarcaAgua,

@@ -55,7 +55,7 @@
 'class_name' => 'col-12 border-width-1 mb-x4 border-bottom-style-dotted',
 'nombre_campo_nombre' => 'Observacion:',
 'nombre_campo_class' => 'bold',
-'nombre' = isset($venta['VtaObse']) ? $venta['VtaObse'] : '-'
+'nombre' => isset($venta['VtaObse']) ? $venta['VtaObse'] : '-'
 ])
 
 @include('pdf.documents.partials.info_documento3')

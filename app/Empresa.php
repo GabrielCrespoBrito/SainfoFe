@@ -52,7 +52,7 @@ class Empresa extends Model
   {
     $this->present = new EmpresaPresenter($this);
   }
-  
+
   use
     UsesSystemConnection,
     EmpresaMethod,
@@ -183,7 +183,7 @@ class Empresa extends Model
   {
     return $this->ruc() .  'ticket' . '.jpg';
   }
-  
+
   public function getIgvPorc()
   {
     $igv = get_option('Logigv');
@@ -1117,7 +1117,7 @@ class Empresa extends Model
         $user_local->delete();
       }
     }
-    
+
     // usuario_empr
     $users_empresa = $this->empresa_usuarios;
     if ($users_empresa->count()) {
@@ -1139,7 +1139,7 @@ class Empresa extends Model
     optional($this->getWebsite())->delete();
     optional($this->getHost())->delete();
 
-  
+
     $this->delete();
   }
 
@@ -1215,17 +1215,17 @@ class Empresa extends Model
       $suscripcion = $orden->suscripcion;
 
 
-      if( $suscripcion ){
+      if ($suscripcion) {
 
-        
-        if( $suscripcion->usos ){
-          
+
+        if ($suscripcion->usos) {
+
           foreach ($suscripcion->usos as $uso) {
             $uso->delete();
           }
         }
       }
-        
+
       optional($suscripcion)->delete();
       optional($orden)->delete();
     }
@@ -1649,6 +1649,7 @@ class Empresa extends Model
     $nameDocumento = time() . '.pdf';
     $routeTemp = file_build_path('temp', $nameDocumento);
     $plantilla = PDFPlantilla::find($plantilla_id);
+
     $pdf = new PDFGenerator(
       view($plantilla->vista, $plantilla->getDataPlantilla()),
       PDFGenerator::HTMLGENERATOR
@@ -1967,7 +1968,7 @@ class Empresa extends Model
   {
     $local = Local::find($id);
 
-    if( $local->isDireccionInd() ){
+    if ($local->isDireccionInd()) {
       return $local->LocDire;
     }
 
