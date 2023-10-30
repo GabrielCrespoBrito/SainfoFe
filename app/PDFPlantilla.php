@@ -84,7 +84,7 @@ class PDFPlantilla extends Model
   public function getDataPlantilla()
   {
     return $this->getData();
-
+  }
   //   $e = get_empresa();
   //   $plantilla_data = $this->plantilla_data;
   //   $forma_pago =  $e->formas_pagos->first();
@@ -180,43 +180,43 @@ class PDFPlantilla extends Model
   //   ];
   // }
 
-  // public static function findDefault($tipo, $formato)
-  // {
-  //   return self::where('tipo', $tipo)
-  //   ->where('formato' , $formato )
-  //   ->where('default' , '1')->first();
-  // }
+  public static function findDefault($tipo, $formato)
+  {
+    return self::where('tipo', $tipo)
+    ->where('formato' , $formato )
+    ->where('default' , '1')->first();
+  }
 
-  // public static function createNew($nombre, $vista, $tipo, $formato, $descripcion = "" )
-  // {
-  //   $data = [
-  //     'nombre' => $nombre,
-  //     'vista' => $vista,
-  //     'tipo' => $tipo,
-  //     'formato' => $formato,
-  //     'descripcion' => $descripcion,
-  //     'impresion_directa' => 0,
-  //     'copias_impresion' => 0,
-  //     'default' => 0,
-  //   ];
+  public static function createNew($nombre, $vista, $tipo, $formato, $descripcion = "" )
+  {
+    $data = [
+      'nombre' => $nombre,
+      'vista' => $vista,
+      'tipo' => $tipo,
+      'formato' => $formato,
+      'descripcion' => $descripcion,
+      'impresion_directa' => 0,
+      'copias_impresion' => 0,
+      'default' => 0,
+    ];
     
-  //   $plantilla = self::create($data);
-  //   $plantilla_default = self::findDefault($tipo, $formato);
+    $plantilla = self::create($data);
+    $plantilla_default = self::findDefault($tipo, $formato);
 
-  //   # Plantilla Data Copiar Data
-  //   $plantilla_data_default = $plantilla_default->plantilla_data;
-  //   $plantilla_data_arr = $plantilla_data_default->toArray();
-  //   $plantilla_data_arr['plantilla_id'] = $plantilla->id;
-  //   unset($plantilla_data_arr['id']);
-  //   $plantilla_data = $plantilla->plantilla_data()->create($plantilla_data_arr);
+    # Plantilla Data Copiar Data
+    $plantilla_data_default = $plantilla_default->plantilla_data;
+    $plantilla_data_arr = $plantilla_data_default->toArray();
+    $plantilla_data_arr['plantilla_id'] = $plantilla->id;
+    unset($plantilla_data_arr['id']);
+    $plantilla_data = $plantilla->plantilla_data()->create($plantilla_data_arr);
 
-  //   #Copiar Detalles
-  //   foreach( $plantilla_data_default->items as $item ) {
-  //     $item_data = $item->toArray();
-  //     unset($item_data['id']);
-  //     $item_data['data_id'] = $plantilla_data->id;
-  //     $plantilla_data->items()->create($item_data);
-  //   }
+    #Copiar Detalles
+    foreach( $plantilla_data_default->items as $item ) {
+      $item_data = $item->toArray();
+      unset($item_data['id']);
+      $item_data['data_id'] = $plantilla_data->id;
+      $plantilla_data->items()->create($item_data);
+    }
   }
 
 }

@@ -2704,6 +2704,9 @@ position: relative;
 bottom: inherit;
 }
 
+.border-bottom-0 {
+  border-bottom: none !important;
+}
 
 .position-relative {
 position: relative;

@@ -10,6 +10,7 @@ abstract class GetDataPDFAbstract {
   public $empresa;
   public $empcodi;
   public $formato;
+  public $plantilla_data;
 
   public function __construct($pdfPlantilla)
   {
