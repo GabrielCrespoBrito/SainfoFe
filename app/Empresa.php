@@ -194,6 +194,15 @@ class Empresa extends Model
     ];
   }
 
+  public function isCostoDeUltimaCompra()
+  {
+    return (int) get_option('bacDias');
+  }
+
+  public function isQuitarIgvNotaVenta()
+  {
+    return (int) get_option('FilUsua');
+  }
 
   public function nombreFull()
   {

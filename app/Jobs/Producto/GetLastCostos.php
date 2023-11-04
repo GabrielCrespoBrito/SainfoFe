@@ -51,6 +51,7 @@ class GetLastCostos
   {
     $igv = get_empresa()->getIgvPorc();
 
+    
     if ( $this->ultima_compra ) {
       $costo_sol_unitario = ($this->ultima_compra->DetCSol  / $this->ultima_compra->DetCant);
       $costo_dolar_unitario = ($this->ultima_compra->DetCDol / $this->ultima_compra->DetCant);

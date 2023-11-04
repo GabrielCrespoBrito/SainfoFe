@@ -92,8 +92,10 @@ class EmpresaOpcion extends Model
   'DecSole',
   'DecDola',
   'DesAuto',
+  'bacDias',
   'EmpUnid',
   'ImpSald',
+  'FilUsua',
   'OpcConta',
   ];
 
@@ -137,8 +139,13 @@ class EmpresaOpcion extends Model
     'name' => 'Tipo de documento seleccionado por defecto
     '],
 
-    "bacDias" => [ 'rules_validation' => '', 'required' => true, 'default' => null, 'type' => 'input' , 'options' => [] , 'name' => 'bacDias'],
-    "FilUsua" => [ 'rules_validation' => '', 'required' => true, 'default' => null, 'type' => 'input' , 'options' => [] , 'name' => 'FilUsua'],
+    "bacDias" => [ 'rules_validation' =>'required|in:0,1', 'required' => true, 'default' => null, 'type' => 'select' , 'options' => [
+      1 => 'Desde Ultima Compra', 0 => 'Desde Lista de Precios'
+    ] , 'name' => 'Calculo de Costo de Venta'],
+
+    "FilUsua" => [ 'rules_validation' => '', 'required' => true, 'default' => null, 'type' => 'select' , 
+    'options' => [1 => 'Si' , 0 => 'No'] , 'name' => 'Descontar IGV de Nota de Venta'],
+
     "concodi" => [ 'rules_validation' => '', 'required' => true, 'default' => null, 'type' => 'input' , 'options' => [] , 'name' => 'concodi'],
     
     "probusc" => [ 'rules_validation' => 'required|in:0,1', 'required' => true, 'default' => 0, 'type' => 'select' , 'options' => [ 0 => 'Codigo' , 1 => 'Nombre'  ] , 'name' => 'Campo del producto al que apuntar con el cursor por defecto'],

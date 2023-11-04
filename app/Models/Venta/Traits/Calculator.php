@@ -18,6 +18,7 @@ class Calculator
   public $precio;
   public $cantidad;  
   public $incluye_igv;
+  public $tipo_cambio;
   public $base_imponible;
   public $is_gravado;
   public $is_bolsa;

@@ -16,7 +16,6 @@ use App\ClienteProveedor;
 use App\TipoDocumentoPago;
 use App\Helpers\DocumentHelper;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Models\Venta\Traits\Calculator;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Venta\Traits\CalculatorTotal;
@@ -29,10 +28,13 @@ class FacturaSaveRequest extends FormRequest
   public $totales_items = [];
   public $canjeQuery;
   public $fp;
+  public $empresa;
   public $local;
   public $serie;
   public $guiasIds = null;
   public $anticipoModel = null;
+  public $id_nota_venta;
+  public $id_proforma;
 
   public function authorize()
   {
@@ -44,6 +46,7 @@ class FacturaSaveRequest extends FormRequest
   public $id_factura;
   public $id_boleta;
   public $is_nota = false;
+  public $quitarIgv;
   public $is_anticipo = false;
 
   public function rules()
@@ -55,8 +58,10 @@ class FacturaSaveRequest extends FormRequest
     $this->id_nota_venta = TipoDocumentoPago::NOTA_VENTA;
     $this->id_proforma = TipoDocumentoPago::PROFORMA;
     $this->local = auth()->user()->localCurrent()->loccodi;
-    
-    // transportista
+
+    $this->empresa = get_empresa();
+
+    $this->quitarIgv = $this->empresa->isQuitarIgvNotaVenta() && $this->tipo_documento == TipoDocumentoPago::NOTA_VENTA;
 
     $rules = [
       'tipo_documento'    => 'required|in:' .
@@ -221,6 +226,12 @@ class FacturaSaveRequest extends FormRequest
         }
       }
 
+      $incluyeIgv = (bool) $item['incluye_igv'];
+
+      // if ($this->quitarIgv) {
+      //   $incluyeIgv = false;
+      // }
+
       $isSol = $this->moneda == Moneda::SOL_ID;
       $cantidad = $item['DetCant'];
       $factor = $unidad->getFactor();
@@ -230,7 +241,7 @@ class FacturaSaveRequest extends FormRequest
       $calculator->setValues(
         $item['DetPrec'],
         $cantidad,
-        (bool) $item['incluye_igv'],
+        $incluyeIgv,
         $base_imponible,
         $item['DetDcto'],
         $is_bolsa,
@@ -248,8 +259,22 @@ class FacturaSaveRequest extends FormRequest
         $validator->errors()->add('UniCodi', "El total ({$item['DetImpo']}) suministrado del item ({$index}) no coincide no el total correcto de ({$data['total']})");
         return false;
       }
-      
-      $data['costos'] = $unidad->getCostos($producto->ProCodi, $this->fecha_emision, $this->local, $cantidad, $factor, $producto->incluyeIgv());
+
+      $incluyeIgv = $producto->incluyeIgv();
+      if ($this->quitarIgv) {
+        $incluyeIgv = false;
+      }
+
+      $data['costos'] = $unidad->getCostos(
+        $producto->ProCodi,
+        $this->fecha_emision,
+        $this->local,
+        $cantidad,
+        $factor,
+        $incluyeIgv,
+        $this->empresa->isCostoDeUltimaCompra() == false
+      );
+
       $data['producto'] = $producto;
       $data['unidad'] = $unidad;
       $data['index'] = $index;
@@ -263,11 +288,8 @@ class FacturaSaveRequest extends FormRequest
 
   public function validateTotal(&$validator)
   {
-
     $calculator = new CalculatorTotal($this->totales_items);
-
     $detraccion_porc = $this->detraccionItem ? Detraccion::getPorcentajeDetraccion($this->detraccionItem) : 0;
-
     $percepcion = $this->tipo_cargo_global == 'percepcion' ? $this->cargo_global : 0;
     $retencion = $this->tipo_cargo_global == 'retencion' ? $this->cargo_global : 0;
     $anticipo_igv = 0;
@@ -564,9 +586,8 @@ class FacturaSaveRequest extends FormRequest
           }
         }
 
-        $empresa = get_empresa();
-        $empcodi = empcodi();
-        $empresa_ruc = $empresa->ruc();
+        $empresa_ruc = $this->empresa->ruc();
+        $empcodi = $this->empresa->empcodi;
 
         $this->serie = SerieDocumento::findSerie(
           $empcodi,
@@ -616,7 +637,7 @@ class FacturaSaveRequest extends FormRequest
         $cliente_tipo_documento = $this->cliente_model->TDocCodi;
 
         // Boleta limite
-        $boleta_limite = $empresa->getOpcion('boleta_limite');
+        $boleta_limite = $this->empresa->getOpcion('boleta_limite');
 
         if ($this->tipo_documento == $this->id_boleta and $total >= $boleta_limite) {
 

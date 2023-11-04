@@ -147,7 +147,7 @@ trait UnidadMethod
    * 
    * @return object
    */
-  public function getCostos($procodi, $fecha, $local, $cantidad, $factor_venta, $incluye_igv = true)
+  public function getCostos($procodi, $fecha, $local, $cantidad, $factor_venta, $incluye_igv = true, $noSearchUltimaCompra = false)
   {
     return (new GetLastCostos(
       $procodi,
@@ -158,7 +158,8 @@ trait UnidadMethod
       $local,
       $cantidad,
       $factor_venta,
-      $incluye_igv
+      $incluye_igv, 
+      $noSearchUltimaCompra
     ))->handle();
   }
 }

@@ -17,7 +17,7 @@ class CompraDeletingListener
     $compra = $event->compra;
 
     $items_original =  $compra->items;
-    
+
     # Borrar items de la compra 
     $compra->deleteMany('items');
 
@@ -41,9 +41,7 @@ class CompraDeletingListener
     # Borrar Final
     $compra->delete();
 
-
-    // Comprate
-    $job = new UpdatedProductUltimosCostos( $items_original, null );
+    $job = new UpdatedProductUltimosCostos($items_original, null);
     $job->handle();
   }
 }
