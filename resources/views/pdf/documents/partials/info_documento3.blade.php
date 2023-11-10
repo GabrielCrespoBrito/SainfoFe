@@ -4,6 +4,7 @@ $medio_pago_nombre = $medio_pago_nombre ?? null;
 $showGuias = $showGuias ?? true;
 $showResponsable = $showResponsable ?? true;
 $showOrdenCompra = $showOrdenCompra ?? true;
+$showPagos = $showPagos ?? true;
 $class_name = $class_name ?? 'col-12 border-width-1 mb-x4 border-bottom-style-dotted';
 $valor_td_class = $valor_td_class ?? ' ';
 
@@ -35,8 +36,15 @@ $trs = [
 ]],
 
 
+
+
+];
+
+
+if( $showPagos ){
+
 // Forma de Pago
-[[
+$trs[] =  [[
 'class_name' => 'text-top',
 'valor_td_class' => 'valor_td_info bold text-left ' . $valor_td_class,
 'valor_text' => 'Forma de Pago:',
@@ -45,10 +53,7 @@ $trs = [
 'class_name' => 'td_class',
 'valor_td_class' => 'valor_td_info text-left pl-x3 ' . $valor_td_class,
 'valor_text' => $forma_pago->connomb,
-]],
-
-];
-
+]];
 
 
 if($medio_pago_nombre){
@@ -64,6 +69,7 @@ if($medio_pago_nombre){
   ]];
 }
 
+}
 
 if($showGuias){
 
@@ -109,9 +115,7 @@ if($showOrdenCompra){
   'valor_td_class' => 'text-left pl-x3 ' . $valor_td_class,
   'valor_text' => $venta["VtaPedi"],
   ]];
-
 }
-
 
 @endphp
 

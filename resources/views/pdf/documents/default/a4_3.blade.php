@@ -19,7 +19,7 @@
   ])
 
   @include('pdf.documents.partials.id', [
-  'class_name' => 'col-3 border-style-solid border-radius-5 border-width-1 m-0 h4 bg-yellow text-center',
+  'class_name' => 'col-3 border-style-solid border-radius-5 border-width-1 m-0 h4  text-center',
   'ruc' => $empresa['EmpLin1'],
   'class_nombre' => 'bold pt-x5 pb-x5',
   'class_ruc' => ' pt-x6 pb-x3',
@@ -77,6 +77,9 @@
 
 @endslot
 @endcomponent
+
+{{-- /HEADER --}}
+
 
 @php
 $cant_items = $items->count();

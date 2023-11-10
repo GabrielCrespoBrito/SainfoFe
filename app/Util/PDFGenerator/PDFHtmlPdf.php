@@ -137,6 +137,8 @@ class PDFHtmlPdf
       throw new \Exception("View is required", 1);
     }    
     $pdf = new Pdf( $this->getOptions() );
+    // dd($this->getGlobalOptions());
+    // exit();
     $pdf->setOptions( $this->getGlobalOptions());
     $pdf->addPage( $this->getView() );
     $pdf->binary = $this->getBinary();

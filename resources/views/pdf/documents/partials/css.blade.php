@@ -1787,15 +1787,27 @@ font-style: italic;
 /* Backgrounds **/
 
 .bg-black {
+background-color: rgb(0, 0, 0);
+}
+.!bg-black {
 background-color: rgb(0, 0, 0) !important;
 }
 .bg-white {
+background-color: white;
+}
+.!bg-white {
 background-color: white !important;
 }
 .bg-blue {
+background-color: blue;
+}
+.!bg-blue {
 background-color: blue !important;
 }
 .bg-red {
+background-color: rgba(255, 0, 0, 0.541);
+}
+.!bg-red {
 background-color: rgba(255, 0, 0, 0.541) !important;
 }
 .bg-orange {
@@ -1894,55 +1906,55 @@ padding-bottom: 1em;
 
 /* Padding horizontal */
 .px-x1 {
-  padding-right: .1em;
-  padding-left: .1em;
+padding-right: .1em;
+padding-left: .1em;
 }
 
 .px-x2 {
-  padding-right: .2em;
-  padding-left: .2em;
+padding-right: .2em;
+padding-left: .2em;
 }
 
 .px-x3 {
-  padding-right: .3em;
-  padding-left: .3em;
+padding-right: .3em;
+padding-left: .3em;
 }
 
 .px-x4 {
-  padding-right: .4em;
-  padding-left: .4em;
+padding-right: .4em;
+padding-left: .4em;
 }
 
 .px-x5 {
-  padding-right: .5em;
-  padding-left: .5em;
+padding-right: .5em;
+padding-left: .5em;
 }
 
 .px-x6 {
-  padding-right: .6em;
-  padding-left: .6em;
+padding-right: .6em;
+padding-left: .6em;
 }
 
 .px-x7 {
-  padding-right: .7em;
-  padding-left: .7em;
+padding-right: .7em;
+padding-left: .7em;
 }
 
 .px-x8 {
-  padding-right: .8em;
-  padding-left: .8em;
+padding-right: .8em;
+padding-left: .8em;
 }
 
 .px-x9 {
-  padding-right: .9em;
-  padding-left: .9em;
+padding-right: .9em;
+padding-left: .9em;
 }
 
 .px-x10 {
-  padding-right: 1em;
-  padding-left: 1em;
+padding-right: 1em;
+padding-left: 1em;
 }
-/*  */
+/* */
 
 .p-0 {
 padding:0 !important;
@@ -2298,10 +2310,15 @@ overflow: hidden;
 .col-1,
 .col-2,
 .col-3,
+.col-35,
 .col-4,
 .col-5,
 .col-6,
+.col-65,
+.col-68,
+.col-32,
 .col-7,
+.col-75,
 .col-8,
 .col-9,
 .col-10,
@@ -2312,7 +2329,8 @@ position: relative;
 min-height: 1px;
 }
 
-.col-1, .col-2, .col-25, .col-3, .col-35, .col-4, .col-45, .col-5, .col-55, .col-6, .col-65, .col-7, .col-75, .col-8, .col-85, .col-9, .col-95, .col-10 {
+.col-1, .col-2, .col-25, .col-3,.col-32, .col-35, .col-4, .col-45, .col-5, .col-55, .col-6, .col-65,.col-68, .col-7,
+.col-75, .col-8, .col-85, .col-9, .col-95, .col-10 {
 float: left;
 }
 
@@ -2325,6 +2343,9 @@ width: 20%;
 .width-30 {
 width: 30%;
 }
+.width-32 {
+width: 32%;
+}
 .width-40 {
 width: 40%;
 }
@@ -2333,6 +2354,12 @@ width: 50%;
 }
 .width-60 {
 width: 60%;
+}
+.width-65 {
+width: 65%;
+}
+.width-68 {
+width: 68%;
 }
 .width-70 {
 width: 70%;
@@ -2360,6 +2387,12 @@ width: 80%;
 .col-7 {
 width: 70%;
 }
+.col-68 {
+width: 68%;
+}
+.col-65 {
+width: 65%;
+}
 .col-6 {
 width: 60%;
 }
@@ -2374,6 +2407,9 @@ width: 40%;
 }
 .col-35 {
 width: 35%;
+}
+.col-32 {
+width: 32%;
 }
 .col-3 {
 width: 30%;
@@ -2392,16 +2428,16 @@ width: 10%;
 
 .width-50,
 .width-100
- {
-  {{-- display: inline-block; --}}
+{
+{{-- display: inline-block; --}}
 }
 
 .width-50 {
-  width: 50px
+width: 50px
 }
 
 .width-100 {
-  width: 100px
+width: 100px
 }
 
 /* ----------------------------------------------------------- */
@@ -2419,7 +2455,7 @@ width: 10%;
 }
 
 .img-logo {
-  text-align: center;
+text-align: center;
 }
 
 /* Documentod id */
@@ -2575,6 +2611,12 @@ border-color: black;
 .border-color-blue {
 border-color: blue;
 }
+
+
+.border-color-gray {
+border-color: gray;
+}
+
 .border-color-blue-light {
 border-color: #255079;
 }
@@ -2629,8 +2671,8 @@ overflow: hidden;
 
 .container-table-height
 {
-  outline: 2px solid green;
-  min-height: 720px;
+outline: 2px solid green;
+min-height: 720px;
 }
 
 .width-100 {
@@ -2684,8 +2726,8 @@ box-shadow: 0 0 0 1px #000000; /* this draws the table border */
 }
 
 .page-break {
-  clear: both !important;
-  page-break-after: always !important;
+clear: both !important;
+page-break-after: always !important;
 }
 
 /* --- Footer --- */
@@ -2694,6 +2736,23 @@ box-shadow: 0 0 0 1px #000000; /* this draws the table border */
 position: fixed;
 bottom: 0;
 }
+
+.bg-gray {
+background-color: gray;
+}
+
+.bg-gray-800 {
+background-color:#eeeeee;
+}
+
+.!bg-gray-800 {
+background-color:#eeeeee !important;
+}
+
+.bg-gray-800-i {
+background-color:#eeeeee !important;
+}
+
 
 .footer.position-initial {
 position:initial;
@@ -2705,7 +2764,7 @@ bottom: inherit;
 }
 
 .border-bottom-0 {
-  border-bottom: none !important;
+border-bottom: none !important;
 }
 
 .position-relative {
@@ -2764,12 +2823,11 @@ outline:1px solid black;
 }
 
 
-@if( $logoMarcaAgua )
-
-body.a4 .img-marca-agua {
-position : fixed;
-opacity : .5;
-}
+@if ($logoMarcaAgua)
+    body.a4 .img-marca-agua {
+    position : fixed;
+    opacity : .5;
+    }
 @endif
 
 
@@ -2838,7 +2896,7 @@ left: 50%;
 
 .table_items_class tbody td
 {
-  vertical-align: top;
+vertical-align: top;
 }
 
 
@@ -2896,38 +2954,83 @@ border-right: 1px solid #255079;
 
 
 tbody.pt-x2 td {
-  padding-top: .2em;
+padding-top: .2em;
 }
 
 tbody.pb-x2 td {
-  padding-bottom: .2em;
+padding-bottom: .2em;
 }
 
 body.preliminar::before {
-  content: 'VISTA-PRELIMINAR';
-  position: absolute;
-  font-size: 40px;
-  top: 50%;
-  left: 30%;
-  color: red;
-  border: 1px solid red;
-  border-radius: 50px;
-  padding: 20px;
-  z-index: 1000;
+content: 'VISTA-PRELIMINAR';
+position: absolute;
+font-size: 40px;
+top: 50%;
+left: 30%;
+color: red;
+border: 1px solid red;
+border-radius: 50px;
+padding: 20px;
+z-index: 1000;
 }
 
 .text-italic {
-  font-style:italic;
+font-style:italic;
 }
 
 .text-decoration-underline {
-  text-decoration:underline;
+text-decoration:underline;
 }
 
 .td-font-size-9 {
-  font-size: .9em;
+font-size: .9em;
 }
 
 .td-font-size-8 {
-  font-size: .8em;
+font-size: .8em;
+}
+
+.line-height-0 {
+line-height: 0;
+}
+
+.line-height-10 {
+line-height: 1em;
+}
+
+.line-height-9 {
+line-height: .9em;
+}
+
+.line-height-8 {
+line-height: .8em;
+}
+
+.line-height-5 {
+line-height: .5em;
+}
+
+.line-height-3 {
+line-height: .3em;
+}
+
+
+.min-h-100 {
+min-height: 100px;
+}
+
+.min-h-150 {
+min-height: 150px;
+}
+
+.min-h-200 {
+min-height: 200px;
+}
+
+.min-h-400 {
+min-height: 400px;
+}
+
+table.odd-background tr:nth-child(even) {
+  background-color: #f0f0f0;
 }

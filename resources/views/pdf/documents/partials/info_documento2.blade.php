@@ -9,7 +9,7 @@ $trs = [
 'class_name' => 'border-right-style-solid text-top td_class border-style-solid border-width-1',
 // ---------------------------------
 'titulo_td_class' => 'font-size-7 titulo_td_info bold text-left pl-x3',
-'titulo_text' => 'Fecha emisiòn',
+'titulo_text' => 'Fecha emisión',
 // ---------------------------------
 'valor_td_class' => 'font-size-7 valor_td_info text-left pl-x3',
 'valor_text' => $venta["VtaFvta"] ,

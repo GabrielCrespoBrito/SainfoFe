@@ -6,6 +6,7 @@ $titulo_div_class = $titulo_div_class ?? '';
 $tr_titulo_class = $tr_titulo_class ?? '';
 $tr_valor_class = $tr_valor_class ?? '';
 $is_credito = $venta2->isCredito();
+$textAlign = $textAlign ?? 'left';
 $creditos = $is_credito ? $venta2->getCreditos() : false ;
 $total = $is_credito ? $creditos->sum('monto') : ($venta2->VtaImpo - ($venta2->retencionMonto() + $venta2->detraccionMonto()));
 @endphp
@@ -40,8 +41,8 @@ $total = $is_credito ? $creditos->sum('monto') : ($venta2->VtaImpo - ($venta2->r
         @endforeach
         @else
         @foreach( $condiciones as $condicion )
-        <tr style="text-align:left;">
-          <td style="font-size:.7em;text-align:left" class="pl-x4 {{ $tr_valor_class }}"> {{ $condicion }} </td>
+        <tr style="text-align:{{ $textAlign }};">
+          <td style="font-size:.7em;text-align:{{ $textAlign }}" class="pl-x4 {{ $tr_valor_class }}"> {{ $condicion }} </td>
         </tr>
           @endforeach
 

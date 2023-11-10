@@ -33,7 +33,7 @@
   ])
 
   @include('pdf.documents.partials.id', [
-  'class_name' => 'col-3 height-180 border-style-solid border-radius-5 border-width-1 m-0 h4 bg-yellow text-center',
+  'class_name' => 'col-3 height-180 border-style-solid border-radius-5 border-width-1 m-0 h4  text-center',
   'ruc' => $empresa['EmpLin1'],
   'class_ruc' => ' pt-x6 pb-x3 mt-x10',
   'class_nombre' => 'bold c-red pt-x5 pb-x5 mt-x10 text-uppercase',
