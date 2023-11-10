@@ -3,6 +3,7 @@
 
 $completar_tds = $completar_tds ?? false;
 $class_name = $class_name ?? '';
+$borderTbody = $borderTbody ?? true;
 $class_name_table = $class_name_table ?? '';
 $thead_class = $thead_class ?? '';
 $tbody_class = $tbody_class ?? '';
@@ -78,14 +79,14 @@ $cant_items_add = $completar_tds ? ($cant_items_add - count($items)) : false;
     <tbody class="{{ $tbody_class }}">
       @foreach( $items as $item )
       <tr>
-        <td class="border-left-style-solid pl-x3 vertical-align-top">{{ $item->DetItem }}</td>
+        <td class="{{ $borderTbody ?  'border-left-style-solid' : '' }} pl-x3 vertical-align-top">{{ $item->DetItem }}</td>
         <td class="pl-x6 vertical-align-top">{{ $item->DetCodi }}</td>
         <td class="pl-x6 text-left vertical-align-top">{{ $item->DetNomb }}
           @if( $item->DetDeta ) <br>{!! $item->DetDetaFormat() !!} @endif
         </td>
         <td class="pr-x6 vertical-align-top pl-x3">{{ $item->DetUnid }}</td>
         <td class="text-right pr-x3 vertical-align-top">{{ fixedValue($item->DetPeso) }}</td>
-        <td class="text-right border-right-style-solid border-left-style-solid pr-x3 pl-x3 vertical-align-top">{{ $item->DetCant }}</td>
+        <td class="text-right {{ $borderTbody ? 'border-right-style-solid border-left-style-solid' : ''  }}  pr-x3 pl-x3 vertical-align-top">{{ $item->DetCant }}</td>
 
         {{-- @if($orden_campos['valor_unitario'] )
         <td class="text-right border-right-style-solid pr-x3 pl-x3 vertical-align-top">
@@ -93,13 +94,13 @@ $cant_items_add = $completar_tds ? ($cant_items_add - count($items)) : false;
         </td>
         @endif --}}
 
-        <td class="text-right border-right-style-solid pr-x3 pl-x3 vertical-align-top"> {{ decimal($item->precioUnitario(), $decimals ) }}</td>
+        <td class="text-right {{ $borderTbody ? 'border-right-style-solid' : ''  }}  pr-x3 pl-x3 vertical-align-top"> {{ decimal($item->precioUnitario(), $decimals ) }}</td>
 
         {{-- @if($orden_campos['precio_unitario'] ) --}}
         {{-- <td class="text-right border-right-style-solid pr-x3 pl-x3 vertical-align-top"> {{ decimal($item->precioUnitario(), $decimals ) }}</td> --}}
         {{-- @endif --}}
 
-        <td class="text-right border-right-style-solid pr-x3 pl-x3 vertical-align-top"> {{ decimal( $item->DetImpo ) }}</td>
+        <td class="text-right {{ $borderTbody ? 'border-right-style-solid' : ''  }} pr-x3 pl-x3 vertical-align-top"> {{ decimal( $item->DetImpo ) }}</td>
 
       </tr>
       @endforeach

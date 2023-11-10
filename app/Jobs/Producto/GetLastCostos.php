@@ -64,7 +64,12 @@ class GetLastCostos
       $factor_costo = $this->unidad_factor;
     }
 
-    $factor_multiplicador = $this->factor_venta / $factor_costo;
+    if($this->factor_venta == 0 || $factor_costo == 0 ){
+      $factor_multiplicador = 0;
+    }
+    else {
+      $factor_multiplicador = $this->factor_venta / $factor_costo;
+    }
     $costo_sol = $costo_sol_unitario * ($this->cantidad * $factor_multiplicador);
     $costo_dolar = $costo_dolar_unitario * ($this->cantidad * $factor_multiplicador);
     
