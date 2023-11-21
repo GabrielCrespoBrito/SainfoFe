@@ -48,11 +48,11 @@ class ImportVentasController extends ImportController
 			DB::commit();
 
 		} catch (Exception | ErrorException | FatalThrowableError $e) {
+      dd( $e );
+      exit();
 			$errors[] = "Ha habido un inconveniente al guardar los documentos: ({$e->getMessage()}";
 			$success = false;
-			// \DB::rollback();
-			dd("exception", $e);
-			return response()->json($e->getMessage(), 400);
+			DB::rollback();
 			error_clear_last();
 		}
 

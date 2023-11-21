@@ -439,8 +439,10 @@ class ImportExcellVentas
         $cantidad = $data['cantidad' . $i];
         $precio = $data['precio' . $i];
         
-        $producto = Producto::findByProCodi($data[$indexProCodi], $this->empcodi);
+        $producto = Producto::findByProCodi($data[$indexProCodi]);
         
+        // logger( $data, $indexProCodi, $producto, $data[$indexProCodi]  ) ;
+
         $incluye_igv = (bool) $producto->incluye_igv;
         $base = $data['base' . $i];
         
