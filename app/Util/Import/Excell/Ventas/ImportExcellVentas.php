@@ -400,6 +400,7 @@ class ImportExcellVentas
         $cliente->PCRucc  = $documento_cliente;
         $cliente->TdoCodi = $this->data_row['cliente_tipodocumento'];
         $cliente->MonCodi = '01';
+        $cliente->UDelete = '';
         $cliente->save();
       }
 
