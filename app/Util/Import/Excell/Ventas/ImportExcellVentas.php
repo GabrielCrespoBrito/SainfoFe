@@ -173,7 +173,7 @@ class ImportExcellVentas
       'VtaSdCa' => ['name' => 'VtaSdCa', 'default' => '0'],
       'vtafact' => ['name' => 'vtafact', 'default' => '0'],
       'TipCodi' => ['name' => 'TipCodi', 'default' => '111201'],
-
+      'UDelete' => ['name' => 'TipCodi', 'default' => ''],
       'observacion' => ['name' => 'VtaObse', 'default' => ''],
     ],
 
