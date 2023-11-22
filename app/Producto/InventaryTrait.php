@@ -5,6 +5,7 @@ namespace App\Producto;;
 use App\M;
 use App\Unidad;
 use App\GuiaSalida;
+use App\GuiaSalidaItem;
 use Illuminate\Support\Facades\DB;
 
 trait InventaryTrait 
@@ -180,41 +181,8 @@ trait InventaryTrait
 	} 
 
 
-	public function reProcess( $local = null, $fecha = null )
+	public function reProcess()
 	{
-		$loccodi = $local ?? $local->LocCodi;
-
-		$groupDetalles = $this->getMovimientos($loccodi, $fecha);
-
-		$groupDetalles = $groupDetalles
-		->select( 'guias_cab.EntSal', 'guia_detalle.UniCodi', 'unidad.UniEnte', 'unidad.UniMedi',  'guia_detalle.Detcant')
-    ->get()
-		->groupBy([ 'EntSal' , 'UniCodi' ]);
-
-		// GuiEsta
-		$cant = 0;
-
-    foreach( $groupDetalles as $tipoGuia => $groupDetalle )
-    {
-    	$isIngreso = $tipoGuia == GuiaSalida::INGRESO;
-	    foreach( $groupDetalle as $unidad => $items ){
-				$cantidad = $items->sum('Detcant');
-        $ente = $items->first()->UniEnte;
-        $medi = $items->first()->UniMedi;
-        $cantParcial = (float) get_real_quantity( $ente,  $medi, $cantidad );
-	    	if( $isIngreso ){
-	    		$cant += $cantParcial;
-	    	}	
-	    	else {
-	    		$cant -= $cantParcial;
-	    	}
-	    }
-		}
-
-		$stock = 'prosto' . ($local ? substr($local->LocCodi,-1) : 1);  
-
-		$this->{$stock} = $cant;
-		$this->save();
+    GuiaSalidaItem::updateStock2($this->ProCodi);
 	}
-
 }

@@ -499,7 +499,7 @@ class ProductosController extends Controller
       $local = $request->local == 'todos' ? null : Local::findOrfail($request->local);
       $producto =  Producto::findByProCodi($request->id);
       $producto->reProcess($local);
-      $stocks = $producto->getStocks();
+      $stocks = $producto->refresh()->getStocks();
       $message = ' Se ha actualizado el stock del producto';
       $code = 200;
     } catch (\QueryException | Throwable | \Exception | ErrorException | FatalThrowableError $e) {
@@ -524,20 +524,21 @@ class ProductosController extends Controller
   public function updateAlmacen(Request $request, $producto_id)
   {
     $producto = Producto::findByProCodi($producto_id);
-    $producto->reProcessInventario($request->loccodi);
+    $producto->reProcess();
+    $producto->refresh();
 
     return response()->json([
-      "1" => $producto->prosto1,
-      "2" => $producto->prosto2,
-      "3" => $producto->prosto3,
-      "4" => $producto->prosto4,
-      "5" => $producto->prosto5,
-      "6" => $producto->prosto6,
-      "7" => $producto->prosto7,
-      "8" => $producto->prosto8,
-      "9" => $producto->prosto9,
-      "10" => $producto->prosto10,
-      "total" => $producto->getTotalInventario(),
+      "1" => decimal($producto->prosto1),
+      "2" => decimal($producto->prosto2),
+      "3" => decimal($producto->prosto3),
+      "4" => decimal($producto->prosto4),
+      "5" => decimal($producto->prosto5),
+      "6" => decimal($producto->prosto6),
+      "7" => decimal($producto->prosto7),
+      "8" => decimal($producto->prosto8),
+      "9" => decimal($producto->prosto9),
+      "10" => decimal($producto->prosto10),
+      "total" => decimal($producto->getTotalInventario()),
     ]);
   }
 

@@ -103,6 +103,6 @@ class CreateDetalleFromTomaDetalle
     $guiaItem->empcodi = $guia->EmpCodi;
     $guiaItem->DetIng  = null;
     $guiaItem->save();
-    $guiaItem->updateStock($guiaItem->DetCodi, $guia->Loccodi );
+    $guiaItem->updateStock2($guiaItem->DetCodi );
   }
 }

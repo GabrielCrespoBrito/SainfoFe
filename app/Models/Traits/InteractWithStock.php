@@ -33,6 +33,42 @@ trait InteractWithStock
       ->update([ $campo_stock => $total ]);
   }
 
+  /**
+   * Actualizar el Stock Total de un producto
+   * 
+   */
+  public static function updateStock2( $procodi )
+  {
+    $stocksTotalByLocal = DB::connection('tenant')->table('guia_detalle')
+    ->join('guias_cab', 'guias_cab.GuiOper', '=', 'guia_detalle.GuiOper')
+    ->select('guias_cab.Loccodi', DB::raw('SUM(guia_detalle.CpaVtaCant) as cant'))
+    ->where('guia_detalle.DetCodi', '=', $procodi)
+    ->groupBy('guias_cab.Loccodi')
+    ->get();
+
+    $stocksTotales = [
+      'prosto1' => 0,
+      'prosto2' => 0,
+      'prosto3' => 0,
+      'prosto4' => 0,
+      'prosto5' => 0,
+      'prosto6' => 0,
+      'prosto7' => 0,
+      'prosto8' => 0,
+      'prosto9' => 0
+    ];
+
+    foreach ($stocksTotalByLocal as $stockTotal ) {
+     
+      $nombre = 'prosto' . (int) $stockTotal->Loccodi;
+      $stocksTotales[$nombre] = $stockTotal->cant;
+    }
+
+    DB::connection('tenant')->table('productos')
+    ->where('ProCodi', '=', $procodi)
+    ->update($stocksTotales);
+  }
+
   public function updateAllStock($procodi, $fecha = null)
   {
     $locales = ['001', '002', '003', '004', '005', '006', '007', '008', '009', '010'];

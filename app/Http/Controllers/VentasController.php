@@ -397,6 +397,9 @@ class VentasController extends Controller
         $documento->createFormaPago($request->pagos);
         $tipo_guia = $request->input('guia_tipo', Venta::GUIA_ACCION_NINGUNA);
 
+        // dd($request->input('id_almacen', '001'));
+        // exit();
+
         if ($tipo_guia != Venta::GUIA_ACCION_NINGUNA) {
           $rpta = $documento->createOrAssocGuia(
             $tipo_guia,

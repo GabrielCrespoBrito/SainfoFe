@@ -1,6 +1,8 @@
 <?php
 
+use App\GuiaSalidaItem;
 use App\Mes;
+use App\Producto;
 use App\Venta;
 use App\XmlHelper;
 use Illuminate\Support\Facades\Log;
@@ -11,6 +13,8 @@ Route::prefix('test')->group(function () {
   Route::name('test.')->group(function () {
 
     Route::get('notificaciones', 'TestsController@notify');
+
+
 
     Route::post('printDirect/{id?}', 'TestsController@imprimirDirecto')->name('imprimir_directo');
 
@@ -33,6 +37,18 @@ Route::prefix('test')->group(function () {
     Route::get('sunat', 'TestsController@sunatRequest');
 
     Route::get('m', 'TestsController@m');
+
+    Route::get('stock/{procodi?}', function ($procodi) {
+
+
+      $aja = GuiaSalidaItem::updateStock2($procodi);
+      // $producto = Producto::findByProCodi(($procodi));
+
+      dd( $aja );
+
+
+    });
+
 
     Route::get('phpinfo/', function () {
 

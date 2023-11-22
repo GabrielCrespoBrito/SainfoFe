@@ -82,11 +82,11 @@ class ReporteKardexFisico2
           ->on('productos.ProCodi', '=', 'guia_detalle.DetCodi')
           ->on('productos.empcodi', '=', 'guia_detalle.empcodi');
       })
-      ->join('unidad', function ($join) {
-        $join
-          ->on('unidad.UniCodi', '=', 'guia_detalle.UniCodi')
-          ->on('unidad.empcodi', '=', 'guia_detalle.empcodi');
-      })
+      // ->join('unidad', function ($join) {
+      //   $join
+      //     ->on('unidad.UniCodi', '=', 'guia_detalle.UniCodi')
+      //     ->on('unidad.empcodi', '=', 'guia_detalle.empcodi');
+      // })
       ->join('prov_clientes', function ($join) {
         $join
           ->on('prov_clientes.PCCodi', '=', 'guias_cab.PCCodi')
@@ -102,6 +102,7 @@ class ReporteKardexFisico2
     // ->unique('Linea')
     // ->groupBy('DetCodi');
 
+
     if ($this->localId) {
       $query->where('guias_cab.Loccodi', $this->localId);
     }
@@ -113,18 +114,21 @@ class ReporteKardexFisico2
     
     // Filtrar Producto
     if ($this->filterProduct) {
-      $query->whereBetween('productos.ID', [$this->productoIdDesde, $this->productoIdHasta]);
+      $query->whereBetween('productos.ID', [ $this->productoIdDesde, $this->productoIdHasta ]);
     } 
     else {
       $query
-        ->where('productos.grucodi',  $this->grucodi)
-        ->where('productos.famcodi',  $this->famcodi);
+        ->where('productos.grucodi',  $this->grucodi )
+        ->where('productos.famcodi',  $this->famcodi );
     }
+
+    // dd( $this->productoIdDesde, $this->productoIdHasta, $this->localId, $query->get() );
+
 
     return $query
       ->orderBy('guias_cab.GuiFemi' , 'asc')
       ->orderBy('productos.ProNomb', 'asc')
-      ->select('guia_detalle.*', 'guias_cab.*', 'productos.ProNomb', 'productos.unpcodi', 'productos.ID', 'prov_clientes.PCNomb', 'unidad.*')
+      ->select('guia_detalle.*', 'guias_cab.*', 'productos.ProNomb', 'productos.unpcodi', 'productos.ID', 'prov_clientes.PCNomb')
       ->get()
       ->unique('Linea')
       ->groupBy('DetCodi');
@@ -236,7 +240,7 @@ class ReporteKardexFisico2
       'id' => $data_product->ID,
       'codigo' => $data_product->DetCodi,
       'nombre' => $data_product->ProNomb,
-      'unidad' => $data_product->unpcodi,
+      // 'unidad' => $data_product->unpcodi,
     ];
   }
 

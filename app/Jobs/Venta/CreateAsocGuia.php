@@ -3,13 +3,14 @@
 namespace App\Jobs\Venta;
 
 use App\Venta;
+use Exception;
 use App\GuiaSalida;
 use App\GuiaSalidaItem;
 use App\SerieDocumento;
 use App\TipoMovimiento;
+use App\Util\ResultTrait;
 use Illuminate\Support\Facades\DB;
 use App\Models\GuiaVenta\GuiaVenta;
-use App\Util\ResultTrait;
 use Illuminate\Support\Facades\Log;
 
 class CreateAsocGuia
@@ -52,11 +53,8 @@ class CreateAsocGuia
     
     try {
       $this->asociar_accion ? $this->associateGuias() : $this->createGuia();
-    } catch (\Throwable $th) {
+    } catch (Exception $th) {
       $this->setError($th->getMessage());
-    }
-
-    if ($this->isError()) {
       $this->deleteInfoGuia();
     }
 
@@ -173,7 +171,7 @@ class CreateAsocGuia
 
       foreach ($data as $guiaSalidaData) {
         $guiaItem = GuiaSalidaItem::create($guiaSalidaData);
-        $guiaItem->updateStock($guiaItem->DetCodi, $this->id_almacen);
+        $guiaItem->updateStock2($guiaItem->DetCodi);
       }
     } else {
       foreach ($this->venta->items as $item) {

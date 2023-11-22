@@ -31,14 +31,11 @@ class UpdateInventarios
 	public function handle()
 	{
 		$productos_chuck = Producto::all()->chunk(50);
+    // dd( $productos_chuck );
+    // exit();
 		foreach( $productos_chuck as $productos ){
 			foreach( $productos as $producto ){
-        if( $this->local ){
-          $producto->updateStock($producto->ProCodi,  $this->local , $this->fecha  );
-        }
-        else {
-          $producto->updateAllStock($producto->ProCodi, $this->fecha );
-        }
+          $producto->updateStock2( $producto->ProCodi );
 			}
 		}
 	}

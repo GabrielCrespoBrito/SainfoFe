@@ -135,7 +135,7 @@ class GuiaSalidaItem extends Model
     $guiaItem->detfven = null;
     $guiaItem->empcodi = $guia->EmpCodi;
     $guiaItem->save();
-    $guiaItem->updateStock($guiaItem->DetCodi, $guia->Loccodi);
+    $guiaItem->updateStock2($guiaItem->DetCodi);
   }
 
   public function a()
@@ -183,7 +183,7 @@ class GuiaSalidaItem extends Model
       $guiaItem->save();
       $guiaItem->setDetUnid();
       $guiaItem->calculateTotal();
-      $guiaItem->updateStock($guiaItem->DetCodi, $guia->Loccodi);
+      $guiaItem->updateStock2($guiaItem->DetCodi);
       $i++;
     }
   }
