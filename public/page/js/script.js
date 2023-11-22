@@ -1299,6 +1299,44 @@
   })
   // Carusel New
 
+  function imgSlider()
+  {
+    const width = window.innerWidth;
+
+    $(".swiper-slide").each(function (index, dom) {
+
+      const $this = $(this);
+
+      const urlMobil = $this.attr('data-slider-bg-mobil');
+      const urlRegular = $this.attr('data-slide-full');
+
+      const isMobile = width < 800;
+      const url = isMobile ? urlMobil : urlRegular;
+
+      
+      let cssStyles = {
+        "background-image": "url(" + url + ")",
+        "background-size": "cover",
+      };
+      
+      if(isMobile){
+        cssStyles['margin-top'] = "2.5em;"
+        cssStyles['min-height'] = "600px;"
+      }
+      
+      console.log( width, isMobile, urlMobil, urlRegular, cssStyles)
+      $this.css(cssStyles);
+
+    }); 
+  }
+
+
+  $(window).on('resize', imgSlider);
+
+
+  imgSlider();
+
+
   $(".solution_card").on('mouseenter', (e) => {
 
     e.stopImmediatePropagation();

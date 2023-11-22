@@ -5,7 +5,13 @@
   <div class="swiper-wrapper">
 
   @foreach( $banners as $banner )
-    <div class="swiper-slide punto-venta" data-slide-bg="{{ str_replace( '\\', '/', $banner['path'] ) }}">
+    <div class="swiper-slide punto-venta" 
+    {{-- data-slider-bg-mobil="https://fastly.picsum.photos/id/951/536/354.jpg?hmac=sNmKuSgwNYO49s2ozCXWOS-1i8dFuF8LACs1aMGCWlg"  --}}
+    data-slider-bg-mobil="{{ str_replace( '\\', '/', $banner['path_mobile'] ) }}"
+    data-slide-full="{{ str_replace( '\\', '/', $banner['path'] ) }}"
+    data-slide-bg="{{ str_replace( '\\', '/', $banner['path'] ) }}"
+    
+    >
     </div>
   @endforeach
   

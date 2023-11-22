@@ -174,9 +174,6 @@ class ConsultarDocumento {
     $response = strtoupper($res->getBody()->getContents());
     $content = explode('|',  $response);
 
-    // dd($response);
-    // dd( $content );
-
     if(strstr( $response, "SUCCESS TRUE") === false ){
       $success = false;
       $error = $content[0];

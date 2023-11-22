@@ -32,6 +32,7 @@ class Banner extends Model
     foreach ($banners as $banner) {
       $data = $banner->toArray();
       $data['path'] = $banner->pathImage();
+      $data['path_mobile'] = $banner->getPathImage($banner->imagen_mobile);
       $bannerData[] = $data;
     }
     return $bannerData;

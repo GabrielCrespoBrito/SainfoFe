@@ -23,8 +23,6 @@ class LandingPageController extends Controller
     $testimonios = Testimonio::allWithLogoPath();
     $banners = Banner::allWithLogoPath();
 
-    // dd( $banners );
-    // $testimonios = [];
     return view('landing.index', compact('planes', 'banners', 'clientesGroup', 'testimonios'));
   }
 

@@ -22,7 +22,12 @@ trait ImageUploadTrait
 
   public function pathImage()
   {
-    return file_build_path(config('app.aws_url_bucket'), 'images', $this->getImage());
+    return $this->getPathImage($this->getImage());
+  }
+
+  public function getPathImage( $img_name )
+  {
+    return file_build_path(config('app.aws_url_bucket'), 'images', $img_name );
   }
 
 }

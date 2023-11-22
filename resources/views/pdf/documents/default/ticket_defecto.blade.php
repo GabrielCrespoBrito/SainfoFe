@@ -47,7 +47,7 @@
     'documento' => $cliente->PCRucc,
     'direccion_campo_nombre' => "Dirección",
     'direccion_campo_class' => 'bold',
-    'direccion' => "jkandskjasndkjasn". $cliente->PCDire,
+    'direccion' => $cliente->PCDire,
   ])
 </div>
 

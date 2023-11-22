@@ -45,7 +45,8 @@ class ReporteProductoStock
 
   public function getQuery()
   {
-    $query = DB::connection('tenant')->table('productos');
+    $query = DB::connection('tenant')->table('productos')
+    ->where('UDelete' , '=' , "0");
 
     if( $this->grupoId ) {
       $query

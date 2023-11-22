@@ -425,7 +425,6 @@ class FHelper
 
       $amazon = $v->amazon;
 
-      // dd("amazon", $amazon);
       // CDR
       if (!$amazon->CDR) {
         $cdrExists = $v->fileExist(self::CDR);

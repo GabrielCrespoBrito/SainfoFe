@@ -57,9 +57,6 @@ class Caja extends Model
     // $detalles = Caja::detallesByTipo($this->CajNume);
     $detalles = $this->detalles->load('venta_pago');
 
-    // dd( $detalles );
-    // exit();
-
     #      Ingresos totales
     $total_ingreso_sol = $detalles->where('ANULADO', self::INGRESO )->sum('CANINGS');
     $total_egreso_sol = $detalles->where('ANULADO', self::EGRESO )->sum('CANEGRS');    
