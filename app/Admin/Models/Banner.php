@@ -15,9 +15,9 @@ class Banner extends Model
 
   protected $table = "pagina_banners";
 
-  public function getImageName()
+  public function getImageName($last_part = "")
   {
-    return 'banners_pagina_' . time();
+    return 'banners_pagina_' . time() . $last_part;
   }
   
   public function getImage()
@@ -37,4 +37,10 @@ class Banner extends Model
     }
     return $bannerData;
   }
+
+  public function pathImageMobil()
+  {
+    return $this->getPathImage($this->imagen_mobile);
+  }
+
 }

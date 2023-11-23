@@ -32,12 +32,14 @@ class BannerRequest extends FormRequest
       if($this->isStore){
         $rules['nombre'] = 'required|unique:pagina_banners,nombre';
         $rules['imagen'] = 'required|mimes:jpg,jpeg,png,gif,webp';
+        $rules['imagen_mobile'] = 'required|mimes:jpg,jpeg,png,gif,webp';
       }
 
       else {
         $id = $this->route()->parameters['id'];
         $rules['nombre'] = "required|unique:pagina_banners,nombre,{$id}";
         $rules['imagen'] = $this->imagen ? 'required|mimes:jpg,jpeg,png,gif,webp' : 'sometimes|nullable';
+        $rules['imagen_mobile'] = $this->imagen_mobile ? 'required|mimes:jpg,jpeg,png,gif,webp' : 'sometimes|nullable';
       }
 
       return $rules;

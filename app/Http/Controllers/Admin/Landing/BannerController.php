@@ -34,6 +34,7 @@ class BannerController extends Controller
       $banner = new Banner();
       $banner->nombre = $request->nombre;
       $banner->imagen = $banner->uploadImage($request->file('imagen'), $banner->getImageName());
+      $banner->imagen_mobile = $banner->uploadImage($request->file('imagen_mobile'), $banner->getImageName('_mob'));
       $banner->save();
       DB::commit();
     } catch (\Throwable $th) {
@@ -54,10 +55,17 @@ class BannerController extends Controller
       $banner = Banner::find($id);
       $banner->nombre = $request->nombre;
       $file = $request->file('imagen');
+      $file_mobile = $request->file('imagen_mobile');
       if ($file) {
         $banner->deleteImage();
         $banner->imagen = $banner->uploadImage($file, $banner->getImageName());
       }
+      if ($file_mobile) {
+        $banner->deleteImage($banner->imagen_mobile);
+        $banner->imagen_mobile = $banner->uploadImage($file_mobile, $banner->getImageName());
+      }
+
+
       $banner->save();
       DB::commit();
     } catch (\Throwable $th) {
@@ -74,8 +82,9 @@ class BannerController extends Controller
   {
     $banner = Banner::findOrfail($id);
     $banner->deleteImage();
-    $banner->delete();
+    $banner->deleteImage($banner->imagen_mobile);
+    $banner->delete();  
     noti()->success('Banner Eliminado exitosamente');
-    return back();
+    return redirect()->back();
   }
 }

@@ -13,11 +13,13 @@ trait ImageUploadTrait
     return $logoName;
   }
 
-  public function deleteImage()
+  public function deleteImage($imagen = null)
   {
+    $imagen = $imagen ?? $this->getImage();
+
     $fh = fileHelper();
     $fh->only_nube = true;
-    $fh->delete_img($this->getImage());
+    $fh->delete_img($imagen);
   }
 
   public function pathImage()

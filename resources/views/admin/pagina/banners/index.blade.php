@@ -16,11 +16,14 @@
   </div>
 
 {{-- id, representante, cargo, testimonio_text, imagen, created_at, updated_at --}}
-    @component('components.table', [ 'id' => 'table_canje' , 'thead' => [ '', 'Nombre', '' ]])
+    @component('components.table', [ 'id' => 'table_canje' , 'thead' => [ 'Imagen Principal', 'Imagen Para Mobil', 'Nombre', '' ]])
       @slot('body')
         @foreach( $banners as $banner )
           <tr>
             <td> <img style="width:100px" src="{{ $banner->pathImage() }}" alt="" class="rounded-circle img-fluid"></td>
+            
+            <td> <img style="width:100px" src="{{ $banner->pathImageMobil() }}" alt="" class="rounded-circle img-fluid"></td>
+
             <td> {{ $banner->nombre }} </td>
 
             <td> 
