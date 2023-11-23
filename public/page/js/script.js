@@ -1306,7 +1306,8 @@
     const urlRegular = $ele.attr('data-slide-full');
 
     const isMobile = width < 800;
-    const url = isMobile ? urlMobil : urlRegular;
+    
+    const url = isMobile ? (urlMobil ? urlMobil : urlRegular) : urlRegular;
 
     $ele.removeAttr('style');
 
@@ -1316,7 +1317,7 @@
       'background-repeat' : "no-repeat",
     };
 
-    if (isMobile) {
+    if (isMobile && urlMobil) {
       cssStyles['margin-top'] = "2.5em"
       cssStyles['min-height'] = "400px"
       cssStyles['background-size'] = "contain";

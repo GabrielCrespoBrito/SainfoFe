@@ -2,7 +2,7 @@
 {{--| Swiper |--}}
 <section class="section section-slider slider-sainfo swiper-container swiper-slider swiper-slider-1 context-dark" data-loop="true" data-autoplay="5000" data-simulate-touch="false">
 
-  <div class="swiper-wrapper">
+  <div class="swiper-wrapper" >
 
   @foreach( $banners as $banner )
     <div class="swiper-slide punto-venta" 

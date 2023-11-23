@@ -2,7 +2,7 @@
   $content = $content ?? null; 
 @endphp
 
-<div class="swiper-slide facturacion" data-slide-bg="{{ $img  }}">
+<div class="swiper-slide facturacion"  data-slide-full="{{ $img  }}" data-slide-bg="{{ $img  }}">
   <div class="swiper-slide-caption section-lg">
     <div class="container">
       <div class="row">
