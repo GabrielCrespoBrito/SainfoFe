@@ -2,11 +2,8 @@
 
 namespace App\Jobs;
 
-use Carbon\Carbon;
 use App\GuiaSalida;
-use App\GuiaSalidaItem;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ReporteKardexFisico2
 {
@@ -292,6 +289,8 @@ class ReporteKardexFisico2
   public function addToData(&$arrData, $data_product)
   {
     $stock_incial = $this->getStockInicialProducto($data_product);
+
+
 
     $info_producto = [
       'info' =>  $this->getInfoProducto($data_product[0]),
