@@ -48,9 +48,8 @@ trait InventaryTrait
       $this->prosto6 +
       $this->prosto7 +
       $this->prosto8 +
-      $this->prosto9 +
-      $this->prosto10; 
-  }
+      $this->prosto9;
+    }
 
 	/**
 	 * Inventario de reserva

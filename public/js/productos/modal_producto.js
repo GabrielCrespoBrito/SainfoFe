@@ -261,9 +261,8 @@ let AppModalProducto =
       Number(info.prosto6) + 
       Number(info.prosto7) + 
       Number(info.prosto8) + 
-      Number(info.prosto9) + 
-      Number(info.prosto10);
-    return total;    
+      Number(info.prosto9)
+    return total;
   },
 
   inputColumn : function(value,data,info)

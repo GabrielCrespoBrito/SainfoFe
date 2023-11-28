@@ -154,8 +154,19 @@ window.data_guardado = null;
 
 $(document).ready(function (e) {
   var need_pago = true;
+  
   function sumStock(value, data, info) {
-    let sum = Number(info.prosto1) + Number(info.prosto2) + Number(info.prosto3) + Number(info.prosto4) + Number(info.prosto5) + Number(info.prosto6) + Number(info.prosto7) + Number(info.prosto8) + Number(info.prosto9);
+
+    let sum = 
+    Number(info.prosto1) + 
+    Number(info.prosto2) + 
+    Number(info.prosto3) + 
+    Number(info.prosto4) + 
+    Number(info.prosto5) + 
+    Number(info.prosto6) + 
+    Number(info.prosto7) + 
+    Number(info.prosto8) + 
+    Number(info.prosto9);
     return fixedNumber(sum);
   }
 
