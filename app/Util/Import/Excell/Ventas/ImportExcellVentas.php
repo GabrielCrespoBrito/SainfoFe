@@ -125,6 +125,7 @@ class ImportExcellVentas
       'pcrucc' => ['name' => 'PCRucc', 'default' => ''],
       'pcnomb' => ['name' => 'PCNomb', 'default' => ''],
       'pcdire' => ['name' => 'PCDire', 'default' => ''],
+      'pcdire' => ['name' => 'PCDire', 'default' => ''],
       'pctel1' => ['name' => 'PCTel1', 'default' => ''],
     ],
 
@@ -371,7 +372,7 @@ class ImportExcellVentas
       $fecha = date('Y-m-d', $timestamp);
       $documento_cliente =
         is_numeric($this->data_row['cliente_documento']) ?
-        (int) $this->data_row['cliente_documento'] :
+        $this->data_row['cliente_documento'] :
         $this->data_row['cliente_documento'];
 
       $this->validate_date($this->data_row['fecha']);
