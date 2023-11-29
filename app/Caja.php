@@ -237,6 +237,7 @@ class Caja extends Model
   {
     $loccodi = $loccodi ?? optional(user_()->localCurrent())->loccodi;
 
+
     $conditions = [
       'LocCodi'  => $loccodi,
       'CajEsta'  => 'Ap',
@@ -247,6 +248,7 @@ class Caja extends Model
       $conditions['UsuCodi'] = user_()->usucodi;
     }
 
+
     return self::where($conditions);        
   }
 
@@ -254,6 +256,7 @@ class Caja extends Model
   {
     return self::cajaAperturada($loccodi , $onlyLocal)->first();
   }
+
 
   public static function hasAperturada( $loccodi = null, $onlyLocal = false )
   {

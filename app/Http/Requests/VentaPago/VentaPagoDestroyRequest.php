@@ -36,9 +36,10 @@ class VentaPagoDestroyRequest extends FormRequest
 			$validator->after(function ($validator) {
 
 				$pago = VentaPago::findOrfail($this->id_pago);
-				$caja = $pago->caja;
 
-				if ( ! $caja->hasAperturada() ) {
+        $caja = $pago->caja;
+
+				if ( ! $caja->isAperturada() ) {
 					$validator->errors()->add('tipo', "La caja ({$caja->CajNume}) donde esta registrada este pago esta cerrada, por lo tanto no se puede eliminar ni modificar");
 				}
 
