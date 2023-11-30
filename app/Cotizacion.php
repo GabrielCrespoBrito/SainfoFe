@@ -2,16 +2,17 @@
 
 namespace App;
 
-use App\Jobs\Cotizacion\SetFacturado;
 use App\Moneda;
+use App\Traits\InteractWhatApp;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\Empresa\ImgStringInfo;
+use App\Models\MedioPago\MedioPago;
+use App\Jobs\Cotizacion\SetFacturado;
 use App\Util\PDFGenerator\PDFGenerator;
 use Illuminate\Database\Eloquent\Model;
 use App\Util\ModelUtil\ModelEmpresaScope;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
 use App\Models\Cotizacion\Traits\handleStates;
-use App\Traits\InteractWhatApp;
 
 class Cotizacion extends Model
 {
@@ -547,9 +548,25 @@ class Cotizacion extends Model
     $data['moneda']      = $this->moneda;
     $data['forma_pago']  = $this->forma_pago;
     $data['items']       = $this->items;
+    $data['medio_pago_nombre'] = $this->getMedioPagoNombreForPDF();
+
+    
     $data['showPeso'] = $showPeso;
     return $data;
   }
+
+  public function getMedioPagoNombre()
+  {
+    return optional($this->medio_pago)->TpgNomb;
+  }
+
+  public function getMedioPagoNombreForPDF()
+  {
+    return ($this->TpgCodi == null || $this->TpgCodi == MedioPago::SIN_DEFINIR) ?
+      '' :
+      $this->getMedioPagoNombre();
+  }
+
 
   public function peso()
   {
