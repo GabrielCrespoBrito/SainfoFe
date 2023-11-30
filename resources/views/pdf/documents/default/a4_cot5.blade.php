@@ -45,7 +45,7 @@
 </div>
 
 <div class="row">
-  @include('pdf.documents.partials.info_cliente', [
+  @include('pdf.documents.partials.info_cliente2', [
   'class_name' => 'col-12 border-width-1 mt-x5 pl-x2 border-style-solid',
   'nombre_campo_nombre' => 'Razón Social:',
   'nombre_campo_class' => 'bold font-size-9',
