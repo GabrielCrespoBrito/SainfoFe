@@ -16,7 +16,7 @@ class ProductosTomaInventarioExcell extends ExcellGenerator
   public $linea = 1;
   public $title_hoja = "";
 
-  
+
 
   public function __construct($data, $title_hoja)
   {
@@ -47,8 +47,8 @@ class ProductosTomaInventarioExcell extends ExcellGenerator
 
   public function headerSheet(&$sheet)
   {
-    $sheet->row( $line = $this->getLineaAndSum(), $this->getHeader());
-    $sheet->row( $line, function ($row) {
+    $sheet->row($line = $this->getLineaAndSum(), $this->getHeader());
+    $sheet->row($line, function ($row) {
       $row->setBackground('#000000');
       $row->setFontColor('#FFFFFF');
     });
@@ -56,18 +56,45 @@ class ProductosTomaInventarioExcell extends ExcellGenerator
 
   public function query()
   {
-    return DB::connection('tenant')->table('productos')
+    //
+    $listas = auth()->user()->listasCode();
+    // $term = str_replace('*', '%', $request->search['value']);
+    // $campo = $request->input('campo_busqueda', 'nombre');
+    // $grupo = $request->input('grupo');
+    // $familia = $request->input('familia');
+    // $marca = $request->input('marca');
+
+    // $busqueda = Producto::query()
+    //   ->with([
+    //     'marca_',
+    //     'marca',
+    //     'unidades_' => function ($q) use ($listas) {
+    //       $q->whereIn('LisCodi', $listas);
+    //     },
+    //     'unidades_.lista'
+    //   ])->whereHas('unidades_', function ($q) use ($listas) {
+    //     $q->whereIn('LisCodi', $listas);
+    //   });
+
+    //
+
+
+    $query = DB::connection('tenant')->table('productos')
+      ->join('unidad', 'unidad.ID', '=', 'productos.Id')
       ->select('ProCodi', 'ProNomb')
+      ->whereIn('unidad.LisCodi',  $listas)
       ->orderBy('ProCodi', 'asc')
       ->get()
       ->chunk(50);
+
+    return $query;
   }
 
   public function processProductos(&$sheet)
   {
     $itemsGroup = $this->query();
 
-    foreach( $itemsGroup as $items ){
+    foreach ($itemsGroup as $items) {
       foreach ($items as $item) {
         $sheet->row($this->getLineaAndSum(), (array) $item);
       }
