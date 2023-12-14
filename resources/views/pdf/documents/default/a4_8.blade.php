@@ -139,7 +139,7 @@ $classFooter = '';
     <div class="row">
 
       @include('pdf.documents.partials.pagos', [
-      'class_name' => 'col-5 border-right-style-solid border-top-style-solid border-width-1 border-color-blue-light ',
+      'class_name' => 'col-5 border-bottom-style-solid border-right-style-solid border-top-style-solid border-width-1 border-color-blue-light ',
       'class_name_table' => 'border-width-1 border-color-blue-light table-with-border',
       'titulo_div_class' => 'bold pl-x3 text-uppercase bold pl-x3 mb-x3 border-bottom-style-solid border-width-1 border-color-blue-light ',
       'tr_titulo_class' => 'bold text-center',
@@ -147,11 +147,20 @@ $classFooter = '';
       ])
 
       @include('pdf.documents.partials.cuentas', [
-      'class_name' => 'col-5 border-top-style-solid border-width-1 border-color-blue-light ',
+      'class_name' => 'col-5 border-bottom-style-solid border-top-style-solid border-width-1 border-color-blue-light ',
       'class_name_table' => '',
       'titulo_div_class' => 'bold pl-x3 mb-x3 border-bottom-style-solid border-width-1 border-color-blue-light ',
       'cuenta_text_class' => 'pl-x3 ',
       'cuenta_cuenta_text_class' => 'bold',
+      ])
+
+
+    </div>
+
+    <div class="row">
+
+      @include('pdf.documents.partials.firmas', [
+      'class_name' => 'col-10',
       ])
 
     </div>

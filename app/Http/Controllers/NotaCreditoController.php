@@ -23,7 +23,9 @@ class NotaCreditoController extends Controller
     
     
     if( $isVenta ){
-      $notas_creditos = Venta::with('cliente_with')
+      $notas_creditos = Venta::with(['cliente_with'  => function ($q) use( $isVenta ) {
+        $q->where('TipCodi',  $isVenta ?  'C' : 'P' );
+      }])
       ->where('TidCodi', TipoDocumentoPago::NOTA_CREDITO)
       ->where($saldo_field, '>', 0);
       
