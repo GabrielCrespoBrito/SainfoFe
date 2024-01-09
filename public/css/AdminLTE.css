@@ -5654,10 +5654,7 @@ table.text-center th {
   Modal Grande 
 */
 
-@media (max-width: 768px) {
-  * {
-    /* outline: 1px solid red; */
-  }
+@media (min-width: 768px) {
 
   .modal-dialog.modal-xxl {
     width: 1200px;

@@ -154,19 +154,19 @@ window.data_guardado = null;
 
 $(document).ready(function (e) {
   var need_pago = true;
-  
+
   function sumStock(value, data, info) {
 
-    let sum = 
-    Number(info.prosto1) + 
-    Number(info.prosto2) + 
-    Number(info.prosto3) + 
-    Number(info.prosto4) + 
-    Number(info.prosto5) + 
-    Number(info.prosto6) + 
-    Number(info.prosto7) + 
-    Number(info.prosto8) + 
-    Number(info.prosto9);
+    let sum =
+      Number(info.prosto1) +
+      Number(info.prosto2) +
+      Number(info.prosto3) +
+      Number(info.prosto4) +
+      Number(info.prosto5) +
+      Number(info.prosto6) +
+      Number(info.prosto7) +
+      Number(info.prosto8) +
+      Number(info.prosto9);
     return fixedNumber(sum);
   }
 
@@ -2306,23 +2306,27 @@ $(document).ready(function (e) {
   }
 
   function showPDF(path, prev = true) {
+    
+    console.log(path, /Android|iPhone/i.test(navigator.userAgent));
+
     if (/Android|iPhone/i.test(navigator.userAgent)) {
-      $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
-      $("#modalData").find('.modal-title').text('Prevializaciòn de documento');
-      const $embedPDF = `<embed src="${path}" width="100%" height="800px">`;
+      $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-sm')
+      $("#modalData").find('.modal-title').text('Previsualización del documento');
+
+      const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
+
       $("#modalData").find('.modal-body').empty();
       $("#modalData").find('.modal-body').append($embedPDF);
       $("#modalData").modal()
     }
-
-
+    
     else {
       $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
 
       let nombre = "";
 
       if (prev) {
-        nombre = "Prevializaciòn de documento";
+        nombre = "Previsualización de documento";
       }
       else {
         let path_arr = path.split('/');
@@ -2330,7 +2334,9 @@ $(document).ready(function (e) {
       }
 
       $("#modalData").find('.modal-title').text(nombre);
-      const $embedPDF = `<embed src="${path}" width="100%" height="800px">`;
+
+      const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
+
       $("#modalData").find('.modal-body').empty();
       $("#modalData").find('.modal-body').append($embedPDF);
       $("#modalData").modal()
@@ -2464,7 +2470,7 @@ $(document).ready(function (e) {
     else {
 
       if (openVentana("caja")) {
-        if( venta_rapida ){
+        if (venta_rapida) {
           go_listado(500);
         }
         else {
