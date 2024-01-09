@@ -22,6 +22,7 @@
 <script src="{{ asset('plugins/onscan/onscan.min.js') }}"> </script>
 <script src="{{ asset('plugins/datatable/dataTables.bootstrap.js') }}"> </script>
 <script src="{{ asset('plugins/bootstrap-daterange/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('plugins/download/download.js') }}"> </script>  
 <script type="text/javascript" src="{{ asset('js/numero_palabra.js')}}"></script>
 <script type="text/javascript" src="{{ asset(mix('js/mix/ConectorPlugin.js'))}}"></script>
 <script type="text/javascript" src="{{ asset(mix('js/mix/print_ticket.js'))}}"></script>

@@ -5653,6 +5653,15 @@ table.text-center th {
 /* 
   Modal Grande 
 */
-.modal-dialog.modal-xxl {
-  width: 1200px;
+
+@media (max-width: 768px) {
+  * {
+    /* outline: 1px solid red; */
+  }
+
+  .modal-dialog.modal-xxl {
+    width: 1200px;
+  }
+
 }
+

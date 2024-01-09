@@ -53,12 +53,19 @@
   'contacto_campo_nombre' => 'Contacto: ',
   'contacto_campo_class' => 'bold',
   'contacto' => $contacto,
+  
+  'telefono_campo_nombre' => 'Moneda: ',
+  'telefono_campo_class' => 'bold',
+  'telefono' => $moneda_abreviatura,
+
   'vendedor_campo_nombre' => 'Vendedor: ',
   'vendedor_campo_class' => 'bold',
   'vendedor' => $vendedor_nombre,
   'fecha_emision_campo_class' => 'bold',
   'fecha_emision_campo_nombre' => 'Fecha emisión: ',
   'fecha_emision' => $fecha_emision_,
+  'forma_pago_nombre' => 'Forma de Pago:',
+  'forma_pago' => $forma_pago
   ])
 
 </div>

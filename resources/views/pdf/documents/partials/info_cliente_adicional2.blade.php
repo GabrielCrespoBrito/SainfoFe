@@ -37,7 +37,7 @@ $contacto_text_class = $contacto_text_class ?? '';
 // Vendedor
 $vendedor = $vendedor ?? "";
 $vendedor_div_class = $vendedor_div_class ?? '';
-$vendedor_campo_nombre = $vendedor_campo_nombre ?? '';
+$vendedor_campo_nombre = $vendedor_campo_nombre ?? 'Vendedor';
 $vendedor_campo_class = $vendedor_campo_class ?? '';
 $vendedor_text_class = $vendedor_text_class ?? '';
 
@@ -89,7 +89,7 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
       <!-- Moneda -->
       <td class="width-30 pb-x5">
         <div class="nombre_div_class">
-          <span class="bold">Teléfono: </span>
+          <span class="bold"> {{ $telefono_campo_nombre }} </span>
           <span class="{{ $right_text_class }}"> {{ $telefono }}
           </span>
         </div>
@@ -111,10 +111,33 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
       <!-- Forma de Pago -->
       <td class="width-30 pb-x5">
         <div class="nombre_div_class">
-          <span class="bold">Vendedor: </span>
+          <span class="bold"> {{ $vendedor_campo_nombre }} </span>
           <span class="{{ $right_text_class }}"> {{ $vendedor }} </span>
           {{-- <span class="bold">Forma de Pago:</span>
           <span class="{{ $right_text_class }}"> {{ optional($forma_pago)->connomb }} --}}
+          </span>
+        </div>
+      </td>
+      <!-- Forma de Pago -->
+    </tr>
+
+
+
+  {{-- Forma de Pago --}}
+
+   <tr>
+      <!--  -->
+      <td class="width-70 pb-x5">
+        <div class="nombre_div_class">
+        </div>
+      </td>
+      <!-- /RUC -->
+
+      <!-- Forma de Pago -->
+      <td class="width-30 pb-x5">
+        <div class="nombre_div_class">
+          <span class="bold"> {{ $forma_pago_nombre }} </span>
+          <span class="{{ $right_text_class }}"> {{ optional($forma_pago)->connomb }} </span>
           </span>
         </div>
       </td>
