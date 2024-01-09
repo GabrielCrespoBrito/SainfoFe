@@ -48,7 +48,8 @@ $fecha_emision_campo_class = $fecha_emision_campo_class ?? '';
 $fecha_emision_text_class = $fecha_emision_text_class ?? '';
 
 $telefono_campo_nombre = $telefono_campo_nombre ?? 'Telefono:';
-
+$forma_pago_nombre = $forma_pago_nombre ?? '';
+ 
 @endphp
 
 <div class="{{ $class_name }}">
