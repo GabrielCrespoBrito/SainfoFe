@@ -47,6 +47,8 @@ $fecha_emision_campo_nombre = $fecha_emision_campo_nombre ?? '';
 $fecha_emision_campo_class = $fecha_emision_campo_class ?? '';
 $fecha_emision_text_class = $fecha_emision_text_class ?? '';
 
+$telefono_campo_nombre = $telefono_campo_nombre ?? 'Telefono:';
+
 @endphp
 
 <div class="{{ $class_name }}">
