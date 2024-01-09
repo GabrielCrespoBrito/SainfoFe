@@ -2312,23 +2312,9 @@ $(document).ready(function (e) {
     if (/Android|iPhone/i.test(navigator.userAgent)) {
       $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-sm')
       $("#modalData").find('.modal-title').text('Previsualización del documento');
-      
-      // path = "http://10323013760.localhost:8001/temp/10323013760-01-FF11-.pdf";
-      // <iframe src="https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" style="width:100%; height:650px;" frameborder="0"></iframe>
-
-      // https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true
-      // const $embedPDF = `<iframe src="${path}&embedded=true" width="100%" height="800px"></iframe>`;
-      // const $embedPDF = `<iframe src="${path}&embedded=true" width="100%" height="800px"></iframe>`;
-
-      // const $embedPDF = `<iframe src="${path}" width="100%" height="500px"></iframe> `;
-      // path = "http://infolab.stanford.edu/pub/papers/google.pdf";
-      // path = "http://10323013760.localhost:8001/temp/hello.pdf";
-      // path = "http://10323013760.localhost:8001/temp/google.pdf";
-      // path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
 
       const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
-      
-      // style="width:100%; height:650px;" frameborder="0"></iframe>
+
       $("#modalData").find('.modal-body').empty();
       $("#modalData").find('.modal-body').append($embedPDF);
       $("#modalData").modal()
@@ -2347,16 +2333,10 @@ $(document).ready(function (e) {
         nombre = path_arr[path_arr.length - 1];
       }
 
-      // path = "http://10323013760.localhost:8001/temp/10323013760-01-FF11-.pdf";
-// 
       $("#modalData").find('.modal-title').text(nombre);
-      // path = "http://infolab.stanford.edu/pub/papers/google.pdf";
-      // path = "http://10323013760.localhost:8001/temp/hello.pdf";
-      // path = "http://10323013760.localhost:8001/temp/google.pdf";
-      // path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
-      
-      // const $embedPDF = `<iframe src="${path}&embedded=true" width="100%" height="500px"></iframe>`;
+
       const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
+
       $("#modalData").find('.modal-body').empty();
       $("#modalData").find('.modal-body').append($embedPDF);
       $("#modalData").modal()
