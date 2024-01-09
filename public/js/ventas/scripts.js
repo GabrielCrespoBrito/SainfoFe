@@ -154,19 +154,19 @@ window.data_guardado = null;
 
 $(document).ready(function (e) {
   var need_pago = true;
-  
+
   function sumStock(value, data, info) {
 
-    let sum = 
-    Number(info.prosto1) + 
-    Number(info.prosto2) + 
-    Number(info.prosto3) + 
-    Number(info.prosto4) + 
-    Number(info.prosto5) + 
-    Number(info.prosto6) + 
-    Number(info.prosto7) + 
-    Number(info.prosto8) + 
-    Number(info.prosto9);
+    let sum =
+      Number(info.prosto1) +
+      Number(info.prosto2) +
+      Number(info.prosto3) +
+      Number(info.prosto4) +
+      Number(info.prosto5) +
+      Number(info.prosto6) +
+      Number(info.prosto7) +
+      Number(info.prosto8) +
+      Number(info.prosto9);
     return fixedNumber(sum);
   }
 
@@ -2306,31 +2306,57 @@ $(document).ready(function (e) {
   }
 
   function showPDF(path, prev = true) {
+    
+    console.log(path, /Android|iPhone/i.test(navigator.userAgent));
+
     if (/Android|iPhone/i.test(navigator.userAgent)) {
-      $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
-      $("#modalData").find('.modal-title').text('Prevializaciòn de documento');
-      const $embedPDF = `<embed src="${path}" width="100%" height="800px">`;
+      $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-sm')
+      $("#modalData").find('.modal-title').text('Previsualización del documento');
+      
+      // path = "http://10323013760.localhost:8001/temp/10323013760-01-FF11-.pdf";
+      // <iframe src="https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" style="width:100%; height:650px;" frameborder="0"></iframe>
+
+      // https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true
+      // const $embedPDF = `<iframe src="${path}&embedded=true" width="100%" height="800px"></iframe>`;
+      // const $embedPDF = `<iframe src="${path}&embedded=true" width="100%" height="800px"></iframe>`;
+
+      // const $embedPDF = `<iframe src="${path}" width="100%" height="500px"></iframe> `;
+      // path = "http://infolab.stanford.edu/pub/papers/google.pdf";
+      // path = "http://10323013760.localhost:8001/temp/hello.pdf";
+      path = "http://10323013760.localhost:8001/temp/google.pdf";
+      path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
+
+      const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
+      
+      // style="width:100%; height:650px;" frameborder="0"></iframe>
       $("#modalData").find('.modal-body').empty();
       $("#modalData").find('.modal-body').append($embedPDF);
       $("#modalData").modal()
     }
-
-
+    
     else {
       $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
 
       let nombre = "";
 
       if (prev) {
-        nombre = "Prevializaciòn de documento";
+        nombre = "Previsualización de documento";
       }
       else {
         let path_arr = path.split('/');
         nombre = path_arr[path_arr.length - 1];
       }
 
+      // path = "http://10323013760.localhost:8001/temp/10323013760-01-FF11-.pdf";
+// 
       $("#modalData").find('.modal-title').text(nombre);
-      const $embedPDF = `<embed src="${path}" width="100%" height="800px">`;
+      path = "http://infolab.stanford.edu/pub/papers/google.pdf";
+      // path = "http://10323013760.localhost:8001/temp/hello.pdf";
+      // path = "http://10323013760.localhost:8001/temp/google.pdf";
+      path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
+      
+      // const $embedPDF = `<iframe src="${path}&embedded=true" width="100%" height="500px"></iframe>`;
+      const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
       $("#modalData").find('.modal-body').empty();
       $("#modalData").find('.modal-body').append($embedPDF);
       $("#modalData").modal()
@@ -2464,7 +2490,7 @@ $(document).ready(function (e) {
     else {
 
       if (openVentana("caja")) {
-        if( venta_rapida ){
+        if (venta_rapida) {
           go_listado(500);
         }
         else {
