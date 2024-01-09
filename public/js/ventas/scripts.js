@@ -2323,8 +2323,8 @@ $(document).ready(function (e) {
       // const $embedPDF = `<iframe src="${path}" width="100%" height="500px"></iframe> `;
       // path = "http://infolab.stanford.edu/pub/papers/google.pdf";
       // path = "http://10323013760.localhost:8001/temp/hello.pdf";
-      path = "http://10323013760.localhost:8001/temp/google.pdf";
-      path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
+      // path = "http://10323013760.localhost:8001/temp/google.pdf";
+      // path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
 
       const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
       
@@ -2350,10 +2350,10 @@ $(document).ready(function (e) {
       // path = "http://10323013760.localhost:8001/temp/10323013760-01-FF11-.pdf";
 // 
       $("#modalData").find('.modal-title').text(nombre);
-      path = "http://infolab.stanford.edu/pub/papers/google.pdf";
+      // path = "http://infolab.stanford.edu/pub/papers/google.pdf";
       // path = "http://10323013760.localhost:8001/temp/hello.pdf";
       // path = "http://10323013760.localhost:8001/temp/google.pdf";
-      path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
+      // path = "https://10323013760.sainfo.pe/temp/20521752166-52-N001-005434.pdf";
       
       // const $embedPDF = `<iframe src="${path}&embedded=true" width="100%" height="500px"></iframe>`;
       const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
