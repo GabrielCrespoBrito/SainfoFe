@@ -2,7 +2,7 @@ $(document).ready(function (e) {
 
   window.almacenVisualize = true;
   window.columns_alms_hide = [];
-
+  window.isSoles = null;
   var enter_accion = false;
   var tr_pago = {};
   // var IGV_VALUE = 1.18;
@@ -968,6 +968,11 @@ $(document).ready(function (e) {
 
   function set_precio() {
     let codigo_moneda, unidades;
+
+    if (current_product_data == null) {
+      return;
+    }
+
     if (action_i() == "create") {
       console.log("action_i() create", current_product_data)
 
@@ -986,9 +991,6 @@ $(document).ready(function (e) {
     let producto_unidad = $("[name=producto_unidad] option:selected");
     let unidad_select = null;
 
-    let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
-
-    // 
     // console.log("unidades", current_product_data, unidades);
 
     for (let i = 0; i < unidades.length; i++) {
@@ -998,9 +1000,9 @@ $(document).ready(function (e) {
       }
     }
 
-    precio = is_sol ? unidad_select.UNIPUVS : unidad_select.UniPUVD;
-    let precio_min = is_sol ? unidad_select.UniPMVS : unidad_select.UniPMVD;
-    const decimales = is_sol ? window.decimales_soles : window.decimales_dolares;
+    precio = window.isSoles ? unidad_select.UNIPUVS : unidad_select.UniPUVD;
+    let precio_min = window.isSoles ? unidad_select.UniPMVS : unidad_select.UniPMVD;
+    const decimales = window.isSoles ? window.decimales_soles : window.decimales_dolares;
 
     $("[name=producto_precio]").val(fixedNumber(precio, false, decimales));
     $("[name=producto_precio]")
@@ -1458,6 +1460,12 @@ $(document).ready(function (e) {
 
   function moneda_precio_change() {
     set_precio();
+    setMoneda();
+  }
+
+
+  function setMoneda() {
+    window.isSoles = Number($("[name=moneda] option:selected").attr('data-esSol'));
   }
 
   function teclado_acciones(e) {
@@ -1656,8 +1664,6 @@ $(document).ready(function (e) {
 
 
   function guardar_factura(data) {
-    console.log("factura guardada", data);
-
     return;
   }
 
@@ -1667,7 +1673,6 @@ $(document).ready(function (e) {
 
     $(".div_esperando").hide();
     $(".div_guardar").show();
-    console.log("error al guardar la factura", data, isJson(response));
 
     if (typeof response == "string") {
       notificaciones(response, 'error');
@@ -2520,17 +2525,14 @@ $(document).ready(function (e) {
           4: { name: 'UniPUCD', decimales: window.decimales_dolares },
           5: { name: 'UniPUCS', decimales: window.decimales_soles },
           6: { name: 'UniMarg', decimales: 2 },
-          7: { name: 'UNIPUVS', decimales: window.decimales_soles },
+          7: { name: window.isSoles ? 'UNIPUVS' : 'UNIPUVD', decimales: window.isSoles ? window.decimales_soles : decimales_dolares },
         }
       }
       else {
         columnsProperty = {
-          4: { name: 'UNIPUVS', decimales: window.decimales_soles },
+          4: { name: window.isSoles ? 'UNIPUVS' : 'UNIPUVD', decimales: window.isSoles ? window.decimales_soles : decimales_dolares },
         }
       }
-
-      console.log("settings.col" , settings.col)
-
 
       if (dataUnidadFirst) {
         valOutput = dataUnidadFirst[columnsProperty[settings.col].name];
@@ -2670,6 +2672,7 @@ $(document).ready(function (e) {
     clearDataTable();
     setProductoInputSearchDefaultFocus()
     initialFocus();
+    setMoneda()
   };
 
   init();

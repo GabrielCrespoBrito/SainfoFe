@@ -2,6 +2,8 @@ window.canjeIds = [];
 window.almacenVisualize = true;
 window.columns_alms_hide = [];
 window.isCanje = false;
+window.isSoles = null;
+
 // venta_rapida
 function poner_data_cliente(data) {
   // 
@@ -1914,6 +1916,12 @@ $(document).ready(function (e) {
 
   function moneda_precio_change() {
     set_precio();
+    setMoneda();
+  }
+  
+  function setMoneda()
+  {
+    window.isSoles = Number($("[name=moneda] option:selected").attr('data-esSol'));
   }
 
   function teclado_acciones(e) {
@@ -3969,7 +3977,6 @@ $(document).ready(function (e) {
     $("#modalFP").modal('hide');
   }
 
-
   function addProductoToTable(data) {
     let unidad = data.unidades[0];
     let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
@@ -4898,12 +4905,12 @@ $(document).ready(function (e) {
           5: { name: 'UniPUCD', decimales: window.decimales_dolares },
           6: { name: 'UniPUCS', decimales: window.decimales_soles },
           7: { name: 'UniMarg', decimales: 2 },
-          8: { name: 'UNIPUVS', decimales: window.decimales_soles },
+          8: { name: window.isSoles ? 'UNIPUVS' : 'UNIPUVD', decimales: window.isSoles ? window.decimales_soles : decimales_dolares  },
         }
       }
       else {
         columnsProperty = {
-          5: { name: 'UNIPUVS', decimales: window.decimales_soles },
+          5: { name: window.isSoles ? 'UNIPUVS' : 'UNIPUVD', decimales: window.isSoles ? window.decimales_soles : decimales_dolares },
         }
       }
 
@@ -5237,7 +5244,7 @@ $(document).ready(function (e) {
     date();
     clearDataTable();
     initialFocus();
-
+    setMoneda();
     canjeAppNew.setProcessFunc(addDocFromCanje);
   };
   init();
