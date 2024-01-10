@@ -2306,7 +2306,7 @@ $(document).ready(function (e) {
   }
 
   function showPDF(path, prev = true) {
-    
+
     console.log(path, /Android|iPhone/i.test(navigator.userAgent));
 
     if (/Android|iPhone/i.test(navigator.userAgent)) {
@@ -2319,7 +2319,7 @@ $(document).ready(function (e) {
       $("#modalData").find('.modal-body').append($embedPDF);
       $("#modalData").modal()
     }
-    
+
     else {
       $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
 
@@ -4892,11 +4892,19 @@ $(document).ready(function (e) {
       let dataUnidadFirst = data.unidades_[0];
       let valOutput = '';
 
-      let columnsProperty = {
-        5: { name: 'UniPUCD', decimales: window.decimales_dolares },
-        6: { name: 'UniPUCS', decimales: window.decimales_soles },
-        7: { name: 'UniMarg', decimales: 2 },
-        8: { name: 'UNIPUVS', decimales: window.decimales_soles },
+      let columnsProperty;
+      if (this.ver_costos) {
+        columnsProperty = {
+          5: { name: 'UniPUCD', decimales: window.decimales_dolares },
+          6: { name: 'UniPUCS', decimales: window.decimales_soles },
+          7: { name: 'UniMarg', decimales: 2 },
+          8: { name: 'UNIPUVS', decimales: window.decimales_soles },
+        }
+      }
+      else {
+        columnsProperty = {
+          5: { name: 'UNIPUVS', decimales: window.decimales_soles },
+        }
       }
 
 
@@ -4995,13 +5003,15 @@ $(document).ready(function (e) {
     ];
 
     const ver_costos = Number($("#datatable-productos").attr("data-costos"));
+
     if (ver_costos) {
-      product_columns.push({ data: 'ProMarg', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
-      product_columns.push({ data: 'ProPUCD', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
-      product_columns.push({ data: 'ProPUCS', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+      product_columns.push({ data: 'ProMarg', className: 'text-right', searchable: false, render: dataUnidadPrincipal.bind({ ver_costos: ver_costos }) });
+      product_columns.push({ data: 'ProPUCD', className: 'text-right', searchable: false, render: dataUnidadPrincipal.bind({ ver_costos: ver_costos }) });
+      product_columns.push({ data: 'ProPUCS', className: 'text-right', searchable: false, render: dataUnidadPrincipal.bind({ ver_costos: ver_costos }) });
     }
 
-    product_columns.push({ data: 'ProPUVS', className: 'text-right', searchable: false, render: dataUnidadPrincipal });
+    product_columns.push({ data: 'ProPUVS', className: 'text-right', searchable: false, render: dataUnidadPrincipal.bind({ ver_costos: ver_costos }) });
+    // Total Stock
     product_columns.push({ data: 'ProPUVS', className: 'text-right total-almacen almacen-id-total', searchable: false, render: sumStock });
 
     // -----------------------------------------------------------------------------------
