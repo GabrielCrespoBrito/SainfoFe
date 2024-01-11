@@ -129,6 +129,9 @@ Route::prefix('reportes')->group(function () {
   Route::get('productos-stock', 'Reportes\ProductoStockReportController@create')->name('reportes.productos_stock.create');
   Route::post('productos-stock/report', 'Reportes\ProductoStockReportController@report')->name('reportes.productos_stock.report');
 
+  # Reportes de vendedor-producto
+  Route::get('productos-stock-minimo', 'Reportes\ProductoStockMinimoReportController@create')->name('reportes.productos_stock_minimo.create');
+  Route::post('productos-stock-minimo/report', 'Reportes\ProductoStockMinimoReportController@report')->name('reportes.productos_stock_minimo.report');
 
   # Reportes de vendedor-estadisticas
   Route::get('vendedor-estadisticas','Reportes\VendedorEstadisticaReportController@create')->name('reportes.vendedor_estadistica.create');

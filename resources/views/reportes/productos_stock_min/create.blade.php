@@ -10,12 +10,10 @@
     var url_generate_report = "{{ route('reportes.productos_stock.report') }}";
   </script>
   <script src="{{ asset(mix('js/mix/helpers.js')) }}"></script>  
-  {{-- <script src="{{ asset('js/reportes/kardex_fisico.js') }}"></script> --}}
-  {{-- <script src="{{ asset(mix('js/reportes/mix/kardex_fisico.js')) }}"></script> --}}
 @endsection
 
-@section('titulo_pagina', 'Productos Stock')
+@section('titulo_pagina', 'Productos Stock Minimo')
 @section('contenido')
 @php  $class_adicional = "reportes"; @endphp
-<div id="root-producto-stock" data-stockmin="1" data-route="{{ route('reportes.productos_stock.report') }}"></div>
+<div id="root-producto-stock" data-stockmin="0" data-route="{{ route('reportes.productos_stock_minimo.report') }}"></div>
 @endsection

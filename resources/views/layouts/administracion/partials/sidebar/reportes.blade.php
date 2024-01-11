@@ -60,6 +60,7 @@
         <li><a href="{{ route('reportes.kardex_traslado') }}"><i class="fa fa-circle-o"></i> Kardex Traslado Almacenes</a></li>
         <li><a href="{{ route('reportes.guias') }}"><i class="fa fa-circle-o"></i> Guias Electronica</a></li>
         <li><a href="{{ route('reportes.productos_stock.create') }}"><i class="fa fa-circle-o"></i> Producto Stock</a></li>
+        <li><a href="{{ route('reportes.productos_stock_minimo.create') }}"><i class="fa fa-circle-o"></i> Stock Minimo</a></li>
       </ul>
     </li>
 

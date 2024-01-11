@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use Illuminate\Support\Facades\DB;
 
-class ReporteProductoStock 
+class ReporteProductoStockMin 
 {
 
   /**
@@ -13,11 +13,11 @@ class ReporteProductoStock
    * @param array
    */
   protected $data = [];
-  public $request;
   public $grupoId;
   public $familiaId;
   public $marcaId;
   public $localId;
+  public $request;
   public $stockMinimo;
 
   /**
@@ -32,8 +32,6 @@ class ReporteProductoStock
     $this->familiaId = $data['FamCodi'] == 'todos' ? null : $data['FamCodi'] ?? null;
     $this->marcaId = $data['MarCodi'] == 'todos' ? null : $data['MarCodi'] ?? null;
     $this->localId = $data['LocCodi'] == 'todos' ? null   : $data['LocCodi'];
-    $this->stockMinimo = $data['con_stock_minimo'] ?? false;
-
     $this->handle();
   }
 
@@ -55,20 +53,14 @@ class ReporteProductoStock
       ->where('productos.famcodi', $this->familiaId);
     }
 
-    // dd( $this->grupoId, $this->familiaId, $this->marcaId, $this->localId, $this->stockMinimo, $query->get() );
-    // exit();
-
     if ($this->marcaId) {
       $query->where('productos.marcodi', $this->marcaId);
     }
-    if ($this->stockMinimo) {
 
       $query->where('productos.ProSTem', '1');            
       if ($this->localId) {
         $localCampo = 'productos.prosto' . (int) $this->localId;
-        $query->where($localCampo, '<=', 'productos.Promini');
       }
-    }  
 
     $selectColumns = [
       'productos.ID as id',
@@ -87,7 +79,7 @@ class ReporteProductoStock
     }
 
     return $query
-    ->orderBy( 'productos.ProCodi', 'asc')
+    ->orderBy('productos.ProCodi', 'asc')
     ->orderBy('productos.marcodi', 'asc')
     ->orderBy('productos.ProCodi', 'desc')
       ->select(
@@ -109,7 +101,7 @@ class ReporteProductoStock
       return;
     }
 
-    $this->data = ! $this->stockMinimo ? $query : $query->filter(function($producto){
+    $this->data = $query->filter(function($producto){
       return $producto->stock_total <= $producto->stock_minimo;
     });
   }

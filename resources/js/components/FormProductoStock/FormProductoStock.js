@@ -1,24 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FieldProductSearch from '../FormKardexFisico/FieldProductSearch';
 import FieldAlmacenTipoReporte from '../FormKardexFisico/FieldAlmacenTipoReporte';
 import FieldsetForm from '../FieldsetForm';
 import LabelCheckbox from '../LabelCheckBox';
 import CsrfFieldtoken from '../CsrfFieldtoken';
-import SelectsProductCategory from '../FormKardexFisico/SelectsProductCategory';
 import GrupoSelect from '../GrupoSelect';
 import MarcaSelect from '../MarcaSelect';
 
-// import SelectsProductCategory form
-// SelectsProductCategory
-
 const FormProductoStock = () => {
 
+
+  const ele = document.getElementById('root-producto-stock');
+
+  const route = ele.dataset.route;
+  const stockmin = Boolean(Number(ele.dataset.stockmin));
+  
     return (
       <div>
         <form
           className="formReporte"
-          action="/reportes/productos-stock/report"
+          action={route}
           method="post">
           <CsrfFieldtoken></CsrfFieldtoken>
           <FieldsetForm title='Filtrar Productos por Categorias y Marca'>
@@ -38,6 +39,8 @@ const FormProductoStock = () => {
               className='btn btn-primary btn-flat'>Buscar
             </button>
             </div>
+
+            {stockmin && 
             <div className='col-md-6'>
               <LabelCheckbox
                 name="con_stock_minimo"
@@ -47,6 +50,7 @@ const FormProductoStock = () => {
               >
               </LabelCheckbox>
             </div>
+            }
           </FieldsetForm>
 
 
