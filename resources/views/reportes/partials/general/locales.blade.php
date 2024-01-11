@@ -1,6 +1,7 @@
 @php
   $empresa = get_empresa();
   $locales  = $empresa->almacenes;
+  $grupos = $grupos ?? App\Grupo::all();
 @endphp
 
 <!-- Almacen -->
@@ -9,6 +10,7 @@
 		<fieldset class="fsStyle">			
 			<legend class="legendStyle">Grupo - Almacen</legend>
 			<div class="row" id="demo">
+
 		    <div class="col-md-6">
 		      <select type="text" name="grupos" class="form-control input-sm flat text-center">  
 						<option value="todos"> -- TODOS -- </option>						
