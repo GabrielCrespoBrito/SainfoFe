@@ -43,6 +43,8 @@
       </a>
       <ul class="treeview-menu">
         <li><a href="{{ route('reportes.ventas_tipopago.create') }}"><i class="fa fa-circle-o"></i> Tipos Pagos</a></li>
+        <li><a href="{{ route('reportes.ingresos.create') }}"><i class="fa fa-circle-o"></i> Ingresos </a></li>
+        <li><a href="{{ route('reportes.egresos.create') }}"><i class="fa fa-circle-o"></i> Egresos </a></li>
       </ul>
     </li>
 

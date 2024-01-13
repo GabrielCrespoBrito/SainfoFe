@@ -38,6 +38,9 @@ class PermissionSeeder extends Seeder
   const A_CIERRE_MES = "cierre-mes";
   const A_PRODUCTOSTOCK = "productos-stock";
   const A_PRODUCTOSTOCKMINIMO = "productos-stock-min";
+
+  const A_INGRESOS = "productos-stock-min";
+  const A_EGRESOS = "productos-stock-min";
   
   const A_PARAMETRO = "parametros";
 
@@ -401,6 +404,8 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_VENDEDOVENTARPRODUCTO, self::R_REPORTE),
       concat_space(self::A_PRODUCTOSTOCK, self::R_REPORTE),
       concat_space(self::A_PRODUCTOSTOCKMINIMO, self::R_REPORTE),
+      concat_space(self::A_INGRESOS, self::R_REPORTE),
+      concat_space(self::A_EGRESOS, self::R_REPORTE),
       concat_space(self::A_UTILIDADESVENTAS2, self::R_REPORTE),
     ], self::R_REPORTE,  false);
   }

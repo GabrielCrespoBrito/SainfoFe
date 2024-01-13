@@ -304,7 +304,7 @@ class CajaDetalle extends Model
     $data["CueCodi"] = Caja::TIPOCAJA;
     $data["MocNume"] = self::MocNume(Control::OTROS_INGRESOS);
     $data["CajNume"] = $cajNume;
-    $data["MocFech"] = date('Y-m-d');
+    $data["MocFech"] = isset( $data['fecha'] ) ? $data['fecha'] : date('Y-m-d');
     $data["MocFecV"] = NULL;
     $data["TIPMOV"]  = "INGRESO";
     $data["MocNomb"] = $data['nombre'];

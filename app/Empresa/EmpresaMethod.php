@@ -168,5 +168,13 @@ trait EmpresaMethod
     $user_soporte->notify(new NotifyAdminUserSuscripcionPorVencer($this, $userOwner));
   }
 
-
+  public function getTipoMovimientosEgresos()
+  {
+    return [
+      "006" => "Retiro",
+      // "015" => "Transferencia Caja",
+      "020" => "Personal",
+      // "09" => "Transferencia Banco",
+    ];
+  }
 }

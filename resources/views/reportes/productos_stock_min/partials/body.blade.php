@@ -1,3 +1,4 @@
+{{--  --}}
 <div class="div_items" style="width:100%">
   <table class="table_items" id="table_venta" width="100%">
 
