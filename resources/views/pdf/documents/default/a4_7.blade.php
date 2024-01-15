@@ -64,11 +64,13 @@
                         'vendedor' => false,
                     ])
 
+
+    {{-- @dd($placa) --}}
+
                     @include('pdf.documents.partials.info_documento3', [
                         'class_name' =>
                         'col-4 border-width-1 py-x10 px-x10 border-color-gray border-style-solid border-radius-5 min-h-150',
                         'showPagos' => false,
-                        'showPlaca' => $placa ?? false
                     ])
 
                 </div>

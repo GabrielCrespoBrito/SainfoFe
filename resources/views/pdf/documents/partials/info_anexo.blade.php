@@ -5,10 +5,15 @@ $titulo_info_class = $titulo_info_class ?? 'pl-x3';
 @endphp
 
 {{-- Placa --}}
-@if($venta2->hasPlaca())
+@php
+  $placa = $placa ?? false;
+
+@endphp
+
+@if(  $placa || $venta2->hasPlaca() )
 <div class="{{ $class_name }}">
   <span class="{{ $titulo_info_class }}">Placa:</span>
-  <span class="bold pl-x10 pr-x10"> {{ $venta2->getPlaca() }} </span>
+  <span class="bold pl-x10 pr-x10"> {{ $placa ? $placa : $venta2->getPlaca() }} </span>
 </div>
 @endif
 

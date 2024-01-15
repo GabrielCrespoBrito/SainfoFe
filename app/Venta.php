@@ -985,20 +985,25 @@ class Venta extends Model
 
   public function dataPdf($formato = Venta::FORMATO_A4, $get_url_logo_ticket = false, $items = null)
   {
-    $venta = $this->toArray();
 
+    $venta = $this->toArray();
     $isNotaVenta = $this->isNotaVenta();
     $firma = $isNotaVenta ? null : $this->dataQR();
     $cliente = $this->cliente;
+    $items_fake = $items !== null;
     $items = $items ?? $this->items;
     $this->refresh();
 
     $e = $this->empresa;
     $opciones = $e->opcion;
-    $placa = $this->hasPlaca() ? $this->getPlaca() : false;
-    $logo_ticket_url = $get_url_logo_ticket ? $e->getUrlLogoTicket() : null;
+    if( $items_fake ){
+      $placa = $items->first()->getPlaca();
+    }
+    else {
+      $placa = $this->hasPlaca() ? $this->getPlaca() : false;
+    }
 
-    // _dd($placa);
+    $logo_ticket_url = $get_url_logo_ticket ? $e->getUrlLogoTicket() : null;
 
     $empresa =  $e->toArray();
     $empresa['igv_porc'] = $e->opcion->Logigv;
@@ -1187,6 +1192,8 @@ class Venta extends Model
 
     $plantilla  = $this->getPlantilla($formato);
     $data = $this->dataPdf($formato, $impresion_directa, $items);
+
+
     $tempPath = '';
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
     $pdf->generator->setGlobalOptions(PDFGenerator::getSetting($formato, $generator));
@@ -1199,7 +1206,6 @@ class Venta extends Model
     if ($saveTemp) {
       $tempPath = file_build_path('temp', $namePDF);
       $pdf->save($tempPath);
-      // return $tempPath;
     }
 
     return [
