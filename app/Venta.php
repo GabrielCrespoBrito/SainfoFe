@@ -998,6 +998,8 @@ class Venta extends Model
     $placa = $this->hasPlaca() ? $this->getPlaca() : false;
     $logo_ticket_url = $get_url_logo_ticket ? $e->getUrlLogoTicket() : null;
 
+    // _dd($placa);
+
     $empresa =  $e->toArray();
     $empresa['igv_porc'] = $e->opcion->Logigv;
     $logoMarcaAgua = null;

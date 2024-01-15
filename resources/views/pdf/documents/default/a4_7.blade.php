@@ -66,19 +66,12 @@
 
                     @include('pdf.documents.partials.info_documento3', [
                         'class_name' =>
-                            'col-4 border-width-1 py-x10 px-x10 border-color-gray border-style-solid border-radius-5 min-h-150',
+                        'col-4 border-width-1 py-x10 px-x10 border-color-gray border-style-solid border-radius-5 min-h-150',
                         'showPagos' => false,
+                        'showPlaca' => $placa ?? false
                     ])
 
                 </div>
-
-                {{-- @include('pdf.documents.partials.observacion', [ 
-'class_name' => 'col-12',
-'class_name' => 'border-width-1 mb-x4 pl-x2 border-style-solid border-radius-5',
-'nombre_campo_nombre' => 'Observacion:',
-'nombre_campo_class' => 'bold font-size-9',
-'nombre' => isset($venta['VtaObse']) ? $venta['VtaObse'] : '-'
-]) --}}
             @endslot
         @endcomponent
 
@@ -104,7 +97,7 @@
         ])
 
         <p>-</p>
-        {{-- /FOOTER  93DWf5E!9$v9& --}}
+        {{-- /FOOTER  --}}
 
         <div class="row">
 
@@ -159,7 +152,7 @@
                     'titulo_div_class' => 'bold pl-x3 text-uppercase bold pl-x3 mb-x3 ',
                     'tr_titulo_class' => 'bold text-right',
                     'tr_valor_class' => 'text-right',
-                    'textAlign' => 'right'
+                    'textAlign' => 'right',
                 ])
                 {{--  --}}
 

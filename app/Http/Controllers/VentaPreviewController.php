@@ -11,11 +11,6 @@ class VentaPreviewController extends Controller
   public function create(FacturaSaveRequest $request)
   {
     $dataPdf = (new GeneratePrevPDF($request))->handle();
-
-    // unset ($dataPdf['data']);
-    // _dd( $dataPdf );
-    // exit();
-
     $previewPath =  $dataPdf['tempPath'];
     $realPath = file_build_path($previewPath);
     $pathJs = str_replace('\\', '/', $previewPath);

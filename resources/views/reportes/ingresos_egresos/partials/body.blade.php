@@ -15,12 +15,12 @@
             @foreach ($items['items'] as $item)
                 <tr class="tr-body">
                     <td>{{ $item->id }} </td>
-                    <td>{{ $item->nombre }} </td>
+                    <td style="text-align:left">{{ $item->nombre }} </td>
                     <td>{{ $item->fecha }} </td>
                     <td style="text-align:right">{{ fixedValue($item->soles) }} </td>
                     <td style="text-align:right">{{ fixedValue($item->dolares) }} </td>
-                    <td>{{ $item->motivo }} </td>
-                    <td>{{ $item->usuario }} </td>
+                    <td style="text-align:left">  {{ $item->motivo }} </td>
+                    <td style="text-align:left">{{ $item->usuario }} </td>
                 </tr>
             @endforeach
         </tbody>

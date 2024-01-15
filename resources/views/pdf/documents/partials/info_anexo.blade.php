@@ -12,6 +12,7 @@ $titulo_info_class = $titulo_info_class ?? 'pl-x3';
 </div>
 @endif
 
+
 {{-- Documento de Referencia --}}
 @if( $venta2->isNota() )
 <div class="{{ $class_name }}">
@@ -22,6 +23,15 @@ $titulo_info_class = $titulo_info_class ?? 'pl-x3';
   <span class="bold pr-x10">{{ $venta2->VtaFVtaR }}</span>
   <span class="ml-x10"><span class="bold">Motivo:</span>
   <span class="ml-x5">{{ $venta2->VtaObse }}</span>
+</div>
+@endif
+
+
+{{-- Observación --}}
+@if( $venta2->isNota() == false && $venta2->VtaObse  )
+<div class="{{ $class_name }}">
+  <span class="{{ $titulo_info_class }}">Observación:</span>
+  <span class="bold pl-x10 pr-x10"> {{ $venta2->VtaObse }} </span>
 </div>
 @endif
 
