@@ -23,6 +23,8 @@ use App\Util\ExcellGenerator\KardexValorizadoExcell;
 use App\Http\Requests\Kardex\KardexFisicoReporteRequest;
 use App\Util\ExcellGenerator\KardexValorizadoResumenExcell;
 use App\Http\Controllers\Reportes\KardexValorizado\ReporteKardex;
+use App\Models\Produccion\Produccion;
+use App\Producto;
 
 class ReportesController extends Controller
 {
@@ -365,6 +367,9 @@ class ReportesController extends Controller
 
   public function productoMovimientosReporte(KardexFisicoReporteRequest $request)
   {
+    $producto = Producto::find($request->articulo_desde);
+    // _dd($producto);
+    // exit();
     return $this->kardexFisico(
       $request->input('LocCodi', 'todos'),
       $request->fecha_desde,
@@ -380,16 +385,44 @@ class ReportesController extends Controller
    */
   public function kardexFisico($loccodi, $fecha_desde, $fecha_hasta, $articulo_desde, $articulo_hasta)
   {
-    $reporte = new ReporteKardexFisico(
-      $loccodi,
-      $fecha_desde,
-      $fecha_hasta,
-      $articulo_desde,
-      $articulo_hasta,
-    );
+    // _dd( func_get_args() );
+    // exit();
+
+    // $reporte = new ReporteKardexFisico(
+    //   $loccodi,
+    //   $fecha_desde,
+    //   $fecha_hasta,
+    //   $articulo_desde,
+    //   $articulo_hasta,
+    // );
+
+    $dataAttr = [
+      'filterDate' => true,
+      'filterProducto' => true,
+      'LocCodi' => $loccodi,
+      'fecha_inicio' => $fecha_desde,
+      'fecha_fin' => $fecha_hasta,
+      'articulo_desde' => $articulo_desde,
+      'articulo_hasta' => $articulo_hasta,
+      ];
+
+    // $this->request = $data;
+    // $this->localId = $data['LocCodi'] == 'todos' ? null :  $data['LocCodi'];
+    // $this->filterDate = (int) $data['filterDate'];
+    // $this->filterProduct = (int) $data['filterProducto'];
+    // $this->mescodi = $data['MesCodi'] ?? null;
+    // $this->grucodi = $data['GruCodi'] ?? null;
+    // $this->famcodi = $data['FamCodi'] ?? null;
+    // $this->productoIdDesde = $data['articulo_desde'] ?? null;
+    // $this->productoIdHasta = $data['articulo_hasta'] ?? null;
+
+    $reporte = new ReporteKardexFisico2($dataAttr);
+
 
     $data = $reporte->getData();
 
+      // _dd($data);
+      // exit();
 
     $empresa = get_empresa();
     // $data = $request->all();
@@ -403,7 +436,7 @@ class ReportesController extends Controller
       ->almacenes
       ->where('LocCodi', $local_id)
       ->first()
-      ->LocNomb;
+      ->LocNomb;  
 
     if (count($data)) {
 
@@ -415,7 +448,7 @@ class ReportesController extends Controller
         'fecha_hasta' => $fecha_hasta,
         'articulo_desde' => $articulo_desde,
         'articulo_hasta' => $articulo_hasta,
-        'fecha_anterior' => $reporte->fecha_anterior_al_inicio,
+        'fecha_anterior' => $reporte->fechaAnteriorInicio,
         'LocCodi' => $loccodi,
         'data' => $data
       ];

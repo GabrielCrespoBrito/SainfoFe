@@ -34,6 +34,9 @@ class ReporteKardexFisico2
    */
   public function __construct($data)
   {
+    // dd($data);
+    // exit();
+
     $this->request = $data;
     $this->localId = $data['LocCodi'] == 'todos' ? null :  $data['LocCodi'];
     $this->filterDate = (int) $data['filterDate'];
