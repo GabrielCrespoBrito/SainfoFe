@@ -19,6 +19,10 @@ function poner_data_cliente(data) {
     'data-url': url_buscar_cliente_select2,
   });
 
+  console.log(  "cliente" , data )
+
+  $("[name=zona] option[value=" + data.ZonCodi + "] ").prop('selected', true)
+
   $("[name=tipo_documento_c]").val(data.tipo_documento);
   initSelect2("#cliente_documento");
 }
@@ -2699,6 +2703,7 @@ $(document).ready(function (e) {
       total_peso: $("[name=peso_total]").val(),
       total_importe: $("[name=total_importe]").val(),
       vendedor: $("[name=vendedor]").val(),
+      ZonCodi: $("[name=zona]").val(),
 
       /* Detracción */
       hasDetraccion: $("[name=detraccion]").is(':checked'),
@@ -2712,7 +2717,6 @@ $(document).ready(function (e) {
       anticipoDocumento: $("#documento_anticipo").val(),
       anticipoValue: $("[name=VtaTotalAnticipo]").val(),
 
-      vendedor: $("[name=vendedor]").val(),
       nro_pedido: $("[name=nro_pedido]").val(),
       tipo_seleccion_ref: $(".btn-tipo-nota.selected").data('type'),
 
@@ -3152,6 +3156,7 @@ $(document).ready(function (e) {
   function procesarImportacion(data) {
     $("[name=moneda] option[value=" + data.moneda + "]").prop('selected', true);
     $(`[name=vendedor] option[value=${data.vendedor}]`).prop('selected', true);
+    $(`[name=zona] option[value=${data.ZonCodi}]`).prop('selected', true);
     $("[name=nro_pedido]").val(data.nume);
 
     let items = data.items;
@@ -4698,6 +4703,8 @@ $(document).ready(function (e) {
       let tDocCodi = data.params.args.data.data.tipo_documento_c.TdocNomb;
 
       $(".row-cliente-adicional [name=direccion]").val(data.params.args.data.data.PCDire);
+
+      $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
 
       $("[name=tipo_documento_c]").val(tDocCodi);
     });

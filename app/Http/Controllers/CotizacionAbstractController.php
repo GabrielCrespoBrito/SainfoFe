@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Zona;
 use App\Venta;
 use App\Moneda;
 use App\TipoPago;
@@ -183,6 +184,7 @@ class CotizacionAbstractController extends Controller
     $data = [
       'nume' => $nume,
       'vendedor' => $documento->vencodi,
+      'ZonCodi' => $documento->zoncodi,
       'items' => $items,
       'moneda' => $documento->getMoneda(),
       'table' => $documento->table,
@@ -267,7 +269,8 @@ class CotizacionAbstractController extends Controller
       EmpresaOpcion::MODULO_MANEJO_STOCK => $empresa->getDataAditional(EmpresaOpcion::MODULO_MANEJO_STOCK),
       'locales' => auth()->user()->locales->load('local'),
       'tipo_movimientos' => TipoMovimiento::activos(),
-      "vendedores"  => Vendedor::where('EmpCodi', empcodi())->get(),
+      "vendedores"  => Vendedor::all(),
+      "zonas"  => Zona::all(),
       "tipos_documentos" => SerieDocumento::ultimaSerie(),
       "forma_pagos" => FormaPago::all(),
       'decimales_dolares' => $decimales->dolares,

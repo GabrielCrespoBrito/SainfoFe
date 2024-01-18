@@ -2,12 +2,13 @@
 
 namespace App\Models\Compra\Method;
 
+use App\Zona;
 use App\Compra;
 use App\Moneda;
-use App\CajaDetalle;
 use App\Cotizacion;
-use App\Models\MedioPago\MedioPago;
+use App\CajaDetalle;
 use App\TipoDocumentoPago;
+use App\Models\MedioPago\MedioPago;
 
 trait CompraMethod
 {
@@ -368,6 +369,7 @@ trait CompraMethod
     $data['CpaImpo'] = $totales->total_cobrado;
     $data['IGVImpo']  = get_option('Logigv');
     $data['IGVEsta']  = $data['IGVEsta'] ?? 0;
+    $data['zoncodi']  = $data['zona'] ?? Zona::DEFAULT_ZONA;
     $data['CpaSald'] = $totales->total_cobrado;
     $data['Cpatota'] = $totales->total_cobrado;
     $data['CpaPago'] = 0;
@@ -383,6 +385,7 @@ trait CompraMethod
     $data['Cpabase'] = $totales->valor_venta_por_item_igv;
     $data['CpaIGVV'] = $totales->igv;
     $data['IGVEsta']  = $data['IGVEsta'] ?? 0;
+    $data['zoncodi']  = $data['zona'] ?? Zona::DEFAULT_ZONA;
     $data['CpaImpo'] = $totales->total_cobrado;
     $data['IGVImpo'] = get_option('Logigv');
     $data['CpaSald'] = $totales->total_cobrado;
@@ -465,5 +468,11 @@ trait CompraMethod
   {
     return $this->IGVEsta == Compra::INCLUYE_IGV; 
   }
+
+  public function getZona()
+  {
+    return optional(Zona::find($this->zoncodi));
+  }
+
 
 }	

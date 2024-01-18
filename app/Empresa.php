@@ -850,6 +850,11 @@ class Empresa extends Model
     return $this->hasMany(Vendedor::class, 'empcodi', 'empcodi');
   }
 
+  public function zonas()
+  {
+    return Zona::all();
+  }
+
   public function formas_pagos()
   {
     return $this->hasMany(FormaPago::class, 'empcodi', 'empcodi');

@@ -16,7 +16,6 @@
 @add_assets(['libs' => [ 'datatable' , 'select2'] , 'js' => ['helpers.js' , 'clientes/scripts.js']  ]) 
 @endadd_assets
 
-
 @push('js')
 
 

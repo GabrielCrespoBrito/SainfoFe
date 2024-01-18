@@ -623,7 +623,7 @@ class Venta extends Model
     $venta->PCCodi  = $request->cliente_documento;
     $venta->ConCodi = $request->forma_pago;
     $venta->TpgCodi = $request->medio_pago;
-    $venta->ZonCodi = "0100";
+    $venta->ZonCodi = $request->input('ZonCodi', Zona::DEFAULT_ZONA);
     $venta->MonCodi = $request->moneda;
     $venta->Vencodi = $request->vendedor;
     $venta->DocRefe = $request->doc_ref;

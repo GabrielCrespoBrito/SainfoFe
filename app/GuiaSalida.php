@@ -424,6 +424,7 @@ class GuiaSalida extends Model
     $cerradaAbierto = self::PENDIENTE;
     $peso_total = 0;
     $guiaUni = null;
+    $zoncodi = Zona::DEFAULT_ZONA;
     $usucodi = auth()->user()->usucodi;
 
     # Crear la guia a partir de una venta
@@ -440,6 +441,7 @@ class GuiaSalida extends Model
       $doc_ref = $vta->getCompleteCorrelativo();
       $usucodi = $vta->UsuCodi;
       $tipcodi = $vta->TipCodi;
+      $zoncodi = $vta->ZonCodi;
       $vtaoper = $vta->VtaOper;
       $vencodi = $vta->Vencodi;
       $cantidad = $vta->Vtacant;
@@ -513,7 +515,7 @@ class GuiaSalida extends Model
     $guia->GuiEsta = $estado;
     $guia->PCCodi  = $is_venta ? $vta->PCCodi : $cliente->PCCodi;
     $guia->DCodi   = $guia->PCCodi;
-    $guia->zoncodi  = "0100";
+    $guia->zoncodi  = $zoncodi;
     $guia->vencodi = $vencodi;
     $guia->Loccodi = $id_almacen;
     $guia->TidCodi1 = $tipoDoc;

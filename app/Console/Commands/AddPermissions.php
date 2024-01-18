@@ -91,7 +91,7 @@ class AddPermissions extends Command
       // 
       DB::connection()->commit();
     } catch (\Throwable $th) {
-      throw new Exception("Error Processing Request", 1);
+      throw new Exception("Error Processing Request " . $th->getMessage(), 1);
       // noti()->error('Error', $th->getMessage());
       DB::connection()->rollBack();
       return back();

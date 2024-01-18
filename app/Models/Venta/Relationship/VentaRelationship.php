@@ -2,12 +2,14 @@
 
 namespace App\Models\Venta\Relationship;
 
+use App\Zona;
+use App\Venta;
 use App\Cotizacion;
 use App\Detraccion;
-use App\Models\Contingencia\ContingenciaDetalle;
-use App\ModuloMonitoreo\StatusCode\StatusCode;
 use App\VentaCanje;
 use App\VentaCredito;
+use App\ModuloMonitoreo\StatusCode\StatusCode;
+use App\Models\Contingencia\ContingenciaDetalle;
 
 trait VentaRelationship
 {
@@ -51,8 +53,18 @@ trait VentaRelationship
 		return $this->hasMany( VentaCredito::class, 'VtaOper', 'VtaOper ');
 	}
 
+  public function zona()
+  {
+    return $this->belongsTo(Zona::class, 'ZonCodi', 'ZonCodi ');
+  }
+
+  public function getZona()
+  {
+    return optional(Zona::find($this->ZonCodi));
+  }
+
 	public function getCreditos()
-	{
+	{ 
 		return VentaCredito::where('VtaOper', $this->VtaOper)->get();
 	}
 

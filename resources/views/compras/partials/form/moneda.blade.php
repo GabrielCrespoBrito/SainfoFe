@@ -70,14 +70,14 @@
 </div>
 
 <div class="row">  
-  <div class="form-group col-md-5">  
+  <div class="form-group col-md-3">  
     <div class="input-group">
       <span class="input-group-addon">Doc Ref</span>
     <input name="Docrefe" class="form-control input-sm" {{ setInputState($show) }} value="{{ $compra->Docrefe }}" type="text">
     </div>
   </div>
 
-  <div class="form-group col-md-5">  
+  <div class="form-group col-md-4">  
     <div class="input-group">
       <span class="input-group-addon">Observacion</span>
     <input 
@@ -87,6 +87,24 @@
       type="text">   
     </div>
   </div>  
+  
+{{--  Zona --}}
+    <div class="form-group col-md-3">  
+      <div class="input-group">
+        <span class="input-group-addon">Zona </span>
+        @if( $active_form)
+        <select name="zona" data-namedb="zona" class="form-control input-sm">
+          @foreach( $zonas as $zona )
+          <option {{ return_strs_if( $zona->ZonCodi == $compra->zoncodi , 'selected=selected' )   }}  value="{{ $zona->ZonCodi }}">{{ $zona->ZonNomb }}</option>
+
+          @endforeach
+        </select>
+        @else
+        <input name="zona" readonly="readonly" class="form-control input-sm" value="{{ $compra->getZona()->ZonNomb }}">        
+        @endif
+      </div>
+    </div>
+{{--  Zona --}}
   
   <div class="form-group col-md-2">  
     <div class="input-group">

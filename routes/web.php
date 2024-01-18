@@ -173,6 +173,9 @@ Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
         
         # cajas
         include('routes_web/cajas.php');
+
+        # cajas
+        include('routes_web/zonas.php');
         
         include('routes_web/banco.php');
         

@@ -306,6 +306,7 @@ class VentasController extends Controller
       $data["tipos_documentos"] = SerieDocumento::getSeriesVentas(getTrueIsEmpresaNCHabit());
       $data["tipo_cambio"] = TipoCambioPrincipal::ultimo_cambio(false);
       $data["vendedores"] = $empresa->vendedores;
+      $data["zonas"] = $empresa->zonas();
       $data["forma_pagos"] = $empresa->formas_pagos->load('dias');
       $data["cliente_default"] = ClienteProveedor::clienteDefault();
       $data["tipo_documento_defecto"] = get_option('CcoCodi');

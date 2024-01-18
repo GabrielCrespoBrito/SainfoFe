@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Zona;
 use App\Moneda;
 use App\Traits\InteractWhatApp;
 use Illuminate\Support\Facades\DB;
@@ -252,7 +253,7 @@ class Cotizacion extends Model
     $c->CotFVen = $data['fecha_vencimiento'];
     $c->PcCodi  = $data['cliente_documento'];
     $c->ConCodi = $data["forma_pago"];
-    $c->zoncodi = "0100";
+    $c->zoncodi = $data["ZonCodi"] ?? Zona::DEFAULT_ZONA;
     $c->moncodi = $data["moneda"];
     $c->vencodi = $data["vendedor"];
     $c->DocRefe = $data["doc_ref"];
@@ -772,4 +773,10 @@ class Cotizacion extends Model
   {
     (new SetFacturado($this, $vtaoper))->handle();
   }
+
+  public function getZona()
+  {
+    return optional(Zona::find($this->zoncodi));
+  }
+
 }

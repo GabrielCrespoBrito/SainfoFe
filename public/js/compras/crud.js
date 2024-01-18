@@ -647,6 +647,12 @@ function open_modal_cliente() {
 
 H.add_events(function () {
 
+
+  $('#cliente_documento').on('select2:selecting', function (data) {
+    $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
+  });
+
+
   $(".aceptar_importacion").on('click', makeImport)
 
   $("[name=incluye_igv]").on('change', inputChangeIncluirIgv )

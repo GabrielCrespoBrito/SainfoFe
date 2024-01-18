@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Compra;
+use App\Zona;
 use App\Compra;
 use App\EmpresaOpcion;
+use App\SettingSystem;
 use App\TipoCambioPrincipal;
 use App\Models\MedioPago\MedioPago;
 use App\Repositories\MedioPagoRepository;
-use App\SettingSystem;
 
 trait CompraTrait 
 {
@@ -81,6 +82,7 @@ trait CompraTrait
       'igvOptions' => SettingSystem::getIgvOpciones(),
       'vendedores' => $empresa->vendedores,
       'forma_pagos' => $empresa->formas_pagos,
+      'zonas' => Zona::all(),
       'medios_pagos'        => $mprepository->all()->where('uso', MedioPago::ESTADO_USO),
       'cursor_pointer_producto' => get_option(EmpresaOpcion::CAMPO_CURSOR_PRODUCTO),
       'tipo_cambio' =>  TipoCambioPrincipal::ultimo_cambio(false),

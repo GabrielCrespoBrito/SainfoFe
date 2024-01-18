@@ -26,7 +26,7 @@
 
 <div class="row {{ $create ?  'hide' : '' }} " data-target="general">  
 
-    <div class="form-group col-md-3">  
+    <div class="form-group col-md-2">  
       <div class="input-group">
         <span class="input-group-addon">Tipo cambio </span>
         <input name="tipo_cambio" disabled class="form-control input-sm text-center" value="{{ $create ? $tipo_cambio : $venta->VtaTcam }}" type="text">              
@@ -34,7 +34,7 @@
     </div>
 
 
-    <div class="form-group col-md-3">  
+    <div class="form-group col-md-2">  
       <div class="input-group">
         <span class="input-group-addon">Vendedor </span>
         @if($create)
@@ -48,6 +48,24 @@
         @endif
       </div>
     </div>
+
+
+{{--  Zona --}}
+    <div class="form-group col-md-2">  
+      <div class="input-group">
+        <span class="input-group-addon">Zona </span>
+        @if($create)
+        <select name="zona" data-namedb="zona" class="form-control input-sm">
+          @foreach( $zonas as $zona )
+          <option value="{{ $zona->ZonCodi }}">{{ $zona->ZonNomb }}</option>
+          @endforeach
+        </select>
+        @else
+        <input name="zona" readonly="readonly" class="form-control input-sm" value="{{ $venta->getZona()->ZonNomb }}">        
+        @endif
+      </div>
+    </div>
+{{--  Zona --}}
 
   <div class="form-group col-md-2">  
     <div class="input-group">

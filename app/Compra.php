@@ -65,6 +65,7 @@ class Compra extends Model
     "Cpabase",
     "CpaIGVV",
     "CpaImpo",
+    "zoncodi",
     'CpaPago',
     "CpaSald",
     "Cpatota",
@@ -104,7 +105,6 @@ class Compra extends Model
       $compra->AlmEsta = "Pe";
       $compra->TipCodi = "111201";
       $compra->CpaEOpe = "P";
-      $compra->zoncodi = "0100";
       $compra->CpaNume = $compra->CpaSerie . '-' . $compra->CpaNumee;
     });
     

@@ -74,14 +74,32 @@
   </div>
 
   <div class="row">  
-    <div class="form-group col-md-6">  
+    <div class="form-group col-md-5">  
       <div class="input-group">
         <span class="input-group-addon">Contacto</span>
         <input name="contacto" required="required" class="form-control input-sm" value="{{ $create ? '' : $cotizacion->Cotcont }}" type="text">
       </div>
     </div>
 
-    <div class="form-group col-md-6">  
+{{--  Zona --}}
+    <div class="form-group col-md-3">  
+      <div class="input-group">
+        <span class="input-group-addon">Zona </span>
+        @if( $create || $modify)
+        <select name="zona" data-namedb="zona" class="form-control input-sm">
+          @foreach( $zonas as $zona )
+          <option {{ return_strs_if( $zona->ZonCodi == optional($cotizacion ?? null)->zoncodi , 'selected=selected' )   }}  value="{{ $zona->ZonCodi }}">{{ $zona->ZonNomb }}</option>
+          @endforeach
+        </select>
+        @else
+        <input name="zona" readonly="readonly" class="form-control input-sm" value="{{ $cotizacion->getZona()->ZonNomb }}">        
+        @endif
+      </div>
+    </div>
+{{--  Zona --}}
+
+
+    <div class="form-group col-md-4">  
       <div class="input-group">
         <span class="input-group-addon">Doc Referencia</span>
           <input name="doc_ref" class="form-control input-sm"  value="{{ $create ? '' : $cotizacion->Docrefe }}" type="text">

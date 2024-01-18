@@ -113,6 +113,7 @@ class PermissionSeeder extends Seeder
   const R_LOCAL = "locales";
   const R_FORMAPAGO = "locales";
   const R_VENDEDOR = "vendedores";
+  const R_ZONA = "vendedores";
   const R_EMPRESATRANSPORTE = "empresa-transporte";
   const R_TRANSPORTISTA = "transportista";
   const R_UTILITARIO = "utilitarios";
@@ -196,6 +197,7 @@ class PermissionSeeder extends Seeder
     $this->setCuentasPermisos();
     $this->setLocalPermisos();
     $this->setVendedoresPermisos();
+    $this->setZonasPermisos();
     $this->setFormaPagoPermisos();
     $this->setEmpresaTransportePermisos();
     $this->setTransportistasPermisos();
@@ -525,6 +527,16 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_EDIT, self::R_VENDEDOR),
       concat_space(self::A_DELETE, self::R_VENDEDOR),
     ], self::R_VENDEDOR,  false);
+  }
+
+  public function setZonasPermisos()
+  {
+    $this->setDatas([
+      concat_space(self::A_INDEX, self::R_ZONA),
+      concat_space(self::A_CREATE, self::R_ZONA),
+      concat_space(self::A_EDIT, self::R_ZONA),
+      concat_space(self::A_DELETE, self::R_ZONA),
+    ], self::R_ZONA,  false);
   }
 
   public function setCajaPermisos()

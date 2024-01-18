@@ -34,6 +34,7 @@ return [
   PermissionSeeder::R_CUENTA => 'Cuentas',
   PermissionSeeder::R_FORMAPAGO => 'Forma de Pago',
   PermissionSeeder::R_VENDEDOR => 'Vendedores',
+  PermissionSeeder::R_ZONA => 'Zonas',
   PermissionSeeder::R_EMPRESATRANSPORTE => 'Empresas de Transporte',
   PermissionSeeder::R_TRANSPORTISTA => 'Transportistas',
   

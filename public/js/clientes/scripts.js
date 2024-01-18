@@ -401,7 +401,8 @@
     poner_data_form( "email" , data.PCMail );    
     poner_data_form( "contacto" , data.PCCont );    
 
-    poner_data_form( "vendedor" , data.VenCodi );    
+    poner_data_form("vendedor", data.VenCodi);
+    poner_data_form("ZonCodi", data.ZonCodi);    
     poner_data_form( "moneda" , data.MonCodi );    
     poner_data_form( "lista_precio" , data.LisCodi );    
     poner_data_form( "linea_credito" , data.PCLinea );    
@@ -530,6 +531,9 @@
 
         $("[name=tipo_documento_c]").val(tipodocumento);
         let text = data.PCRucc + " - " +  data.PCNomb;        
+
+        $("[name=zona] option[value=" + data.ZonCodi + "] ").prop('selected', true)
+
         $cliente_documento.select2('destroy');
         $cliente_documento.attr('data-id', data.PCCodi );
         $cliente_documento.attr('data-text', text );

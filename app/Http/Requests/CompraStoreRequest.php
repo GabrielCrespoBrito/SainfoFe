@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Zona;
 use App\Compra;
 use App\Moneda;
 use App\Producto;
@@ -59,6 +60,7 @@ class CompraStoreRequest extends FormRequest
 			'moncodi'  => 'required|in:01,02',
 			'CpaTCam'  => 'required|numeric|min:0.1',
 			'concodi'  => 'required',
+      'zona'  => 'required',
       'TpgCodi'  => 'required|exists:tipo_pago,TpgCodi',
 			'Docrefe'  => 'max:20',
 			'Cpaobse'  => 'max:100',
@@ -138,7 +140,9 @@ class CompraStoreRequest extends FormRequest
         'importe',
         'El importe total no puede ser igual a 0'
       );
+      return;
     }
+
 
     $calculator = new CalculatorTotal( $this->totales_items );
     $calculator->calculateTotales();
@@ -152,22 +156,20 @@ class CompraStoreRequest extends FormRequest
 
 	public function withValidator($validator)
 	{
-		if( !$validator->fails() ){
-
-	    $validator->after(function ($validator){
+    if( !$validator->fails() ){
+      
+      $validator->after(function ($validator){
+        
         if($this->route()->getName() == "compras.update" ){
-
+          
           $compra = Compra::find( $this->route()->parameters()['id'] );
 
           if ( $compra->GuiOper ) {
             $validator->errors()->add('cliente_documento', 'No se puede modificar compra que ya tiene guia asociada');
+            return;
           }
-          return;
         }
         
-        // _dd("hola" , $this->route()->getName() );
-        // exit();
-
 
 				$cliente = ClienteProveedor::findByTipo( $this->PCcodi , 'P' );
 
@@ -181,11 +183,18 @@ class CompraStoreRequest extends FormRequest
 	        $validator->errors()->add('forma_pago','Esta forma de pago no existe');
 	      }
 
+        // Validar Zona
+        $zona = Zona::find($this->zona);
+        if (is_null($zona)) {
+          $validator->errors()->add('zona', 'Este zona no existe');
+        }
+
 	      # Validar Vendedor
 	      $vendedor = Vendedor::find($this->VenCodi);
 	      if( is_null($vendedor) ){
 	        $validator->errors()->add('vendedor','Este vendedor no existe');
 				}
+
 				
 	      # Validar items
 	      $items = collect($this->items);

@@ -15,6 +15,7 @@ use App\ClienteProveedor;
 use App\CondicionVenta;
 use App\Empresa;
 use App\Local;
+use App\Zona;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 class saveDefaultInfo
@@ -57,6 +58,9 @@ class saveDefaultInfo
     Marca::createDefault($empcodi);
     # Moneda
     Moneda::createDefault($empcodi);
+    # Zona
+    Zona::createDefault();
+
     # Lista de precio
     $lista_precio = ListaPrecio::createDefault($empcodi);
     # Producto

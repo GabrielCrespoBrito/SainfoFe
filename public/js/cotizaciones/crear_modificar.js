@@ -1747,6 +1747,7 @@ $(document).ready(function (e) {
       total_peso: $("[name=peso_total]").val(),
       total_importe: $("[name=total_importe]").val(),
       vendedor: $("[name=vendedor]").val(),
+      ZonCodi: $("[name=zona] option:selected").val(),
       nro_pedido: $("[name=nro_pedido]").val(),
       doc_ref: $("[name=doc_ref]").val(),
       tipo_guardado: $("[name=tipo_guardado]:checked").val(),
@@ -2343,8 +2344,8 @@ $(document).ready(function (e) {
 
     $('#cliente_documento').on('select2:selecting', function (data) {
       let contacto = data.params.args.data.data.PCCont;
-      console.log("data del cliente", data);
       console.log(data.params.args.data.data.tipo_documento_c.TdocNomb)
+      $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
 
       $("[name=tipo_documento_c]").val(data.params.args.data.data.tipo_documento_c.TdocNomb);
       $("[name=contacto]").val(contacto);

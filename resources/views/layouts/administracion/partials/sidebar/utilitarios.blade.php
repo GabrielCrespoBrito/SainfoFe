@@ -17,6 +17,12 @@
         <a target="_blank" href="{{ route('locales.index') }}"><i class="fa fa-circle-o"></i> Locales </a>
       </li>
 
+
+      <li>
+        <a target="_blank" href="{{ route('zonas.index') }}"><i class="fa fa-circle-o"></i> Zonas </a>
+      </li>
+
+
       <li>
         <a target="_blank" href="{{ route('formas-pago.index') }}"><i class="fa fa-circle-o"></i> Forma de Pagos </a>
       </li>

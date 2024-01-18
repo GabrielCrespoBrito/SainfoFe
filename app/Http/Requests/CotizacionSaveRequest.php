@@ -2,14 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Zona;
 use App\Venta;
 use App\Moneda;
 use App\Producto;
 use App\Vendedor;
 use App\FormaPago;
+use App\Cotizacion;
 use App\SerieDocumento;
 use App\ClienteProveedor;
-use App\Cotizacion;
 use App\TipoDocumentoPago;
 use App\TipoCambioPrincipal;
 use App\Models\Venta\Traits\Calculator;
@@ -63,6 +64,7 @@ class CotizacionSaveRequest extends FormRequest
 
       // 'forma_pago' => 'required|exists:condicion,conCodi',
       'vendedor' => 'required',
+      'ZonCodi' => 'required',
       'nro_pedido' => '',
       'fecha_emision' => 'required|date',
       'fecha_vencimiento' => 'required|after_or_equal:' . $this->fecha_emision,
@@ -221,6 +223,12 @@ class CotizacionSaveRequest extends FormRequest
         $forma_pago = FormaPago::find($this->forma_pago);
         if (is_null($forma_pago)) {
           $validator->errors()->add('forma_pago', 'Esta forma de pago no existe ');
+        }
+
+        // Validar Vendedor
+        $zona = Zona::find($this->ZonCodi);
+        if (is_null($zona)) {
+          $validator->errors()->add('ZonCodi', 'Esta zona no existe');
         }
 
         // Validar Vendedor

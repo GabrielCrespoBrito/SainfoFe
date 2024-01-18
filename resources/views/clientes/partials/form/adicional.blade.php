@@ -8,7 +8,7 @@
 
      <div class="row">
 
-        <div class="form-group col-md-12">          
+        <div class="form-group col-md-8">          
 
           <label> Vendedor </label>
           <select name="vendedor" class="form-control">
@@ -23,7 +23,25 @@
           </select>
 
         </div> 
-                
+
+        {{-- Zona --}}
+        <div class="form-group col-md-4">          
+
+          <label> Zona </label>
+          <select name="ZonCodi" class="form-control">
+
+              @php
+              $zonas = isset($zonas) ? $zonas : get_empresa()->zonas();
+              @endphp
+
+            @foreach( $zonas  as $zona )
+              <option value="{{ $zona->ZonCodi }}"> {{ $zona->ZonNomb }}</option>
+            @endforeach
+          </select>
+
+        </div> 
+        {{-- Zona --}}
+
       </div>
     
 

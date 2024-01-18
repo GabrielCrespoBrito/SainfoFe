@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\M;
+use App\Zona;
 use Exception;
 use App\Moneda;
 use App\Vendedor;
@@ -19,7 +21,6 @@ use App\Util\ConsultDocument\ConsultRucInterface;
 use App\Http\Requests\ClienteProveedorCrearRequest;
 use App\Http\Requests\ClienteProveedorEditarRequest;
 use App\Http\Requests\ClienteProveedorEliminarRequest;
-use App\M;
 
 class ClienteProveedorController extends Controller
 {
@@ -63,6 +64,8 @@ class ClienteProveedorController extends Controller
     $this->authorize(p_name('A_CREATE', 'R_CLIENTE'));
 
     $data = $request->all();
+    // _dd( $data );
+    // exit();
     $clienteProveedor = new ClienteProveedor;
     $clienteProveedor->EmpCodi = session()->get('empresa');
     $clienteProveedor->TipCodi = $data['tipo_cliente'];
@@ -78,7 +81,7 @@ class ClienteProveedorController extends Controller
     $clienteProveedor->PCCont  = $data['contacto'];
     $clienteProveedor->PCCMail = null;
     $clienteProveedor->VenCodi = $data['vendedor'];
-    $clienteProveedor->ZonCodi = "0100";
+    $clienteProveedor->ZonCodi = $data['ZonCodi'] ?? Zona::DEFAULT_ZONA;
     $clienteProveedor->TdoCodi = $data['tipo_documento'];
     $clienteProveedor->MonCodi = isset($data['moneda']) ? $data['moneda'] : '01';
     $clienteProveedor->PCAfPe = 0;
@@ -125,6 +128,7 @@ class ClienteProveedorController extends Controller
     $cliente_proveedor->MonCodi = $data['moneda'];
     $cliente_proveedor->LisCodi = $data['lista_precio'];
     $cliente_proveedor->PCAfPe = $data['af_pe'];
+    $cliente_proveedor->ZonCodi = $data['ZonCodi'] ?? Zona::DEFAULT_ZONA;
     $cliente_proveedor->PCANom = $data['nombre_avalista'];
     $cliente_proveedor->PCARuc = $data['ruc_avalista'];
     $cliente_proveedor->PCADir = $data['direccion_avalista'];
@@ -329,7 +333,7 @@ class ClienteProveedorController extends Controller
     $clienteProveedor->PCRucc  = $documento;
     $clienteProveedor->PCDire  = $direccion;
     $clienteProveedor->PCDist  = $ubigeo;
-    $clienteProveedor->ZonCodi = "0100";
+    $clienteProveedor->ZonCodi = Zona::DEFAULT_ZONA;
     $clienteProveedor->TdoCodi = $tipo_documento;
     $clienteProveedor->MonCodi = '01';
     $clienteProveedor->LisCodi = "10";

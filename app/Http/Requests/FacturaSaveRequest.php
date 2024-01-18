@@ -20,6 +20,7 @@ use App\Models\Venta\Traits\Calculator;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Venta\Traits\CalculatorTotal;
 use App\ModuloMonitoreo\StatusCode\StatusCode;
+use App\Zona;
 
 class FacturaSaveRequest extends FormRequest
 {
@@ -81,6 +82,7 @@ class FacturaSaveRequest extends FormRequest
       'forma_pago'        => 'required',
       'medio_pago'        => 'required|exists:tipo_pago,TpgCodi',
       'vendedor'          => 'required',
+      'ZonCodi'          => 'required',
       'observacion'          => 'nullable|sometimes|max:100',
       'descuento_global'   => 'required|numeric|min:0|max:100',
       'nro_pedido'        => 'nullable|sometimes|max:100',
@@ -619,6 +621,12 @@ class FacturaSaveRequest extends FormRequest
         $vendedor = Vendedor::find($this->vendedor);
         if (is_null($vendedor)) {
           $validator->errors()->add('vendedor', 'Este vendedor no existe');
+        }
+
+        // Validar Zona
+        $zona = Zona::find($this->ZonCodi);
+        if (is_null($zona)) {
+          $validator->errors()->add('ZonCodi', 'Este zona no existe');
         }
 
         $countGlobalCargo = 0;

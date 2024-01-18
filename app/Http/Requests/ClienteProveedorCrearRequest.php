@@ -26,8 +26,9 @@ class ClienteProveedorCrearRequest extends FormRequest
 			'razon_social'   => 'required|max:100',            
 			'ubigeo' 		 => 'nullable|sometimes',
 			'telefono_1' => 'nullable|numeric',
-			'email'      => 'nullable|email',            
-			'vendedor'   => 'required',
+			'email'      => 'nullable|email',
+      'vendedor'   => 'required',
+      'ZonCodi'   => 'required',
 			'moneda'     => 'nullable|exists:moneda,moncodi',
 			'lista_precio' => 'required',
 		];
