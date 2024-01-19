@@ -108,6 +108,8 @@ return [
   PermissionSeeder::A_MEJORESCLIENTES => 'Mejores Clientes',
   PermissionSeeder::A_VENTASANUAL => 'Ventas Anual',
   PermissionSeeder::A_UTILIDADESVENTAS2 => 'Utilidades Ventas-2',
+  PermissionSeeder::A_VENDEDORZONA => 'Vendedor Zona',
+  
   PermissionSeeder::A_RECURSO => 'Recursos', 
   PermissionSeeder::A_MOVIMIENTOS => 'Movimientos', 
   PermissionSeeder::A_CREATE_MOVIMIENTOS => 'Registrar Movimientos Ingreso/Egreso',

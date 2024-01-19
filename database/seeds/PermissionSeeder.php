@@ -74,6 +74,8 @@ class PermissionSeeder extends Seeder
   
   // -------------------------------------------------------
   const A_UTILIDADESVENTAS2 = "utilidades-ventas-2";
+  const A_VENDEDORZONA = "vendedor-zona";
+  
   const A_REPORTE_COMPRA_VENTA = "reporte-compra-venta";
   const A_REPORTE = "reporte";
   const A_REPORTE_INGRESO_EGRESO = 'reporte-movimientos';
@@ -409,6 +411,9 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_INGRESOS, self::R_REPORTE),
       concat_space(self::A_EGRESOS, self::R_REPORTE),
       concat_space(self::A_UTILIDADESVENTAS2, self::R_REPORTE),
+      concat_space(self::A_VENDEDORZONA, self::R_REPORTE),
+
+      
     ], self::R_REPORTE,  false);
   }
 

@@ -23,11 +23,19 @@ use App\Util\NumeroALetras\NumeroALetras;
 use App\Http\Controllers\Util\Xml\dos_cero\XmlCreator;
 use App\Http\Controllers\Util\Xml\dos_cero\XmlCreatorNC;
 use App\Http\Controllers\Util\Xml\dos_cero\XmlCreatorND;
+use App\TipoDocumento;
 
 function math()
 {
   return new MathHelper();
 }
+
+
+function nombreDocumentoCliente($tipo)
+{
+  return TipoDocumento::getNombreReporte($tipo);
+}
+
 
 function xmlHelper()
 {
@@ -1293,6 +1301,8 @@ if (!function_exists('get_date_info'))
     ];
   }
 }
+
+
 
 if (!function_exists('xmlToArray')) 
 {

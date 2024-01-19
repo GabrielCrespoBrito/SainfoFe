@@ -152,6 +152,13 @@ Route::prefix('reportes')->group(function () {
   Route::post('vendedor-ventas-prodcutos/report-render', 'Reportes\VendedorVentaProductoReportController@reportRender')->name('reportes.vendedor_venta_productos.report_render');
 
 
+  # Reportes de vendedor-zona
+
+  Route::get('cliente-vendedor-zona', 'Reportes\VendedorZonaReportController@create')->name('reportes.vendedor_cliente.create');
+  
+  Route::post('cliente-vendedor-zona/report',    'Reportes\VendedorZonaReportController@report')->name('reportes.vendedor_cliente.report');
+
+
   # Reportes de Ganancias
   Route::get('utilidades', 'Reportes\UtilidadesController@create')->name('reportes.utilidades.create');
   Route::post('utilidades', 'Reportes\UtilidadesController@show')->name('reportes.utilidades.show');
