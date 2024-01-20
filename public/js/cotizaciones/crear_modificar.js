@@ -2346,6 +2346,7 @@ $(document).ready(function (e) {
       let contacto = data.params.args.data.data.PCCont;
       console.log(data.params.args.data.data.tipo_documento_c.TdocNomb)
       $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
+      $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
 
       $("[name=tipo_documento_c]").val(data.params.args.data.data.tipo_documento_c.TdocNomb);
       $("[name=contacto]").val(contacto);

@@ -533,6 +533,7 @@
         let text = data.PCRucc + " - " +  data.PCNomb;        
 
         $("[name=zona] option[value=" + data.ZonCodi + "] ").prop('selected', true)
+        $("[name=vendedor] option[value=" + data.VenCodi + "] ").prop('selected', true)
 
         $cliente_documento.select2('destroy');
         $cliente_documento.attr('data-id', data.PCCodi );

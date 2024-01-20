@@ -19,9 +19,8 @@ function poner_data_cliente(data) {
     'data-url': url_buscar_cliente_select2,
   });
 
-  console.log(  "cliente" , data )
-
   $("[name=zona] option[value=" + data.ZonCodi + "] ").prop('selected', true)
+  $("[name=vendedor] option[value=" + data.VenCodi + "] ").prop('selected', true)
 
   $("[name=tipo_documento_c]").val(data.tipo_documento);
   initSelect2("#cliente_documento");
@@ -4705,6 +4704,7 @@ $(document).ready(function (e) {
       $(".row-cliente-adicional [name=direccion]").val(data.params.args.data.data.PCDire);
 
       $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
+      $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
 
       $("[name=tipo_documento_c]").val(tDocCodi);
     });
