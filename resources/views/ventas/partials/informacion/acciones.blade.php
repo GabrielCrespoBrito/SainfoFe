@@ -8,7 +8,7 @@
       </div>
 
       <div class="col-md-12">
-        <a href="#" target="_blank" data-text="{{ $venta->getMessageLink() }}" class="btn btn-xs btn-default btn-block send-whatapp"> <span style="color: #45c554;" class="fa fa-whatsapp"></span> Enviar WhatApp </a>  
+        <a href="#" target="_blank" data-url="{{  route('compartir-doc', $venta->VtaOper ) }}" data-text="{{ $venta->getMessageLink() }}" class="btn btn-xs btn-default btn-block send-whatapp"> <span style="color: #45c554;" class="fa fa-whatsapp"></span> Enviar WhatApp </a>  
       </div>
     
       <div class="col-md-12 pb-x10 div-number-whatapp" style="display:none">

@@ -10,7 +10,7 @@
     }
   @endphp
 
-  <a target="_blank" href="{{  $route }}" class="btn btn-xs btn-default"> {{ $docNume }} </a>
+  <a target="_blank" href="{{ $route }}" class="btn btn-xs btn-default"> {{ $docNume }} </a>
 @else 
   -
 @endif

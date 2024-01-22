@@ -670,6 +670,7 @@ class VentasController extends Controller
     $venta = Venta::findOrfail($id);
     return view('ventas.partials.informacion.informacion', [
       'venta' => $venta,
+      'cliente' => $venta->cliente,
       'formato' => get_empresa()->fe_formato
     ]);
   }

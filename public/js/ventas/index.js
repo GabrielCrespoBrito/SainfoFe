@@ -586,12 +586,14 @@ function init() {
 
   $("#modalData").on('click', '.send-whatapp', function (e) {
 
+    e.preventDefault();
+
     if (!validateNumberWhatApp()) {
-      e.preventDefault();
       return false;
     }
-
-    $(this).attr('href', getEnlaceWhatApp());
+    
+    compartir();
+    return false;
   });
 
 
@@ -628,10 +630,20 @@ function init() {
     return url.toString();
   }
 
+  function compartir ()
+  {
+    const url = $(".send-whatapp").attr('data-url');
+    ajaxs({}, url, {
+      success: () => {
+        window.open(getEnlaceWhatApp(), '_blank');
+      }
+    })
+  }
+
   $("#modalData").on('keyup', '.div-number-whatapp input', function (e) {
     if (e.keyCode == 13) {
       if (validateNumberWhatApp()) {
-        window.open(getEnlaceWhatApp(), '_blank');
+        compartir();
       }
     }
   });

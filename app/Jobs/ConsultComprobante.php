@@ -8,6 +8,7 @@ use App\PDFPlantilla;
 use App\TipoDocumentoPago;
 use App\Rules\RucValidation;
 use App\Util\PDFGenerator\PDFGenerator;
+use App\VentaCompartida;
 
 class ConsultComprobante
 {
@@ -77,6 +78,18 @@ class ConsultComprobante
       return $this->setError("Numero de Documento Incorrecto");
     }
 
+    if(
+      $tidcodi == TipoDocumentoPago::FACTURA ||
+      $tidcodi == TipoDocumentoPago::BOLETA ||
+      $tidcodi == TipoDocumentoPago::NOTA_CREDITO ||
+      $tidcodi == TipoDocumentoPago::NOTA_DEBITO ){
+
+        if(VentaCompartida::isCompartido($ruc, $tidcodi, $serie, $numero) == false){
+        return $this->setError("No Existe el Documento");
+
+        }
+      }
+
     $this->data = (object) [
       'ruc' => $ruc,
       'tidcodi' => $tidcodi,
@@ -116,7 +129,8 @@ class ConsultComprobante
     $data = $this->data;
 
     // Si el Documento que no es proforma, preventa u orden_de_pago. No hay nada que hacer
-    if(($data->tidcodi == TipoDocumentoPago::PROFORMA ||
+    if((
+      $data->tidcodi   == TipoDocumentoPago::PROFORMA ||
       $data->tidcodi   == TipoDocumentoPago::PREVENTA ||
       $data->tidcodi   == TipoDocumentoPago::ORDEN_PAGO) == false
     ) {

@@ -25,7 +25,7 @@ Route::get('logout', function(){
   return redirect()->route('login');
 });
 
-Route::get( 'pdfv/{token?}/{documento?}', "Documento\ConsultComprobanteApi@consult")->name('consultaComprobante.api');
+Route::get('pdfv/{token?}/{documento?}', "Documento\ConsultComprobanteApi@consult")->name('consultaComprobante.api');
 
 Route::get('/consult-documento/{ruc}/{isRuc?}', "Documento\DocumentoApiConsultController@consult")->name('busquedaDocumentos.api');
 
@@ -61,7 +61,10 @@ Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
   ->name('consulta_ruc')
   ->middleware('cors');
 
-  // Route::post('consult-ruc', 'ClienteProveedor\ConsultDocumentController@consultRUC')->name('clientes.consult_ruc');
+  // Consultar ruc de la empresa
+  Route::post('compartir-doc/{doc?}', "Documento\ConsultComprobanteApi@compartir")
+  ->name('compartir-doc');
+
 
   // Verificar clave sol y guardar la información de la empresa
   Route::get('/verificarSol', "UsersController@showFormSol")->name('usuario.verificar_empresa')
