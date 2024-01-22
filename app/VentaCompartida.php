@@ -24,7 +24,7 @@ class VentaCompartida extends Model
 
 
     if ( ($venta->VtaPDF && $fileHelper->pdfExist($venta->nameFile('.pdf'))) == false ) {
-      
+
       $pdfResult = $venta->generatePDF(PDFPlantilla::FORMATO_A4, true, true);
     }
 
@@ -42,7 +42,7 @@ class VentaCompartida extends Model
     return self::where('ruc', $ruc)
     ->where('serie', $serie)
     ->where('tidcodi', $tidcodi)
-    ->where('numero', $numero)
+    ->where('documento', $numero)
     ->count();
   }  
 
