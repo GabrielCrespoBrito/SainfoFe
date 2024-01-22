@@ -650,6 +650,7 @@ H.add_events(function () {
 
   $('#cliente_documento').on('select2:selecting', function (data) {
     $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
+    $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
   });
 
 
