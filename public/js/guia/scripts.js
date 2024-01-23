@@ -849,6 +849,12 @@ function poner_data_producto(data) {
     .focus();
 
   set_precio();
+
+  let localId = Number($(".informacion_empresa-local option:selected").attr('data-id'));
+
+  let stock = current_product_data.producto['prosto' + localId];
+  $("[name=producto_stock]").val(stock);
+  console.log({ localId, current_product_data, stock })
 }
 
 function tipodocumento_selected(data) {
