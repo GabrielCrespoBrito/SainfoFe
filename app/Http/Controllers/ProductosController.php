@@ -89,7 +89,9 @@ class ProductosController extends Controller
 
 
     if ($campo == "codigo") {
-      $busqueda->where('ProCodi', 'LIKE', $term . '%');
+      $busqueda
+      ->where('ProCodi', 'LIKE', $term . '%')
+      ->orderBy('ProCodi', 'asc');
     } elseif ($campo == "codigo_barra") {
       $busqueda->where('ProCodi1', 'LIKE', $term . '%');
     } elseif ($campo == "nombre") {
