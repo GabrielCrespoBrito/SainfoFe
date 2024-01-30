@@ -606,7 +606,6 @@ class Venta extends Model
     $venta->TidCodi = $request->tipo_documento;
     $venta->VtaSeri = $request->serie_documento;
 
-
     if ($save) {
       $correlativo = SerieDocumento::lastNume($request->serie_documento, $loccodi, $empcodi, $request->tipo_documento);
       $nume = $request->serie_documento . "-" . $correlativo;

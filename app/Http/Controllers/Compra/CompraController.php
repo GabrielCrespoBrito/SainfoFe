@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Compra;
 
+use App\Caja;
 use App\Compra;
 use App\PDFPlantilla;
 use Illuminate\Http\Request;
@@ -16,6 +17,8 @@ use App\Http\Requests\CompraStoreRequest;
 
 class CompraController extends Controller
 {
+  public $compra;
+
   use
     CompraReporte,
     CompraTrait;
@@ -55,6 +58,12 @@ class CompraController extends Controller
   public function create()
   {
     $this->authorize(p_name('A_CREATE', 'R_COMPRA'));
+
+    if(Caja::cajaAperturada(null, get_empresa()->isTipoCajaLocal())->count() == 0){
+      notificacion('Caja sin aperturar', 'Es necesario aperturar la caja', 'error');
+      return redirect()->route('cajas.index');
+    }
+
 
     $data = $this->getDataForm("create");
     return view('compras.create', $data);

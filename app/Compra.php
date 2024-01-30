@@ -101,7 +101,9 @@ class Compra extends Model
       $compra->AjuNeto = 0;
       $compra->AjuIGVV = 0;
       $compra->CpaEsta = 0;
-      $compra->CajNume = Caja::currentCaja()->CajNume;
+      // $venta->CajNume  = $save ? $user->caja_aperturada_new(true,  $loccodi) : null;
+      // $compra->CajNume = Caja::currentCaja()->CajNume;
+      $compra->CajNume = $user->caja_aperturada_new(true, $compra->LocCodi );
       $compra->AlmEsta = "Pe";
       $compra->TipCodi = "111201";
       $compra->CpaEOpe = "P";

@@ -236,19 +236,17 @@ class Caja extends Model
   public static function cajaAperturada( $loccodi = null, $onlyLocal = false )
   {
     $loccodi = $loccodi ?? optional(user_()->localCurrent())->loccodi;
-
-
+    
+    
     $conditions = [
       'LocCodi'  => $loccodi,
       'CajEsta'  => 'Ap',
       'CueCodi'  => self::TIPOCAJA
     ];
-    
     if( !$onlyLocal ) {
       $conditions['UsuCodi'] = user_()->usucodi;
     }
-
-
+    
     return self::where($conditions);        
   }
 

@@ -10,7 +10,6 @@ class CajaMiddleware
   public function handle($request, Closure $next)
   { 
     if( ! Caja::hasAperturada(null, get_empresa()->isTipoCajaLocal() ) ){
-
       notificacion('Caja sin aperturar' , 'Es necesario aperturar la caja'  , 'error' );
       return redirect()->route('cajas.index');
     }
