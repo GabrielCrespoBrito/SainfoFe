@@ -167,8 +167,11 @@ trait ProductoMethod
 			$ultimo_costo = $this->isSol() ? $this->ProPUCS : $this->ProPUCD;
 		}
 
-		$this->update([
-      'ProUltC' => $ultimo_costo
+    //
+    $igv = get_igv();
+
+    $this->update([
+      'ProUltC' => $this->incluye_igv ? math()->porcAndSum($igv, $ultimo_costo) : $ultimo_costo
 		]);
 
 	}

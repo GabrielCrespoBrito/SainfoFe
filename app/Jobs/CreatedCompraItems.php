@@ -46,6 +46,7 @@ class CreatedCompraItems
 
       $abreviatura = optional($unidad)->UniAbre;
       $marca_nombre = optional(Marca::find($data['producto']['marcodi']))->MarNomb;
+      
       $data['DetUnid'] = $abreviatura;
       $data['CpaOper'] = $this->compra->CpaOper;
       $data['MarNomb'] = $marca_nombre;
