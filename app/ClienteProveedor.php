@@ -35,6 +35,8 @@ class ClienteProveedor extends Model
 		'UDelete',
 		'PCDocu',
 		'PCTel1',
+    'ZonCodi',
+    'VenCodi',
 		'EmpCodi'
 	];
 

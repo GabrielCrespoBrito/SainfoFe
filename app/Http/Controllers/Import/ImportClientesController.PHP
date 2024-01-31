@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use App\Http\Controllers\Traits\ImportExcel;
+use App\Util\Import\Excell\ImportExcellClientes;
+use App\Util\Import\Excell\ImportExcellProducts;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class ImportClientesController extends ImportController
@@ -59,6 +61,26 @@ class ImportClientesController extends ImportController
       'errors' => $errors],
       $code
     );
+  }
 
+
+  public function storeCustom(Request $request)
+  {
+    ini_set('memory_limit', '850M');
+    ini_set('max_execution_time', '300');
+
+    $request->validate(
+      ['excel' => 'required|mimes:xlsx|max:1024'],
+      ['excel.required'  => 'Tiene que subir un archivo excel']
+    );
+
+    $importer = new ImportExcellClientes($request->file('excel'));
+    $result = $importer
+      ->handle()
+      ->getResult();
+
+    $message = $result->success ? 'Importación Exitosa' : 'Error en la importaciòn';
+    $code = $result->success ? 200 : 400;
+    return response()->json(['message' => $message, 'errors' => $result->errors], $code);
   }
 }

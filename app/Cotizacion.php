@@ -690,6 +690,8 @@ class Cotizacion extends Model
     $this->refresh();    
     $empresa = get_empresa();
     $plantilla  = $this->getPlantilla($formato);
+    // _dd( $plantilla , $formato);
+    // exit();
     $data = $this->dataPdf($formato, $mostrar_igv);
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
     $namePDF = $this->nameFile('.pdf', true);
