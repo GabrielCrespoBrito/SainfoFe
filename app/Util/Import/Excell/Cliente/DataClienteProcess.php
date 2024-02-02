@@ -19,14 +19,16 @@ const HEADERS = [
   ];
 
   protected $zonas;
+  protected $user;
   protected $dataProcess;
   protected $dataOriginal;
   protected $currentIdClienteTipoCliente;
   protected $currentIdClienteTipoProveedor;
 
   public function __construct($zonas)
-  { 
+  {
     $this->zonas = $zonas;
+    $this->user = auth()->user()->usulogi;
 
     $this->currentIdClienteTipoCliente = (int) ClienteProveedor::ultimoCodigo(ClienteProveedor::TIPO_CLIENTE);
     $this->currentIdClienteTipoProveedor = (int) ClienteProveedor::ultimoCodigo(ClienteProveedor::TIPO_PROVEEDOR);
@@ -97,6 +99,10 @@ const HEADERS = [
     $this->dataProcess[$this->getHeaderName('ubigeo')] = $this->getUbigeo();
     $this->dataProcess[$this->getHeaderName('zona')] = $this->getValueFromOriginal('zona');
     $this->dataProcess[$this->getHeaderName('cvend')] = $this->getValueFromOriginal('cvend');
+    $this->dataProcess["User_FCrea"] = date('Y-m-d H:i:s');
+    $this->dataProcess["User_FModi"] = date('Y-m-d H:i:s');
+    $this->dataProcess["User_ECrea"] = gethostname();
+    $this->dataProcess["UDelete"] =  "";
 
   }
 
