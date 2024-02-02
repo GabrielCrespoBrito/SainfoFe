@@ -30,7 +30,7 @@ class ImportClientesController extends ImportController
    * @param  \Illu minate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store_(Request $request)
   {
     
     ini_set('memory_limit', '450M');
@@ -64,7 +64,7 @@ class ImportClientesController extends ImportController
   }
 
 
-  public function storeCustom(Request $request)
+  public function store(Request $request)
   {
     ini_set('memory_limit', '850M');
     ini_set('max_execution_time', '300');

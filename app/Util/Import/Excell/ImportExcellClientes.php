@@ -5,10 +5,9 @@ namespace App\Util\Import\Excell;
 use Exception;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Util\Import\Excell\Producto\ResultTrait;
-use App\Util\Import\Excell\Producto\StoreProducts;
+use App\Util\Import\Excell\Cliente\StoreClientes;
 use Maatwebsite\Excel\Collections\SheetCollection;
-use App\Util\Import\Excell\Producto\ValidateProducto;
-
+use App\Util\Import\Excell\Cliente\ValidateCliente;
 
 class ImportExcellClientes
 {
@@ -17,7 +16,7 @@ class ImportExcellClientes
   /**
    * Data del Excell
    *  
-   * */  
+   * */
   protected $data;
 
 
@@ -30,12 +29,15 @@ class ImportExcellClientes
 
   public function setData($excell)
   {
-    $this->data = Excel::load($excell->getRealPath())->get();
+    $excell = Excel::load($excell->getRealPath())->get();
+    $this->data = $excell instanceof SheetCollection ? $excell->first() : $excell;
+
+    // Excel::load($excell->getRealPath())->get();
   }
 
   public function validate()
   {
-    $validator = new ValidateProducto($this->data);
+    $validator = new ValidateCliente($this->data);
     $result = $validator
     ->handle()
     ->getResult();    
@@ -49,7 +51,7 @@ class ImportExcellClientes
 
   public function store()
   {
-    $result = (new StoreProducts($this->data))
+    $result = (new StoreClientes($this->data))
     ->handle()
     ->getResult();
 
@@ -61,8 +63,10 @@ class ImportExcellClientes
     return true;
   }
 
+
   public function handle()
-  {  
+  {
+
     if( $this->validate() == false ){
       return $this;
     }

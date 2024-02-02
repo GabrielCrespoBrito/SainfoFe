@@ -20,6 +20,11 @@ class DniValidation implements Rule
         $this->searchOnline = $searchOnline;
     }
 
+    public function setMessages($message)
+    {
+        $this->message = $message;
+    }
+
     /**
      * Validar si es un ruc valido
      *
@@ -52,6 +57,8 @@ class DniValidation implements Rule
      */
     public function passes($attribute, $value)
     {
+      $this->setMessages( sprintf("El dni %s suministrado no es valido", $value));
+
         $isValid = $this->validate($value);
 
         if ($this->searchOnline && $isValid) {
