@@ -24,15 +24,18 @@
   'class_name' => 'col-45',
   'nombre_text_class' => 'h3 bold c-3077119',
   'nombre' => $empresa['EmpNomb'],
-  'direccion_div_class' => 'h4 mb-x8 bold c-3c8dbc',
-  'correo_text_class' => 'bold',
+  'direccion_div_class' => 'h4 mb-x8',
+  'correo_text_class' => '',
   'telefonos_text_class' => 'bold',
   'telefonos_div_class' => 'h4 mb-x8',
   'telefonos_campo_nombre' => 'Celular: ',
   'correo_campo_nombre' => 'Correos: ',
+  'correo_campo_class' => 'bold',
   'correo_div_class' => 'h4 mt-x8',
-  'telefonos' => $telefonos,
-  'direccion' => $direccion
+  'telefonos' => null,
+  'direccion' => $direccion,
+  'direccion_campo_class' => 'bold',
+  'direccion_text_class' => 'regular',
   ])
 
   @include('pdf.documents.partials.id', [
@@ -98,7 +101,7 @@ $classFooter = '';
 'class_name' => 'col-12 border-style-solid border-width-1 ' . $footerBreak ? '' : 'container-table-height' ,
 'class_name_table' => 'col-md-12 col-10 border-style-solid border-width-1',
 'thead_class' => 'font-size-9 bg-cccccc pl-x3 c-black border-right-style-solid c-black border-bottom-style-solid border-width-1 pt-x2 pb-x2',
-'tbody_class' => 'pt-x2 pb-x2 pt-x2 pb-x2 pl-x3 pb-x2 border-bottom-width-1 border-bottom-color-gray border-bottom-style-dotted border-right-style-solid border-width-1 font-size-8',
+'tbody_class' => 'pt-x2 pb-x2 pt-x2 pb-x2 pl-x3 pb-x2 border-bottom-width-1 border-bottom-color-gray-light border-bottom-style-dotted border-right-style-solid border-width-1 font-size-8',
 'class_precio_unit' => 'text-right pr-x3 border-right-style-solid border-width-1',
 'class_importe' => 'text-right pr-x3 ',
 'class_cant' => 'text-right pl-x1 pr-x8 pr-x3 border-right-style-solid border-width-1',

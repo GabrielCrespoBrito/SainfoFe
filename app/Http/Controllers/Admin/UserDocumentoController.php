@@ -27,11 +27,12 @@ class UserDocumentoController extends Controller
       $busqueda = $busqueda->where( 'loccodi' , $loccodi );
     }
     
-    
     if ( $usucodi = $request->input('user_id') ) {
       session()->put('usucodi', $request->input('user_id'));
       $busqueda = $busqueda->where('usucodi', $usucodi);
     }
+
+    $busqueda->orderBy('TidCodi', 'asc');
 
     return DataTables::of($busqueda)
     ->addColumn('acciones', 'admin.usuarios_documentos.partials.column_accion')

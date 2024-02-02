@@ -1986,19 +1986,31 @@ class Empresa extends Model
       return $local->LocDire;
     }
 
-    return $this->getDirecciones();
+    return $this->getDirecciones( $local->concatTlf() );
   }
 
-  public function getDirecciones()
+  public function getDirecciones( $contact_tlf = false )
   {
+    // _dd( $contact_tlf );
+    // exit(); 
 
-    $direcciones = $this->locales->pluck('LocDire', 'LocNomb');
+    // $direcciones = $this->locales->pluck('LocDire', 'LocNomb');
+    $direcciones = $this->locales;
     $direcciones_html = "";
     $first = true;
     $dir_count = $direcciones->count();
 
-    foreach ($direcciones as $localNombre => $direccion) {
+    // foreach ($direcciones as $localNombre => $direccion) {
+    foreach ($direcciones as $local) {
       // 
+      $localNombre = $local->LocNomb;
+      $direccion = $local->LocDire;
+
+      if($contact_tlf){
+        // $direccion = sprintf('%s %s', $direccion, $telefono);
+        $direccion = sprintf('%s %s', $direccion, $local->LocTele);
+      }
+
       if ($first) {
         $direcciones_html = $dir_count == 1 ?
           sprintf('%s', $direccion) :

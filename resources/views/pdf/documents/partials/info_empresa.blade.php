@@ -21,7 +21,9 @@ $direccion_campo_class = $direccion_campo_class ?? '';
 $direccion_text_class = $direccion_text_class ?? '';
 
 // Telefonos
-$telefonos = $telefonos ?? "";
+if(isset($telefonos)){
+  $telefonos = $telefonos ?? "";
+}
 $telefonos_div_class = $telefonos_div_class ?? '';
 $telefonos_campo_nombre = $telefonos_campo_nombre ?? '';
 $telefonos_campo_class = $telefonos_campo_class ?? '';
@@ -70,9 +72,6 @@ $ruc_text_class = $ruc_text_class ?? '';
   {{-- /Rubro --}}
 
 
-
-
-
   {{-- Direcciòn  --}}
   <div class="direccion_div_class {{ $direccion_div_class }}">
 
@@ -97,6 +96,7 @@ $ruc_text_class = $ruc_text_class ?? '';
 
 
   {{-- Telefonos  --}}
+  @if($telefonos)
   <div class="telefonos_div_class {{ $telefonos_div_class }}">
 
     @if($telefonos_campo_nombre)
@@ -108,6 +108,7 @@ $ruc_text_class = $ruc_text_class ?? '';
     <span class="telefonos_text {{ $telefonos_text_class }}"> {{ $telefonos }} </span>
 
   </div>
+  @endif
   {{-- /Telefonos --}}
 
   {{-- Emails  --}}

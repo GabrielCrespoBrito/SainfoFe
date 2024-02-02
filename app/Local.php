@@ -129,6 +129,11 @@ class Local extends Model
     return $this->hasMany( SerieDocumento::class, 'loccodi', 'LocCodi' );
   }
 
+  public function concatTlf()
+  {
+    // return true;
+    return $this->Empcodi == "118";
+  }
 
 
   public function getResumenCode()

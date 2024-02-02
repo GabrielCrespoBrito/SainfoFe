@@ -2697,6 +2697,9 @@ border-bottom-
 color: gray;
 }
 
+.border-bottom-color-gray-light {
+  border-bottom-color: #d7d7d7;
+}
 
 border-color-blue-light.border-bottom-color-gray {
 border-bottom-
