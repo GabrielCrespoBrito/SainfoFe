@@ -131,7 +131,6 @@ class Local extends Model
 
   public function concatTlf()
   {
-    // return true;
     return $this->Empcodi == "118";
   }
 

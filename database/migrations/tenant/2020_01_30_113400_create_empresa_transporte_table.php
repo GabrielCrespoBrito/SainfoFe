@@ -19,6 +19,7 @@ class CreateEmpresaTransporteTable extends Migration
             $table->string('EmpRucc')->nullable();
             $table->string('mtc')->nullable(); 
             $table->string('empresa_id')->default("001");
+            $table->tinyInteger('UDelete')->default("0");
             $table->primary(['EmpCodi'], 'primary_full' );
 
         });

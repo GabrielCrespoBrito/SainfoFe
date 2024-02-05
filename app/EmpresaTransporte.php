@@ -24,8 +24,9 @@ class EmpresaTransporte extends Model
 	protected static function boot()
   {
     parent::boot();
-    static::addGlobalScope('empresa', function ($query) {
-      return $query->where( 'empresa_id' , empcodi() );
+
+    static::addGlobalScope('delete', function ($query) {
+      return $query->where( 'UDelete' , "0" );
 		});
 
 		static::creating(function($model){
