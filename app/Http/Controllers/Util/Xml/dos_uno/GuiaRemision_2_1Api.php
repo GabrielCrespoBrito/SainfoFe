@@ -208,14 +208,30 @@ class GuiaRemision_2_1Api extends XmlHelperNew
     // ["modalidad_transporte", $this->documento->mod_traslado],
   }
 
+  public function getMotivoTransporteOtros()
+  {
+    // Hasta ahora solo se necesita para establecimientos de la misma empresa
+    if ($this->documento->motcodi == MotivoTraslado::OTROS) {
+      return $this->change_datas([
+        ["instrucciones", 'INSTRUCCIONES DE TRASLADO OTROS'],
+      ], $this->motivoTrasladoOtros, false);
+    }
+
+    return '';
+  }
+  
+
   public function getShlipmentPart()
   {
+    // cbc:HandlingInstructions
     $ubigeo_partida = $this->documento->guidisp;
     $ubigeo_llegada = $this->documento->guidisll;
     // 
     $this->change_datas([
       // -----------------------------------------------------------
       ["motivo_traslado_codigo", $this->getMotivoTransporte()],
+      ["motivo_traslado_otros", $this->getMotivoTransporteOtros()],
+      
       ["modalidad_transporte", $this->getModalidadTransporte() ],
       // -----------------------------------------------------------
       ["unidad", $this->documento->DetUnid],

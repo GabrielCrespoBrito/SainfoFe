@@ -123,11 +123,14 @@ trait PartsGuiaXMLApi
 
   public $proveedorData_XMLPART = '';
 
+  public $motivoTrasladoOtros = '<cbc:HandlingInstructions>[instrucciones]</cbc:HandlingInstructions>';
+
   public $shipment_XMLPART =
   '
   <cac:Shipment>
     <cbc:ID>1</cbc:ID>
-    [motivo_traslado_codigo]    
+    [motivo_traslado_codigo]
+    [motivo_traslado_otros] 
     <cbc:GrossWeightMeasure unitCode="KGM">[peso]</cbc:GrossWeightMeasure>
     <cac:ShipmentStage>
       <cbc:ID>1</cbc:ID>
@@ -163,6 +166,7 @@ trait PartsGuiaXMLApi
 
   public $motivoTransporte_base = "<cbc:HandlingCode>[motivo_traslado_codigo]</cbc:HandlingCode> ";
 
+  // /DespatchAdvice/cac:Shipment/cbc:HandlingInstructions
   public $modalidadTransporte_base = "<cbc:TransportModeCode>[modalidad_transporte]</cbc:TransportModeCode>";
 
   public $constanciaInscripcion_base =
