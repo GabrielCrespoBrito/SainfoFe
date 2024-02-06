@@ -105,11 +105,15 @@ trait PartsGuiaXMLApi
 
   ##### INFORMACIÓN DEL PROVEEDOR CCUANDO ES UNA GUI DE COMPRA #####
 
+  // /DespatchAdvice/cac:SellerSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID
   public $proveedorData_base =
   '
    <cac:SellerSupplierParty>
     <cbc:CustomerAssignedAccountID schemeID="[tipo_documento_proveedor]">[ruc_proveedor]</cbc:CustomerAssignedAccountID>
     <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="[tipo_documento_proveedor]">[ruc_proveedor]</cbc:ID>
+      </cac:PartyIdentification>
       <cac:PartyLegalEntity>
         <cbc:RegistrationName><![CDATA[[nombre_proveedor]]]></cbc:RegistrationName>
       </cac:PartyLegalEntity>
