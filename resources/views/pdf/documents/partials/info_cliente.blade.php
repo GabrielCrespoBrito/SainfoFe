@@ -94,7 +94,7 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
   {{-- Observacion  --}}
   @if($observacion)
   <div class="direccion_div_class">
-    <span class="direccion_campo_class"> OBSERVACION</span>
+    <span class="direccion_campo_class bold"> OBSERVACION:</span>
     <span class="direccion_text"> {{ $observacion }} </span>
   </div>
   @endif
