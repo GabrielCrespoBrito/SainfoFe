@@ -80,7 +80,9 @@
 
 
                 </div>
-                {{-- 
+
+
+{{-- 
 @include('pdf.documents.partials.observacion', [
 'class_name' => 'mb-x4 pl-x2 border-color-blue-light border-style-solid border-width-1 border-top-0',
 'nombre_campo_nombre' => 'Observacion:',
@@ -126,6 +128,12 @@
             <div class="bold"> SON: {{ $cifra_letra }}</div>
         </div>
 
+
+        @if($observacion)
+        <div class="col-10 border-style-solid border-radius-5 pl-x10 border-width-1 border-color-gray py-x5 mt-x10">
+            <div><span class="bold"> OBSERVACIÓN:</span>  {{ $observacion }}</div>
+        </div>
+        @endif
 
         <div class="col-10 my-x10">
 
