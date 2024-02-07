@@ -3,7 +3,11 @@
   'title'  => 'Listas de Precios',
   'titulo_pagina'  => 'Listas de Precios', 
   'bread'  => [ ['Listas de precios',  route('listaprecio.index') ] ],
+  'assets' => ['js' => ['helpers.js']]
 ])
+
+
+{{-- @include('partials.errores') --}}
 
 @slot('contenido')
 

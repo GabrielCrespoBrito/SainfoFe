@@ -221,7 +221,7 @@ class GuiaSalida extends Model
   public function nameEnvio($ext = ".zip")
   {
     // return $this->empresa->ruc() . "-09-" . $this->nameDocumento() . $ext;
-    return sprintf('%s-%s-%s%s', $this->empresa->ruc(), $this->getTipoDocumento(), $this->nameDocumento() , $ext );
+    return sprintf('%s-%s-%s%s', $this->empresa->ruc(), $this->getTipoDocumento(), $this->nameDocumento(), $ext);
   }
 
   public function namePDF($ruc = null)
@@ -842,7 +842,7 @@ class GuiaSalida extends Model
     $this->isCompra() ?
       optional($this->compra)->resetProductEnviados() :
       optional($this->venta)->updateEnvio();
-    
+
     $this->cancel(true);
     $this->delete();
   }
@@ -1440,7 +1440,35 @@ class GuiaSalida extends Model
       ->withDefault()
       ->where('EmpCodi', $this->EmpCodi)
       ->where('TipCodi', $this->TippCodi);
+  }
+
+  public function getExportData()
+  {
+    if( $this->isTipoExport() ){
+      $docExport =  explode('-', $this->docrefe);
+      return (object) [
+        'tipo_export' => $docExport[0],
+        'serie_doc_num' => $docExport[1],
+        'export_doc_num' => $docExport[2],
+      ];
+    }
+
+    return (object) [
+      'tipo_export' => null,
+      'serie_doc_num' => null,
+      'export_doc_num' => null,
+    ];
 
   }
+
+  public function isTipoExport()
+  {
+    return $this->mod_traslado == MotivoTraslado::IMPORTACION ||
+    $this->mod_traslado == MotivoTraslado::EXPORTACION;
+  }
+
+  // $tipo_export = $guia->getTipoExport();
+  // $serie_doc_num = $guia->getSerieDocExport();
+  // $export_doc_num = $guia->getDocNumExport();
 
 }

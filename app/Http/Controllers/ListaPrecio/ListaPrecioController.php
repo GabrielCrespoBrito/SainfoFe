@@ -81,22 +81,22 @@ class ListaPrecioController extends Controller
     $empresa = get_empresa();
 
     $listaprecio = ListaPrecio::find($id);
-    // dd($listaprecio);
+    
+    
     $unilista = $empresa->unidades->where('LisCodi', $id)->count();
-
+    
     if ($unilista) {
-      notificacion('No se puede eliminar', "Hay unidades de productos que estan usando esta lista", "error");
-      return redirect()->back();
+      noti()->error('No se puede eliminar', "Hay unidades de productos que estan usando esta lista");
+      return redirect()->route('listaprecio.index');
     } else {
       if ($empresa->listas->count() == 1) {
-        notificacion('No se puede eliminar', "No puede quedarse sin listas", "error");
-        return redirect()->back();
+        noti()->error('No se puede eliminar', "No puede quedarse sin listas");
+        return redirect()->route('listaprecio.index');
       }
     }
 
     $listaprecio->delete();
-
-    notificacion('Borrado exitoso', "Se ha eliminado satisfactoriamente la lista");
+    noti()->success('Borrado exitoso', "Se ha eliminado satisfactoriamente la lista");
     return redirect()->route('listaprecio.index');
   }
 

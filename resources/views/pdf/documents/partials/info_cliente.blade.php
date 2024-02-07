@@ -16,15 +16,12 @@ $direccion_campo_nombre = $direccion_campo_nombre ?? '';
 $direccion_campo_class = $direccion_campo_class ?? '';
 $direccion_text_class = $direccion_text_class ?? '';
 
-// Correo
-$documento = $documento ?? "";
+// Observación
+$observacion = $observacion ?? observacion
+
 $documento_div_class = $documento_div_class ?? '';
-$documento_campo_nombre = $documento_campo_nombre ?? '';
-$documento_campo_class = $documento_campo_class ?? '';
 $documento_text_class = $documento_text_class ?? '';
 
-
-// Contacto
 $contacto = $contacto ?? "";
 $contacto_div_class = $contacto_div_class ?? '';
 $contacto_campo_nombre = $contacto_campo_nombre ?? '';
@@ -91,6 +88,16 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
     <span class="direccion_text {{ $direccion_text_class }}"> {!! $direccion !!} </span>
 
   </div>
+  {{-- /Direcciòn --}}
+
+
+  {{-- Observacion  --}}
+  @if($observacion)
+  <div class="direccion_div_class">
+    <span class="direccion_campo_class"> OBSERVACION</span>
+    <span class="direccion_text"> {{ $observacion }} </span>
+  </div>
+  @endif
   {{-- /Direcciòn --}}
 
 

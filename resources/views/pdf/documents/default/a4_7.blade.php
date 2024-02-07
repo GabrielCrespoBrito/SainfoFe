@@ -50,8 +50,7 @@
                 <div class="row mb-x10" style="margin-top:5px; margin-bottom: 10px">
 
                     @include('pdf.documents.partials.info_cliente', [
-                        'class_name' =>
-                            'col-6 border-width-1 py-x10 px-x10 border-color-gray border-style-solid border-radius-5  min-h-150',
+                        'class_name' => 'col-6 border-width-1 py-x10 px-x10 border-color-gray border-style-solid border-radius-5  min-h-150',
                         'nombre_campo_nombre' => 'DENOMINACIÓN:',
                         'nombre_campo_class' => 'bold ',
                         'nombre' => $cliente->PCNomb,
@@ -62,6 +61,7 @@
                         'direccion_campo_class' => 'bold ',
                         'direccion' => $cliente->PCDire,
                         'vendedor' => false,
+                        'observacion' => $venta2->VtaObse,
                     ])
 
 

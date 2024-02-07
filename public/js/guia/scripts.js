@@ -2431,12 +2431,14 @@ function poner_codigo_documento() {
  * Cambiar motivo de despacho
  */
 function changeMotivo() {
+
   let $motivo = $("[name=motivo_traslado]");
   let $old_option = $motivo.data('old_option');
   let $current_option = $motivo.find('option:selected');
   // Invertir
   $motivo.data('old_option', $current_option);
 
+  console.log( $old_option, $current_option )
 
   // Si se de un tipo diferente revizar
   if ($old_option.attr('data-type') !== $current_option.attr('data-type')) {
@@ -2490,11 +2492,14 @@ function changeMotivo() {
 
     $('#ubigeo_partida').trigger('change');
     $('#ubigeo').trigger('change');
-
   }
 
+  // console.log({ $current_option })
+
+  $current_option.val() == "08" || $current_option.val() == "09" ? $(".campos-export").show() : $(".campos-export").hide();
+
   // Cambiar al valor actual
-  $motivo.data('old_option', $current_option);
+  $motivo.data('old_option', $current_option.val()  );
 }
 
 function mostrarModalTraslado() {
