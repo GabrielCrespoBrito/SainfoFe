@@ -17,7 +17,7 @@ $direccion_campo_class = $direccion_campo_class ?? '';
 $direccion_text_class = $direccion_text_class ?? '';
 
 // Observación
-$observacion = $observacion ?? observacion
+$observacion = $observacion ?? null;
 
 $documento_div_class = $documento_div_class ?? '';
 $documento_text_class = $documento_text_class ?? '';
