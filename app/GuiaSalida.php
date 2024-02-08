@@ -1506,7 +1506,7 @@ class GuiaSalida extends Model
 
     return (object) [
       'id' => $this->venta->VtaNume ,
-      'tipo' =>  $this->documento->venta->TidCodi,
+      'tipo' =>  $this->venta->TidCodi,
     ];
 
 
