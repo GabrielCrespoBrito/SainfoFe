@@ -98,9 +98,21 @@
                                 </div>
                             </div>
 
+{{--  Motivo Traslado --}}
+
+          <div class="form-group col-md-12">  
+            <div class="input-group">
+              <span class="input-group-addon">Modalida de Traslado</span>
+                <select class="form-control input-sm" name="modalidad_traslado">
+                  <option  value="01" {{ $mod_traslado ==  "01" ? 'selected=selected' : ''}}> Transporte Publico </option>
+                  <option  value="02" {{ $mod_traslado ==  "02" ? 'selected=selected' : ''}}> Transporte Privado </option>
+              </select>
+            </div>
+          </div>
+          
+{{--  --}}
                             {{--  --}}
                             @php
-                                //
                                 $exportData = $guia->getExportData();
                             @endphp
 

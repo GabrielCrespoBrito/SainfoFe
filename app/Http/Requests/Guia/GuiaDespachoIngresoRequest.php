@@ -21,6 +21,11 @@ class GuiaDespachoIngresoRequest extends FormRequest
   {
     $modTrasladoPublico = GuiaSalida::TRASLADO_PUBLICO;
     $modTrasladoPrivado = GuiaSalida::TRASLADO_PRIVADO;
+
+  // "tipo_export" => "50"
+  // "serie_doc_num" => "5353"
+  // "export_doc_num" => "453"
+
     return [
       'direccion_llegada'    => 'required|max:255',
       'ubigeo_partida' => 'required|numeric',
@@ -29,8 +34,11 @@ class GuiaDespachoIngresoRequest extends FormRequest
       'empresa' => 'required',
       'peso_total' => 'required|numeric|min:1',
       'motivo_traslado' => 'required|exists:motivo_traslado,MotCodi',
+
       'modalidad_traslado' => "required|in:{$modTrasladoPrivado},{$modTrasladoPublico}",
-      
+      "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       'transportista' => "required_if:modalidad_traslado,{$modTrasladoPrivado}",
       'placa' => "required_if:modalidad_traslado,{$modTrasladoPrivado}",
       'empresa' => "required_if:modalidad_traslado,{$modTrasladoPublico}",

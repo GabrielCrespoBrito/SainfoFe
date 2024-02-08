@@ -2499,7 +2499,7 @@ function changeMotivo() {
   $current_option.val() == "08" || $current_option.val() == "09" ? $(".campos-export").show() : $(".campos-export").hide();
 
   // Cambiar al valor actual
-  $motivo.data('old_option', $current_option.val()  );
+  $motivo.data('old_option', $current_option );
 }
 
 function mostrarModalTraslado() {

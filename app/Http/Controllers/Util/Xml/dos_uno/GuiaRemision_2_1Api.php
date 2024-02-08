@@ -26,12 +26,20 @@ class GuiaRemision_2_1Api extends XmlHelperNew
 
   public function getDocumentoRelacionado()
   {
-    if($this->documento->vtaoper){
+    $docRelacionado = $this->documento->getDocRefReal();
+
+    if($this->documento->vtaoper || $this->documento->isTipoExport()){
+      // return $this->change_datas([
+      //   [ 'id', $this->documento->venta->VtaNume   ],
+      //   [ 'tipo', $this->documento->venta->TidCodi ],
+      //   [ 'tipo_nombre', $this->documento->xmlInfo()->documentoRelacionadoNombre($this->documento->venta->TidCodi) ],
+      //   [ 'ruc', $this->ruc_empresa ],
+      // ], $this->documentoRelacionado, false);
       return $this->change_datas([
-        [ 'id', $this->documento->venta->VtaNume   ],
-        [ 'tipo', $this->documento->venta->TidCodi ],
-        [ 'ruc', $this->ruc_empresa ],
-        [ 'tipo_nombre', $this->documento->xmlInfo()->documentoRelacionadoNombre($this->documento->venta->TidCodi) ],
+        ['id', $docRelacionado->id  ],
+        ['tipo', $docRelacionado->tipo ],
+        ['tipo_nombre', $this->documento->xmlInfo()->documentoRelacionadoNombre($docRelacionado->tipo)],
+        ['ruc', $this->ruc_empresa],
       ], $this->documentoRelacionado, false);
     }
     return '';

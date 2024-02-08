@@ -460,8 +460,11 @@ class GuiaSalidaController extends GuiaController
 
   public function despacho(GuiaDespachoIngresoRequest $request, $id_guia)
   {
+    // _dd( $request->all() );
+    // exit();
+
     $guia = $this->model->find($id_guia);
-    $guia->saveDespacho($request->all());
+    // $guia->saveDespacho($request->all());
     $guia->fresh()->saveDespacho($request->all());
     $guia->createXmlZip();
 

@@ -602,6 +602,9 @@ class GuiaSalida extends Model
       $this->GuiUni =  sprintf('%s-%s-%s', $this->getTipoDocumento(), $serie, $numero);
     }
 
+    
+    $motivoTraslado = $data['motivo_traslado'] ?? null;
+
     $this->DCodi = $data['destinatario'] ?? null;
     $this->mod_traslado = $data['modalidad_traslado'] ?? null;
     $this->guidirp = $data['direccion_partida'];
@@ -617,9 +620,28 @@ class GuiaSalida extends Model
     $this->GuiPDF = "0";
     $this->GuiXML = "1";
     $this->GuiFDes = date('Y-m-d');
-    $this->motcodi = $data['motivo_traslado'] ?? null;
-    $this->e_traslado = $data['motivo_traslado'] ?? null == MotivoTraslado::TRASLADO_MISMA_EMPRESA ?
+    $this->motcodi = $motivoTraslado;
+
+    if( $motivoTraslado == MotivoTraslado::IMPORTACION || $motivoTraslado == MotivoTraslado::EXPORTACION ){
+
+      //        "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+
+      $this->docrefe = sprintf('%s-%s-%s', $data['tipo_export'] , $data['serie_doc_num'], $data['export_doc_num'] );
+    }
+
+
+
+      // "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+
+
+
+    $this->e_traslado = $motivoTraslado == MotivoTraslado::TRASLADO_MISMA_EMPRESA ?
       GuiaSalida::ESTADO_TRASLADO_PENDIENTE : null;
+
     $this->save();
 
     if ($actualizarSerie) {
@@ -1454,7 +1476,7 @@ class GuiaSalida extends Model
     }
 
     return (object) [
-      'tipo_export' => null,
+      'tipo_export' => null ?? 52,
       'serie_doc_num' => null,
       'export_doc_num' => null,
     ];
@@ -1463,8 +1485,30 @@ class GuiaSalida extends Model
 
   public function isTipoExport()
   {
-    return $this->mod_traslado == MotivoTraslado::IMPORTACION ||
-    $this->mod_traslado == MotivoTraslado::EXPORTACION;
+    return $this->motcodi == MotivoTraslado::IMPORTACION ||
+    $this->motcodi == MotivoTraslado::EXPORTACION;
+  }
+
+
+  public function getDocRefReal()
+  {
+    if($this->motcodi == MotivoTraslado::IMPORTACION || $this->motcodi == MotivoTraslado::EXPORTACION){
+      $exportData = $this->getExportData();
+      return (object) [
+        'id' => $exportData->serie_doc_num  . '-' . $exportData->export_doc_num ,
+        'tipo' =>  $exportData->tipo_export,
+      ];
+    }
+
+      //   [ 'id', $this->documento->venta->VtaNume   ],
+      //   [ 'tipo', $this->documento->venta->TidCodi ],
+
+    return (object) [
+      'id' => $this->venta->VtaNume ,
+      'tipo' =>  $this->documento->venta->TidCodi,
+    ];
+
+
   }
 
   // $tipo_export = $guia->getTipoExport();
