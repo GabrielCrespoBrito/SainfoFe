@@ -14,11 +14,6 @@
 ])
 
 
-{{-- @slot('filtros')
-  @include('reportes.vendedor.partials.ventas.header')
-@endslot
- --}}
-
 @slot('content')
 
 @include('reportes.vendedor.partials.zonas.table')

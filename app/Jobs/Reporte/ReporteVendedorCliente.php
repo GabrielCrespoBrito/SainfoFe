@@ -2,12 +2,6 @@
 
 namespace App\Jobs\Reporte;
 
-use App\Marca;
-use App\ModuloMonitoreo\StatusCode\StatusCode;
-use App\TipoDocumentoPago;
-use App\Venta;
-use App\Vendedor;
-use App\VentaItem;
 use Illuminate\Support\Facades\DB;
 
 class ReporteVendedorCliente
