@@ -623,12 +623,11 @@ class GuiaSalida extends Model
     $this->motcodi = $motivoTraslado;
 
     if( $motivoTraslado == MotivoTraslado::IMPORTACION || $motivoTraslado == MotivoTraslado::EXPORTACION ){
-
       //        "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
 
-      $this->docrefe = sprintf('%s-%s-%s', $data['tipo_export'] , $data['serie_doc_num'], $data['export_doc_num'] );
+      $this->docrefe = sprintf('%s-%s', $data['tipo_export'] , $data['export_doc_num'] );
     }
 
 
@@ -1468,17 +1467,17 @@ class GuiaSalida extends Model
   {
     if( $this->isTipoExport() ){
       $docExport =  explode('-', $this->docrefe);
+
+
       return (object) [
         'tipo_export' => $docExport[0],
-        'serie_doc_num' => $docExport[1],
-        'export_doc_num' => $docExport[2],
+        'documento_id' => sprintf('%s-%s-%s-%s' , $docExport[1]  , $docExport[2], $docExport[3], $docExport[4]),
       ];
     }
 
     return (object) [
       'tipo_export' => null ?? 52,
-      'serie_doc_num' => null,
-      'export_doc_num' => null,
+      'documento_id' => null,
     ];
 
   }
@@ -1494,8 +1493,10 @@ class GuiaSalida extends Model
   {
     if($this->motcodi == MotivoTraslado::IMPORTACION || $this->motcodi == MotivoTraslado::EXPORTACION){
       $exportData = $this->getExportData();
+
+
       return (object) [
-        'id' => $exportData->serie_doc_num  . '-' . $exportData->export_doc_num ,
+        'id' => $exportData->documento_id ,
         'tipo' =>  $exportData->tipo_export,
       ];
     }

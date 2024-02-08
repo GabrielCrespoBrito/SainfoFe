@@ -115,6 +115,7 @@
                             @php
                                 $exportData = $guia->getExportData();
                             @endphp
+                            {{-- @dd( $exportData ) --}}
 
                             <div class="col-md-12 campos-export">
 
@@ -132,19 +133,11 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon no-p">Serie</span>
-                                        <input class="form-control input-sm text-uppercase" name="serie_doc_num"
-                                            type="text" value="{{ $exportData->serie_doc_num }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon no-p">Número</span>
                                         <input class="form-control input-sm text-uppercase" name="export_doc_num"
-                                            type="text" value="{{ $exportData->export_doc_num }}">
+                                            type="text" value="{{ $exportData->documento_id }}">
                                     </div>
                                 </div>
 

@@ -37,7 +37,6 @@ class GuiaDespachoIngresoRequest extends FormRequest
 
       'modalidad_traslado' => "required|in:{$modTrasladoPrivado},{$modTrasladoPublico}",
       "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-      "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       'transportista' => "required_if:modalidad_traslado,{$modTrasladoPrivado}",
       'placa' => "required_if:modalidad_traslado,{$modTrasladoPrivado}",
