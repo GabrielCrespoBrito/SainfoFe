@@ -2496,7 +2496,7 @@ function changeMotivo() {
 
   // console.log({ $current_option })
 
-  $current_option.val() == "08" || $current_option.val() == "09" ? $(".campos-export").show() : $(".campos-export").hide();
+  showHideCamposExtro()
 
   // Cambiar al valor actual
   $motivo.data('old_option', $current_option );
@@ -2505,6 +2505,15 @@ function changeMotivo() {
 function mostrarModalTraslado() {
   $("#modalTraslado").modal();
 }
+
+
+function showHideCamposExtro()
+{
+  const motId = $("[name=motivo_traslado] option:selected").val();
+  motId == "08" || motId == "09" ? $(".campos-export").show() : $(".campos-export").hide();
+
+}
+
 
 /**
  * Cambiar motivo de despacho
@@ -2968,6 +2977,7 @@ function init() {
   showDespachoIsNecesary();
   saveCurrentMotivo()
   setProductoInputSearchDefaultFocus();
+  mostrarModalTraslado();
 };
 
 // Ejecutar todas las funciones
