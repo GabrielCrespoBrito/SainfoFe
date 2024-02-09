@@ -88,9 +88,12 @@ const HEADERS = [
 
   public function prepareProductData()
   {
+
     $this->dataProcess[ 'PCCodi'] = $this->getId();
     $this->dataProcess[$this->getHeaderName('tipo_cliente')] = $this->getValueFromOriginal('tipo_cliente');
-    $this->dataProcess[$this->getHeaderName('tipo_documento')] = (int) $this->getValueFromOriginal('tipo_documento');
+    $td = $this->getValueFromOriginal('tipo_documento');
+    $this->dataProcess[$this->getHeaderName('tipo_documento')] = $td;
+    $this->dataProcess["TDocCodi"] = $td; 
     $this->dataProcess[$this->getHeaderName('documento')] = $this->getValueFromOriginal('documento');
     $this->dataProcess[$this->getHeaderName('nombre')] = $this->getValueFromOriginal('nombre');
     $this->dataProcess[$this->getHeaderName('direccion')] = $this->getValueFromOriginal('direccion');

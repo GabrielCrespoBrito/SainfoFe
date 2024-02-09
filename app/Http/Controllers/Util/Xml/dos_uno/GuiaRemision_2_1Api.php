@@ -26,9 +26,9 @@ class GuiaRemision_2_1Api extends XmlHelperNew
 
   public function getDocumentoRelacionado()
   {
-    $docRelacionado = $this->documento->getDocRefReal();
-
+    
     if($this->documento->vtaoper || $this->documento->isTipoExport()){
+      $docRelacionado = $this->documento->getDocRefReal();
       // return $this->change_datas([
       //   [ 'id', $this->documento->venta->VtaNume   ],
       //   [ 'tipo', $this->documento->venta->TidCodi ],
