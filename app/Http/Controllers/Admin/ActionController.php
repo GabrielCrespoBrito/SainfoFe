@@ -64,6 +64,7 @@ class ActionController extends Controller
    */
   public function updateResumenesPendientes(Request $request)
   {
+    ini_set('memory_limit', '400M');
     (new UpdateEmpresasResumenPendientes(true, true))->handle();
     return response()->json(['success' => true]);
   }
