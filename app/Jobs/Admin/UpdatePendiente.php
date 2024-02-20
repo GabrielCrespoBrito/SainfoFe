@@ -67,23 +67,26 @@ abstract class UpdatePendiente
   {
     $empresas = $this->getEmpresas();
 
-    foreach ($empresas as $empresa) {
+    $empresas_chunk = $empresas->chunk(25);
 
-      try {
-        # Activar coneccion a bd de empresa
-        (new ActiveEmpresaTenant($empresa))->handle();
-        $cant_pendiente =  $this->searchInEmpresa($empresa);
+    foreach( $empresas_chunk as $empresas ){
 
-        if ($cant_pendiente) {
-          $this->addToData($empresa->id(), $cant_pendiente);
+      foreach ($empresas as $empresa) {
+
+        try {
+          # Activar coneccion a bd de empresa
+          (new ActiveEmpresaTenant($empresa))->handle();
+          $cant_pendiente =  $this->searchInEmpresa($empresa);
+
+          if ($cant_pendiente) {
+            $this->addToData($empresa->id(), $cant_pendiente);
+          }
+          //code...
+        } catch (\Throwable $th) {
+          logger(['@ERROR en UpdatePendiente', 'empresa' => $empresa->id(), 'error' => $th->getMessage()]);
         }
-        //code...
-      } catch (\Throwable $th) {
-        logger(['@ERROR en UpdatePendiente', 'empresa' => $empresa->id(), 'error' => $th->getMessage()]);
       }
-
-
-    }
+  }
   }
 
   /**
