@@ -42,6 +42,8 @@ class ReporteUtilidades
 
     $query = Venta::with([ 'cliente_with' => function($query){
       $query->where('TipCodi', 'C');
+    }, 'items'  => function ($query){
+      $query->where('DetBase', '=',  'GRAVADA');
     }, 'items.producto'  => function($query) use ($grupo) {
       if( $grupo ){
         $query->where('grucodi', '=' ,  $grupo);
