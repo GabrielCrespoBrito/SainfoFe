@@ -146,6 +146,7 @@ class Venta extends Model
     "VtaISC",
     "VtaImpo",
     "TipoOper",
+    'VtaOperC',
     "VtaEsta",
     "VtaPago",
     'VtaFMail',
@@ -170,7 +171,6 @@ class Venta extends Model
     "fe_obse",
     "fe_estado",
   ];
-
 
   public function isSol()
   {

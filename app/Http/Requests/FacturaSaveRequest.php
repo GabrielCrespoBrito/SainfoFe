@@ -193,7 +193,7 @@ class FacturaSaveRequest extends FormRequest
       ->whereIn('VtaOper', $this->canjeIds);
 
     if ($this->canjeQuery->count() != count($this->canjeIds)) {
-      $validator->errors()->add('canjeIds', "Hay Notas de Creditos Facturada, Que no se encuentra/Ya estan Canjeadas o el Id no existe");
+      $validator->errors()->add('canjeIds', "Hay Notas de Venta Facturada, Que no se encuentra/Ya estan Canjeadas o el Id no existe");
       return false;
     }
 
