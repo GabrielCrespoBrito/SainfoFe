@@ -1668,7 +1668,10 @@ class Empresa extends Model
       view($plantilla->vista, $plantilla->getDataPlantilla()),
       PDFGenerator::HTMLGENERATOR
     );
-    $pdf->generator->setGlobalOptions(PDFGenerator::getSetting($plantilla->formato, PDFGenerator::HTMLGENERATOR));
+
+    // $pdf->generator->setGlobalOptions(PDFGenerator::getSetting($plantilla->formato, PDFGenerator::HTMLGENERATOR));
+    $pdf->generator->setGlobalOptions( $plantilla->getSetting(PDFGenerator::HTMLGENERATOR));
+    
     $success = $pdf->save($routeTemp);
     return asset("temp/{$nameDocumento}");
   }
@@ -1989,13 +1992,13 @@ class Empresa extends Model
     return $this->getDirecciones( $local->concatTlf() );
   }
 
-  public function getDirecciones( $contact_tlf = false )
+  public function getDirecciones( $contact_tlf = false, $format = 2 )
   {
-    // _dd( $contact_tlf );
-    // exit(); 
 
-    // $direcciones = $this->locales->pluck('LocDire', 'LocNomb');
     $direcciones = $this->locales;
+    
+    if( $format == 1 ){
+      
     $direcciones_html = "";
     $first = true;
     $dir_count = $direcciones->count();
@@ -2007,7 +2010,6 @@ class Empresa extends Model
       $direccion = $local->LocDire;
 
       if($contact_tlf){
-        // $direccion = sprintf('%s %s', $direccion, $telefono);
         $direccion = sprintf('%s %s', $direccion, $local->LocTele);
       }
 
@@ -2022,6 +2024,12 @@ class Empresa extends Model
     }
 
     return $direcciones_html;
+    }
+
+    elseif( $format == 2 ){
+      return implode(" / ",  $direcciones->pluck('LocDire')->toArray());
+    }
+
   }
 
   public function syncMedioPagos($tipos_pagos = null)

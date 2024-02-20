@@ -65,8 +65,7 @@ $ruc_text_class = $ruc_text_class ?? '';
   {{-- Rubro  --}}
   @if( $rubro )
   <div class="nombre_div_class {{ $rubro_div_class }}">
-    <div class="nombre_text {{ $rubro_text_class }}"> {{ $rubro }} </div>
-
+    <div class="nombre_text {{ $rubro_text_class }}"> {!! $rubro !!} </div>
   </div>
   @endif
   {{-- /Rubro --}}
@@ -116,11 +115,12 @@ $ruc_text_class = $ruc_text_class ?? '';
 
     @if($correo_campo_nombre)
     <span class="correo_campo_class {{ $correo_campo_class }}">
-      {{ $correo_campo_nombre }}
+      {!! $correo_campo_nombre !!}
     </span>
+    
     @endif
 
-    <span class="correo_text {{ $correo_text_class }}"> {{ $correo }} </span>
+    <span class="correo_text {{ $correo_text_class }}"> {!! $correo !!} </span>
 
   </div>
   {{-- /Emails --}}

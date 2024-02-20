@@ -1,6 +1,10 @@
 {{-- Modal para poner información --}}
+@php
+  $size =  $size ?? 'modal-md';
+@endphp
 
-@component('components.modal', ['id' => 'modalData' , 'size' => 'modal-md', 'title' => '' ])
+
+@component('components.modal', ['id' => 'modalData' , 'size' => $size, 'title' => '' ])
   @slot('body')
   @endslot
 @endcomponent 

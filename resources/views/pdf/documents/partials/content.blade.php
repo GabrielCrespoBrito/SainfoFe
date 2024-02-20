@@ -13,7 +13,7 @@
 <body class="{{ $class_name ?? '' }} {{ $preliminar ? 'preliminar' : '' }} ">
   @if( $logoMarcaAgua )
     @php
-      $top = $logoMarcaAguaSizes['top'];
+      $top = $logoMarcaAguaSizes['top'] + 100;
       $left = $logoMarcaAguaSizes['left'];
     @endphp
     <img class="img-marca-agua" style="top:{{$top}}px;left:{{$left}}px" src="data:image/png;base64,{{ $logoMarcaAgua }}">

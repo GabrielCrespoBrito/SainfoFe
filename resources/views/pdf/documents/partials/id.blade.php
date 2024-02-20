@@ -6,7 +6,7 @@ $class_nombre = $class_nombre ?? '';
 $class_numeracion = $class_numeracion ?? '';
 @endphp
 
-<div class="id-documento {{ $class_name }}">
+<div style="" class="id-documento {{ $class_name }}">
   @if( $ruc )
   <div class="ruc {{ $class_ruc }}"> <span class="text">R.U.C.</span> {{ $ruc }} </div>
   @endif

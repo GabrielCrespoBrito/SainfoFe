@@ -6,7 +6,7 @@
 {{-- @include("partials.modal_update_tc", ['updatedNeeded' => session()->has('save_tipocambio') ]) --}}
 {{-- end body --}}
 
-@include("partials.modal_data")
+@include("partials.modal_data", [ 'size' => 'modal-lgg' ])
 
 <!-- jQuery 3 -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>

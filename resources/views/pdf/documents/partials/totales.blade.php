@@ -2,7 +2,7 @@
     $class_name = $class_name ?? '';
     $total_nombre_class = $total_nombre_class ?? '';
     $total_value_class = $total_value_class ?? '';
-
+    $showACuenta = $showACuenta ?? true;
     $isNotaVenta = $venta2->isNotaVenta();
     $show_igv = !$isNotaVenta;
     $show_base = !$isNotaVenta;
@@ -114,7 +114,7 @@
                     </span> {{ fixedValue($total) }}</td>
             </tr>
 
-            @if ($venta_rapida)
+            @if ($venta_rapida && $showACuenta)
                 <tr>
                     <td class="total_nombre {{ $total_nombre_class }}">A CUENTA: </td>
                     <td class="total_value {{ $total_value_class }}"> <span

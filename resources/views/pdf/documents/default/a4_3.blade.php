@@ -1,118 +1,239 @@
 @component('pdf.documents.partials.content', [
-'class_name' => 'a4',
-'logoMarcaAgua' => $logoMarcaAgua,
-'preliminar' => !$venta2->exists,
-'logoMarcaAguaSizes' => $logoMarcaAguaSizes
+    'class_name' => 'a4',
+    'logoMarcaAgua' => $logoMarcaAgua,
+    'preliminar' => !$venta2->exists,
+    'logoMarcaAguaSizes' => $logoMarcaAguaSizes,
 ])
 
-@slot('content')
+    @slot('content')
 
-{{-- HEADER --}}
-@component('pdf.documents.partials.header')
+        {{-- HEADER --}}
+        @component('pdf.documents.partials.header')
+            @slot('content')
+                <div class="row">
 
-@slot('content')
+                    <div class="col-7">
 
-<div class="row">
 
-  @include('pdf.documents.partials.logo', [
-  'class_name' => 'col-7 c-white'
-  ])
+                        @include('pdf.documents.partials.logo', [
+                            'class_name' => ' c-white',
+                        ])
 
-  @include('pdf.documents.partials.id', [
-  'class_name' => 'col-3 border-style-solid border-radius-5 border-width-1 m-0 h4  text-center',
-  'ruc' => $empresa['EmpLin1'],
-  'class_nombre' => 'bold pt-x5 pb-x5',
-  'class_ruc' => ' pt-x6 pb-x3',
-  'class_numeracion' => ' pt-x3 pb-x6',
-  ])
+                        @include('pdf.documents.partials.info_empresa', [
+                            'class_name' => 'letter-spacing-1px',
+                            'direccion_div_class' => 'bold',
+                            'rubro_text_class' => 'text-center bold font-size-1.1',
+                            'rubro' => $rubro,
+                            'correo_div_class' => 'text-center',
+                            'correo_text_class' => 'text-center',
+                            'telefonos_div_class' => 'bold text-center',
+                            'telefonos' => $telefonos,
+                            'direccion_text_class' => 'bold text-uppercase text-center',
+                            'direccion' => $direccion,
+                        ])
 
-</div>
-
-<div class="row">
-
-  @include('pdf.documents.partials.info_empresa', [ 'class_name' => $logoSubtitulo ? 'col-7 text-bottom' : 'col-md-12',
-  'direccion_div_class' => 'bold',
-  'correo_text_class' => 'bold',
-  'correo_campo_nombre' => $cliente_correo,
-  'telefonos_text_class' => 'bold',
-  'telefonos_campo_nombre' => 'Telefonos:',
-  'telefonos' => $telefonos,
-  'direccion' => $direccion
-  ])
-
-  @if($logoSubtitulo)
-  @include('pdf.documents.partials.logo_subtitulo', [ 'class_name' => 'col-3'])
-  @endif
-
-</div>
+                    </div>
 
 
 
-<div class="row">
+                    {{-- / --}}
+                    <div class="col-3">
 
-  @include('pdf.documents.partials.info_cliente', [
-  'class_name' => 'col-12 border-width-1 mt-x5 mb-x5 pl-x2 border-style-solid border-radius-5',
-  'nombre_campo_nombre' => 'Razón Social:',
-  'nombre_campo_class' => 'bold font-size-9',
-  'nombre' => $cliente->PCNomb,
-  'documento_campo_nombre' => $cliente->getNombreTipoDocumento() . ':',
-  'documento_campo_class' => 'bold font-size-9',
-  'documento' => $cliente->PCRucc,
-  'direccion_campo_nombre' => "Dirección",
-  'direccion_campo_class' => 'bold font-size-9',
-  'direccion' => $cliente->PCDire,
-  'vendedor' => false,
-  ])
+                        @include('pdf.documents.partials.id', [
+                            'class_name' =>
+                                ' border-style-solid border-radius-10 border-width-2 m-0 h4 text-center border-box',
+                            'ruc' => $empresa['EmpLin1'],
+                            'class_nombre' =>
+                                'pt-x5 pb-x6 mb-x2 box-sizing-border-box font-size-9 bg-gray-800 bg-blue-light-100',
+                            'class_ruc' => ' pt-x6 pb-x3',
+                            'class_numeracion' => ' pt-x3 pb-x6',
+                        ])
 
-</div>
+                        @if ($logoSubtitulo)
+                            @include('pdf.documents.partials.logo_subtitulo', [
+                                'class_name' => 'col-10',
+                                'img_logo_class' => 'outline-none',
+                            ])
+                        @endif
 
-@include('pdf.documents.partials.observacion', [ 'class_name' => 'col-12',
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row">
+
+                    @include('pdf.documents.partials.info_cliente3', [
+                        'class_name' =>
+                            'col-12 p-x8 border-width-2 mt-x5 mb-x5 border-style-solid border-radius-10 letter-spacing-1px',
+                        'nombre_text_class' => 'bold ',
+                        'nombre' => $cliente->PCNomb,
+                        'documento_campo_nombre' => $cliente->getNombreTipoDocumento() . ':',
+                        'documento_campo_class' => '',
+                        'documento' => $cliente->PCRucc,
+                        'direccion_campo_nombre' => 'Dirección',
+                        'direccion_campo_class' => '',
+                        'direccion' => $cliente->PCDire,
+                        'fecha_emision' => $fecha_emision_,
+                        'vendedor' => false,
+                    ])
+
+                </div>
+
+
+                {{-- @include('pdf.documents.partials.observacion', [ 'class_name' => 'col-12',
 'class_name' => 'border-width-1 mb-x4 pl-x2 border-style-solid border-radius-5',
 'nombre_campo_nombre' => 'Observacion:',
 'nombre_campo_class' => 'bold font-size-9',
 'nombre' => isset($venta['VtaObse']) ? $venta['VtaObse'] : '-'
-])
+]) --}}
 
-@include('pdf.documents.partials.info_documento1')
+                {{-- @include('pdf.documents.partials.info_documento1') --}}
+            @endslot
+        @endcomponent
 
-@endslot
-@endcomponent
-
-{{-- /HEADER --}}
+        {{-- /HEADER --}}
 
 
-@php
-$cant_items = $items->count();
-$footerBreak =($cant_items >= 20 && $cant_items <= 45) || ($cant_items>= 88 && $cant_items <= 105) || ($cant_items>= 131);
-$classFooter = '';
-@endphp
+        @php
+            $cant_items = $items->count();
+            $footerBreak = ($cant_items >= 20 && $cant_items <= 45) || ($cant_items >= 88 && $cant_items <= 105) || $cant_items >= 131;
+            $classFooter = '';
+        @endphp
 
-@include('pdf.documents.partials.table', [
-'complete_tds_spaces' => true,
-'class_name' => 'col-12 border-style-solid border-width-1 ' . $footerBreak ? '' : 'container-table-height',
-'class_name_table' => 'col-md-12 col-10 border-style-solid border-width-1',
-'thead_class' => 'font-size-9 pl-x3 bg-cccccc c-black border-right-style-solid border-bottom-style-solid border-width-1 pt-x2 pb-x2',
-'tbody_class' => 'pt-x2 pb-x2 pl-x3 pb-x2 border-bottom-width-1 border-bottom-color-gray border-bottom-style-dotted border-right-style-solid border-width-1 font-size-8',
-'class_precio_unit' => 'text-right pr-x3 border-right-style-solid border-width-1',
-'class_importe' => 'text-right pr-x3 ',
-'class_cant' => 'text-right pl-x1 pr-x8 pr-x3 border-right-style-solid border-width-1',
-'class_orden' => 'text-center border-right-style-solid border-width-1',
-'class_codigo' => 'text-center border-right-style-solid border-width-1',
-'class_unidad' => 'text-center border-right-style-solid border-width-1',
-'class_descripcion' => 'border-right-style-solid border-width-1',
-])
 
-    @if($footerBreak)
+        {{-- <div class="col-10 p-x2 letter-spacing-1px border-color-black border-style-solid border-width-2 border-radius-10 overflow-hidden  '  . ($footerBreak ? '' : 'container-table-height')"> --}}
+
+        <div
+            class="col-10 letter-spacing-1px border-color-black border-style-solid border-width-2 border-radius-10 overflow-hidden">
+
+            @include('pdf.documents.partials.table', [
+                'complete_tds_spaces' => true,
+                'cantAddNV' => 30,
+                'cantAddDoc' => 20,
+                'class_name' => '',
+                'class_name_table' => 'border-collapse-separate',
+                'thead_class' =>
+                    'font-size-9 bg-blue-light-100  bold c-black pb-x10 pt-x10 pl-x3 border-color-black  border-bottom-style-solid border-width-2',
+                'tbody_class' => 'pt-x2 pb-x2 pl-x3 pb-x2',
+                'class_precio_unit' => 'text-right pr-x3',
+                'class_importe' => 'text-right pr-x3 ',
+                'class_cant' => 'text-right pl-x1 pr-x8 pr-x3',
+                'class_orden' => 'text-center',
+                'class_codigo' => 'text-center',
+                'class_unidad' => 'text-center',
+                'class_descripcion' => '',
+            ])
+
+            <div
+                class="col-10 letter-spacing-1px pl-x10 pr-x10 pt-x3 pb-x3 border-color-black border-top-style-solid border-width-2 overflow-hidden">
+                <table width="100%">
+                    <tr style="vertical-align: middle">
+                        <td style="vertical-align: middle"
+                            class="letter-spacing-1px border-color-black border-right-style-solid border-width-2" width="50%">
+                            <span class="text-uppercase text-center font-size-15px"> Son: {{ $cifra_letra }} </span>
+                        </td>
+
+                        <td width="50%">
+                            {{-- Totales  --}}
+
+                            @include('pdf.documents.partials.totales', [
+                                'class_name' => 'table-totales',
+                                'style' => 'bottom:0;right:0',
+                                'showACuenta' => false,
+                                'class_name_table' => 'border-width-1 table-with-border border-radius-5',
+                                'total_nombre_class' => 'pl-x5',
+                                'total_value_class' => 'text-right pr-x5',
+                                'info_text_consultada_class' => '',
+                            ])
+                            {{-- /Totales --}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+        </div>
+
+
+        {{--  --}}
+
+        <div
+            class="col-10 mt-x5 letter-spacing-1px pl-x10 pr-x10 pt-x3 pb-x3 border-color-black border-radius-10 border-style-solid border-width-2 overflow-hidden">
+
+            <table width="100%">
+                <tr style="vertical-align: top">
+
+                    <td style="vertical-align: top" class="letter-spacing-1px border-color-black border-right-style-solid border-width-2" width="50%">
+
+                        <div class="bg-blue-light-100 text-center font-size-15px bold"> Información adicional </div>
+
+                        {{--  --}}
+                        <div class="row">
+                            @include('pdf.documents.partials.info_anexo', [
+                                'cifra_letra' => false,
+                                'class_name' => 'col-10',
+                            ])
+                        </div>
+                        {{--  --}}
+
+                    </td>
+
+                    {{-- Pagos  --}}
+                    <td width="50%" style="overflow:hidden">
+
+                        <div class="bg-blue-light-100 text-center font-size-15px bold"> Información de pagos </div>
+
+
+{{-- Pagos --}}
+                        <div>
+                            @include('pdf.documents.partials.pagos2', [
+                                'class_name' => '',
+                                'class_name_table' => 'border-width-1 table-with-border border-radius-5',
+                                'titulo_div_class' => 'pl-x3 font-size-9 text-uppercase pl-x3 mb-x3 border-bottom-style-solid border-width-1',
+                                'tr_titulo_class' => 'bold text-center',
+                                'tr_valor_class' => 'text-center',
+                            ])
+                        </div> 
+{{-- /Pagos --}}
+
+
+                        <div>
+
+                            @include('pdf.documents.partials.cuentas', [
+                                'class_name' => 'col-10 pt-x5',
+                                'titulo' => false,
+                                'class_name_table' => '',
+                                'titulo_div_class' => 'bold pl-x3 mb-x3 border-bottom-style-solid border-width-1',
+                                'cuenta_text_class' => 'pl-x3',
+                                'cuenta_cuenta_text_class' => 'bold',
+                            ]) 
+
+
+                        </div>
+
+                    </td>
+                    {{-- /Pagos --}}
+
+                </tr>
+            </table>
+        </div>
+
+        {{--  --}}
+
+        {{-- @if ($footerBreak)
     @php
     $classFooter = 'position-initial';
     @endphp
     <div class="page-break"></div>
-    @endif
+    @endif --}}
 
-    {{-- FOOTER --}}
-    @component('pdf.documents.partials.footer', [
-    'class_name' => "mt-x4 border-style-solid footer-full-table border-width-1 $classFooter"
-    ])
+        {{-- FOOTER --}}
+        {{-- @component('pdf.documents.partials.footer', [
+    'class_name' => "mt-x4 border-style-solid footer-full-table border-width-1 $classFooter",
+])
 
     @slot('content')
 
@@ -174,8 +295,8 @@ $classFooter = '';
     </div>
 
     @endslot
-    @endcomponent
-    {{-- /FOOTER --}}
+    @endcomponent --}}
+        {{-- /FOOTER --}}
 
     @endslot
-    @endcomponent
+@endcomponent

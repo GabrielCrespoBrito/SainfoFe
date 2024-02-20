@@ -219,4 +219,11 @@ class PDFPlantilla extends Model
     }
   }
 
+
+  public function getSetting( $provider )
+  {
+    $settings = json_decode($this->settings);
+    return $settings[$provider];
+  }
+
 }

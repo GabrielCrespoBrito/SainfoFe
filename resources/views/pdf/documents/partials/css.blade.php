@@ -560,11 +560,13 @@ font-size: 10px;
 }
 
 body {
+{{-- font-family: Arial, Helvetica, sans-serif; --}}
 font-family: Arial, Helvetica, sans-serif;
 font-size: 14px;
 line-height: 1.42857143;
 background-color: #ffffff;
 }
+
 input,
 button,
 select,
@@ -804,6 +806,9 @@ text-transform: lowercase;
 }
 .text-uppercase {
 text-transform: uppercase;
+}
+.bold-900 {
+  font-weight: 900;
 }
 .text-capitalize {
 text-transform: capitalize;
@@ -1750,9 +1755,6 @@ display: none !important;
 position: fixed;
 }
 
-.overflow-hidden {
-overflow: hidden;
-}
 
 /* ----------------- Styles ----------------- */
 
@@ -1805,10 +1807,10 @@ background-color: blue;
 background-color: blue !important;
 }
 .bg-red {
-background-color: rgba(255, 0, 0, 0.541);
+background-color: red;
 }
 .!bg-red {
-background-color: rgba(255, 0, 0, 0.541) !important;
+background-color: red !important;
 }
 .bg-orange {
 background-color: orange !important;
@@ -2560,6 +2562,18 @@ font-size: .2em;
 font-size: .1em;
 }
 
+.font-size-1.1 {
+font-size: 1.1em;
+}
+
+.font-size-20px {
+  font-size: 20px;
+}
+
+.font-size-25px {
+  font-size: 25px;
+}
+
 .text-uppercase {
 text-transform: uppercase !important;
 }
@@ -2656,6 +2670,7 @@ border-left: 0 !important;
 .border-right-0 {
 border-right: 0 !important;
 }
+
 .border-color-black {
 border-color: black;
 }
@@ -2680,21 +2695,17 @@ border-color: white;
 .color-blue-light {
 color: #255079;
 }
+
 .bg-blue-light {
 background-color: #255079 !important;
 }
 
-
-255079;
-}
 .bg-blue-light {
 background-color: #255079 !important;
 }
 
 border-color-blue-light.border-bottom-color-gray {
-border-bottom-
-
-color: gray;
+border-bottom-color: gray;
 }
 
 .border-bottom-color-gray-light {
@@ -2702,9 +2713,7 @@ color: gray;
 }
 
 border-color-blue-light.border-bottom-color-gray {
-border-bottom-
-
-color: gray;
+border-bottom-color: gray;
 }
 
 border-color-blue-light.position-relative {
@@ -2725,7 +2734,6 @@ overflow: hidden;
 
 .container-table-height
 {
-outline: 2px solid green;
 min-height: 720px;
 }
 
@@ -2791,6 +2799,15 @@ position: fixed;
 bottom: 0;
 }
 
+.box-sizing-content-box {
+  box-sizing:content-box;
+}
+
+.box-sizing-border-box {
+  box-sizing:border-box;
+}
+
+
 .bg-gray {
 background-color: gray;
 }
@@ -2798,6 +2815,12 @@ background-color: gray;
 .bg-gray-800 {
 background-color:#eeeeee;
 }
+
+
+.bg-blue-light-100 {
+background-color: #d4e6f1;
+}
+
 
 .!bg-gray-800 {
 background-color:#eeeeee !important;
@@ -3091,4 +3114,24 @@ min-height: 400px;
 
 table.odd-background tr:nth-child(even) {
   background-color: #f0f0f0;
+}
+
+{{-- Letter-spacing --}}
+
+.letter-spacing-1px * {
+  letter-spacing: 1px;
+}
+
+
+.letter-spacing-x.1 {
+  letter-spacing: .1em;
+}
+
+.letter-spacing-x.2 {
+  letter-spacing: .2em;
+}
+
+.border-collapse-separate {
+  border-collapse: separate !important;
+  border-spacing:  3px;
 }

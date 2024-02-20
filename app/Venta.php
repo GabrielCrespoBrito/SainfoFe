@@ -1053,6 +1053,7 @@ class Venta extends Model
       'venta' => $venta,
       'venta2' => $this,
       'venta_rapida' => $e->hasVentaRapida(),
+      'rubro' => $e->EmpLin6,
       'empresa' => $empresa,
       'igvPorc' => $opciones->Logigv . '%',
       'isPreventa' => false,

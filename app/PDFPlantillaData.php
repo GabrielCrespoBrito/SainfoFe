@@ -21,7 +21,7 @@ class PDFPlantillaData extends Model
       'PCNomb' => $this->nombre_cliente,
       'PCodi' =>  ClienteProveedor::DEFAULT_CODIGO,
       'PCRucc' => $this->documento_cliente,
-      'PCDire' => $this->direccion_cliente,
+      'PCDire' => 'AV. NICOLAS AYLLON NRO. 1202 CHACLACAYO - LIMA - LIMA',
       'PCMail' => $this->correo_cliente,
       'ubigeo' => $this->ubigeo_cliente,
       'TDocCodi' => TipoDocumento::RUC,      
