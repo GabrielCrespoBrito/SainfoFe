@@ -21,6 +21,7 @@ class ListaPrecio extends Model
   protected $table       = 'lista_precio';
   public $timestamps   = false;
   protected $primaryKey = 'LisCodi';
+  public $keyType     = 'string';
   protected $guarded = [];
 
   public function getLisCodiAttribute($value)
