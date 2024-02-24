@@ -22,8 +22,6 @@
 		</tr>
 	</thead>
 	<tbody> 
-
-
 		@dd( $is_orden )
 
 		@if( ! $create )
@@ -61,10 +59,7 @@
 			</tr>				
 			@endforeach 
 		@endif
-
-
 	</tbody>
 	</table>
-
   </div>
 </div>

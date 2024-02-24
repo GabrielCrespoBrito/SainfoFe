@@ -19,7 +19,6 @@
         $descuento = $item->DetDcto;
       @endphp
 
-
       @include('cotizaciones.partials.factura.table.tr',[
       'item' => $item->DetItem,
       'tiecodi' => $producto->tiecodi,

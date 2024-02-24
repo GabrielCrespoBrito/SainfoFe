@@ -27,6 +27,7 @@ class ActionController extends Controller
    */
   public function updateAccionesPendientes(Request $request)
   {
+    ini_set('memory_limit', -1);
     (new UpdateAllPendientes(true, true))->handle();
     return response()->json(['success' => true]);
   }
@@ -39,6 +40,8 @@ class ActionController extends Controller
      */
     public function updateDocumentsPendientes(Request $request)
     {
+      ini_set('memory_limit', -1);
+
       (new UpdateEmpresasVentasPendientes(true,true))->handle();
       return response()->json(['success' => true]);
     }
@@ -51,6 +54,7 @@ class ActionController extends Controller
    */
   public function updateGuiasPendientes(Request $request)
   {
+    ini_set('memory_limit', -1);
     (new UpdateEmpresasGuiasPendientes(true,true))->handle();
     return response()->json(['success' => true]);
   }
@@ -64,7 +68,7 @@ class ActionController extends Controller
    */
   public function updateResumenesPendientes(Request $request)
   {
-    // ini_set('memory_limit', '400M');
+    ini_set('memory_limit', -1);
     (new UpdateEmpresasResumenPendientes(true, true))->handle();
     return response()->json(['success' => true]);
   }

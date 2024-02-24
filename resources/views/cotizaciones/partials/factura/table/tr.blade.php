@@ -1,8 +1,6 @@
-{{-- @dd($info) --}}
 
 @php  
   $data_info;
-  // $info = $info->toArray();
   if(!$data_info = json_encode($info)){
     $info_arr = $info;
     $data_info = json_encode($info_arr);
