@@ -4,11 +4,12 @@ namespace App;
 
 use App\Moneda;
 use App\Jobs\Empresa\ImgStringInfo;
-use App\Jobs\PDFPlantilla\GetDataForCotizacion;
+use App\Util\PDFGenerator\PDFGenerator;
+use Illuminate\Database\Eloquent\Model;
 use App\Jobs\PDFPlantilla\GetDataForGuia;
 use App\Jobs\PDFPlantilla\GetDataForVenta;
-use Illuminate\Database\Eloquent\Model;
 use Hyn\Tenancy\Traits\UsesSystemConnection;
+use App\Jobs\PDFPlantilla\GetDataForCotizacion;
 
 class PDFPlantilla extends Model
 {
@@ -220,10 +221,9 @@ class PDFPlantilla extends Model
   }
 
 
-  public function getSetting( $provider )
+  public function getSetting( $provider = PDFGenerator::HTMLGENERATOR )
   {
     $settings = json_decode($this->settings);
-    return $settings[$provider];
+    return (array) $settings->{$provider};
   }
-
 }

@@ -1669,8 +1669,8 @@ class Empresa extends Model
       PDFGenerator::HTMLGENERATOR
     );
 
-    // $pdf->generator->setGlobalOptions(PDFGenerator::getSetting($plantilla->formato, PDFGenerator::HTMLGENERATOR));
-    $pdf->generator->setGlobalOptions( $plantilla->getSetting(PDFGenerator::HTMLGENERATOR));
+
+    $pdf->generator->setGlobalOptions($plantilla->getSetting(PDFGenerator::HTMLGENERATOR));
     
     $success = $pdf->save($routeTemp);
     return asset("temp/{$nameDocumento}");

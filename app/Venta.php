@@ -1165,19 +1165,6 @@ class Venta extends Model
     return $asset;
   }
 
-  public function storePDF_()
-  {
-    $empresa = $this->empresa;
-
-    $plantilla  = $this->getPlantilla(PDFPlantilla::FORMATO_A4);
-    $data = $this->dataPdf(PDFPlantilla::FORMATO_A4);
-
-    $pdf = new PDFGenerator(view($plantilla->vista, $data), PDFGenerator::HTMLGENERATOR);
-    $pdf->generator->setGlobalOptions(PDFGenerator::getSetting($plantilla->formato, PDFGenerator::HTMLGENERATOR));
-
-    FileHelper($empresa->EmpLin1)->save_pdf($this->nameFile('.pdf'), $pdf->generator->toString());
-  }
-
 
   public function generatePDF(
     $formato = PDFPlantilla::FORMATO_A4,
@@ -1196,7 +1183,8 @@ class Venta extends Model
 
     $tempPath = '';
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
-    $pdf->generator->setGlobalOptions(PDFGenerator::getSetting($formato, $generator));
+    $pdf->generator->setGlobalOptions($plantilla->getSetting());
+    
     $namePDF = $this->nameFile('.pdf');
 
     if ($save) {
