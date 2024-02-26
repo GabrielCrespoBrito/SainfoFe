@@ -517,6 +517,7 @@ class Cotizacion extends Model
     $data['logoMarcaAguaSizes'] = $logoMarcaAguaSizes;
     $data['logoSubtitulo'] = $logoSubtitulo;
     $data['telefono'] = $this->cliente->PCTel1;
+    $data['rubro'] = $e->EmpLin6;
     $data['moneda_abreviatura'] = Moneda::getAbrev($this->moncodi);
     $data['moneda_nombre'] = Moneda::getNombre($this->moncodi);
     $data['decimals'] = $decimals;
@@ -695,7 +696,9 @@ class Cotizacion extends Model
     $data = $this->dataPdf($formato, $mostrar_igv);
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
     $namePDF = $this->nameFile('.pdf', true);
-    $pdf->generator->setGlobalOptions(PDFGenerator::getSetting($formato, $generator));
+    $pdf->generator->setGlobalOptions($plantilla->getSetting($generator));
+
+
     // 
     if ($save) {
       FileHelper($empresa->EmpLin1)->save_pdf($namePDF, $pdf->generator->toString());

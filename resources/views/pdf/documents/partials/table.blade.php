@@ -2,6 +2,8 @@
 $cant_items = $cant_items ?? 0;
 $complete_tds_spaces = $complete_tds_spaces ?? false;
 $cant_tds_to_add = 0;
+$cantAddNV = $cantAddNV ?? 43;
+$cantAddDoc =  $cantAddDoc ?? 35;
 
 if ($complete_tds_spaces) {
   if ($cant_items) {
@@ -9,10 +11,13 @@ if ($complete_tds_spaces) {
     ;
     if ($cant_items < 24) {
       $complete_tds_spaces = true;
-      $cant_tds_to_add = ($venta2->isNotaVenta() ? 43 : 35) - $cant_items;
+      $cant_tds_to_add = ($venta2->isNotaVenta() ? $cantAddNV : $cantAddDoc) - $cant_items;
     }
   }
 }
+
+// dd($class_name);
+
 
 $class_name = $class_name ?? '';
 $class_name_table = $class_name_table ?? '';
@@ -67,8 +72,12 @@ $theads = [
 ];
 
 ?>
+
+{{-- @dd( $class_name ) --}}
+
 <!--  -->
 <div style="" class="items {{ $class_name }}">
+  
   <table class="table_items_class {{ $class_name_table }}">
     <thead>
       <tr class="tr_head">

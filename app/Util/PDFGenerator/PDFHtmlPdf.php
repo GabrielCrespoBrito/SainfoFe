@@ -47,7 +47,7 @@ class PDFHtmlPdf
     'margin-left' => '0.39in',
   ];
 
-  # Settings For A4 principales de configuración
+  # Settings For A5 principales de configuración
   const SETTINGS_A5 = [
     'no-outline',
     'margin-top' => '0in',
@@ -58,7 +58,7 @@ class PDFHtmlPdf
     'orientation' => 'landscape',
   ];
 
-  # Settings For A4 principales de configuración
+  # Settings For Ticket principales de configuración
   const SETTINGS_TICKET = [
     'no-outline',
     'page-width' => '7.5cm',

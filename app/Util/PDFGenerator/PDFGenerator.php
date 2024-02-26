@@ -25,11 +25,11 @@ class PDFGenerator
       case self::HTMLGENERATOR:
         return PDFHtmlPdf::getSetting($formato, $includeye_footer);
         break;
-
+      // 
       case self::DOMGENERATOR:
         return PDFDom::getSetting($formato, $includeye_footer);
         break;
-
+      // 
       default:
       throw new Exception("The Generator {$generator} don't exists", 1);
       break;

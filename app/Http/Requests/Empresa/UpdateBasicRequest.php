@@ -29,7 +29,7 @@ class UpdateBasicRequest extends FormRequest
       'ubigeo'            => 'required|exists:ubigeo,ubicodi',
       'email'             => 'required|max:120',
       'telefonos'         => 'required|max:100',
-      'rubro'             => 'nullable|sometimes|max:200',
+      'rubro'             => 'nullable|sometimes|max:600',
     ];
   }
 }

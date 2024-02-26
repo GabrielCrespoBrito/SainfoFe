@@ -79,8 +79,10 @@ $titulo_info_class = $titulo_info_class ?? 'pl-x3';
 </div>
 @endif
 
+@if($cifra_letra)
 {{-- Monto en palabras --}}
 <div class="{{ $class_name }}">
   <span class="{{ $titulo_info_class }}">Son:</span>
   <span class="bold pl-x10 pr-x10"> {{ $cifra_letra }}</span>
 </div>
+@endif

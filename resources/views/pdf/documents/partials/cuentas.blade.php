@@ -8,6 +8,7 @@ $titulo = $titulo ?? 'CUENTAS';
 @endphp
 
 <div class="cuentas {{ $class_name }}">
+
   @if( $titulo )
   <div class="titulo_div_class {{ $titulo_div_class }}"> {{ $titulo }} </div>
   @endif
@@ -18,7 +19,5 @@ $titulo = $titulo ?? 'CUENTAS';
     <span class="{{ $cuenta_cuenta_text_class }}"> {{ $cuenta['banco_cuenta'] }} </span>
   </div>
   @endforeach
-
-
 
 </div>
