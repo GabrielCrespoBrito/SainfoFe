@@ -40,14 +40,24 @@ class DocumentoController extends Controller
   {
     (new SystemStat)->repository()->clearCache();
 
-    $empresas_pendientes = (new SystemStat)->getEmpresasVentasPendientes();
-    $empresas = Empresa::formatListPendientes($empresas_pendientes->data);
-    $routeTableSearch = route('admin.documentos.search_pendientes');
+    $empresasAll = $request->input('empresasAll', false);
     $title = 'Documentos Pendientes';
+    
     $routeTableSearch = route('admin.documentos.search_pendientes');
-    $hasPendientes = $empresas_pendientes->data->result;
+    if ( $empresasAll ) {
+      $empresas_pendientes = [];
+      $empresas = Empresa::formatListPendientes();
+      $hasPendientes = true;
+    } 
+    
+    else {
+      $empresas_pendientes = (new SystemStat)->getEmpresasVentasPendientes();
+      $empresas = Empresa::formatListPendientes($empresas_pendientes->data);
+      $hasPendientes = $empresas_pendientes->data->result;
+    }
 
-    return view('admin.documentos.pending', compact('empresas', 'title', 'empresas_pendientes','routeTableSearch', 'hasPendientes'));
+
+    return view('admin.documentos.pending', compact('empresas', 'title', 'empresas_pendientes','routeTableSearch', 'hasPendientes', 'empresasAll'));
   }
 
 

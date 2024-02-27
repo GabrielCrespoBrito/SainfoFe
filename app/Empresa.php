@@ -1771,16 +1771,31 @@ class Empresa extends Model
   public static function formatListPendientes($empresas_pendientes = [])
   {
     $empresas_pendientes = (array) $empresas_pendientes;
-    $empresas_pendientes['empresas'] = (array) $empresas_pendientes['empresas'];
     $empresas_format = [];
-    $empresas =  Empresa::whereIn('empcodi', array_keys((array) $empresas_pendientes['empresas']))->get();
+    
+    if( $empresas_pendientes ){
+      $empresas_pendientes['empresas'] = (array) $empresas_pendientes['empresas'];
+      $empresas = Empresa::whereIn('empcodi', array_keys((array) $empresas_pendientes['empresas']))->get();
+    }
+    else {
+      $empresas = Empresa::all();
+    }
+
+
+
+    
+
     $empresa_id_selected = session()->get('empresa_id');
 
     foreach ($empresas as $empresa) {
       // ------------------------------------------------------------ \\
       $empresa_id = $empresa->id();
       $ambiente_str = $empresa->isProduction() ? 'PROD' : 'DESR';
-      $pendientes_str = sprintf('PEND (%s) ', $empresas_pendientes['empresas'][$empresa_id]->cant);
+      $pendientes_str = '';
+
+      if($empresas_pendientes){
+        $pendientes_str = sprintf('PEND (%s) ', $empresas_pendientes['empresas'][$empresa_id]->cant);
+      }
 
       $nombre = sprintf(
         "%s | %s | %s | %s %s ",
