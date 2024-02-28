@@ -195,7 +195,7 @@ class RespaldoDatabase extends Command
    */
   public function makeRespaldoPrincipal()
   {
-    $this->setCurrentDatabase(env('DB_DATABASE'));
+    $this->setCurrentDatabase(env('DB_DATABASE', 'forge'));
     return $this->respaldoDB();
   }
 
