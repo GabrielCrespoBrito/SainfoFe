@@ -67,7 +67,11 @@ class RespaldoDatabase extends Command
     parent::__construct();
 
     $this->date = now()->subDay(1)->format('Y-m-d');
-    $this->pathTemp =  public_path('temp/backup' . getSeparator());
+    $this->pathTemp =  public_path( 'temp' . getSeparator());
+
+    // dd( $this->pathTemp );
+    // exit();
+    // $this->pathTemp =   'C:\laragon\temp';
 
     if (env('enviroment') === 'production') {
       ini_set('memory_limit', '400M');
