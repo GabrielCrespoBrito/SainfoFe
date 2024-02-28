@@ -172,7 +172,7 @@ class RespaldoDatabase extends Command
     } catch (ProcessFailedException $exception) {
       $success = false;
       $error = sprintf("@ERROR-RESPALDO-BD (%s) (%s)", $exception->getMessage(), $this->currentDatabase);
-      Log::info($error);
+      logger($error);
       $this->error($error);
     }
 
@@ -205,7 +205,7 @@ class RespaldoDatabase extends Command
     try {
       return $empresa->getDatabase();
     } catch (\Throwable $th) {
-      Log::info("@ERROR-RESPALDO " . $empresa->empcodi);
+      Log::info( sprintf("@ERROR-RESPALDO %s (%s)", $empresa->empcodi, $th->getMessage() ));
       return null;
     }
   }
