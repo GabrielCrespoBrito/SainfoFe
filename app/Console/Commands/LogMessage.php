@@ -38,5 +38,6 @@ class LogMessage extends Command
    */
   public function handle()
   {
+    logger('Log message from command util:log_mensaje ' . date('Y-m-d H:i:s'));
   }
 }

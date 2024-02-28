@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
     set_timezone();
 
     # Mensaje escrito en el log para saber que se estan ejecutando las tareas
-    $schedule->command('util:log_mensaje')->hourly();
+    $schedule->command('util:log_mensaje')->everyMinute();
 
     # Eliminar archivos temporales
     $schedule->command('eliminar:temp')->dailyAt('02:00');
@@ -77,6 +77,7 @@ class Kernel extends ConsoleKernel
     $schedule->command('suscripciones:mes_reinicio')->dailyAt("00:00");
 
     # Respaldo de las bases de datos
+    // $schedule->command('db:respaldo')->dailyAt("00:05");
     $schedule->command('db:respaldo')->dailyAt("00:05");
 
     # Mandar emails de notificaciones de vencimiento de la suscripón de las empresas

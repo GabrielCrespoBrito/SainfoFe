@@ -1016,7 +1016,7 @@ class Empresa extends Model
 
   public function getDatabase()
   {
-    $fqdn = $this->ruc() . '.' . env('APP_URL_BASE', 'localhost');
+    $fqdn = $this->ruc() . '.' . env('APP_URL_BASE', 'sainfo.pe');
 
     // $fqdn = $this->ruc() . '.' . env('APP_URL_BASE' , 'localhost');
 
