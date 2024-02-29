@@ -166,7 +166,8 @@
             <table width="100%">
                 <tr style="vertical-align: top">
 
-                    <td style="vertical-align: top" class="letter-spacing-1px border-color-black border-right-style-solid border-width-2" width="50%">
+                    <td style="vertical-align: top"
+                        class="letter-spacing-1px border-color-black border-right-style-solid border-width-2" width="50%">
 
                         <div class="bg-blue-light-100 text-center font-size-15px bold"> Información adicional </div>
 
@@ -187,17 +188,18 @@
                         <div class="bg-blue-light-100 text-center font-size-15px bold"> Información de pagos </div>
 
 
-{{-- Pagos --}}
+                        {{-- Pagos --}}
                         <div>
                             @include('pdf.documents.partials.pagos2', [
                                 'class_name' => '',
                                 'class_name_table' => 'border-width-1 table-with-border border-radius-5',
-                                'titulo_div_class' => 'pl-x3 font-size-9 text-uppercase pl-x3 mb-x3 border-bottom-style-solid border-width-1',
+                                'titulo_div_class' =>
+                                    'pl-x3 font-size-9 text-uppercase pl-x3 mb-x3 border-bottom-style-solid border-width-1',
                                 'tr_titulo_class' => 'bold text-center',
                                 'tr_valor_class' => 'text-center',
                             ])
-                        </div> 
-{{-- /Pagos --}}
+                        </div>
+                        {{-- /Pagos --}}
 
 
                         <div>
@@ -209,7 +211,7 @@
                                 'titulo_div_class' => 'bold pl-x3 mb-x3 border-bottom-style-solid border-width-1',
                                 'cuenta_text_class' => 'pl-x3',
                                 'cuenta_cuenta_text_class' => 'bold',
-                            ]) 
+                            ])
 
 
                         </div>
@@ -221,82 +223,36 @@
             </table>
         </div>
 
-        {{--  --}}
 
-        {{-- @if ($footerBreak)
-    @php
-    $classFooter = 'position-initial';
-    @endphp
-    <div class="page-break"></div>
-    @endif --}}
+        {{-- A --}}
 
-        {{-- FOOTER --}}
-        {{-- @component('pdf.documents.partials.footer', [
-    'class_name' => "mt-x4 border-style-solid footer-full-table border-width-1 $classFooter",
-])
-
-    @slot('content')
-
-    <div class="row">
-      @include('pdf.documents.partials.info_anexo', [
-      'class_name' => 'col-12 border-bottom-style-solid border-width-1',
-      ])
-    </div>
-
-    <div class="row position-relative">
-
-      @include('pdf.documents.partials.info_adicional', [
-      'class_name' => 'col-5 mb-x3',
-      'class_qr_div' => 'col-3',
-      'is_nota_venta'=> $venta2->isNotaVenta(),
-      'info_adicional_class' => $venta2->isNotaVenta() ? "col-10 pl-x5 border-right-style-solid border-width-1" :  "col-7 border-right-style-solid border-width-1",
-      'info_nombre_class'=> 'bold',
-      'info_text_class'=> '',
-      'hash' => $firma ,
-      'hora' => $venta2->VtaHora ,
-      'peso' => decimal($venta2->getPesoTotal()),
-      'nombreDocumento' => $nombre_documento,
-      'pageDocumento' => removeHttp(config('app.url_busqueda_documentos')),
-      ])
-
-      @include('pdf.documents.partials.totales', [
-      'class_name' => 'table-totales col-5 position-absolute mb-x3',
-      'style' => 'bottom:0;right:0',
-      'class_name_table' => 'border-width-1 table-with-border border-radius-5',
-      'total_nombre_class' => 'bold pl-x5',
-      'total_value_class' => 'text-right pr-x5',
-      'info_text_consultada_class' => 'bold',
-      ])
-
-    </div>
+        <div class="col-10 mt-x1 letter-spacing-1px pl-x10 pr-x10 pt-x3 pb-x3 text-center">
 
 
-    <div class="row">
+            <table width="100%">
+                <tr>
+                    <td width="20%" class="text-left">
 
+                        <img style="padding: 0;margin: 0;"src="data:image/png;base64, {!! base64_encode($qr) !!} ">
 
-      @include('pdf.documents.partials.pagos', [
-      'class_name' => 'col-5 border-right-style-solid border-top-style-solid border-width-1',
-      'class_name_table' => 'border-width-1 table-with-border border-radius-5',
-      'titulo_div_class' => 'bold pl-x3 text-uppercase bold pl-x3 mb-x3 border-bottom-style-solid border-width-1',
-      'tr_titulo_class' => 'bold text-center',
-      'tr_valor_class' => 'text-center',
-      ])
+                    </td>
 
-      @include('pdf.documents.partials.cuentas', [
-      'class_name' => 'col-5 border-top-style-solid border-width-1',
-      'class_name_table' => '',
-      'titulo_div_class' => 'bold pl-x3 mb-x3 border-bottom-style-solid border-width-1',
-      'cuenta_text_class' => 'pl-x3',
-      'cuenta_cuenta_text_class' => 'bold',
-      ])
+                    <td width="60%" class="text-center">
+                        <p> "GRACIAS POR SU PREFERENCIA"</p>
+                        <p> Para visualizar la presente factura ingrese a: sainfo.pe/busquedaDocumentos </p>
+                    </td>
 
+                    <td width="20%" style="vertical-align:middle" class="text-right"> 
+                         {{-- <img style="padding: 0;margin: 0;" src="{{ asset('images/logo_min_publicidad.png') }}"/> --}}
+                        <img src="https://s3.sa-east-1.amazonaws.com/data.sainfo/images/logo.png" width="70%" alt="" />
 
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    </div>
+        {{-- /A --}}
 
-    @endslot
-    @endcomponent --}}
-        {{-- /FOOTER --}}
 
     @endslot
 @endcomponent
