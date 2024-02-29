@@ -237,12 +237,12 @@
 
                     </td>
 
-                    <td width="60%" style="vertical-align:top" class="text-center">
+                    <td width="60%" style="vertical-align:middle" class="text-center">
                         <p> "GRACIAS POR SU PREFERENCIA"</p>
                         <p> Para visualizar la presente factura ingrese a: sainfo.pe/busquedaDocumentos </p>
                     </td>
 
-                    <td width="20%" style="vertical-align:top" class="text-right"> 
+                    <td width="20%" style="vertical-align:middle" class="text-right"> 
                          {{-- <img style="padding: 0;margin: 0;" src="{{ asset('images/logo_min_publicidad.png') }}"/> --}}
                         <img src="https://s3.sa-east-1.amazonaws.com/data.sainfo/images/logo.png" width="70%" alt="" />
 
