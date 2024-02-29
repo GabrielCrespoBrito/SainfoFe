@@ -51,10 +51,10 @@ class CompraPagoStoreRequest extends FormRequest
 
 			$validator->after(function ($validator) use ($compra) {
 
-				if ( ! Caja::hasAperturada() ) {
-					$validator->errors()->add('deuda', 'No tiene ninguna caja aperturada');
-					return;
-				}
+        if (!Caja::hasAperturada(null, get_empresa()->isTipoCajaLocal())) {
+          $validator->errors()->add('deuda', 'No tiene ninguna caja aperturada');
+          return;
+        }
 
         if ($compra->deudaSaldada()) {
           $validator->errors()->add('deuda', 'Esta compra ya ha sido completamente pagada');
@@ -69,9 +69,12 @@ class CompraPagoStoreRequest extends FormRequest
 						$validator->errors()->add('deuda', 'La cuenta de bancaria no existe');
 						return;
 					}
-
+          
+          
 					$caja = Caja::where('CueCodi', $this->cuenta_id)->first();
-					if( is_null($caja) ){
+
+
+          if( is_null($caja) ){
 						$validator->errors()->add('deuda', 'La cuenta de banco no tiene aperturada ninguna caja');
 						return;
 					}
