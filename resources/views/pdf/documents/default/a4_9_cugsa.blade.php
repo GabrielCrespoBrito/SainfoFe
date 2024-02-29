@@ -111,8 +111,8 @@
 
             @include('pdf.documents.partials.table', [
                 'complete_tds_spaces' => true,
-                'cantAddNV' => 30,
-                'cantAddDoc' => 20,
+                'cantAddNV' => 20,
+                'cantAddDoc' => 10,
                 'class_name' => '',
                 'class_name_table' => 'border-collapse-separate',
                 'thead_class' =>
