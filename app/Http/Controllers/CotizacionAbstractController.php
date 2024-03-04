@@ -114,9 +114,11 @@ class CotizacionAbstractController extends Controller
     $titulo_pagina = Cotizacion::getNombre($tipo);
     $locales = user_()->locales->load('local');
     $vendedores = get_empresa()->vendedores;
+    $usuarios = get_empresa()->users;
     return view('cotizaciones.index', [
       'tipo' => $tipo,
       'locales' => $locales,
+      'usuarios' => $usuarios,
       'vendedores' => $vendedores,
       'titulo_pagina' => $titulo_pagina,
       'routes' => $this->getRoutes(),
@@ -228,6 +230,10 @@ class CotizacionAbstractController extends Controller
 
     if ($request->vendedor) {
       $busqueda->where('vencodi', $request->vendedor);
+    }
+
+    if ($request->usucodi) {
+      $busqueda->where('usucodi', $request->usucodi);
     }
 
     if ($term) {

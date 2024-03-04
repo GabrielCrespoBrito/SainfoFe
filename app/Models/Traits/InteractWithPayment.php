@@ -17,9 +17,6 @@ trait InteractWithPayment
       array_push( $payments , $pago->getDataFormat() );
     }
 
- 
-
-
     $data = $this->getDataPayment();
     $data['payments'] = $payments;
 

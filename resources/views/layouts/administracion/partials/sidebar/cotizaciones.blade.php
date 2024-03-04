@@ -25,5 +25,9 @@
       <a href="{{ route('tienda.index') }}"><i class="fa fa-circle-o"></i> Tienda </a>
     </li>
 
+    <li>
+      <a href="{{ route('coti.report') }}"><i class="fa fa-circle-o"></i> Reporte </a>
+    </li>
+
   </ul>
 </li>

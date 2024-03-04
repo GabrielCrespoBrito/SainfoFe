@@ -156,6 +156,7 @@ function initDatable()
          "local": $("[name=local] option:selected").val(),
          "estado": $("[name=estado] option:selected").val(),
          "vendedor": $("[name=vendedor] option:selected").val(),
+         "usucodi": $("[name=usucodi] option:selected").val(),
        });
       }
       //      
@@ -478,7 +479,7 @@ function events()
     id_factura = $(this).parents('tr').find("td:eq(0)").text();
   });
 
-  $("[name=tipo],[name=mes],[name=local],[name=vendedor],[name=estado]").on( 'change', function(){
+  $("[name=tipo],[name=mes],[name=local],[name=vendedor],[name=usucodi],[name=estado]").on( 'change', function(){
     table.draw();
   });
 

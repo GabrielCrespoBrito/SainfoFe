@@ -73,7 +73,6 @@ class VentaTipoPagoReportController extends Controller
     $empresa = get_empresa();
     $caja = Caja::findOrfail($caja_id);
 
-
     $clienteCallBack = function($join)
     {
       $join->on('prov_clientes.PCCodi', '=', 'ventas_pago.PCCodi')
@@ -83,8 +82,8 @@ class VentaTipoPagoReportController extends Controller
     $ventasCallBack =  function ($join) use($caja)
     {
       $join->on('ventas_cab.VtaOper', '=', 'ventas_pago.VtaOper')
-      ->where('ventas_cab.LocCodi', '=', $caja->LocCodi)
-      ->where('ventas_cab.User_Crea', '=', $caja->User_Crea);
+      ->where('ventas_cab.LocCodi', '=', $caja->LocCodi);
+      // ->where('ventas_cab.User_Crea', '=', $caja->User_Crea);
     };
 
     
@@ -147,37 +146,7 @@ class VentaTipoPagoReportController extends Controller
         ->join('prov_clientes', $clienteCallBack)
         ->join('ventas_cab', $ventasCallBack)
         ->where('ventas_pago.PagFech', $caja->CajFech);
-
-
-    //   $pagos = VentaPago::with(['venta' => function($q) use ($caja) {
-    //     $q->where('LocCodi', $caja->LocCodi )
-    //     ->where('User_Crea', $caja->User_Crea);
-
-    //   },
-    //   'cliente' => function ($q) {
-    //     $q->where('TipCodi', ClienteProveedor::TIPO_CLIENTE);
-    //   }
-    // ])
-    //   ->where('PagFech', $caja->CajFech);
-
-
-
-    }
-
-    /*
-
-      <td> {{ $item->VtaOper }} </td>
-      <td> {{ $item->PagFech }} </td>
-      <td> {{ $item->PagBoch }} </td>
-      <td> {{ $item->cliente->PCNomb }} </td>
-      <td> {{ $item->CtoCodi }} </td>
-      <td> {{ $item->Bannomb }} </td>
-      <td> {{ $item->MonCodi }} </td>
-      <td class="text-align-right"> {{ $item->PagTCam }} </td>
-      <td class="text-align-right"> {{ $item->PagImpo }} </td>
-      
-    */
-
+   }
 
     $pagos = $pagos
       ->orderBy('ventas_pago.TpgCodi')

@@ -34,6 +34,8 @@ class VentasPagosController extends Controller
 
     $venta = Venta::find($request->id_factura);
     $data = $venta->getDataPayments();
+    // _dd("aja", $data );
+    // exit();
     return response()->json($data);
   }
 

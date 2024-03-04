@@ -17,6 +17,11 @@ Route::prefix('preventa')->group(function () {
     Route::delete('delete/{cotizacion_id}', 'CotizacionesController@delete')->name('delete');
     Route::post('save', 'CotizacionesController@save')->name('save');
     Route::post('liberar', 'CotizacionesController@liberar')->name('liberar');
+
+
+    Route::get('reporte-create', 'CotizacionReportController@create')->name('report');
+    Route::post('report-show', 'CotizacionReportController@report')->name('report-post');
+
     Route::get('imprimir/{tipo_impresion?}/{id_cotizacion?}/{formato?}', 'CotizacionesController@pdf')->name('imprimir');
   });
 });

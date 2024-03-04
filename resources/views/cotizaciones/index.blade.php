@@ -62,6 +62,15 @@
     </div>
 
     <div class="col-md-2 col-sm-4  col-xs-6">
+      <select name="usucodi" class="form-control input-sm">
+        <option value=""> - USUARIOS - </option>
+        @foreach ($usuarios as $usuario)
+        <option value="{{ $usuario->usucodi }}"> {{ $usuario->usulogi }} </option>
+        @endforeach
+      </select>
+    </div>
+
+    <div class="col-md-2 col-sm-4  col-xs-6">
       <select name="estado" class="form-control input-sm">
         <option value=""> - ESTADO - </option>
         <option value="P">Pendiente</option>
@@ -73,7 +82,7 @@
 
   <input type="hidden" name="tipo" value="{{ $tipo }}">
 
-  <div class="col-md-offset-2 col-md-2 acciones-div ww">
+  <div class=" col-md-2 acciones-div ww">
     <a href="{{ $routes->create }}" data-toggle="tooltip" title="Nueva" class="btn btn-primary btn-flat pull-right crear-nuevo"> <span class="fa fa-plus"></span> Nueva </a>
   </div>
 
