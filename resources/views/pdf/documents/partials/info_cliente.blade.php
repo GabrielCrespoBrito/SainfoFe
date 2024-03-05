@@ -62,7 +62,9 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
   </div>
   {{-- /Nombre --}}
 
+
   {{-- Documento  --}}
+  @if($documento)
   <div class="documento_div_class {{ $documento_div_class }}">
 
     @if($documento_campo_nombre)
@@ -70,13 +72,13 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
       {{ $documento_campo_nombre }}
     </span>
     @endif
-
     <span class="documento_text {{ $documento_text_class }}"> {{ $documento }} </span>
-
   </div>
+  @endif
   {{-- /Documento --}}
 
   {{-- Direcciòn  --}}
+  @if($direccion)
   <div class="direccion_div_class {{ $direccion_div_class }}">
 
     @if($direccion_campo_nombre)
@@ -88,6 +90,8 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
     <span class="direccion_text {{ $direccion_text_class }}"> {!! $direccion !!} </span>
 
   </div>
+  @endif
+
   {{-- /Direcciòn --}}
 
 

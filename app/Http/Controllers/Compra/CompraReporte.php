@@ -90,9 +90,6 @@ trait CompraReporte
       'withProducts' => $request->input('products',false),
     ];
 
-    // _dd( $request->all() );
-    // exit();
-
 
     if( $request->tiporeporte == "pdf" ){
       $pdf = new PDFGenerator(view('compras.pdf', $data), PDFGenerator::HTMLGENERATOR);

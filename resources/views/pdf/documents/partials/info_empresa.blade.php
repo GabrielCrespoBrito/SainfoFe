@@ -111,6 +111,7 @@ $ruc_text_class = $ruc_text_class ?? '';
   {{-- /Telefonos --}}
 
   {{-- Emails  --}}
+  @if($correo)
   <div class="email_div_class {{ $correo_div_class }}">
 
     @if($correo_campo_nombre)
@@ -123,6 +124,7 @@ $ruc_text_class = $ruc_text_class ?? '';
     <span class="correo_text {{ $correo_text_class }}"> {!! $correo !!} </span>
 
   </div>
+  @endif
   {{-- /Emails --}}
 
 </div>

@@ -1,6 +1,7 @@
 @php
 
 $medio_pago_nombre = $medio_pago_nombre ?? null;
+$vendedor_campo_class = $vendedor_campo_class ?? '';
 $showGuias = $showGuias ?? true;
 $showResponsable = $showResponsable ?? true;
 $showOrdenCompra = $showOrdenCompra ?? true;
@@ -25,7 +26,7 @@ $trs = [
 
 // Vendedor
 [[
-'class_name' => 'text-top',
+'class_name' => 'text-top ' . $vendedor_campo_class ,
 'valor_td_class' => 'valor_td_info bold text-left ' . $valor_td_class,
 'valor_text' => 'Vendedor:',
 ],

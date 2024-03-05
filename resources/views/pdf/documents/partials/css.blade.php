@@ -2655,9 +2655,18 @@ border-left-style: solid;
 .border-bottom-style-solid {
 border-bottom-style: solid;
 }
+.border-top-style-dotted {
+border-top-style: dotted;
+}
+
 .border-bottom-style-dotted {
 border-bottom-style: dotted;
 }
+
+.border-bottom-style-double {
+  border-bottom-style: double;
+}
+
 .border-bottom-0 {
 border-bottom: 0 !important;
 }
