@@ -31,6 +31,8 @@
   <script src="{{ asset('plugins/datatable/jquery.dataTables.min.js') }}"> </script>
   <script src="{{ asset('plugins/datatable/dataTables.bootstrap.js') }}"> </script>
   <script src="{{ asset('js/cotizaciones/index.js') }}"> </script>  
+	<script src="{{ asset(mix('js/cotizaciones/mix/index.js')) }}"> </script>
+
 @endsection
 
 @section('titulo_pagina', $titulo_pagina)

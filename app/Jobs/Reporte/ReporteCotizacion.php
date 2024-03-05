@@ -46,19 +46,17 @@ class ReporteCotizacion
    */
   public function getQuery()
   {
-    $query = Cotizacion::with([ 'items.producto', 'cliente_with' => function ($query) {
+    $query = Cotizacion::with(['items.producto', 'cliente_with' => function ($query) {
       $query->where('TipCodi', 'C');
     }, 'vendedor'])
       ->whereBetween('CotFVta', [$this->fecha_desde, $this->fecha_hasta]);
-
-      // ->whereIn('TidCodi', [ Venta::BOLETA, Venta::FACTURA, Venta::NOTA_DEBITO,  Venta::NOTA_CREDITO, Venta::NOTA_VENTA ]);
 
     if ($this->vendedor) {
       $query->where('vencodi', $this->vendedor);
     }
 
-   if ($this->usucodi) {
-      $query->where('Vencodi', $this->usucodi);
+    if ($this->usucodi) {
+      $query->where('usucodi', $this->usucodi);
     }
 
     if ($this->estado) {
@@ -69,7 +67,7 @@ class ReporteCotizacion
     return
       $query->get();
 
-      // ->groupBy('Vencodi');
+    // ->groupBy('Vencodi');
   }
 
   /**
@@ -80,21 +78,21 @@ class ReporteCotizacion
   public function handle()
   {
     $query =  $this->getQuery();
-    
+
 
     // Si no existen registros, deter el resto del script
-    if( $query->count() === 0 ){
+    if ($query->count() === 0) {
       return;
     }
 
     $data = [];
-    $this->addToData($data, $this->getInfoReporte() );
+    $this->addToData($data, $this->getInfoReporte());
     $total_reporte = &$data['total'];
 
     $this->processAll($query, $data, $total_reporte);
     $this->data = $data;
   }
-  
+
   /**
    * Procesar los dias por iterar
    *
@@ -102,7 +100,7 @@ class ReporteCotizacion
    */
   public function processAll($cotizaciones, &$data, &$total_reporte)
   {
-    foreach ($cotizaciones as $cotId => $cotizacion ) {
+    foreach ($cotizaciones as $cotId => $cotizacion) {
 
       $info = [
         'id' => $cotizacion->CotNume,
@@ -114,7 +112,7 @@ class ReporteCotizacion
         'items' => [],
       ];
 
-      foreach( $cotizacion->items as $item ){
+      foreach ($cotizacion->items as $item) {
         $info['items'][] = [
           'id' => $item->DetCodi,
           'nombre' => $item->DetNomb,
@@ -123,7 +121,7 @@ class ReporteCotizacion
         ];
       }
 
-    $data['items'][] = $info;
+      $data['items'][] = $info;
     }
   }
 
@@ -156,7 +154,7 @@ class ReporteCotizacion
 
   public function getInfoReporte()
   {
-    $vendedor = $this->vendedor ? Vendedor::find($this->vendedor)->LocNomb : 'TODOS';
+    $vendedor = $this->vendedor ? Vendedor::find($this->vendedor)->vennomb : 'TODOS';
     $usuario  = $this->usucodi ? User::find($this->usucodi)->usulogi : 'TODOS';
     $estado   = $this->estado ? ['P' => 'Pendiente', 'L' => 'Liberada'][$this->estado] : 'TODOS';
     $empresa  = get_empresa();

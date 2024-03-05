@@ -26,6 +26,7 @@ mix
   .js('public/js/guia/scripts.js', 'public/js/guia/mix/')
   .js('public/js/compras/crud.js', 'public/js/compras/mix/')
   .js('public/js/cotizaciones/crear_modificar.js', 'public/js/cotizaciones/mix/')
+  .js('public/js/cotizaciones/index.js', 'public/js/cotizaciones/mix/')
   .js('public/js/sainfo.js', 'public/js/mix/sainfo.js')
   .js('public/js/admin.js', 'public/js/mix/admin.js')
   .js('public/js/unidad/index.js', 'public/js/unidad/mix/index.js')

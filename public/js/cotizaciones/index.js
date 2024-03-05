@@ -229,7 +229,7 @@ function initTags()
 }
 
 
-function show_hide_modal( id_modal , action = "show" , static = true )
+function show_hide_modal( id_modal , action = "show" , _static = true )
 {
   $("#" + id_modal).modal(action);
 }
