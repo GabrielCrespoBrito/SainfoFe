@@ -115,7 +115,7 @@ class CotizacionExcell extends ExcellGenerator
     $excel->sheet($this->getSheetTitle(), function ($sheet) {
 
       $this->sheet = $sheet;
-      $this->sheet->setAutoSize(false);
+      $this->sheet->setAutoSize(true);
       $this->sheet->setFontFamily('Arial');
       $this->sheet->setFontSize(10);
 
