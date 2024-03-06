@@ -115,8 +115,7 @@
                 'cantAddDoc' => 15,
                 'class_name' => '',
                 'class_name_table' => 'border-collapse-separate',
-                'thead_class' =>
-                    'font-size-9 bg-blue-light-100  bold c-black pb-x10 pt-x10 pl-x3 border-color-black  border-bottom-style-solid border-width-2',
+                'thead_class' => 'font-size-9 bg-blue-light-100  bold c-black pb-x10 pt-x10 pl-x3 border-color-black  border-bottom-style-solid border-width-2',
                 'tbody_class' => 'pt-x2 pb-x2 pl-x3 pb-x2',
                 'class_precio_unit' => 'text-right pr-x3',
                 'class_importe' => 'text-right pr-x3 ',
@@ -242,9 +241,10 @@
                         <p> Para visualizar la presente factura ingrese a: sainfo.pe/busquedaDocumentos </p>
                     </td>
 
-                    <td width="20%" style="vertical-align:middle" class="text-right"> 
-                         {{-- <img style="padding: 0;margin: 0;" src="{{ asset('images/logo_min_publicidad.png') }}"/> --}}
-                        <img src="https://s3.sa-east-1.amazonaws.com/data.sainfo/images/logo.png" width="70%" alt="" />
+                    <td width="20%" style="vertical-align:middle" class="text-right">
+                        {{-- <img style="padding: 0;margin: 0;" src="{{ asset('images/logo_min_publicidad.png') }}"/> --}}
+                        <img src="https://s3.sa-east-1.amazonaws.com/data.sainfo/images/logo.png" width="70%"
+                            alt="" />
 
                     </td>
                 </tr>

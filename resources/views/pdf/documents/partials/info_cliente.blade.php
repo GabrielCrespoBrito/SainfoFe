@@ -49,6 +49,7 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
 <div class="info_cliente {{ $class_name }}">
 
   {{-- Nombre --}}
+  @if($nombre)
   <div class="nombre_div_class {{ $nombre_div_class }}">
 
     @if($nombre_campo_nombre)
@@ -60,6 +61,7 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
     <span class="nombre_text {{ $nombre_text_class }}"> {{ $nombre }} </span>
 
   </div>
+  @endif
   {{-- /Nombre --}}
 
 

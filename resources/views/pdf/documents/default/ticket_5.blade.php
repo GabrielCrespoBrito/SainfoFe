@@ -47,7 +47,7 @@
   'class_name' => 'col-12 border-width-1 mt-x5 mb-x5 border-bottom-style-dotted',
   'nombre_campo_nombre' => 'Razón Social:',
   'nombre_campo_class' => 'bold',
-  'nombre' => $cliente->PCNomb,
+  // 'nombre' => $cliente->PCNomb,
   'documento_campo_nombre' => $cliente->getNombreTipoDocumento() . ':',
   'documento_campo_class' => 'bold',
   'documento' => false,
@@ -119,27 +119,14 @@
   ])
 
   @endif
-  
+
+<div class="">Hora: {{ $venta2->VtaHora }}</div>
+
   <div class="text-center pt-x10">
     <div class="text-center">GRACIAS POR SU COMPRA</div>
   </div>
 
 
-  {{-- @include('pdf.documents.partials.info_adicional', [
-  'class_name' => 'col-12',
-  'class_qr_div' => 'col-12 text-center',
-  'info_adicional_class' => 'col-12',
-  'info_nombre_class'=> '',
-  'is_nota_venta'=> $venta2->isNotaVenta(),
-  'info_text_class'=> 'bold',
-  'hash' => $firma ,
-  'hora' => $venta2->VtaHora ,
-  'peso' => decimal($venta2->getPesoTotal()),
-  'nombreDocumento' => $nombre_documento,
-  'pageDocumento' => config('app.url_busqueda_documentos'),
-  'pageDocumento' => removeHttp(config('app.url_busqueda_documentos')),
-  'info_nombre_consultada_class' => 'bold'
-  ]) --}}
 
 </div>
 
