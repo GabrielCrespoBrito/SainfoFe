@@ -19,6 +19,8 @@
     $anticipo = $venta2->hasAnticipo() ? $venta2->VtaTotalAnticipo : false;
     $total = $venta2->VtaImpo;
     $style = $style ?? '';
+    $decimalsTotal = $decimalsTotal ?? '2';
+    
 
 @endphp
 
@@ -111,7 +113,7 @@
             <tr>
                 <td class="total_nombre {{ $total_nombre_class }}">TOTAL.: </td>
                 <td class="total_value {{ $total_value_class }}"> <span class="moneda_abbr">{{ $moneda_abreviatura }}
-                    </span> {{ fixedValue($total) }}</td>
+                    </span> {{ fixedValue($total, $decimalsTotal) }}</td>
             </tr>
 
             @if ($venta_rapida && $showACuenta)
