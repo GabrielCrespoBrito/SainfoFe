@@ -45,7 +45,7 @@
 
   @include('pdf.documents.partials.info_cliente', [
   'class_name' => 'col-12 border-width-1 mt-x5 mb-x5 border-bottom-style-dotted',
-  'nombre_campo_nombre' => 'Razón Social:',
+  'nombre_campo_nombre' => 'Nombre:',
   'nombre_campo_class' => 'bold',
   'nombre' => $cliente->PCNomb,
   'documento_campo_nombre' => $cliente->getNombreTipoDocumento() . ':',
