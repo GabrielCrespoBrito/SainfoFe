@@ -32,7 +32,7 @@
             <tr>
                 <td class="total_nombre {{ $total_nombre_class }}">OP. GRAVADAS.: </td>
                 <td class="total_value {{ $total_value_class }}"> <span class="moneda_abbr">{{ $moneda_abreviatura }}
-                    </span> {{ fixedValue($gravadas) }} </td>
+                    </span> {{ fixedValue($gravadas, $decimalsTotal) }} </td>
             </tr>
         @endif
 
@@ -88,7 +88,7 @@
             <tr>
                 <td class="total_nombre {{ $total_nombre_class }}">IGV.: {{ $igvPorc }} </td>
                 <td class="total_value {{ $total_value_class }}"> <span class="moneda_abbr">{{ $moneda_abreviatura }}
-                    </span> {{ fixedValue($igv) }}</td>
+                    </span> {{ fixedValue($igv, $decimalsTotal) }}</td>
             </tr>
         @endif
 
@@ -120,13 +120,13 @@
                 <tr>
                     <td class="total_nombre {{ $total_nombre_class }}">A CUENTA: </td>
                     <td class="total_value {{ $total_value_class }}"> <span
-                            class="moneda_abbr">{{ $moneda_abreviatura }} </span> {{ fixedValue($venta2->VtaPago) }}</td>
+                            class="moneda_abbr">{{ $moneda_abreviatura }} </span> {{ fixedValue($venta2->VtaPago, $decimalsTotal) }}</td>
                 </tr>
 
                 <tr>
                     <td class="total_nombre {{ $total_nombre_class }}">SALDO: </td>
                     <td class="total_value {{ $total_value_class }}"> <span
-                            class="moneda_abbr">{{ $moneda_abreviatura }} </span> {{ fixedValue($venta2->VtaSald) }}</td>
+                            class="moneda_abbr">{{ $moneda_abreviatura }} </span> {{ fixedValue($venta2->VtaSald, $decimalsTotal) }}</td>
                 </tr>
             @endif
 
