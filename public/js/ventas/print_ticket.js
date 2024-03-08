@@ -164,6 +164,9 @@ class printTicket {
    */
   makeInformacionDocumento() {
     // 22-25
+
+    console.log( this.data );
+
     this.conector
       .EscribirTextoFeed(this.getTextoSize('Fecha:', 22) + this.getTextoSize(this.data['documento_fecha'], this.line_width - 22))
       .EscribirTextoFeed(this.getTextoSize('Vendedor:', 22) + this.getTextoSize(this.data['documento_vendedor'], this.line_width - 22))

@@ -27,7 +27,12 @@ Route::middleware('tenant.exists')->group(function () {
 		Route::post('tipodocumento/','TipoDocumentoPagoController@busqueda')->name('tipo_documento_select');
     
     Route::post('prev/', 'VentaPreviewController@create')->name('prev');
+    
+    
+    Route::post('data_impresion/', 'VentaImprecionDirectaController@show')->name('data_impresion');
+
       
+
 
 		Route::post('verificar_ticket/','VentasController@verificar_ticket')->name('verificar_ticket');
 

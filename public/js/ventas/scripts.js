@@ -2332,6 +2332,45 @@ $(document).ready(function (e) {
     }
 
     else {
+
+      console.log("Aqui")
+
+      if( window.data_guardado ){
+        if (window.data_guardado.imprecion_data.impresion_directa ){
+          ajaxs( 
+            {
+              id_venta: window.data_guardado.codigo_venta
+            },
+            url_venta_data_impresion, 
+            { success : function(dataImpresion){
+
+              console.log(dataImpresion, window.data_guardado.imprecion_data );
+              
+              try {
+
+                let ticketPrint = new printTicket(
+                  dataImpresion,
+                  window.data_guardado.imprecion_data.nombre_impresora,
+                  window.data_guardado.imprecion_data.cantidad_copias,
+                  (successPrint) => { console.log("success Print", successPrint); },
+                  (errorPrint) => { console.log("Error Print", errorPrint) }
+                );
+
+                ticketPrint.print();              
+              } catch (error) {
+                console.log("error Imprecion", error);
+              }
+              //
+  
+              
+            }}
+            );
+
+          // Imprecion
+          console.log("Buscar informacion para imprimir");
+        }
+      }
+
       $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
 
       let nombre = "";
@@ -2520,23 +2559,23 @@ $(document).ready(function (e) {
           successStore(true);
         }
 
-        let ticketPrint = new printTicket(
-          data.imprecion_data.data_impresion,
-          data.imprecion_data.nombre_impresora,
-          data.imprecion_data.cantidad_copias,
-          impresionExitosa,
-          impresionError
-        );
+        // let ticketPrint = new printTicket(
+        //   data.imprecion_data.data_impresion,
+        //   data.imprecion_data.nombre_impresora,
+        //   data.imprecion_data.cantidad_copias,
+        //   impresionExitosa,
+        //   impresionError
+        // );
 
-        console.log(ticketPrint)
+        // console.log(ticketPrint)
 
-        ticketPrint.errorFunc = function (data) {
-          console.log("errorFunc", data)
-          successStore(true);
-        }.bind(ticketPrint);
+        // ticketPrint.errorFunc = function (data) {
+        //   console.log("errorFunc", data)
+        //   successStore(true);
+        // }.bind(ticketPrint);
 
 
-        ticketPrint.print();
+        // ticketPrint.print();
 
       } catch (error) {
         console.log("error_print", error)
@@ -2718,8 +2757,7 @@ $(document).ready(function (e) {
 
       nro_pedido: $("[name=nro_pedido]").val(),
       tipo_seleccion_ref: $(".btn-tipo-nota.selected").data('type'),
-
-
+      //
       doc_ref: $("[name=doc_ref]").val(),
       ref_documento: $("[name=ref_documento]").val(),
       ref_serie: $("[name=ref_serie]").val(),
@@ -2727,10 +2765,10 @@ $(document).ready(function (e) {
       ref_fecha: $("[name=ref_fecha]").val(),
       ref_motivo: $("[name=ref_motivo]").val(),
       ref_tipo: $("[name=ref_tipo]").val(),
-
+      // 
       tipo_cargo_global: $("[name=tipo_cargo_global]").val(),
       cargo_global: $("[name=cargo_global]").val(),
-
+      //
       tipo_guardado: $("[name=tipo_guardado]:checked").val(),
       imprimir: $("[name=tipo_guardado]").is(':checked'),
       formato_impresion: $("[name=formato_impresion]").val(),

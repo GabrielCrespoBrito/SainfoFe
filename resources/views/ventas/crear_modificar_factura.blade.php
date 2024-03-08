@@ -94,7 +94,8 @@
   var url_guardar_condicion = "{{ route('condicion.guardar_default') }}";
   var url_enviar_email = "{{ route('mail.enviar_documento') }}"
   var url_quitar_pago = "{{ route('ventas.quitar_pago') }}"
-  var url_data_pago = "{{ route('ventas.data_pago') }}"
+  var url_data_pago = "{{ route('ventas.data_pago') }}";
+  let url_venta_data_impresion = "{{ route('ventas.data_impresion') }}";
   var url_verificar_ticket = "{{ route('ventas.verificar_ticket') }}"
   // datatables
   var table_clientes = null;
