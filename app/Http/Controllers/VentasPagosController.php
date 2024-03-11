@@ -134,6 +134,7 @@ class VentasPagosController extends Controller
     $venta_pago = VentaPago::createPago($request);
     $venta_data = $venta_pago->toArray();
     $venta_data['moneda_abbre'] = $venta_pago->moneda_abbre();
+
     if (!$venta_pago->isTipoCredito()) {
       $tipoIngreso = in_array($request->tipopago,  TipoPago::getTipoBanco()) ? 'banco' : 'venta';
       $tipo_mov = $venta->isNotaCredito() ? 'S' : 'I';
@@ -146,6 +147,7 @@ class VentasPagosController extends Controller
       $save = $formato == PDFPlantilla::FORMATO_A4;
       $serie = $venta->getSerie();
       $venta->generatePDF($formato, $save, true, $serie->impresion_directa);
+      $venta->registerPago( $request->all() );
       // $venta->update(['VtaEsta' => 'P']);
     }
 

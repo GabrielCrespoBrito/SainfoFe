@@ -57,6 +57,8 @@ class EntidadReporteController extends Controller
         'entidades' => $entidades,
       ];
 
+      
+
       $generator = new PDFGenerator(view('reportes.entidades.pdf', $data) , PDFGenerator::HTMLGENERATOR);
       return $generator->generate();
 

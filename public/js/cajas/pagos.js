@@ -314,6 +314,10 @@ window.AppPago =
     let data =
     {
       PagOper: this.idPago,
+
+      pagoEfectivo: $('[name=soles]', this.parent).val(),
+      vuelto: $('[name=totalOperacion]', this.parent).val(),
+
       tipopago: this.eles.tipopago.find('option:selected').val(),
       VtaOper: this.get_id(),
       VtaImpo: this.getImporte(),

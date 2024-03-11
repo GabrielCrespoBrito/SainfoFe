@@ -8,6 +8,7 @@
       <th class="text-left"> T.D </th>
       <th class="text-left" style="padding-left:20px"> DOCUMENTO </th>
       <th class="text-left" style="padding-left:20px"> DIRECCION </th>
+      <th class="text-left" style="padding-left:20px"> UBIGEO </th>
       <th class="text-left" style="padding-left:20px"> TELEFONO </th>
       <th class="text-right" style="padding-right:5px"> CORREO </th>
     </tr>
@@ -24,6 +25,7 @@
       <td class="text-left"> {{ $tipo_documento_nombre }} </strong> </td>
       <td class="text-left" style="padding-left:20px">{{ $entidad->documento }}</td>
       <td class="text-left" style="padding-left:20px">{{ $entidad->direccion }}</td>
+      <td class="text-left" style="padding-left:20px">{{ ubigeoNombre($entidad->ubigeo) }}</td>
       <td class="text-left" style="padding-left:20px">{{ $entidad->telefono }}</td>
       <td class="text-right" style="padding-right:5px">{{ $entidad->correo }}</td>
     </tr>

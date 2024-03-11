@@ -231,6 +231,7 @@ class GuiaController extends Controller
       if ($accion == "edit") {
         $data['guia'] = GuiaSalida::find($id_guia);
         $data['series'] = SerieDocumento::ultimaSerie();
+        // $data['series'] = SerieDocumento::ultimaSerie(true, $data['guia']->TidCodi1);
       }
 
       $tipos_clientes = Cache::rememberForever('tipos_clientes' . $empcodi, function () {
@@ -258,7 +259,8 @@ class GuiaController extends Controller
       $data["motivo_traslado"] = $motivo_traslado;
       $data["transportistas"] = $transportistas;
       $data["empresas_transporte"] = $empresas_transporte;
-      $data["tipos_documentos"] = SerieDocumento::ultimaSerie(true)[0]['series'];
+
+      $data["tipos_documentos"] = SerieDocumento::ultimaSerie(true, $tipoDocumento )[0]['series'];
       $vendedores = Cache::rememberForever('vendedores' . $empcodi, function () {
         return Vendedor::all();
       });

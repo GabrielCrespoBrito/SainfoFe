@@ -122,7 +122,7 @@
     @include('clientes.partials.modal_clientes_proveedores')  
   @endif
 
-  @if( $guia->canModify() )
+  @if( $guia->canModify() && !$guia->isGuiaTransportista() )
     @include('guia_remision.partials.factura.modal_generar_doc', [ 'overflow' => true ])    
   @endif
 
@@ -148,7 +148,4 @@
   ])
     
 @endif
-
 @endsection
-
-

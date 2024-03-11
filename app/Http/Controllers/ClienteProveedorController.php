@@ -195,7 +195,7 @@ class ClienteProveedorController extends Controller
   {
     $this->authorize(p_name('A_SHOW', 'R_CLIENTE'));
 
-    $cliente_proveedor = ClienteProveedor::with('ubigeo')
+    $cliente_proveedor = ClienteProveedor::with([ 'ubigeo.departamento', 'ubigeo.provincia'])
       ->where('PCCodi', $request->codigo)
       ->where('EmpCodi', empcodi())
       ->where('TipCodi', 'C')

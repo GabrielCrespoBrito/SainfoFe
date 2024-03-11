@@ -160,7 +160,6 @@
 
 
   function defaultErrorAjaxFunc(data){
-    console.log( "error ajax clientes.scripts defaultErrorAjaxFunc" , data.responseJSON );
     let errors = data.responseJSON.errors;
     let erros_arr = [];
     $("#form-cliente input").parents('.form-group').removeClass('has-error');;  
@@ -401,8 +400,8 @@
     poner_data_form( "email" , data.PCMail );    
     poner_data_form( "contacto" , data.PCCont );    
 
-    poner_data_form("vendedor", data.VenCodi);
-    poner_data_form("ZonCodi", data.ZonCodi);    
+    poner_data_form( "vendedor" , data.VenCodi);
+    poner_data_form( "ZonCodi" , data.ZonCodi);    
     poner_data_form( "moneda" , data.MonCodi );    
     poner_data_form( "lista_precio" , data.LisCodi );    
     poner_data_form( "linea_credito" , data.PCLinea );    
@@ -414,24 +413,47 @@
     poner_data_form( "telefono_avalista" , data.PCATel );    
     poner_data_form( "email_avalista" , data.PCAEma );   
     
-    $("#form_cliente #ubigeo")
-    .select2('destroy')
-    .empty()
-    .attr({
-      'data-value'   : "",
-      'data-text' : ""
-    });
+    // $("#form_cliente #ubigeo")
+    // .select2('destroy')
+    // .empty()
+    // .attr({
+    //   'data-value'   : "",
+    //   'data-text' : ""
+    // });
 
-    if( data.ubigeo !== null ){
-      $("#form_cliente #ubigeo")
+    // resetSelect2Ubigeo();
+
+    console.log(data);
+    
+    if( data.ubigeo ){
+
+      console.log(  "Accediendo data");
+
+      let text = `(${data.ubigeo.ubicodi}) - ${data.ubigeo.departamento.depnomb} - ${data.ubigeo.provincia.provnomb} - ${data.ubigeo.ubinomb}`;
+
+
+      // "(" +  + ")" + ""  
+      //    + ' - ' + data.ubigeo.ubinomb
+
+      //   //
+      // $text = sprintf("(%s) %s - %s - %s",
+      //   $dataUbigeo['ubicodi'],
+      //   $dataUbigeo['departamento']['depnomb'],
+      //   $dataUbigeo['provincia']['provnomb'],
+      //   $dataUbigeo['ubinomb']
+      // );
+        //
+
+      $("#form-cliente #ubigeo")
       .attr({
+        'data-id': data.ubigeo.ubicodi,
         'data-value'   : data.ubigeo.ubicodi,
-        'data-text' : data.ubigeo.ubinomb
+        'data-text': text 
       });      
     }
 
     // initSelect2(".select2");
-    initSelect2("#ubigeo");
+    initSelect2("#form-cliente #ubigeo");
     $("#form-cliente [name=tipo_cliente] option:not(:selected) ").prop('disabled','disabled');
   }
 
@@ -499,8 +521,6 @@
   function success_save_func(data)
   {
     let $cliente_documento = $('#cliente_documento');
-
-    console.log("success_save_func", data , $cliente_documento);
 
     if( $cliente_documento.length ){
       if ( ! $cliente_documento.val() ){

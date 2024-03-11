@@ -22,6 +22,7 @@ use App\Jobs\Venta\UpdateNotaVentaByCanje;
 use App\Util\Sunat\Services\ServicesParams;
 use App\ModuloMonitoreo\StatusCode\StatusCode;
 use App\Jobs\Venta\PrepareDataVentaForJavascriptPrint;
+use App\Jobs\Venta\RegisterPago;
 use App\Util\Sunat\Request\credentials\CredentialDatabase;
 use App\Util\Sunat\Services\SunatConsult\ConsultStatusResolver;
 
@@ -946,6 +947,11 @@ trait VentaMethod
   public static function prepareDataVentaForJavascriptPrint( array $data )
   {
     return (new PrepareDataVentaForJavascriptPrint($data))->convert();
+  }
+
+  public function registerPago( $data )
+  {
+    (new RegisterPago( $this, $data))->handle();
   }
 
 

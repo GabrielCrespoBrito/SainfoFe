@@ -59,6 +59,11 @@ class GuiaTransportistaController extends GuiaController
     $despachar = $request->input('despachar', 0);
     $data['estado_edit'] =  $guia->getEstadoEdicion();
     $data['despachar'] = $despachar;
+
+
+    // _dd($data['series']);
+    // exit();
+
     return view('guia_remision.edit', $data);
   }
 

@@ -24,6 +24,7 @@ use App\Http\Controllers\Util\Xml\dos_cero\XmlCreator;
 use App\Http\Controllers\Util\Xml\dos_cero\XmlCreatorNC;
 use App\Http\Controllers\Util\Xml\dos_cero\XmlCreatorND;
 use App\TipoDocumento;
+use App\Ubigeo;
 
 function math()
 {
@@ -982,6 +983,16 @@ function calculate($tipo, $v)
   if (isSalida($tipo)) {
   }
 }
+
+function ubigeoNombre($ubicodi = null)
+{
+  if($ubicodi == null || $ubicodi == "" || $ubicodi == "-" ){
+    return "";
+  }
+
+  return Ubigeo::PLAIN_UBIGEOS[$ubicodi];
+}
+
 function convertNegative($v)
 {
   return $v * (-1);
