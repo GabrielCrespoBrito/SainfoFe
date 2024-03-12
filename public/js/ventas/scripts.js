@@ -10,6 +10,8 @@ function poner_data_cliente(data) {
   $("[name=cliente_documento]").select2('destroy')
   $("[name=cliente_documento]").empty()
 
+  console.log("Poner Data Cliente", data);
+
   let text = data.PCRucc + " - " + data.PCNomb;
   let id = data.PCCodi
 

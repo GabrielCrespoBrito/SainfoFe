@@ -40,7 +40,7 @@
         @if($create)
         <select name="vendedor" data-namedb="VenCodi" class="form-control input-sm">
           @foreach( $vendedores as $vendedor )
-          <option {{ $vendedor->isUserLoginVendedor() ? 'selected=selected' : ''   }} value="{{ $vendedor->Vencodi }}">{{ $vendedor->vennomb }}</option>
+          <option {{ $vendedor->isUserLoginVendedor() ? 'selected' : ''   }} value="{{ $vendedor->Vencodi }}">{{ $vendedor->vennomb }}</option>
           @endforeach
         </select>
         @else
