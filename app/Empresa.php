@@ -1859,10 +1859,10 @@ class Empresa extends Model
     if (is_numeric($serLetra)) {
       $nuevoNumero = (int) $serLetra + 1;
       $nueva_serie = math()->addCero($nuevoNumero, 3);
-    } else {
+    } 
+    
+    else {
       $serLetraTwoDigits = substr($serLetra, -2);
-
-
       if (is_numeric($serLetraTwoDigits)) {
         $nuevoNumero = (int) $serLetraTwoDigits + 1;
         $nuevaTwoDigits = math()->addCero($nuevoNumero, 2);
@@ -1902,6 +1902,11 @@ class Empresa extends Model
       ['first_letter' => 'N', 'tidcodi' => '53', 'codigo' => 'tidcodi_53', 'nombre' => 'Pre Venta', 'serie' => 'N' . $serie, 'defecto' => 0, 'tipo' => 'cotizaciones', 'correlativo' => '0'],
 
       ['first_letter' => 'O', 'tidcodi' => '98', 'codigo' => 'tidcodi_98', 'nombre' => 'Ord. Pago', 'serie' => 'O' . $serie, 'defecto' => 0, 'tipo' => 'cotizaciones', 'correlativo' => '0'],
+
+      ['first_letter' => 'OC', 'tidcodi' => '99', 'codigo' => 'tidcodi_99', 'nombre' => 'Ord. de Compra', 'serie' => 'OC' . $serie, 'defecto' => 0, 'tipo' => 'cotizaciones', 'correlativo' => '0'],
+
+
+
     ];
 
     if ($add_plantillas) {

@@ -449,6 +449,8 @@ class VentasController extends Controller
       $error = substr($e->getMessage(), 0, 150);
       DB::connection('tenant')->rollBack();
       DB::connection()->rollBack();
+      logger("@ERROR-CREAR-VENTA " . get_empresa()->EmpLin1);
+      logger($e);
       return response()->json(['message' => 'Error al guardar el documento: ' . $error], 500);
     }
 

@@ -667,6 +667,14 @@ class Cotizacion extends Model
 
   public function getPlantilla($formato)
   {
+    // logger(
+    //   [$this->EmpCodi,
+    //   $this->getSerieNumeracion(),
+    //   $this->TidCodi1,
+    //   $this->LocCodi,
+    //   $this->usucodi,
+    //   ]);
+
     if ($formato == PDFPlantilla::FORMATO_A4) {
       return $this->getSerie()->plantillaA4()->first();
     }
