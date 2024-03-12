@@ -8,6 +8,7 @@ use App\Models\Tienda\Cliente;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Util\PDFGenerator\PDFGenerator;
+use App\Util\ExcellGenerator\ClienteReporteExcell;
 
 class EntidadReporteController extends Controller
 {
@@ -53,14 +54,24 @@ class EntidadReporteController extends Controller
 
       $data = [
         'titulo' => $titulo,
+        'empresa_nombre' => get_empresa()->nombreRuc(),
         'fecha' => date('Y-m-d H:i:s'),
         'entidades' => $entidades,
       ];
 
-      
+      if( $request->tipo_reporte == "pdf" ){
+        $generator = new PDFGenerator(view('reportes.entidades.pdf', $data) , PDFGenerator::HTMLGENERATOR);
+        return $generator->generate();
+      }
 
-      $generator = new PDFGenerator(view('reportes.entidades.pdf', $data) , PDFGenerator::HTMLGENERATOR);
-      return $generator->generate();
 
+      // Excell
+			$excellExport = new ClienteReporteExcell($data);
+
+			$info = $excellExport
+				->generate()
+				->store();
+
+			return response()->download( $info['full'] , $info['file'] );
     }
 }

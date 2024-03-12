@@ -28,14 +28,22 @@
     <div class="filtro">
       <div class="cold-md-12">
         <fieldset class="fsStyle">
-          <legend class="legendStyle">Tipo </legend>
+          <legend class="legendStyle">Tipo de Entidad / Tipo de Reporte  </legend>
           <div class="row" id="demo">
-            <div class="col-md-12">
+            <div class="col-md-8">
               <select type="text" requred name="tipo" class="form-control input-sm flat text-center">
                 <option value="C"> Cliente </option>
                 <option value="P"> Proveedor </option>
               </select>
             </div>
+          {{--  --}}
+             <div class="col-md-4">
+              <select type="text" requred name="tipo_reporte" class="form-control input-sm flat text-center">
+                <option value="pdf"> PDF </option>
+                <option value="excell"> Excell </option>
+              </select>
+            </div>
+          {{--  --}}
             </div>           
         </fieldset>
       </div>
