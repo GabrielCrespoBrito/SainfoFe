@@ -50,6 +50,8 @@ class CreateVentasCabTable extends Migration
 			$table->char('LocCodi', 3)->nullable();
 			$table->float('VtaPago')->nullable();
 			$table->string('VtaSald')->nullable();
+      $table->float('VtaEfectivo')->nullable();
+      $table->float('VtaVuelto')->nullable();
 			$table->char('VtaEsPe', 2)->nullable();
 			$table->float('VtaPPer')->nullable();
 			$table->float('VtaAPer')->nullable();

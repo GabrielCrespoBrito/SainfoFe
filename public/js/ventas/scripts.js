@@ -10,8 +10,7 @@ function poner_data_cliente(data) {
   $("[name=cliente_documento]").select2('destroy')
   $("[name=cliente_documento]").empty()
 
-  console.log("Poner Data Cliente", data);
-
+  
   let text = data.PCRucc + " - " + data.PCNomb;
   let id = data.PCCodi
 
@@ -20,9 +19,13 @@ function poner_data_cliente(data) {
     'data-text': text,
     'data-url': url_buscar_cliente_select2,
   });
-
+  
   $("[name=zona] option[value=" + data.ZonCodi + "] ").prop('selected', true)
-  $("[name=vendedor] option[value=" + data.VenCodi + "] ").prop('selected', true)
+  
+  // && data.VenCodi != null
+  if (data.PCCodi != "00001" && data.VenCodi != null ){
+    $("[name=vendedor] option[value=" + data.VenCodi + "] ").prop('selected', true)
+  }
 
   $("[name=tipo_documento_c]").val(data.tipo_documento);
   initSelect2("#cliente_documento");
