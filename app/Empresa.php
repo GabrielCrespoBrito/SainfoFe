@@ -1880,6 +1880,8 @@ class Empresa extends Model
   {
     $serie = $serie ?? $this->nuevoNumeroSerie();
 
+    $serieOrdenCompra =  agregar_ceros( (int) $serie, 2, 0);
+
     $series = [
       ['first_letter' => 'F', 'tidcodi' => '01', 'codigo' => 'tidcodi_01',  'nombre'   => 'Factura', 'serie' =>  'F' . $serie, 'defecto' => 1, 'tipo' => 'ventas', 'correlativo' => '0'],
 
@@ -1895,6 +1897,8 @@ class Empresa extends Model
 
       ['first_letter' => 'T', 'tidcodi' => '09', 'codigo' => 'tidcodi_09', 'nombre' => 'Guia Remisión', 'serie' =>  'T' . $serie, 'defecto' => 0, 'tipo' => 'guias', 'correlativo' => '0'],
 
+      ['first_letter' => 'V', 'tidcodi' => '31', 'codigo' => 'tidcodi_31', 'nombre' => 'Guia Transportista', 'serie' =>  'V' . $serie, 'defecto' => 0, 'tipo' => 'guias', 'correlativo' => '0'],
+      
       ['first_letter' => 'P', 'tidcodi' => '50', 'codigo' => 'tidcodi_50', 'nombre' => 'Proforma', 'serie' => 'P' . $serie, 'defecto' => 0, 'tipo' => 'cotizaciones', 'correlativo' => '0'],
 
       ['first_letter' => 'N', 'tidcodi' => '52', 'codigo' => 'tidcodi_52', 'nombre' => 'Nota De Venta', 'serie' =>  'N' . $serie, 'defecto' => 0, 'tipo' => 'ventas', 'correlativo' => '0'],
@@ -1903,7 +1907,7 @@ class Empresa extends Model
 
       ['first_letter' => 'O', 'tidcodi' => '98', 'codigo' => 'tidcodi_98', 'nombre' => 'Ord. Pago', 'serie' => 'O' . $serie, 'defecto' => 0, 'tipo' => 'cotizaciones', 'correlativo' => '0'],
 
-      ['first_letter' => 'OC', 'tidcodi' => '99', 'codigo' => 'tidcodi_99', 'nombre' => 'Ord. de Compra', 'serie' => 'OC' . $serie, 'defecto' => 0, 'tipo' => 'cotizaciones', 'correlativo' => '0'],
+      ['first_letter' => 'OC', 'tidcodi' => '99', 'codigo' => 'tidcodi_99', 'nombre' => 'Ord. de Compra', 'serie' => 'OC' .   $serieOrdenCompra, 'defecto' => 0, 'tipo' => 'cotizaciones', 'correlativo' => '0'],
 
 
 

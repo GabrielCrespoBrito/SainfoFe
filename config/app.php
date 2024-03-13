@@ -267,6 +267,8 @@ return [
     ['tidcodi' => '98', 'defecto' => 0, 'sercodi' => 'OP01', 'tipo' =>  'cotizaciones'],
     // OrdenDeCompra
     ['tidcodi' => '99', 'defecto' => 0, 'sercodi' => 'OC01', 'tipo' =>  'cotizaciones'],
+
+
   ],
 
   'logos_dimenciones' => [

@@ -31,7 +31,6 @@ class LocalAsociateInfo
   {
     UserLocal::create_($usucodi, $this->loccodi, $this->empcodi, 0);
 
-    // Asociar local defecto
     User::find($usucodi)->setDefaultLocal($this->loccodi);
   }
 

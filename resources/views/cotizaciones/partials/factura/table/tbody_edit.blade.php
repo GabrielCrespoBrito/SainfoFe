@@ -27,7 +27,7 @@
       'detcodi' => $item->DetCodi,
       'unidad_nombre' => $unidad->withListaName(),
       'nombre'    => $item->DetNomb,
-      'marca'     => $producto->marca->MarNomb,
+      'marca'     => $producto->MarNomb,
       'cantidad' => $item->DetCant,
       'precio'    => $item->DetPrec,
       'descuento' => $item->DetDcto,
