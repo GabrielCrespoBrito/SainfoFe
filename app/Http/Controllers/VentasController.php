@@ -510,6 +510,9 @@ class VentasController extends Controller
         \File::put(public_path($pathTemp), $fileHelper->getPdf($namePDF));
       } else {
         $pathTemp = $venta->generatePDF($formato, true, true, false, PDFGenerator::HTMLGENERATOR);
+        $pathTemp = $pathTemp['tempPath'];
+        // logger( $pathTemp );
+        // exit();
       }
     } else {
       $generator = $formato == PDFPlantilla::FORMATO_A5 ? PDFGenerator::HTMLGENERATOR : PDFGenerator::HTMLGENERATOR;
@@ -522,9 +525,6 @@ class VentasController extends Controller
       $realPath = file_build_path($pathTemp);
       return response()->download($realPath, $namePDF);
     }
-
-    // dd( $pathTemp );
-    // exit();
 
     $path = asset($pathTemp);
     $pathJs = str_replace('\\', '/', $path);

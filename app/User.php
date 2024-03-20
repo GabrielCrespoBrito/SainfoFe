@@ -33,6 +33,7 @@ class User extends Authenticatable
   const ID_ADMIN = "01";
   const TIPO_DUENO = "01";
   const TIPO_ASISTENTE = "02";
+  const TIPO_CONTADOR = "11";
   const CARGO_ADMNISTRATIVO = "00";
   const PLAN_REGISTER_CAMPO = "ususerf";
 
@@ -62,7 +63,7 @@ class User extends Authenticatable
   }
 
   public function isContador(){
-    return $this->usulogi == "CONTADOR";
+    return $this->carcodi ==  User::TIPO_CONTADOR;
   }
 
   public function username()
