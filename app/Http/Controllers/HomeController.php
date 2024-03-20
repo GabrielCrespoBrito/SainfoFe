@@ -46,7 +46,9 @@ class HomeController extends Controller
   {
     $user  = auth()->user();
     if ($user->isContador()) {
-      return view('contador.index');
+      $routeData = route('reportes.ventas_mensual_getdata');
+      $routeDate = route('reportes.consult_date');
+      return view('reportes.ventas_mensual.form_new_contador', compact('routeData', 'routeDate'));
     } else {
       $empresa = Empresa::find(empcodi());
       (new CheckIfMonthExists)->handle();      

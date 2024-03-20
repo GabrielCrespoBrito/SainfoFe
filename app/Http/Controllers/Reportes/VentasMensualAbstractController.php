@@ -49,8 +49,6 @@ trait VentasMensualAbstractController
     $fecha_inicio = $request->fecha_inicio;
     $fecha_final =  $request->fecha_final;
     $isFileReport = $formato == "archivos";
-    // dd($estadoSunat);
-    // exit();
     $report = new VentaContableReport($fecha_inicio, $fecha_final, $request->tipo, $estadoSunat);
 
     if($isFileReport){
@@ -167,17 +165,12 @@ trait VentasMensualAbstractController
 
       $comprimido =  $this->saveFiles($data->toArray(), $empresa->empcodi );
 
-      // _dd( $comprimido );
-      // exit();
-
       if ($comprimido) {
         ob_end_clean();
-
-        // $contenido = base64_encode(file_get_contents($comprimido['path']));
         return response()->file($comprimido['path']);
-
-        // return ['contenido' =>  $contenido, 'nombre' =>  $comprimido['name'], 'type' => 'zip'];
-      } else {
+      }
+       
+      else {
         return response()->json(['message' => 'No se encontrarón archivos para descargar'], 400);
       }
 

@@ -2,15 +2,8 @@
 
 namespace App\Http\Controllers\Reportes;
 
-use App\Mes;
-use Carbon\Carbon;
-use App\Models\Cierre;
 use Illuminate\Http\Request;
-use mikehaertl\wkhtmlto\Pdf;
 use App\Http\Controllers\Controller;
-use App\Jobs\Venta\ConsultDocs;
-use App\Jobs\Venta\VentaContableReport;
-use App\Util\ExcellGenerator\VentaContableExcell;
 
 class VentasMensualController extends Controller
 {

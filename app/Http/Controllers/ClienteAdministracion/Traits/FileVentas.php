@@ -56,24 +56,24 @@ trait FileVentas
 
 			foreach( $ids as $id ){
 				$pathFilesVenta = $this->getFiles( $id );
-				// dump( "id" , $id, $pathFilesVenta );
-				// exit;
 				$pathFiles = array_merge( $pathFiles , $pathFilesVenta );
 			}
 
 			if( count( $pathFiles ) ){
-
 				$name_comprimido = get_empresa()->EmpLin1 . '_' . date('Ymdhms') . '.zip';
 				$path_comprimido = $this->fileHelper->getTempPath($name_comprimido);
 				$zipper = \Zipper::make($path_comprimido);
 
-				foreach ( $pathFiles as $path ) {
+        foreach ( $pathFiles as $path ) {
 					$zipper->add( $path );
 				}
 
 				$zipper->close();
-
-				return [ 'name' => $name_comprimido , 'path' => $path_comprimido];
+				
+        return [
+          'name' => $name_comprimido,
+          'path' => $path_comprimido
+        ];
 			}
 		}
 
