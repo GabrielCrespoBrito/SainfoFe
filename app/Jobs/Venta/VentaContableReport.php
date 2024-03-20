@@ -14,6 +14,7 @@ class VentaContableReport
   public $fecha_inicio;
   public $fecha_final;
   public $tipo;
+  public $onlyGetQuery = false;
   public $estadoSunat;
 
   public function __construct($fecha_inicio, $fecha_final, $tipo, $estadoSunat)
@@ -76,15 +77,32 @@ class VentaContableReport
       $docs->where('TidCodi', '=', $this->tipo);
     }
 
-    return
-      $docs
-      ->orderBy('TidCodi', 'asc')
-      ->orderBy('VtaSeri', 'asc')
-      ->orderBy('VtaNumee', 'asc')
-      ->get()
-      ->groupBy('TidCodi');
+
+    if ($this->onlyGetQuery) {
+      return $docs
+        ->orderBy('TidCodi', 'asc')
+        ->orderBy('VtaSeri', 'asc')
+        ->orderBy('VtaNumee', 'asc')
+        ->get()
+        ->pluck('VtaOper');
+    } else {
+      return  $docs
+        ->orderBy('TidCodi', 'asc')
+        ->orderBy('VtaSeri', 'asc')
+        ->orderBy('VtaNumee', 'asc')
+        ->get()
+        ->groupBy('TidCodi');
+    }
   }
 
+
+  public function setOnlyGetQuery(bool $onlyGetQuery)
+  {
+
+    $this->onlyGetQuery = $onlyGetQuery;
+
+    return $this;
+  }
 
   /**
    * Execute the job.
@@ -94,6 +112,12 @@ class VentaContableReport
   public function handle()
   {
     $query =  $this->getQuery();
+
+    if ($this->onlyGetQuery) {
+      return $query;
+    }
+
+
     $data = [];
 
     $this->addToData($data);

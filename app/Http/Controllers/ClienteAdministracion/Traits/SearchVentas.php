@@ -30,13 +30,13 @@ trait SearchVentas
 
 		// Estado
 		if( $estado != "todos" ){
-
-			if( $estado == "anulado" ){
-				$busqueda->where('VtaEsta', 'A' );
-			}
-			else {
-				$busqueda->where('fe_rpta', $estado )->where('VtaEsta', 'V' );					
-			}
+			$busqueda->where('VtaFMail', $estado );
+			// if( $estado == "anulado" ){
+			// 	$busqueda->where('VtaEsta', 'A' );
+			// }
+			// else {
+			// 	$busqueda->where('fe_rpta', $estado )->where('VtaEsta', 'V' );					
+			// }
 		}
 
 		return $busqueda;
@@ -45,7 +45,8 @@ trait SearchVentas
 	public function searchGetId( $empcodi , $fecha_desde , $fecha_hasta, $tipo = "todos", $estado = "todos" ){
 
 		$data = $this->searchByFilter( $empcodi , $fecha_desde , $fecha_hasta, $tipo , $estado );
-		return $data->pluck('VtaOper')->toArray();
+		
+    return $data->pluck('VtaOper')->toArray();
 	}
 
 }

@@ -20,7 +20,10 @@ class VentasMensualController extends Controller
   {
     $routeData = route('reportes.ventas_mensual_getdata');
     $routeDate = route('reportes.consult_date');
-    return view('reportes.ventas_mensual.form_new', compact('routeData', 'routeDate'));
+
+    $view = auth()->user()->isContador() ? 'reportes.ventas_mensual.form_new_contador' : 'reportes.ventas_mensual.form_new';
+
+    return view($view, compact('routeData', 'routeDate'));
   }
 
   public function getData(Request $request )

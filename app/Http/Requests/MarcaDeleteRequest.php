@@ -47,9 +47,10 @@ class MarcaDeleteRequest extends FormRequest
                 }
 
                 else {
-                    $productos_with_marca = Producto::where('marcodi', $this->MarCodi)->where('empcodi',empcodi())->count();  
+                    $productos_with_marca = Producto::where('marcodi', $this->MarCodi)->count();  
                     
                     if( $productos_with_marca ){
+                      
                         $validator->errors()->add('field', "No puede borrar esta marca, por que esta siendo usada en algun producto" );     
                     }
                 }

@@ -12,7 +12,7 @@ trait FileVentas
 
 	public function getFiles( $id ){
 
-		$venta = Venta::find($id, $this->empcodi);
+		$venta = Venta::find($id);
 		$docs = [ 'xml' , 'pdf' , 'cdr' ];
 		$pathFiles = [];
 

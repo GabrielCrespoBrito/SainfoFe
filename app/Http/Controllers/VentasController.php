@@ -86,10 +86,15 @@ class VentasController extends Controller
 
   public function search(Request $request)
   {
+    
     $term = $request->input('search')['value'];
     $estado = $request->input("estado");
     $status = $request->input("status");
     $filter = false;
+    
+    
+    logger([ $estado, $status, $filter ]);
+
     $busqueda = DB::connection('tenant')->table('ventas_cab')
       ->join('prov_clientes', function ($join) {
         $join
@@ -138,11 +143,12 @@ class VentasController extends Controller
       $busqueda = $busqueda->whereBetween('ventas_cab.VtaFvta', [$request->input('fecha_desde'), $request->input('fecha_hasta')]);
     }
 
+    // Tipos de Documentos
     if ($request->input("tipo") == "todos") {
-      // $busqueda = $busqueda->where('ventas_cab.TidCodi', '!=' , TipoDocumentoPago::NOTA_VENTA );
       $busqueda = $busqueda->whereNotIn('ventas_cab.TidCodi', [TipoDocumentoPago::NOTA_VENTA, 50]);
-    } else {
-
+    } 
+    
+    else {
       if ($request->input("tipo") == TipoDocumentoPago::NOTA_VENTA) {
         if (!auth()->user()->checkPermissionTo_(concat_space(PermissionSeeder::A_VER_NOTAS_VENTA, PermissionSeeder::R_VENTA))) {
           throw new Exception("Error No tiene permitido ver este tipo de documentos", 1);
@@ -156,17 +162,22 @@ class VentasController extends Controller
       $busqueda->where('ventas_cab.VtaSdCa', $filter, 0);
     }
 
-    if ($request->input("local") != "todos") {
+    if ( $request->input("local") != "todos" && $request->input("local") != null ) {
       $busqueda->where('ventas_cab.LocCodi', '=', $request->input("local"));
     }
 
     if (!is_null($estado)) {
+      
       if ($estado != "todos") {
+        
         if ($estado == "anulado") {
           $busqueda->where('ventas_cab.VtaEsta', '=', "A");
-        } else {
+        }
+
+        else {
           $busqueda->where('ventas_cab.fe_rpta', '=', $estado);
         }
+        
       }
     }
 
@@ -398,9 +409,6 @@ class VentasController extends Controller
         $documento->createFormaPago($request->pagos);
         $tipo_guia = $request->input('guia_tipo', Venta::GUIA_ACCION_NINGUNA);
 
-        // dd($request->input('id_almacen', '001'));
-        // exit();
-
         if ($tipo_guia != Venta::GUIA_ACCION_NINGUNA) {
           $rpta = $documento->createOrAssocGuia(
             $tipo_guia,
@@ -455,7 +463,7 @@ class VentasController extends Controller
     }
 
     if ($isTableVentas && $isFacturacion) {
-      $empresa->sumarConsumo(Caracteristica::COMPROBANTES);
+      $empresa->updateConsumo(Caracteristica::COMPROBANTES);
     }
 
 

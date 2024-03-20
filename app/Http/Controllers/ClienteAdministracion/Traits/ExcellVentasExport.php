@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\ClienteAdministracion\Traits;
 use App\Venta;
+use Exception;
 
 trait ExcellVentasExport {
 
   public function generateExcell( $ventas ){
 
     if( is_array($ventas) ){
-      
+      $ventas = Venta::with(['cliente_with', 'moneda'])->whereIn('VtaOper', $ventas)
+      ->get()
+      ->toArray(); 
+      // throw new Exception("Error Processing Request", 1);
     }
+
+    // _dd( $ventas );
+    // exit();
 
     $nameFile = get_empresa()->EmpLin1 . '_' . date('Ymd');;
     $nameFileWithExt = ($nameFile . '.xlsx' );
@@ -57,6 +64,9 @@ trait ExcellVentasExport {
             $cell->setAlignment("center");
           });
         }
+
+        // _dd( $ventas );
+        // exit();
 
         foreach($ventas as $index => $venta) {
  

@@ -1358,6 +1358,11 @@ class Empresa extends Model
     $this->suscripcionActual()->sumarRestarConsumo($caracteristica, $quantity, true);
   }
 
+  public function updateConsumo($caracteristica)
+  {
+    $this->suscripcionActual()->updateConsumo($caracteristica);
+  }
+
   public function restarConsumo($caracteristica, $quantity = 1)
   {
     $this->suscripcionActual()->sumarRestarConsumo($caracteristica, $quantity, false);

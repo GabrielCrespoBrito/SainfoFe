@@ -1,4 +1,47 @@
+window.needUsage = 1;
+
 function iniciar_grafica(labels, data, reload = false) {
+
+
+  // Funciones callbacck
+
+  var myLegendContainer = document.getElementById("legend");
+  // generate HTML legend
+  myLegendContainer.innerHTML = chart.generateLegend();
+  // bind onClick event to all LI-tags of the legend
+  var legendItems = myLegendContainer.getElementsByTagName('li');
+  for (var i = 0; i < legendItems.length; i += 1) {
+    legendItems[i].addEventListener("click", legendClickCallback, false);
+  }
+
+  function legendClickCallback(event) {
+    event = event || window.event;
+
+    var target = event.target || event.srcElement;
+    while (target.nodeName !== 'LI') {
+      target = target.parentElement;
+    }
+    var parent = target.parentElement;
+    var chartId = parseInt(parent.classList[0].split("-")[0], 10);
+    var chart = Chart.instances[chartId];
+    var index = Array.prototype.slice.call(parent.children).indexOf(target);
+    var meta = chart.getDatasetMeta(0);
+    var item = meta.data[index];
+
+    if (item.hidden === null || item.hidden === false) {
+      item.hidden = true;
+      target.classList.add('hidden');
+    } else {
+      target.classList.remove('hidden');
+      item.hidden = null;
+    }
+    chart.update();
+  }
+
+
+
+  //
+
 
   var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
 
@@ -35,8 +78,7 @@ function iniciar_grafica(labels, data, reload = false) {
 
 
 
-function createSlotsData(docs)
-{
+function createSlotsData(docs) {
   // const d = JSON.parse(window.data_grafica);
   const d = window.data_grafica;
 
@@ -52,15 +94,12 @@ function createSlotsData(docs)
   let routeVentaPorEnviar = dataEleParent.dataset.ventaporenviar
   let routeVentaNoAceptadas = dataEleParent.dataset.ventanoaceptadas
 
-  console.log(docs)
-
-
   for (const prop in docs) {
 
     if (prop == 52 || prop == "total") {
       continue;
     }
-    
+
     const NOMBRES = {
       '01': 'FACTURA',
       '03': 'BOLETA DE VENTA',
@@ -68,12 +107,9 @@ function createSlotsData(docs)
       '08': 'NOTA DE DEBITO',
       '09': 'GUIA DE REMISION'
     }
-    
+
     const ele = docs[prop];
 
-    console.log( prop, ele )
-// 
-    
     const nombre = NOMBRES[prop];
 
     if (prop == "09") {
@@ -98,8 +134,8 @@ function createSlotsData(docs)
     let pendientes = 0;
     let rechazadas = 0;
     let total = 0;
-    
-    if( prop == "09" ){
+
+    if (prop == "09") {
       aceptadas = ele.enviadas;
       pendientes = ele.por_enviar;
       rechazadas = ele.no_aceptadas;
@@ -161,16 +197,165 @@ function createSlotsData(docs)
 }
 
 
-function createGrafica(tipo, color = "rgba(0,0,0,.5)")
-{
+function createGraficaStatus(totales) {
+
+  $(".container-graphic-status")
+    .empty()
+    .append(`<canvas id="graphic-status"></canvas>`)
+
+
+  // Obtén el contexto del canvas
+  var ctx = document.getElementById('graphic-status').getContext('2d');
+
+  let dataInfo = {
+
+    '0001': {
+      color: "#77e892",
+      label: "Aceptado"
+    },
+    '0002': {
+      color: "#edcf8c",
+      label: "Rechazado"
+    },
+    '0003': {
+      color: "rgb(255,0,0)",
+      label: "Anulado"
+    },
+
+    '0011': {
+      color: "#c7cbc8",
+      label: "Pendiente"
+    }
+
+  }
+
+  // let totales = data.docs.total;
+
+  let labels = [];
+  let values = [];
+  let backGrounds = [];
+
+  for (prop in totales) {
+    if (prop != "total") {
+      let cantidad = totales[prop].cantidad;
+      if (cantidad) {
+        values.push(totales[prop].cantidad);
+        backGrounds.push(dataInfo[prop].color)
+        labels.push(`(${totales[prop].cantidad}) ${dataInfo[prop].label}`);
+      }
+
+    }
+  }
+
+  const config = {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Estados de Documentos',
+        data: values,
+        backgroundColor: backGrounds,
+      }]
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Estado de Documentos '
+        }
+      }
+    }
+  };
+
+
+  const myChart = new Chart(ctx, config);
+  // myChart.resize(400, 300);
+}
+
+
+function createGraficaUso(usos) {
+
+  console.log(usos)
+
+  $(".container-graphic-ussage")
+    .empty()
+    .append(`<canvas id="graphic-ussage"></canvas>`)
+
+  // Obtén el contexto del canvas
+  var ctx = document.getElementById('graphic-ussage').getContext('2d');
+
+  let valueUsado = 0;
+  let valueDisponible = 0;
+  
+  
+  for (prop in usos) {
+    const uso = usos[prop];
+    
+    console.log(uso);
+
+    if (uso.caracteristica.codigo == "comprobantes" ){
+      valueUsado = uso.limite - uso.restante;
+      valueDisponible = uso.restante; 
+      break;
+    }
+  }
+
+  console.log(valueUsado, valueDisponible)
+
+  let dataGrafico = {
+    usado: {
+      value: valueUsado,
+      color: "rgb(208, 208, 208)",
+      label: `(${valueUsado}) Usado`
+    },
+
+    disponible: {
+      value: valueDisponible,
+      color: "rgb(118, 211, 125)",
+      label: `(${valueDisponible}) Disponible"`
+    },
+  }
+
+  const config = {
+    type: 'doughnut',
+    data: {
+      labels: [dataGrafico.usado.label, dataGrafico.disponible.label],
+      datasets: [{
+        label: 'Documentos',
+        data: [dataGrafico.usado.value, dataGrafico.disponible.value],
+        backgroundColor: [dataGrafico.usado.color, dataGrafico.disponible.color],
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Documentos Realizados '
+        }
+      }
+    }
+  };
+
+
+  const myChart = new Chart(ctx, config);
+}
+
+
+function createGrafica(tipo, color = "rgba(0,0,0,.5)") {
+
+  let values = [];
+  let labels = [];
+  let backGrounds = [];
+
   const eles = {
-    ventas : {
+    ventas: {
       container: $('.container-graphic-ventas'),
       title: $('#title-graphic-ventas'),
       titleText: 'Ventas',
       canvasId: 'graphic-ventas',
     },
-    compras : {
+    compras: {
       container: $('.container-graphic-compras'),
       title: $('#title-graphic-compras'),
       titleText: 'Compras',
@@ -180,52 +365,66 @@ function createGrafica(tipo, color = "rgba(0,0,0,.5)")
 
   const ele = eles[tipo];
   const moneda = ele.container.parents('.container-grafica-parent').find('.btn-currency-change.active').attr('data-currency')
-  const registers = window.data_grafica[tipo];  
+
+  const registers = window.data_grafica[tipo];
   let registerValues = [];
   let total = 0;
 
   for (const dia in registers) {
     let value = registers[dia][moneda];
     total = total + Number(value);
-    registerValues.push(value.toFixed(2));
+    // registerValues.push(value.toFixed(2));
+    backGrounds.push(color);
+    values.push(value.toFixed(2));
   }
 
   total = total.toFixed(2);
 
   const title = `${ele.titleText} (${total})`
-  ele.title.find('.cifra').text(title);
+  // ele.title.find('.cifra').text(title);
 
   ele.container
     .empty()
-    .append(`<canvas height="100px" id="${ele.canvasId}"></canvas>`  )
+    .append(`<canvas id="${ele.canvasId}"></canvas>`)
 
-    function getOptions(label, data) {
-      return {
-        labels: label,
-        datasets: [{ data: data, fillColor : color }],
-        options: { title: { display: true }}
-      }
+  labels = Object.keys(registers);
+
+  const ctx = document.getElementById(ele.canvasId).getContext("2d");
+
+  const config = {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: title,
+        data: values,
+        backgroundColor: backGrounds,
+      }]
+    },
+    options: {
+      responsive: true
     }
-    
+  };
 
-  const labels = Object.keys(registers);
-  new Chart(document.getElementById(ele.canvasId).getContext("2d"))
-  .Bar(
-    getOptions(labels, registerValues),
-    { responsive: true }
-  );  
+
+  let myChart = new Chart(ctx, config);
 }
 
-function set_data_mes(data)
-{
-  // window.data_grafica = JSON.parse(data.data);
-  window.data_grafica = data.data;
-  // console.log('xxx');
-  // console.log(data.data.docs);
+function set_data_mes(data) {
 
+  
+  window.data_grafica = data.data;
+  
   createSlotsData(data.data.docs);
-  createGrafica('ventas', "rgba(60,141,188,1)" )
-  createGrafica('compras')
+  createGrafica('ventas', "rgba(60,141,188,1)")
+  createGrafica('compras');
+  createGraficaStatus(data.data.docs.total)
+
+  if (window.needUsage){
+    createGraficaUso(data.usages);
+  }
+
+  window.needUsage = 0;
 }
 
 function search_month_date() {
@@ -239,8 +438,11 @@ function search_month_date() {
     $t.attr('href', newDate);
   })
 
-  ajaxs(
-    { date: value },
+
+  ajaxs({
+      date: value,
+      needUsage: window.needUsage
+    },
     url_data_mes,
     { success: searchDataMensual }
   )
@@ -251,18 +453,18 @@ function search_month_date() {
 
 
 function changeCurrency() {
-  
+
   let $this = $(this);
 
-  if( $this.is('.active') ){
+  if ($this.is('.active')) {
     return;
   }
-  
+
   $this.parents('.title-graphic').find('.btn-currency-change').removeClass('active');
   $this.addClass('active');
 
   const color = $this.attr('data-target') == 'ventas' ? 'rgba(60,141,188,1)' : null;
-  createGrafica( $this.attr('data-target'), color )
+  createGrafica($this.attr('data-target'), color)
 }
 
 
@@ -274,10 +476,15 @@ function events() {
 function searchDataMensual() {
 
   let value = $("[name=mes]").val();
-  ajaxs(
-    { date: value },
+
+  ajaxs({ 
+    date: value,
+    needUsage : window.needUsage 
+  },
     url_data_mes,
-    { success: set_data_mes }
+    { 
+      success: set_data_mes 
+    }
   )
 
   return false;
@@ -286,5 +493,4 @@ function searchDataMensual() {
 init(
   events,
   searchDataMensual
-  // iniciar_grafica.bind(this, window.data_grafica.labels, window.data_grafica.data)
 )

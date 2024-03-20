@@ -72,7 +72,7 @@ class Cierre extends Model
     if( $mes ){
       return $mes->getOrCreateStadistics($searchSunat);
     }
-
+    
     return self::crearEstadisticas($mescodi, null, $searchSunat);
   }
 

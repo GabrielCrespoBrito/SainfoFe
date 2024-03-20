@@ -13,7 +13,11 @@ $routeReporte = $routeReporte ?? route('reportes.ventas_mensual_pdf');
             <select name="formato" class="form-control">
               <option value="pdf"> PDF </option>
               <option value="excell"> Excell </option>
-              @if( !$isFecha )
+              @if( $isContador  )
+              <option value="archivos"> Archivos (XML, PDFS, CDR) </option>
+              @endif
+              
+              @if( $isFecha == false && $isContador == false )
               <option value="txt_sire"> TXT (Sire) (Se cerrada el Mes al Generar este Reporte) </option>
               @endif
             </select>

@@ -2,12 +2,13 @@
 
 namespace App\Suscripcion;
 
-use App\Models\Suscripcion\Caracteristica;
-use App\Models\Suscripcion\Suscripcion;
-use App\Producto;
 use App\User;
-use Hyn\Tenancy\Traits\UsesSystemConnection;
+use App\Venta;
+use App\Producto;
+use App\Models\Suscripcion\Suscripcion;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Suscripcion\Caracteristica;
+use Hyn\Tenancy\Traits\UsesSystemConnection;
 
 class SuscripcionUso extends Model
 {
@@ -41,6 +42,22 @@ class SuscripcionUso extends Model
 			'limite' => $limite ?? $this->limite,
 		]);
 	}
+
+
+  public function updateUso()
+  {
+    $uso = 0;
+    $restante = 0;
+
+    if($this->caracteristica->codigo == Caracteristica::COMPROBANTES){
+      $uso = Venta::where('Mescodi', date('Ym'))->count();
+      $restante = $this->limite - $uso;
+    }
+    // @TODO, el resto de caractersiticas
+
+
+    $this->updateValues($uso, $restante);
+  }
 
 	public function sumarRestarUso($quantity = 1, $sumar = true)
 	{

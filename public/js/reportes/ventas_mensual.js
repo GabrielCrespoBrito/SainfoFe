@@ -257,6 +257,7 @@ $(".search-consulta").on('click', (e) => {
       $(".reporte-data").empty();
       $(".reporte-data").append(html);
       initDatable();
+      Helper.init();
       searchUltimaBusqueda();
     },
     complete : () => {

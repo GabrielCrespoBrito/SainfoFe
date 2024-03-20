@@ -58,8 +58,15 @@ class ReportesController extends Controller
 
   public function importe_mensual(Request $request)
   {
+    $usages = null;
+
+    if($request->input('needUsage')){
+      $usages = get_empresa()->suscripcionActual()->usos->load('caracteristica')->toArray();
+    }
+
     return response()->json([
-        'data' => Cierre::getStadistics($request->date)
+        'data' => Cierre::getStadistics($request->date),
+        'usages' => $usages,
     ]);
   }
 

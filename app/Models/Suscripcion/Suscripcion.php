@@ -7,6 +7,7 @@ use App\Venta;
 use Carbon\Carbon;
 use App\Suscripcion\SuscripcionUso;
 use App\Jobs\Suscripcion\CreateUsos;
+use App\Jobs\UpdateConsumoSuscripcion;
 use Illuminate\Database\Eloquent\Model;
 use Hyn\Tenancy\Traits\UsesSystemConnection;
 use App\Models\Empresa\Traits\SuscripcionInteract;
@@ -155,5 +156,11 @@ class Suscripcion extends Model
     $this->empresa->updateTiempoSuscripcion( $fecha );
     return $this;
   }
+
+  public function updateConsumo($caracteristica)
+  {
+    (new UpdateConsumoSuscripcion($this,$caracteristica))->handle();
+  }
+
   
 }

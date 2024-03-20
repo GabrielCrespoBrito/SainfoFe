@@ -56,8 +56,6 @@ class HomeController extends Controller
           $empresa->guardarEstadoSeHaGuardadoInformacionPorDefecto();
           $empresa->cleanCache();
         } catch (\Throwable $th) {
-          dd($th);
-          exit();
           $empresa->DeleteAllInfoUser();
           logger('@ERROR ERROR REGISTRANDO INFORMACIÒN POR DEFECTO DE EMPRESA');
           noti()->error('No se pudo crear su informaciòn por defecto para acceder, intente de nuevo');
@@ -65,8 +63,7 @@ class HomeController extends Controller
           return back();
         }
       }
-      // dd("aja");
-      // exit();
+
       return view('dashboard', [
         // 'data' => $data,
         'sidebar' => false,

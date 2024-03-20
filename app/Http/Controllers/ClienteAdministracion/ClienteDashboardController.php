@@ -41,11 +41,11 @@ class ClienteDashboardController extends Controller
 
 			$busqueda = 
 	    Venta::query()
-	    ->with(['forma_pago','vendedor','moneda'])
-			->where('PCCodi'  , session()->get('PCCodi') )
-			->where('EmpCodi' , session()->get('EmpCodi_Cliente') )
-			->where('fe_rpta' , '!=' , NULL)
-			->where('VtaEsta' , '=' , 'V');
+	    ->with(['forma_pago','vendedor','moneda']);
+			// ->where('PCCodi'  , session()->get('PCCodi') )
+			// ->where('EmpCodi' , session()->get('EmpCodi_Cliente') )
+			// ->where('fe_rpta' , '!=' , NULL)
+			// ->where('VtaEsta' , '=' , 'V');
 
 			$busqueda->whereBetween('VtaFvta', [ $request->fecha_desde, $request->fecha_hasta ]);
 
@@ -93,6 +93,7 @@ class ClienteDashboardController extends Controller
 				$ids = $this->searchGetId( $empcodi, $request->fecha_desde, $request->fecha_hasta, $request->tipo , $request->estado );
 			}
 
+
 			if( count($ids) > 500 ){
 				return response()->json(['message' => 'No se pueden descargar mas de 500 archivos a la vez' ], 400);
 			}
@@ -114,7 +115,9 @@ class ClienteDashboardController extends Controller
 		else {
 			
 			if( $filter ){
+
 				$ids = $this->searchByFilter($empcodi,$request->fecha_desde,$request->fecha_hasta,$request->tipo,$request->estado)->get()->toArray();
+        
 			}
 			
 			ob_end_clean();
