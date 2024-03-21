@@ -167,10 +167,6 @@ class ReporteUtilidades
     $total['utilidad_dolar'] += $data_utilidad->utilidad_dolar;
 
     if ($total_reporte) {
-      logger("--------------------------- TOTAL REPORTE ---------------------------");
-      logger( (array) $data_utilidad);
-      logger($total);
-      logger("----------------------------------------------------------------------");
     }
 
   }
