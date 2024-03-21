@@ -9,6 +9,12 @@ function isFechaByMensual()
   return $(".btn-filtro-change.active").is('[data-tipo=mes]');
 }
 
+function initSelectTable()
+{
+  $(".datatable").on('click', 'tbody tr', seleccionar_tr);    
+}
+
+
 
 function getFechaInicio()
 {
@@ -83,6 +89,8 @@ function initDatable() {
   });
 
   window.table_ventas = table;
+
+  initSelectTable();
 }
 
 
@@ -187,20 +195,83 @@ function searchUltimaBusqueda()
   ajaxs( data, url , funcs );
 }
 
+
+
+function active_ordisable_trfactura(active = true, tr_factura) {
+
+  if (active) {
+    $(tr_factura).addClass('seleccionado');
+  }
+
+  else {
+    $(tr_factura).removeClass('seleccionado');
+  }
+}
+
+function seleccionar_tr() {
+  let tr = $(this);
+
+  if (tr.find('.dataTables_empty').length) {
+    return;
+  }
+
+  if (tr.is('.seleccionado')) {
+    active_ordisable_trfactura(false, tr);
+  }
+
+  else {
+    active_ordisable_trfactura(true, tr);
+  }
+}
+
 $("body").on('click', ".generate-report", (e) => {
 
   let $btn = $(e.target)
   let url = $btn.attr('data-url');
   let status = getStatus();
   let params = new URLSearchParams();
+  
+  const formato = $("[name=formato]").val();
 
-  params.set('formato', $("[name=formato]").val());
+
+  params.set('formato', formato);
   params.set('estado_sunat', status ? status : 'todos' );
   params.set('fecha_inicio', getFechaInicio());
   params.set('fecha_final', getFechaFinal());
   params.set('tipo', getTipoDoc());
-  url = url.concat( '?', params.toString());
-  $btn.attr('href', url )
+
+
+  if( formato == "archivos" ){
+    let trSelect = $("tr.seleccionado");
+
+    let message = false; 
+
+    if ( trSelect.length == 0 ){
+      message = 'Para Descargar los Archivos, tiene que seleccionan los documentos. No se permiten mas de 50 Documentos';
+    }
+    
+    if (trSelect.length > 50) {
+      message = 'No se permiten los archivos de mas de 50 Documentos a la ves';
+    }
+
+    if( message ){
+      notificaciones( message );
+      e.preventDefault();
+      return false;
+    }
+
+    let ids = [];
+    
+    trSelect.each(function(index,dom){
+      ids.push( $(dom).find( 'td:eq(1)' ).text().trim() )
+    })
+
+    params.set('ids', ids);
+  }
+
+  url = url.concat('?', params.toString());
+  $btn.attr('href', url)
+
 })
 
 
@@ -268,6 +339,7 @@ $(".search-consulta").on('click', (e) => {
   ajaxs( data , url , funcs ); 
   return false;
 });
+
 
 
 

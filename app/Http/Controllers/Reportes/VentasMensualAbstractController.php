@@ -48,24 +48,23 @@ trait VentasMensualAbstractController
     $estadoSunat = $request->estado_sunat;
     $fecha_inicio = $request->fecha_inicio;
     $fecha_final =  $request->fecha_final;
+    $ids =  explode(',', $request->ids);
     $isFileReport = $formato == "archivos";
     $report = new VentaContableReport($fecha_inicio, $fecha_final, $request->tipo, $estadoSunat);
 
-    if($isFileReport){
-      $report->setOnlyGetQuery(true);
-    }
+    // if($isFileReport){
+      // $report->setOnlyGetQuery(true);
+    // }
 
     if ($request->cerrar_mes) {
       Cierre::createIfNotExists($mescodi);
     }
 
-    $data = $isFileReport ? 
-
-    $report->handle() :
-    
-    $report
-      ->handle()
-      ->getData();
+    if(!$isFileReport){
+      $data = $report
+        ->handle()
+        ->getData();
+    } 
 
     set_time_limit(0);
     ini_set('memory_limit', '3000M'); 
@@ -163,7 +162,11 @@ trait VentasMensualAbstractController
     // Descargar Archivos
     if( $formato == "archivos" ){
 
-      $comprimido =  $this->saveFiles($data->toArray(), $empresa->empcodi );
+      // _dd( $ids );
+      // exit();
+
+      // $comprimido =  $this->saveFiles($data->toArray(), $empresa->empcodi );
+      $comprimido =  $this->saveFiles($ids, $empresa->empcodi );
 
       if ($comprimido) {
         ob_end_clean();

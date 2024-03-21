@@ -5,7 +5,7 @@ width="100%"
 data-selected="true"
 data-multiple="true"
 data-id="{{ $empresa_id }}"
-class="table datatable sainfo-table sainfo-noicon oneline"
+class="table datatable table_select_tr sainfo-table sainfo-noicon oneline"
 data-url="{{  $routeVentaConsulta  }}">
 
 <thead>
