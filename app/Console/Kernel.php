@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
     set_timezone();
 
     # Mensaje escrito en el log para saber que se estan ejecutando las tareas
-    $schedule->command('util:log_mensaje')->everyMinute();
+    $schedule->command('util:log_mensaje')->everyThirtyMinutes();
 
     # Eliminar archivos temporales
     $schedule->command('eliminar:temp')->dailyAt('02:00');
