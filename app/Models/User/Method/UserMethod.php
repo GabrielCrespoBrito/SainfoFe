@@ -276,11 +276,17 @@ trait UserMethod
     $this->syncPermissions($permissions);
   }
 
+  public function setContadorPermissions()
+  {
+    $permissionSeeder = new PermissionSeeder();
+    $permissions = collect($permissionSeeder->getContadorPermissions())->where('is_admin', false)->pluck('name');
+    $this->syncPermissions($permissions);
+  }
+
 
   public function hasLocalDefecto()
   {
     return $this->locales->where('defecto', 1)->count();
-
   }
 
 
@@ -365,12 +371,11 @@ trait UserMethod
 
   public function registerPermissions($permissions)
   {
-    (new RegisterPermission($this,$permissions))->handle();
+    (new RegisterPermission($this, $permissions))->handle();
   }
 
   public function registerLocales($locales, $update = false)
   {
     (new RegisterLocales($this, $locales, $update))->handle();
   }
-
 }

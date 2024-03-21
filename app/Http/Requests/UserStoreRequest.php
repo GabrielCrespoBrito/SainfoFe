@@ -33,6 +33,7 @@ class UserStoreRequest extends FormRequest
       'email'     => 'required|email|min:4',
       'telefono'  => 'nullable|numeric',
       'direccion' => 'nullable',
+      'tipo_usuario' => 'required|in:02,11',
     ];
   }
 

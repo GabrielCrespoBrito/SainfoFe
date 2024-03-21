@@ -43,13 +43,10 @@ function seleccionar_factura()
   }
 
   else {
-
     $('.seleccionado').removeClass('seleccionado');
-
     active_or_disable_button(true)
     active_ordisable_trfactura(true, tr );          
   }
-
 }
 
 

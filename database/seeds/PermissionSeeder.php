@@ -41,7 +41,7 @@ class PermissionSeeder extends Seeder
 
   const A_INGRESOS = "productos-stock-min";
   const A_EGRESOS = "productos-stock-min";
-  
+
   const A_PARAMETRO = "parametros";
 
   # Reportes
@@ -71,11 +71,11 @@ class PermissionSeeder extends Seeder
   const A_VENDEDORESTADISTICA = "vendedor-estadisticas";
   const A_VENDEDORPRODUCTO = "vendedor-productos";
   const A_VENDEDOVENTARPRODUCTO = "vendedor-ventas-productos";
-  
+
   // -------------------------------------------------------
   const A_UTILIDADESVENTAS2 = "utilidades-ventas-2";
   const A_VENDEDORZONA = "vendedor-zona";
-  
+
   const A_REPORTE_COMPRA_VENTA = "reporte-compra-venta";
   const A_REPORTE = "reporte";
   const A_REPORTE_INGRESO_EGRESO = 'reporte-movimientos';
@@ -172,7 +172,7 @@ class PermissionSeeder extends Seeder
       'valid' => "1",
       'guard_name' => 'web'
     ];
-    
+
     return $data;
   }
 
@@ -204,6 +204,22 @@ class PermissionSeeder extends Seeder
     $this->setEmpresaTransportePermisos();
     $this->setTransportistasPermisos();
     $this->setUtilitariosPermisos();
+    return $this->data;
+  }
+
+  public function getContadorPermissions()
+  {
+    $this->setDatas([
+      concat_space(self::A_INDEX, self::R_VENTA),
+      concat_space(self::A_SHOW, self::R_VENTA),
+      concat_space(self::A_IMPRIMIR, self::R_VENTA),
+      concat_space(self::A_RECURSO, self::R_VENTA),
+      concat_space(self::A_VER_NOTAS_VENTA, self::R_VENTA),
+    ], self::R_VENTA,  false);
+
+    $this->setVentasPermisos();
+    $this->setClientePermisos();
+    $this->setReportesPermisos();
     return $this->data;
   }
 
@@ -329,7 +345,7 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_UPDATEPRECIOSMASIVE, self::R_PRODUCTO),
       concat_space(self::A_UPDATEPRECIOSTIPOCAMBIO, self::R_PRODUCTO),
       concat_space(self::A_PRODUCCIONMANUAL, self::R_PRODUCTO),
-      concat_space(self::A_TOMAINVENTARIO, self::R_PRODUCTO),concat_space(self::A_VERCOSTOS, self::R_PRODUCTO),
+      concat_space(self::A_TOMAINVENTARIO, self::R_PRODUCTO), concat_space(self::A_VERCOSTOS, self::R_PRODUCTO),
 
     ], self::R_PRODUCTO,  false);
   }
@@ -359,8 +375,6 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_IMPRIMIR, self::R_ORDENCOMPRA),
 
     ], self::R_ORDENCOMPRA,  false);
-
-
   }
 
   public function setUtilitariosPermisos()
@@ -413,7 +427,7 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_UTILIDADESVENTAS2, self::R_REPORTE),
       concat_space(self::A_VENDEDORZONA, self::R_REPORTE),
 
-      
+
     ], self::R_REPORTE,  false);
   }
 

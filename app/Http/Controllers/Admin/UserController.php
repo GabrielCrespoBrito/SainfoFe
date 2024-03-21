@@ -136,49 +136,9 @@ class UserController extends Controller
     $emps = Empresa::all();
     $user = $id_user == "all" ? User::all() : User::findOrfail($id_user);
     $emps = $id_empresa == "all" ? Empresa::all() : Empresa::find($id_empresa);
-    // dd($id_empresa , $emps );
     return view('admin.usuarios.seleccion_empresa.create', compact('user', 'emps', 'id_user', 'id_empresa'));
   }
-
-  // public function store_empresa(UserEmpresaCreateRequest $request)
-  // {
-  //   empresa_bd_tenant($request->id_empresa);
-
-  //   $user_empresa = new UserEmpresa;
-  //   $user_empresa->usucodi = $request->id_user;
-  //   $user_empresa->empcodi = $request->id_empresa;
-  //   $user_empresa->save();
-  //   $user_empresa->assignToDefaultLocal();
-  //   $user_empresa->createDefaultCaja();
-  //   \Cache::flush();
-
-  //   noti()->success('Usuario agregado', 'Se ha agregado el usuario a la empresa', 'success');
-  //   return redirect()->route('admin.usuarios.index');
-  // }
-
-
-  // public function empresa_show($id)
-  // {
-  //   $user_empresa = UserEmpresa::with(['user', 'empresa'])->find($id);
-  //   $user = $user_empresa->user;
-  //   $empresa = $user_empresa->empresa;
-
-  //   return view('usuarios.seleccion_empresa.show', [
-  //     'user'    => $user,
-  //     'empresa' => $empresa,
-  //     'id'      => $id,
-  //   ]);
-  // }
-
-  // public function empresa_delete(UserEmpresaDeleteRequest $request, $id)
-  // {
-
-  //   $user_empresa = UserEmpresa::findOrfail($id);
-  //   $user_empresa->delete();
-  //   notificacion('Borrado exitoso', 'Se ha Eliminado exitosamente la información asociada de este usuario a la empresa', 'success');
-  //   return redirect()->route('admin.usuarios.index');
-  // }
-
+  
   public function activeToggle(Request $request, $id_user)
   {
     $user = User::findOrfail($id_user);
@@ -187,17 +147,6 @@ class UserController extends Controller
     noti()->success('Estado Actualizado', 'El usuario se ha actualizado exitosamente al estado ' . $state);
     return redirect()->route('admin.usuarios.index');
   }
-
-  // public function cambiarStatus($id_user)
-  // {
-  //   loremp swkd   
-  //   $user = User::findOrfail($id_user);
-  //   $state = $user->toggleActive();
-  //   $state =  $state ? "Activo" : "Inactivo";
-  //   notificacion('Estado Actualizado', 'El usuario se ha actualizado exitosamente al estado ' . $state);
-  //   return redirect()->back();
-  // }
-
 
   public function createDocumento( $id_empresa = "all", $id_user = "all", $id_local = "all" ) {
     $tipo_documentos = TipoDocumentoPago::validDocumentos();

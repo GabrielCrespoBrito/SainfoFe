@@ -136,11 +136,13 @@ class UsersController extends Controller
 
   public function store( UserStoreRequest $request )
   {
+    $isContador = $request->input('tipo_usuario') == User::TIPO_CONTADOR;
+
     $user = new User;
     $user->usucodi = User::ultimoCodigo();
     $user->usulogi = $request->usuario;
-    $user->usunomb = $request->nombre;      
-    $user->carcodi = "01";
+    $user->usunomb = $request->nombre;
+    $user->carcodi =  $request->input('tipo_usuario', '02');
     $user->usucla2 = $request->password;
     $user->usutele = $request->telefono;
     $user->usudire = $request->direccion;
@@ -151,11 +153,18 @@ class UsersController extends Controller
     $user->save();
     $user->asociateToEmpresa(empcodi(), false, [], false);
 
-    if($request->permisos){
-      $user->registerPermissions($request->permisos);
+    if($isContador){
+      $user->setContadorPermissions();
+
+    }
+    else {
+      if($request->permisos){
+        $user->registerPermissions($request->permisos);
+      }
     }
 
-    if ($request->local) {
+
+    if ($request->local && !$isContador) {
       $user->registerLocales($request->local);
     }
 
