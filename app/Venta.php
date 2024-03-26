@@ -1926,10 +1926,6 @@ class Venta extends Model
 
       if ($this->isNotaCredito() && $this->docRefIsBoleta()) {
 
-        
-
-
-
         if ($isOse) {
           $sent = Sunat::sentPendiente($this->VtaOper, $this->EmpCodi);
         } else {

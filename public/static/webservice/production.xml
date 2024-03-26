@@ -34,8 +34,8 @@
 </wsdl:binding>
 <wsdl:service name="billService">
     <wsdl:port name="BillServicePort" binding="ns0:BillServicePortBinding">
-    <soap11:address location="https://www.sunat.gob.pe:443/ol-ti-itcpfegem/billService"/></wsdl:port>
+    <soap11:address location="https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?wsdl"/></wsdl:port>
     <wsdl:port name="BillServicePort.1" binding="ns0:BillServicePortBinding">
-    <soap11:address location="https://www.sunat.gob.pe:443/ol-ti-itcpfegem/billService"/></wsdl:port>
+    <soap11:address location="https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?wsdl"/></wsdl:port>
 </wsdl:service>
 </wsdl:definitions>

@@ -73,7 +73,6 @@ class Sunat
   {
     // $venta = Venta::find( $id_venta , $empcodi );
     $venta = Venta::where( 'VtaOper', $id_venta )->first();
-    
 
     $sent = self::verify( 
         $venta->empresa->EmpLin1 , 
