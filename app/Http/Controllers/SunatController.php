@@ -31,9 +31,7 @@ class SunatController extends Controller
   public function sendSunatVenta($id_venta, $check_status = false)
   {
     $venta = Venta::find($id_venta);
-    # New
     $sent = $venta->sendSunatPendiente($check_status);
-    # HolaMundoHelloWordLorempIpsumOdlor
     $message = isset($sent['message']) ? $sent['message'] : '-';
     $code_http = isset($sent['code_http']) ? $sent['code_http'] : '400';
     return response(['data' => $message], $code_http);    

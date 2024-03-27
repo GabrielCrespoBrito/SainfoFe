@@ -72,23 +72,23 @@
                         '07' => 'Nota Credito',
                         '08' => 'Nota Debito',
                     ];
-                    
+
                     if (
                         auth()
                             ->user()
-                            ->checkPermissionTo_(concat_space(PermissionSeeder::A_VER_NOTAS_VENTA, PermissionSeeder::R_VENTA))
+                            ->checkPermissionTo_(
+                                concat_space(PermissionSeeder::A_VER_NOTAS_VENTA, PermissionSeeder::R_VENTA),
+                            )
                     ) {
                         $tiposDocumentos['52'] = 'Nota Venta';
                     }
                 @endphp
 
 
-                {!! Form::select(
-                    'tipo',
-                    $tiposDocumentos,
-                    $tipo,
-                    ['class' => 'form-control input-sm', 'data-reloadtable' => 'table'],
-                ) !!}
+                {!! Form::select('tipo', $tiposDocumentos, $tipo, [
+                    'class' => 'form-control input-sm',
+                    'data-reloadtable' => 'table',
+                ]) !!}
 
                 <input type="hidden" name="status" value="{{ request()->request->get('status') }}">
 

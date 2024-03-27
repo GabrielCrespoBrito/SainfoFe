@@ -316,7 +316,11 @@ class FacturaSaveRequest extends FormRequest
     $total_request = (float) trim($this->total_importe);
 
     $this->merge(['anticipoValue' => $anticipo_value]);
+    
+    logger( (array) $totales );
+    logger( (array) $this->totales_items );
 
+    
     if ($total_calculado != $total_request) {
       $validator->errors()->add('total', "El total suministrado {$this->total_importe} no coincide con el total correcto calculado ({$totales->total_cobrado})");
       return false;
@@ -326,6 +330,7 @@ class FacturaSaveRequest extends FormRequest
       $validator->errors()->add('total', "El total no puede ser negativo");
       return false;
     }
+
 
     $this->total_documento = $totales;
 

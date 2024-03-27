@@ -549,6 +549,8 @@ $(document).ready(function (e) {
     let $cargo_global = $("[data-name=cargo_global]");
 
 
+    console.log('info_sum_cant', info)
+
     // let anticipo_value
     info.total_importe -= totalAnticipo();
     // info.total_importe += calc_percepcion(info.total_importe);
@@ -563,7 +565,8 @@ $(document).ready(function (e) {
         $cargo_global.val(formatNumber(info[prop]));
       }
       else {
-        $("[data-name=" + prop + "]").val(fixedValue(info[prop]));
+        $("[data-name=" + prop + "]").val(numberFormat(info[prop], 2));
+        // $("[data-name=" + prop + "]").val(formatNumber(info[prop]));
       }
     }
 
@@ -1907,6 +1910,24 @@ $(document).ready(function (e) {
 
     return Math.round(value * 100) / 100;
   }
+
+  function numberFormat(value, decimal = 0) {
+    // Convierte el valor a un número (si no lo es)
+    const numericValue = parseFloat(value);
+
+    // Verifica si el valor es un número válido
+    if (isNaN(numericValue)) {
+      return 'Invalid input';
+    }
+
+    // Formatea el número con el número de decimales especificado
+    return numericValue.toLocaleString(undefined, {
+      minimumFractionDigits: decimal,
+      maximumFractionDigits: decimal,
+    }).replace(",", ".");
+  }
+
+  window.nf = numberFormat;
 
   function descuento() {
     let descuento_value = Number($("[name=producto_dct]").val());

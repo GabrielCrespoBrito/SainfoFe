@@ -46,7 +46,9 @@
                 continue;
               }
             @endphp
-            <option data-periodo="{{ $empresaR->periodos->pluck("Pan_cAnio")->implode(",") }}" {{ $loop->first ? 'selected=selected' : '' }} value="{{ $empresaR->empcodi }}">{{ $empresaR->empcodi }} - {{ $empresaR->EmpNomb }}
+            <option 
+            data-ruc="{{ $empresaR->EmpLin1 }}"
+            data-periodo="{{ $empresaR->periodos->pluck("Pan_cAnio")->implode(",") }}" {{ $loop->first ? 'selected=selected' : '' }} value="{{ $empresaR->empcodi }}">{{ $empresaR->empcodi }} - {{ $empresaR->EmpNomb }}
 
             </option>
           @endforeach
@@ -109,24 +111,5 @@
 <!-- jQuery 3 -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/elegir_empresa/elegir_empresa.js') }}"></script>
-<script>
-  // $(function(){
-  //  $("form").on('submit' , function(e){
-  //     $("[type=submit]" ).prop('disabled',true);
-  //   });   
-  //   $("[name=empresa]").on('change' , function(e){
-  //     let dataPeriodos = $("option:selected", this ).attr('data-periodo').split(",");
-  //     let selectPeriodo = $("[name=periodo]");
-  //     selectPeriodo.empty();
-  //     for(let i = 0; i < dataPeriodos.length ; i++){
-  //       let periodo = dataPeriodos[i];                
-  //       let option = $("<option></option>")
-  //       .attr('value', periodo )
-  //       .text( periodo );
-  //       selectPeriodo.append(option);
-  //     }
-  //   });
-  // });
-</script>
 </body>
 </html>

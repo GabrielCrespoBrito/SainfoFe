@@ -30,7 +30,6 @@ class HomeController extends Controller
   {
     $user = auth()->user();
 
-
     if ($user->isVerificated()) {
       if ($user->hasEmpresa()) {
         return redirect()->route('elegir_empresa');
@@ -100,7 +99,6 @@ class HomeController extends Controller
     $hostExists = Hostname::where('fqdn', $fqdn)->exists();
     $puerto = env('SERVER_PORT');
     $port = $request->server('SERVER_PORT') == $puerto ? ":{$puerto}" : '';
-
     
     if ($hostExists) {
       session()->put('empresa', $empresa->empcodi);
@@ -109,16 +107,12 @@ class HomeController extends Controller
       session()->put('periodo', $request->periodo);
       session()->flash('elegida_empresa', true);
       // http://
-      $url = ($request->secure() ? 'https://' : 'http://') .
-      // 208576552.localhost
-      $fqdn .
-      // :8001 | :8000 |  
-      $port .
-      // home
-      '/home';
-      
-      // dd( $url );
+      // $url = sprintf( '%s/%s%s/home',)($request->secure() ? 'https://' : 'http://') .
+      $url = sprintf('%s/%s%s/home', ($request->secure() ? 'https://' : 'http://'), $fqdn, $port);
+
+      logger( $url );
       // exit();
+
       return redirect($url);
     } else {
       Auth::logout();

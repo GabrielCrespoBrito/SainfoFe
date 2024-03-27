@@ -21,6 +21,8 @@ class UsuarioEmpresa
     // Si no esta verificado el usuario, tiene que verificarse
     if(! auth()->user()->isVerificated()){
       noti()->success('' , 'Por terminar el paso de verificación de su cuenta');
+      logger('@ERROR Por terminar el paso de verificación de su cuenta');
+
       return redirect()->route('verificar');
     }
 
@@ -30,11 +32,13 @@ class UsuarioEmpresa
       // Comprobar si se puede registrar la empresa      
       if( config('auth.register_user')  ){
         noti()->success('Faltan un paso' , 'Tiene que registrar los datos de su empresa');
+        logger('@ERROR UserEmpresa Faltan un paso Tiene que registrar los datos de su empresa');
         return redirect()->route('usuario.verificar_empresa');
       }
   
       auth()->logout();
       noti()->info('Su usuario no esta asociado a ninguna empresa, por favor comuniquese con el administrador');
+      logger('@ERROR Su usuario no esta asociado a ninguna empresa, por favor comuniquese con el administrador');
       return redirect()->route('login');
     }
     

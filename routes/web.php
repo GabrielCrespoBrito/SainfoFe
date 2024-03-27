@@ -69,7 +69,9 @@ Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
   // Verificar clave sol y guardar la información de la empresa
   Route::get('/verificarSol', "UsersController@showFormSol")->name('usuario.verificar_empresa')
   ->middleware(['registration_user.active', 'usuario.verificar:1']);
+
   Route::post('/verificarSolStore', "UsersController@storeSolEmpresa")->name('usuario.store_verificar_empresa')->middleware(['registration_user.active', 'usuario.verificar:1']);
+  
   Route::post('/storeEmpresaInfo', "UsersController@saveEmpresaInformation")->name('usuario.store_empresa_informacion');
   
   // form para elegir empresa y periodo a trabajar
@@ -80,6 +82,7 @@ Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
   Route::group(['middleware' => 'elegir.periodo'], function () {
     
     Route::middleware('tenant.exists')->group(function () {
+
       Route::get('/home', "HomeController@index")->name('home');
     });
 

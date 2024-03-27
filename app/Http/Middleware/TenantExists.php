@@ -18,7 +18,9 @@ class TenantExists
 	{
 		$fqdn = $request->getHost();		
 
-    
+    // _dd( $fqdn );
+    // exit();
+
 		if (!$this->tenantExists($fqdn)) {
 			auth()->logout();
 			abort(404, 'Nope.');

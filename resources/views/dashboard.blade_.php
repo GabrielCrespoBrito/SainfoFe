@@ -10,7 +10,6 @@
   <script type="text/javascript" src="{{ asset('plugins/chart/chart.js') }}"></script>
   <script type="text/javascript" src="{{ asset(mix('js/mix/helpers.js')) }}">  </script>
   <script type="text/javascript" src="{{ asset('js/dashboard.js') }}"></script>
-  <script src="{{ asset('js/elegir_empresa/elegir_empresa.js') }}"></script>
   <script src="{{ asset('js/app.js') }}"></script>
 @endsection
 
