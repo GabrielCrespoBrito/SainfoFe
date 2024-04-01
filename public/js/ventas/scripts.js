@@ -565,8 +565,8 @@ $(document).ready(function (e) {
         $cargo_global.val(formatNumber(info[prop]));
       }
       else {
-        // $("[data-name=" + prop + "]").val(numberFormat(info[prop], 2));
-        $("[data-name=" + prop + "]").val(formatNumber(info[prop]));
+        $("[data-name=" + prop + "]").val(numberFormat(info[prop], 2));
+        // $("[data-name=" + prop + "]").val(formatNumber(info[prop]));
       }
     }
 
@@ -1910,24 +1910,6 @@ $(document).ready(function (e) {
 
     return Math.round(value * 100) / 100;
   }
-
-  function numberFormat(value, decimal = 0) {
-    // Convierte el valor a un número (si no lo es)
-    const numericValue = parseFloat(value);
-
-    // Verifica si el valor es un número válido
-    if (isNaN(numericValue)) {
-      return 'Invalid input';
-    }
-
-    // Formatea el número con el número de decimales especificado
-    return numericValue.toLocaleString(undefined, {
-      minimumFractionDigits: decimal,
-      maximumFractionDigits: decimal,
-    }).replace(",", ".");
-  }
-
-  window.nf = numberFormat;
 
   function descuento() {
     let descuento_value = Number($("[name=producto_dct]").val());
@@ -4961,6 +4943,27 @@ $(document).ready(function (e) {
 
   function formatNumber(value) {
     return fixedNumber(value);
+  }
+
+
+  function numberFormat(value, decimal = 0) {
+    // Convierte el valor a un número (si no lo es)
+    const numericValue = parseFloat(value);
+
+    // Verifica si el valor es un número válido
+    if (isNaN(numericValue)) {
+      return 'Invalid input';
+    }
+
+    // Formatea el número con el número de decimales especificado
+    let v = numericValue.toLocaleString(undefined, {
+      minimumFractionDigits: decimal,
+      maximumFractionDigits: decimal,
+    });
+
+    return v
+      .replace('.', '')
+      .replace(',', '.');
   }
 
 
