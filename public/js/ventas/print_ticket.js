@@ -287,12 +287,12 @@ class printTicket {
    * @return
    */
   makeQr() {
-    let informacion_qr = this.data['qr_data'];
+    // let informacion_qr = this.data['qr_data'];
 
-    this.conector
-      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
-      .ImprimirCodigoQr(informacion_qr, 160, ConectorPluginV3.RECUPERACION_QR_MEJOR, ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL)
-      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA);
+    // this.conector
+    //   .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+    //   .ImprimirCodigoQr(informacion_qr, 160, ConectorPluginV3.RECUPERACION_QR_MEJOR, ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL)
+    //   .EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA);
   }
 
   /**

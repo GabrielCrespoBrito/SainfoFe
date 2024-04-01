@@ -565,8 +565,8 @@ $(document).ready(function (e) {
         $cargo_global.val(formatNumber(info[prop]));
       }
       else {
-        $("[data-name=" + prop + "]").val(numberFormat(info[prop], 2));
-        // $("[data-name=" + prop + "]").val(formatNumber(info[prop]));
+        // $("[data-name=" + prop + "]").val(numberFormat(info[prop], 2));
+        $("[data-name=" + prop + "]").val(formatNumber(info[prop]));
       }
     }
 
