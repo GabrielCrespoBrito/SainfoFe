@@ -109,13 +109,13 @@ class printTicket {
     this.conector
       .EstablecerTamañoFuente(2, 1)
       .EstablecerEnfatizado(true)
-      .EscribirTextoFeed(this.data['empresa_nombre'])
+      .EscribirTextoFeed(this.data['empresa_nombre_comercial'])
       .EstablecerEnfatizado(false)
       .EstablecerTamañoFuente(1, 1)
       .EscribirTextoFeed(this.data['empresa_direccion'])
-      .EscribirTextoFeed(this.data['empresa_ruc'])
+      // .EscribirTextoFeed(this.data['empresa_ruc'])
       .EscribirTextoFeed(this.data['empresa_telefonos'])
-      .EscribirTextoFeed(this.data['empresa_correos'])
+      // .EscribirTextoFeed(this.data['empresa_correos'])
       .EscribirTexto(this.getLineaSeparadora())
     }
 
@@ -152,9 +152,10 @@ class printTicket {
    * @return
    */
   makeObservacion() {
-    this.conector
-      .EscribirTextoFeed(this.data['documento_observacion'])
-      .EscribirTexto(this.getLineaSeparadora())
+
+    // this.conector
+    //   .EscribirTextoFeed(this.data['documento_observacion'])
+    //   .EscribirTexto(this.getLineaSeparadora())
   }
 
 
@@ -171,9 +172,9 @@ class printTicket {
       .EscribirTextoFeed(this.getTextoSize('Fecha:', 22) + this.getTextoSize(this.data['documento_fecha'], this.line_width - 22))
       .EscribirTextoFeed(this.getTextoSize('Vendedor:', 22) + this.getTextoSize(this.data['documento_vendedor'], this.line_width - 22))
       .EscribirTextoFeed(this.getTextoSize('Forma de Pago:', 22) + this.getTextoSize(this.data['documento_forma_pago'], this.line_width - 22))
-      .EscribirTextoFeed(this.getTextoSize('Guia/s:', 22) + this.getTextoSize(this.data['documento_guias'], this.line_width - 22, true, true))
-      .EscribirTextoFeed(this.getTextoSize('Responsable:', 22) + this.getTextoSize(this.data['documento_responsable'], this.line_width - 22))
-      .EscribirTextoFeed(this.getTextoSize('Ord.Compra:', 22) + this.getTextoSize(this.data['documento_orden_compra'], this.line_width - 22))
+      // .EscribirTextoFeed(this.getTextoSize('Guia/s:', 22) + this.getTextoSize(this.data['documento_guias'], this.line_width - 22, true, true))
+      // .EscribirTextoFeed(this.getTextoSize('Responsable:', 22) + this.getTextoSize(this.data['documento_responsable'], this.line_width - 22))
+      // .EscribirTextoFeed(this.getTextoSize('Ord.Compra:', 22) + this.getTextoSize(this.data['documento_orden_compra'], this.line_width - 22))
       .EscribirTexto(this.getLineaSeparadora())
   }
 
@@ -301,21 +302,18 @@ class printTicket {
    */
   makePie() {
 
-    let representacion_impresora = 'Representaciòn impresa de:';
-    let consulta = 'Esta puede ser consultada en:';
-
     this.conector
-      .EscribirTextoFeed('Resumen: ' + this.data['documento_hash'])
+      // .EscribirTextoFeed('Resumen: ' + this.data['documento_hash'])
       .EscribirTextoFeed('Hora: ' + this.data['documento_hora'])
-      .EscribirTextoFeed('Peso: ' + this.data['documento_peso'] + ' Kgs.')
-      .EscribirTextoFeed(representacion_impresora)
-      .EstablecerEnfatizado(true)
-      .EscribirTextoFeed(this.data['documento_nombre'])
-      .EstablecerEnfatizado(false)
-      .EscribirTextoFeed(consulta)
-      .EstablecerEnfatizado(true)
-      .EscribirTextoFeed($.trim(this.data['direccion_consulta']))
-      .EstablecerEnfatizado(false)
+      // .EscribirTextoFeed('Peso: ' + this.data['documento_peso'] + ' Kgs.')
+      // .EscribirTextoFeed("Representaciòn impresa de:")
+      // .EstablecerEnfatizado(true)
+      // .EscribirTextoFeed(this.data['documento_nombre'])
+      // .EstablecerEnfatizado(false)
+      // .EscribirTextoFeed("Esta puede ser consultada en:")
+      // .EstablecerEnfatizado(true)
+      // .EscribirTextoFeed($.trim(this.data['direccion_consulta']))
+      // .EstablecerEnfatizado(false)
       .Corte(1)
   }
 

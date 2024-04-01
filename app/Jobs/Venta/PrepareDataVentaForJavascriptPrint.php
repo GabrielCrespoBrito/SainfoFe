@@ -16,6 +16,7 @@ class PrepareDataVentaForJavascriptPrint
   {
     $this->convert_data['empresa_logo_path'] = $this->data['logo_ticket_url'];
     $this->convert_data['empresa_nombre'] = $this->data['empresa']['EmpNomb'];
+    $this->convert_data['empresa_nombre_comercial'] = $this->data['empresa']['EmpLin5'];
     $this->convert_data['empresa_direccion'] = removeformatoText($this->data['direccion']);
     $this->convert_data['empresa_ruc'] = 'R.U.C ' .  $this->data['empresa']['EmpLin1'];
     $this->convert_data['empresa_telefonos'] = $this->data['telefonos'];
