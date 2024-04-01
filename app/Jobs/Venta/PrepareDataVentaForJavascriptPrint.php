@@ -131,7 +131,9 @@ class PrepareDataVentaForJavascriptPrint
     $totals = [];
 
     $venta = $this->data['venta2'];
-    $decimals = $this->data['decimals'];
+    // Original
+    // $decimals = $this->data['decimals'];
+    $decimals = 2;
 
     $totals[] = [
       'descripcion' => 'OP. GRAVADAS.:',
@@ -180,10 +182,10 @@ class PrepareDataVentaForJavascriptPrint
       ];
     }
 
-    $totals[] = [
-      'descripcion' => 'IGV.:',
-      'value' =>  fixedValue($venta->VtaIGVV, $decimals)
-    ];
+    // $totals[] = [
+    //   'descripcion' => 'IGV.:',
+    //   'value' =>  fixedValue($venta->VtaIGVV, $decimals)
+    // ];
 
     if ($venta->hasMontoPercepcion()) {
       $totals[] = [
