@@ -100,12 +100,13 @@ class printTicket {
   makeEmpresaData() {
     this.conector
       .Iniciar()
-     .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
-     
-    if (this.data['empresa_logo_path']){
+      .EstablecerFuente('Arial')
+      .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+
+    if (this.data['empresa_logo_path']) {
       // this.conector.DescargarImagenDeInternetEImprimir(this.data['empresa_logo_path'], ConectorPluginV3.TAMAÑO_IMAGEN_NORMAL, 160)
     }
-  
+
     this.conector
       .EstablecerTamañoFuente(1, 1)
       .EstablecerEnfatizado(true)
@@ -117,7 +118,7 @@ class printTicket {
       .EscribirTextoFeed(this.data['empresa_telefonos'])
       // .EscribirTextoFeed(this.data['empresa_correos'])
       .EscribirTexto(this.getLineaSeparadora())
-    }
+  }
 
   /**
    * Informacion del documento
@@ -126,7 +127,7 @@ class printTicket {
   makeDocumentoId() {
     this.conector
       .EstablecerEnfatizado(true)
-      .EstablecerTamañoFuente(2, 1)
+      .EstablecerTamañoFuente(1, 1)
       .EscribirTextoFeed(this.data['documento_nombre'])
       .EscribirTextoFeed(this.data['documento_id'])
       .EstablecerTamañoFuente(1, 1)
@@ -166,7 +167,7 @@ class printTicket {
   makeInformacionDocumento() {
     // 22-25
 
-    console.log( this.data );
+    console.log(this.data);
 
     this.conector
       .EscribirTextoFeed(this.getTextoSize('Fecha:', 22) + this.getTextoSize(this.data['documento_fecha'], this.line_width - 22))
