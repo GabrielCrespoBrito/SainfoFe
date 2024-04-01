@@ -133,7 +133,7 @@ class PrepareDataVentaForJavascriptPrint
     $venta = $this->data['venta2'];
     // Original
     // $decimals = $this->data['decimals'];
-    $decimals = 2;
+    $decimals = 1;
 
     $totals[] = [
       'descripcion' => 'OP. GRAVADAS.:',

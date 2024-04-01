@@ -107,7 +107,7 @@ class printTicket {
     }
   
     this.conector
-      .EstablecerTamañoFuente(2, 1)
+      .EstablecerTamañoFuente(1, 1)
       .EstablecerEnfatizado(true)
       .EscribirTextoFeed(this.data['empresa_nombre_comercial'])
       .EstablecerEnfatizado(false)
