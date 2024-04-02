@@ -23,9 +23,12 @@ class ProductoController extends Controller
 
   public function showPDF(Request $request)
   {
+    // _dd($request->all());
+    // exit();
     $fecha_desde = $request->fecha_desde;
     $fecha_hasta = $request->fecha_hasta;
     $local = $request->local;
+    $grupo = $request->grupos;
 
     // , $fecha_desde, $fecha_hasta, $local = "todos
     $validator = validator([
@@ -54,8 +57,10 @@ class ProductoController extends Controller
     }
 
     $local_report = $local == 'todos' ? null : $local;
+    $grupo = $grupo == 'todos' ? null : $grupo;
+    $grupo_nombre = $grupo ? Grupo::find($grupo)->GruNomb : 'Todos';
 
-    $data_products = (new ProductoMasVendidoReport($fecha_desde, $fecha_hasta, $local_report))->getData();
+    $data_products = (new ProductoMasVendidoReport($fecha_desde, $fecha_hasta, $local_report, $grupo))->getData();
 
     $empresa = get_empresa();
 
@@ -65,7 +70,9 @@ class ProductoController extends Controller
       'empresa_ruc' => $empresa->ruc(),
       'fecha_desde' => $fecha_desde,
       'fecha_hasta' => $fecha_hasta,
-      'local' => $local
+      'local' => $local,
+      'grupo' => $grupo,
+      'grupo_nombre' => $grupo_nombre,
     ];
 
     //

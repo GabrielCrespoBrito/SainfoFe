@@ -10,6 +10,7 @@ class ProductoMasVendidoReport
   public $fecha_desde;
   public $fecha_hasta;
   public $local;
+  public $grupo;
 
 
   /**
@@ -17,11 +18,12 @@ class ProductoMasVendidoReport
    *
    * @return void
    */
-  public function __construct($fecha_desde, $fecha_hasta, $local = null)
+  public function __construct($fecha_desde, $fecha_hasta, $local = null, $grupo = null)
   {
     $this->fecha_desde = $fecha_desde;
     $this->fecha_hasta = $fecha_hasta;
     $this->local = $local;
+    $this->grupo = $grupo;
 
     $this->handle();
   }
@@ -42,6 +44,7 @@ class ProductoMasVendidoReport
       DB::connection('tenant')->table('ventas_detalle')
       ->join('ventas_cab', 'ventas_cab.VtaOper', '=', 'ventas_detalle.VtaOper')
       ->join('productos', 'productos.ProCodi', '=', 'ventas_detalle.DetCodi')
+      ->join('grupos', 'grupos.GruCodi', '=', 'productos.grucodi')
       ->join('unidad', 'unidad.Unicodi', '=', 'ventas_detalle.UniCodi')
       ->where('ventas_detalle.DetCodi', '!=' , 'P' )
       ->whereBetween('ventas_cab.VtaFvta', [$this->fecha_desde, $this->fecha_hasta]);
@@ -51,16 +54,24 @@ class ProductoMasVendidoReport
       $group_productos->where('ventas_cab.LocCodi', $this->local);
     }
 
+    if ($this->grupo) {
+      $group_productos->where('productos.grucodi', $this->grupo);
+    }
+
+    $fields = [
+      'productos.ProNomb as nombre',
+      'grupos.GruCodi as codigo_grupo',
+      'grupos.GruNomb as nombre_grupo',
+      'ventas_detalle.DetCodi as codigo_producto',
+      'ventas_detalle.Unicodi as unidad',
+      'ventas_detalle.MarNomb as marca',
+      'ventas_detalle.DetCant as cantidad',
+      'unidad.UniEnte as unidad_entero',
+      'unidad.UniMedi as unidad_medida',
+    ];
+
     return $group_productos
-      ->select([
-        'productos.ProNomb as nombre',
-        'ventas_detalle.DetCodi as codigo_producto',
-        'ventas_detalle.Unicodi as unidad',
-        'ventas_detalle.MarNomb as marca',
-        'ventas_detalle.DetCant as cantidad',
-        'unidad.UniEnte as unidad_entero',
-        'unidad.UniMedi as unidad_medida',
-      ])
+      ->select($fields)
       ->get()
       ->groupBy(['codigo_producto', 'unidad']);
   }
@@ -87,6 +98,9 @@ class ProductoMasVendidoReport
 
       foreach ($group_unidades as $productos_unidad ) {
         $producto_data = $productos_unidad->first();
+        $data[$productoID]['nombre'] = $producto_data->nombre;
+        $data[$productoID]['codigo_grupo'] = $producto_data->codigo_grupo;
+        $data[$productoID]['nombre_grupo'] = $producto_data->nombre_grupo;
         $data[$productoID]['nombre'] = $producto_data->nombre;
         $data[$productoID]['codigo_producto'] = $producto_data->codigo_producto;
         $data[$productoID]['unidad'] = $producto_data->unidad;

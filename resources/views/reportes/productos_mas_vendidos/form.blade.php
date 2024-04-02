@@ -28,9 +28,6 @@
   $class_adicional = "reportes";
 @endphp
 
-{{-- @include('reportes.partials.botones' , ['target' => '_blank']) --}}
-{{-- @include('reportes.partials.productos_mas_vendidos.filtros') --}}
-
 
 <div class="filtros">
 <form action="{{ route('reportes.productos_mas_vendidos.pdf') }}" method="post">
