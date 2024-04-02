@@ -10,6 +10,7 @@ use App\GuiaSalida;
 use App\CajaDetalle;
 use App\PDFPlantilla;
 use Illuminate\Http\Request;
+use App\Util\PDFGenerator\PDFGenerator;
 use App\Http\Requests\Pago\PagoUpdateRequest;
 use App\Http\Requests\VentaPago\VentaPagoStoreRequest;
 use App\Http\Requests\VentaPago\VentaPagoDestroyRequest;
@@ -143,12 +144,20 @@ class VentasPagosController extends Controller
 
     $empresa = get_empresa();
     if( $empresa->hasVentaRapida() && $request->input('create_pdf', false) ){
+
       $formato = $request->input('formato_impresion', 'a4');
       $save = $formato == PDFPlantilla::FORMATO_A4;
       $serie = $venta->getSerie();
-      $venta->generatePDF($formato, $save, true, $serie->impresion_directa);
+      $venta->generatePDF(
+        $formato, 
+        $save, 
+        true, 
+        $serie->impresion_directa, 
+        PDFGenerator::HTMLGENERATOR,
+        null,
+        $formato != PDFPlantilla::FORMATO_A4);
+
       $venta->registerPago( $request->all() );
-      // $venta->update(['VtaEsta' => 'P']);
     }
 
     return  [

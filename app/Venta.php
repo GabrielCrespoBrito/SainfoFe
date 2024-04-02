@@ -982,6 +982,11 @@ class Venta extends Model
   }
 
 
+  public function modifyData(array $data)
+  {
+
+  }
+
   public function dataPdf($formato = Venta::FORMATO_A4, $get_url_logo_ticket = false, $items = null)
   {
 
@@ -1172,15 +1177,14 @@ class Venta extends Model
     $saveTemp = false,
     $impresion_directa = false,
     $generator = PDFGenerator::HTMLGENERATOR,
-    $items = null
+    $items = null,
+    $forceSaveA4 = false
   ) {
 
     $empresa = $this->empresa;
 
     $plantilla  = $this->getPlantilla($formato);
     $data = $this->dataPdf($formato, $impresion_directa, $items);
-
-
     $tempPath = '';
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
     $pdf->generator->setGlobalOptions($plantilla->getSetting());
@@ -1196,6 +1200,17 @@ class Venta extends Model
       $pdf->save($tempPath);
     }
 
+    if($forceSaveA4){
+      $data['logoDocumento'] = $empresa->getLogo(PDFPlantilla::FORMATO_A4);
+      $data['logoMarcaAgua'] = $empresa->getLogoEncodeMarcaAgua();
+      $data['logoMarcaAguaSizes'] = (new ImgStringInfo($empresa->FE_RESO))->getInfo();
+      $data['logoSubtitulo'] = $empresa->getLogoEncodeSubtitulo();
+      $plantilla  = $this->getPlantilla(PDFPlantilla::FORMATO_A4);
+      $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
+      $pdf->generator->setGlobalOptions($plantilla->getSetting());
+      FileHelper($empresa->EmpLin1)->save_pdf($namePDF, $pdf->generator->toString());
+    }
+    
     return [
       'data' => $data,
       'tempPath' => $tempPath,

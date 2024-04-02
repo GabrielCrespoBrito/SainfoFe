@@ -429,15 +429,22 @@ class VentasController extends Controller
         $serie = $request->serie;
         
         if($empresa->hasVentaRapida()){
-          // $tempPath = file_build_path('temp', $documento->nameFile('.pdf'));
-          // $pdfResult = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
           $result = file_build_path('temp', $documento->nameFile('.pdf'));
-          // Todavia no se usa, impresion directa de la impresora con venta rapida
           $data_impresion = [];
         }
 
         else {
-          $pdfResult = $documento->generatePDF($formato, $save, true, $serie->impresion_directa);
+
+
+          $pdfResult = $documento->generatePDF(
+            $formato, 
+            $save, 
+            true, 
+            $serie->impresion_directa,
+            PDFGenerator::HTMLGENERATOR,
+            null,
+            $formato != PDFPlantilla::FORMATO_A4 );
+
           $result = $pdfResult['tempPath'];
           $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);
         }
@@ -458,7 +465,6 @@ class VentasController extends Controller
       DB::connection('tenant')->rollBack();
       DB::connection()->rollBack();
       logger("@ERROR-CREAR-VENTA " . get_empresa()->EmpLin1);
-      logger($e);
       return response()->json(['message' => 'Error al guardar el documento: ' . $error], 500);
     }
 
