@@ -2340,9 +2340,6 @@ $(document).ready(function (e) {
     }
 
     else {
-
-      console.log("Aqui")
-
       if( window.data_guardado ){
         if (window.data_guardado.imprecion_data.impresion_directa ){
           ajaxs( 
@@ -2351,11 +2348,7 @@ $(document).ready(function (e) {
             },
             url_venta_data_impresion, 
             { success : function(dataImpresion){
-
-              console.log(dataImpresion, window.data_guardado.imprecion_data );
-              
               try {
-
                 let ticketPrint = new printTicket(
                   dataImpresion,
                   window.data_guardado.imprecion_data.nombre_impresora,
@@ -2363,14 +2356,10 @@ $(document).ready(function (e) {
                   (successPrint) => { console.log("success Print", successPrint); },
                   (errorPrint) => { console.log("Error Print", errorPrint) }
                 );
-
                 ticketPrint.print();              
               } catch (error) {
                 console.log("error Imprecion", error);
               }
-              //
-  
-              
             }}
             );
 
@@ -3628,9 +3617,6 @@ $(document).ready(function (e) {
 
   function guiaNeedShow() {
     $("#modalGuiaSalida").modal();
-
-    // viewGuia();
-    // console.log("aaa");
     return $(".select_guia option:selected").attr('data-guia') == "1";
   }
 

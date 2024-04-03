@@ -433,7 +433,6 @@ trait VentaMethod
         break;
       case StatusCode::CODE_EXITO_0002:
         $fe_rpta = self::FE_RPTA_2;;
-        // $this->saveStatus0002();
         break;
       case StatusCode::CODE_EXITO_0003:
         $fe_rpta = self::FE_RPTA_0;;

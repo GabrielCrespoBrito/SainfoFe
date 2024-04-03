@@ -345,7 +345,7 @@ class printTicket {
   }
 
   errorFunc(e) {
-    console.log("errorFunc", this);
+    console.log("errorFunc", e);
   }
 
   async printExe() {

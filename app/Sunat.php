@@ -11,8 +11,8 @@ class Sunat
 {
   public static function sendFactura($id_venta , $save_xml = true , $empcodi = null )
   {
-    $venta = Venta::where( 'VtaOper' , $id_venta )->first();
-    
+    $venta = is_numeric($id_venta) ? Venta::where('VtaOper', $id_venta)->first() : $id_venta;
+
     if( $save_xml ){
       $venta->saveXML();
     }
@@ -166,7 +166,7 @@ class Sunat
 
   public static function sentPendiente( $id , $empcodi = null )
   {
-    $venta = Venta::where( 'VtaOper' , $id )->first();
+    $venta = is_numeric($id) ? Venta::where( 'VtaOper' , $id )->first() : $id;
     $empresa = $venta->empresa;
     $empcodi = $empresa->empcodi;
 
