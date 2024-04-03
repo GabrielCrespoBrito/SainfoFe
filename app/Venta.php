@@ -1940,9 +1940,9 @@ class Venta extends Model
     if ($this->isPendiente()) {
       $sent = Sunat::sentPendiente($this, $this->EmpCodi);
 
-      if ($checkStatusSunat) {
+      // if ($checkStatusSunat) {
         $this->searchSunatGetStatus(false);
-      }
+      // }
 
       return $sent;
     }  

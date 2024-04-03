@@ -23,7 +23,7 @@ class ImgStringInfo
   {
     $img_info = [0,0];
 
-    if( $this->img_str != "?" ){
+    if( $this->img_str != "?" && $this->img_str != null ){
       $img_info = getimagesizefromstring($this->img_str);
     }
 

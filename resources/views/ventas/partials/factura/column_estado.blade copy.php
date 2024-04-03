@@ -15,20 +15,20 @@
   Anulada
 </a>
 
-@elseif( $VtaFMail == "0001" )
+@elseif( $fe_rpta == 0 )
 
 <a href="#" class="btn btn-xs aceptado">
   <span class="fa fa-check"></span> Aceptado
 </a>
 
-@elseif( $fe_rpta == "0002" )
+@elseif( $fe_rpta == 2 )
 
 <a href="#" class="btn btn-xs por_rechazado">
   <span class="fa fa-times"></span>
   Rechazado
 </a>
 
-@elseif( $VtaFMail == "0011" )
+@elseif( $fe_rpta == 9 )
 
 <a href="#" class="btn btn-xs por_enviar">
   <span class="fa fa-spin fa-spinner"></span>

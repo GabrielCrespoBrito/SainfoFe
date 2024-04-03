@@ -25,7 +25,7 @@ class SunatController extends Controller
   
   public function send_sunat( Request $request )
   {
-    return $this->sendSunatVenta($request->id_venta, true); 
+    return $this->sendSunatVenta($request->id_venta, false); 
   }
   
   public function sendSunatVenta($id_venta, $check_status = false)

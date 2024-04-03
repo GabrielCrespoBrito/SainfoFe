@@ -565,11 +565,16 @@ trait VentaMethod
   {
     $rpta = $this->checkStatus(false);
     $codeDocument = $this->VtaFMail;
+    
+    logger( sprintf('@SEARCH-STATUS %s %s %s', $this->VtaUni, $this->VtaOper,  $this->VtaFMail  ));
+    logger($rpta);
+    logger('@END-SEARCH-STATUS %s %s %s');
 
     if ($rpta['client_connection_success']) {
-
+      
       if ($rpta['communicate']) {
         $statusCode = $rpta['commnucate_data']->status->statusCode;
+        
         if( $codeDocument != $statusCode ){
           $this->updateStatusCode($statusCode);
           $this->processStatus();
