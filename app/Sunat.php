@@ -72,7 +72,7 @@ class Sunat
   public static function verificarDocument ( $id_venta, $solo_verificar = false , $empcodi = null )
   {
     // $venta = Venta::find( $id_venta , $empcodi );
-    $venta = Venta::where( 'VtaOper', $id_venta )->first();
+    $venta =  is_numeric($id_venta) ? Venta::where( 'VtaOper', $id_venta )->first() : $id_venta;
 
     $sent = self::verify( 
         $venta->empresa->EmpLin1 , 

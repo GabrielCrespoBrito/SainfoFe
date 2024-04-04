@@ -2453,9 +2453,9 @@ $(document).ready(function (e) {
   }
 
 
-  function respuesta_sunat(data) {
+  function respuesta_sunat(data, response_code = 200) {
     // console.log("Succes respuesta de la sunat" , data )
-    ms(data.data, 200);
+    ms(data.data, response_code);
     if (venta_rapida) {
       go_listado(1000);
     }
@@ -2507,7 +2507,9 @@ $(document).ready(function (e) {
           // eje_pago(data);
         },
         error: function (data) {
+          // respuesta_sunat(data.)
           ms(data.responseJSON.data, 500);
+          respuesta_sunat(data.responseJSON, 500)
         }
       };
 
