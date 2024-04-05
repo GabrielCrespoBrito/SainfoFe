@@ -548,9 +548,6 @@ $(document).ready(function (e) {
     let info = sum_cant();
     let $cargo_global = $("[data-name=cargo_global]");
 
-
-    console.log('info_sum_cant', info)
-
     // let anticipo_value
     info.total_importe -= totalAnticipo();
     // info.total_importe += calc_percepcion(info.total_importe);
@@ -2318,7 +2315,7 @@ $(document).ready(function (e) {
     $("#load_screen").show();
     ajaxs(data, url_previsulizacion, {
       success: (response) => {
-        showPDF(response.path_);
+        showPDF(response.path_ , true);
       },
       complete: response => $("#load_screen").hide()
     });
@@ -2326,26 +2323,21 @@ $(document).ready(function (e) {
 
   function showPDF(path, prev = true) {
 
-    console.log(path, /Android|iPhone/i.test(navigator.userAgent));
-
     if (/Android|iPhone/i.test(navigator.userAgent)) {
       $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-sm')
       $("#modalData").find('.modal-title').text('Previsualización del documento');
 
       const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
-
       $("#modalData").find('.modal-body').empty();
       $("#modalData").find('.modal-body').append($embedPDF);
-      $("#modalData").modal()
+      $("#modalData").modal();
+      return;
     }
 
-    else {
       if( window.data_guardado ){
         if (window.data_guardado.imprecion_data.impresion_directa ){
-          ajaxs( 
-            {
-              id_venta: window.data_guardado.codigo_venta
-            },
+          // Ajaxs
+          ajaxs({ id_venta: window.data_guardado.codigo_venta },
             url_venta_data_impresion, 
             { success : function(dataImpresion){
               try {
@@ -2353,41 +2345,78 @@ $(document).ready(function (e) {
                   dataImpresion,
                   window.data_guardado.imprecion_data.nombre_impresora,
                   window.data_guardado.imprecion_data.cantidad_copias,
-                  (successPrint) => { console.log("success Print", successPrint); },
-                  (errorPrint) => { console.log("Error Print", errorPrint) }
+                  (successPrint) => { 
+                    // --
+                    console.log("success Print", successPrint); 
+                    actionShowModalSunat();
+                  
+                  },
+                  (errorPrint) => { 
+                    console.log("Error Print Aqui Estamos y Aqui SEguimos", errorPrint) 
+                    showModalPDF(path);
+                  }
                 );
                 ticketPrint.print();              
               } catch (error) {
                 console.log("error Imprecion", error);
               }
-            }}
-            );
-
-          // Imprecion
-          console.log("Buscar informacion para imprimir");
+            }});
+          // /Ajaxs
+        }
+        else {
+          showModalPDF(path, prev)
         }
       }
 
-      $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
 
-      let nombre = "";
 
-      if (prev) {
-        nombre = "Previsualización de documento";
-      }
-      else {
-        let path_arr = path.split('/');
-        nombre = path_arr[path_arr.length - 1];
-      }
+      // // Preparar PDF
+      // $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
+      // let nombre = "";
+      // if (prev) {
+      //   nombre = "Previsualización de documento";
+      // }
+      // else {
+      //   let path_arr = path.split('/');
+      //   nombre = path_arr[path_arr.length - 1];
+      // }
 
-      $("#modalData").find('.modal-title').text(nombre);
+      // $("#modalData").find('.modal-title').text(nombre);
 
-      const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
+      // const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
 
-      $("#modalData").find('.modal-body').empty();
-      $("#modalData").find('.modal-body').append($embedPDF);
-      $("#modalData").modal()
+      // $("#modalData").find('.modal-body').empty();
+      // $("#modalData").find('.modal-body').append($embedPDF);
+      // $("#modalData").modal();
+  }
+
+
+  function showModalPDF(path, prev = false)
+  {
+    console.log("showModalPDF X", arguments);
+
+    // Preparar PDF
+    $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
+    
+    let nombre = "";
+    
+    if (prev) {
+      nombre = "Previsualización de documento";
     }
+    else {
+      let path_arr = path.split('/');
+      nombre = path_arr[path_arr.length - 1];
+    }
+
+    $("#modalData").find('.modal-title').text(nombre);
+
+    const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
+
+    console.log( "embedPDF", $embedPDF )
+
+    $("#modalData").find('.modal-body').empty();
+    $("#modalData").find('.modal-body').append($embedPDF);
+    $("#modalData").modal();
   }
 
 
@@ -2418,7 +2447,6 @@ $(document).ready(function (e) {
     if (openVentana("caja") || need_pago) {
 
       setTimeout(function () {
-        console.log("creando modal pagos");
         AppPago.is_static_modal = true;
         AppPago.set_id($("[name=codigo_venta]").val());
         AppPago.set_callback(function () {
@@ -2543,72 +2571,41 @@ $(document).ready(function (e) {
   a = preguntar_sunat;
 
   function guardar_factura(data) {
+    
     window.documento_guardado = true;
     window.data_guardado = data;
-
-    if (data.imprecion_data.impresion_directa) {
-
-      try {
-
-        function impresionExitosa() {
-          successStore(true)
-        }
-
-        function impresionError(data) {
-          successStore(true);
-        }
-
-        // let ticketPrint = new printTicket(
-        //   data.imprecion_data.data_impresion,
-        //   data.imprecion_data.nombre_impresora,
-        //   data.imprecion_data.cantidad_copias,
-        //   impresionExitosa,
-        //   impresionError
-        // );
-
-        // console.log(ticketPrint)
-
-        // ticketPrint.errorFunc = function (data) {
-        //   console.log("errorFunc", data)
-        //   successStore(true);
-        // }.bind(ticketPrint);
-
-
-        // ticketPrint.print();
-
-      } catch (error) {
-        console.log("error_print", error)
-      }
-
-    }
     successStore(data, true);
   }
 
 
-  function setModalEvent() {
+  function actionShowModalSunat()
+  {
+    console.log("actionShowModalSunat", data_guardado)
 
-    $("#modalData").on('hide.bs.modal', e => {
+    if (window.data_guardado.need_factura) {
+      setTimeout(preguntar_sunat, 500);
+    }
 
-      if (window.data_guardado.need_factura) {
-        setTimeout(preguntar_sunat, 500);
-      }
-
-      else {
-        if (need_pago) {
-          if (venta_rapida) {
-            go_listado();
-          }
-          else {
-            eje_pago();
-          }
-        }
-        else {
+    else {
+      if (need_pago) {
+        if (venta_rapida) {
           go_listado();
         }
+        else {
+          eje_pago();
+        }
       }
+      else {
+        go_listado();
+      }
+    }
 
 
-    })
+  }
+
+  function setModalEvent() {
+
+    $("#modalData").on('hide.bs.modal', actionShowModalSunat  )
   }
 
   function successStore(show_window_print = true) {
@@ -2643,7 +2640,6 @@ $(document).ready(function (e) {
 
 
   function error_guardar_factura(data) {
-    // console.log("error al guardar la factura", data);
     $(".div_esperando").hide();
     $(".div_guardar").show();
     defaultErrorAjaxFunc(data);

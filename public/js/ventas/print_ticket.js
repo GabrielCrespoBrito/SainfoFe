@@ -10,13 +10,21 @@ class printTicket {
   func_error_print;
 
   // Constructor
-  constructor(data = [], nombre_impresora = "POS-80", copy_qty = 1, func_success_print = null, func_error_print = null) {
+  constructor(
+    data = [], 
+    nombre_impresora = "POS-80", 
+    copy_qty = 1, 
+    func_success_print = null, 
+    func_error_print = null ) {
 
     this.data = data;
     this.nombre_impresora = nombre_impresora;
     this.copy_qty = copy_qty;
     this.func_success_print = func_success_print;
     this.func_error_print = func_error_print;
+
+    console.log(this.func_error_print);
+
 
     this.conector = new ConectorPluginV3();
   }
@@ -345,7 +353,11 @@ class printTicket {
   }
 
   errorFunc(e) {
-    console.log("errorFunc", e);
+    console.log("errorFunc", e, this.func_error_print);
+
+    if (this.func_error_print) {
+      this.func_error_print(e);
+    }
   }
 
   async printExe() {
@@ -364,7 +376,13 @@ class printTicket {
           }
         }
       })
-      .catch(this.errorFunc)
+      .catch((e) => {
+        console.log("errorFunc", e, this.func_error_print);
+
+        if (this.func_error_print) {
+          this.func_error_print(e);
+        }
+      })
   }
 
   // Print

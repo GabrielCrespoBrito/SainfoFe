@@ -53,7 +53,7 @@ trait ParametrosTrait
 
     $empresa->cleanCache();
 
-    noti()->success('Acciòn exitosa', 'Se han guardado exitosamente las configuraciones de la empresa');
+    noti()->success('Acción Exitosa', 'Se han guardado exitosamente las configuraciones de la empresa');
     return redirect()->back();
   }
 
@@ -63,9 +63,7 @@ trait ParametrosTrait
 
     $empresa = Empresa::find($id);
     $data = $request->only(EmpresaOpcion::MODULOS);
-    // dd($data);
-    // exit();
-
+    
     $empresa->updateModulos($data);
     $empresa->cleanCache();
     noti()->success( 'Acciòn exitosa' , 'Se han guardado exitosamente las configuraciones de la empresa' );

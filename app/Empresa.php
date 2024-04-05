@@ -1964,9 +1964,14 @@ class Empresa extends Model
       array_merge($data_adicional_current, $data_adicional_new) :
       array_merge($data_adicional_new, $data_adicional_current);
     $data_json = json_encode($data_aditional);
+  
+    // _dd($data_aditional );
+    // exit();
+
     $this->opcion->update(['LogEmpr' => $data_json]);
     $this->cleanCache();
   }
+
 
   public function deleteLogo($logo_id)
   {
