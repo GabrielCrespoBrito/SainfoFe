@@ -37,10 +37,6 @@ class DocumentoRule implements Rule
    */
   public function passes($attribute, $value)
   {
-    // _dd( $value, $this->tipo_cliente, $this->tipo_documento );
-    // logger([ $value, $this->tipo_cliente, $this->tipo_documento ]);
-    // exit();
-    
     if ($this->tipo_documento === TipoDocumento::NINGUNA) {
       return true;
     }

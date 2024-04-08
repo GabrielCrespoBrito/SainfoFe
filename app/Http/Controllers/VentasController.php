@@ -91,9 +91,6 @@ class VentasController extends Controller
     $estado = $request->input("estado");
     $status = $request->input("status");
     $filter = false;
-    
-    
-    logger([ $estado, $status, $filter ]);
 
     $busqueda = DB::connection('tenant')->table('ventas_cab')
       ->join('prov_clientes', function ($join) {
@@ -465,8 +462,6 @@ class VentasController extends Controller
       DB::connection('tenant')->rollBack();
       DB::connection()->rollBack();
       logger("@ERROR-CREAR-VENTA " . get_empresa()->EmpLin1);
-      _dd($e);
-      exit();
       return response()->json(['message' => 'Error al guardar el documento: ' . $error], 500);
     }
 
@@ -519,8 +514,6 @@ class VentasController extends Controller
       } else {
         $pathTemp = $venta->generatePDF($formato, true, true, false, PDFGenerator::HTMLGENERATOR);
         $pathTemp = $pathTemp['tempPath'];
-        // logger( $pathTemp );
-        // exit();
       }
     } else {
       $generator = $formato == PDFPlantilla::FORMATO_A5 ? PDFGenerator::HTMLGENERATOR : PDFGenerator::HTMLGENERATOR;

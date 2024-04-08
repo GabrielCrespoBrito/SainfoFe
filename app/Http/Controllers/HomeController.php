@@ -109,10 +109,6 @@ class HomeController extends Controller
       // http://
       // $url = sprintf( '%s/%s%s/home',)($request->secure() ? 'https://' : 'http://') .
       $url = sprintf('%s/%s%s/home', ($request->secure() ? 'https://' : 'http://'), $fqdn, $port);
-
-      logger( $url );
-      // exit();
-
       return redirect($url);
     } else {
       Auth::logout();

@@ -54,7 +54,6 @@ class ImportExcellProducts
     ->getResult();
 
     if (!$result->success) {
-      logger($result->errors);
       return $this->addError($result->errors);
     }
 

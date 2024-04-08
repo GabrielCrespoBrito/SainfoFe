@@ -423,7 +423,6 @@ class ImportExcel
           $zona->ZonCodi = strtoupper(str_random(4));
           $zona->ZonNomb = $this->data_row['zona'];
           $zona->save();
-          // logger( $zona->ZonCodi );
           $this->data_row['zona'] = $zona->ZonCodi;
         }
       }
