@@ -566,7 +566,13 @@ trait VentaMethod
     $rpta = $this->checkStatus(false);
     $codeDocument = $this->VtaFMail;
     
-    logger( sprintf('@SEARCH-STATUS %s %s %s', $this->VtaUni, $this->VtaOper,  $this->VtaFMail  ));
+    logger(sprintf('@SEARCH-STATUS %s %s %s %s %s', 
+    $this->VtaUni,
+    $this->VtaFMail,
+    $this->EmpCodi,
+    $this->User_FModi,
+    $this->fe_obse
+    ));
     logger($rpta);
     logger('@END-SEARCH-STATUS %s %s %s');
 

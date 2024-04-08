@@ -1941,8 +1941,8 @@ class Venta extends Model
       $sent = Sunat::sentPendiente($this, $this->EmpCodi);
       $this->searchSunatGetStatus(false);
       return $sent;
-    }  
-    
+    }
+
     else {
       return ['data' => $this->fe_obse, 'code_http' => 200];
     }
