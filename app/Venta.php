@@ -300,7 +300,7 @@ class Venta extends Model
 
   public function cliente()
   {
-    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi')->where('TipCodi', 'C')->where('empcodi', $this->EmpCodi);
+    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi')->where('TipCodi', 'C');
   }
 
   public function cliente_with()

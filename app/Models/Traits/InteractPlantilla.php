@@ -82,9 +82,6 @@ trait InteractPlantilla
     $serie = $this->getSerie($withSerie);
 
     return [
-      // PDFPlantilla::FORMATO_A4 => $this->getSerie($withSerie)->plantillaA4()->first(),
-      // PDFPlantilla::FORMATO_A5 => $this->getSerie($withSerie)->plantillaA5()->first(),
-      // PDFPlantilla::FORMATO_TICKET => $this->getSerie($withSerie)->plantillaTicket()->first(),
       PDFPlantilla::FORMATO_A4 => $serie->plantillaA4()->first(),
       PDFPlantilla::FORMATO_A5 => $serie->plantillaA5()->first(),
       PDFPlantilla::FORMATO_TICKET => $serie->plantillaTicket()->first(),      

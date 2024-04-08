@@ -154,6 +154,7 @@ class Factura_2_1 extends XmlHelperNew
   public function getClientePart()
   {
     $cliente = optional($this->documento->cliente);
+
     $this->change_datas([
       ["nombre_cliente", $cliente->PCNomb],
       ["ruc_cliente",  $cliente->PCRucc],

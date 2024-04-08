@@ -627,7 +627,6 @@ function xmlCreador($documento)
 
   if ($documento instanceof GuiaSalida) {
     return new App\Http\Controllers\Util\Xml\dos_uno\GuiaRemision_2_1($documento);
-    // return new App\Http\Controllers\Util\Xml\dos_uno\GuiaRemision_2_1($documento);
   }
 
   return new App\Http\Controllers\Util\Xml\dos_uno\Factura_2_1($documento);
