@@ -568,7 +568,7 @@ trait VentaMethod
     
     logger(sprintf('@SEARCH-STATUS %s %s %s %s %s', 
     $this->VtaUni,
-    $this->VtaFMail,
+    $codeDocument,
     $this->EmpCodi,
     $this->User_FModi,
     $this->fe_obse

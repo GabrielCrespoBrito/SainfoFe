@@ -27,31 +27,33 @@ class DocumentConsultStatusController extends Controller
       return response(['message' => $error], 400);
     }
     // 
-    $message = "{$doc->numero()} : " .
-      $consult['commnucate_data']->status->statusCode . '' .
-      $consult['commnucate_data']->status->statusMessage;
+    $message = sprintf(
+      "%s : %s %s",
+      $doc->numero(),
+      $consult['commnucate_data']->status->statusCode,
+      $consult['commnucate_data']->status->statusMessage
+    );
 
     return response(['message' => $message], 200);
   }
 
-  public function consultProcess( $id )
+  public function consultProcess($id)
   {
     $doc = Venta::find($id);
 
     $consult = $doc->searchSunatGetStatus(true);
     $success = !(!$consult['client_connection_response']['status'] || !$consult['communicate']);
-    
-    if ( !$success) {
+
+    if (!$success) {
       $message = $consult['client_connection_response']['error'] ?
         $consult['client_connection_response']['error'] :
         'Error a la hora de consultar a la sunat';
-    }
-    else {
+    } else {
 
-    $message = 
-    "{$doc->numero()} : " .
-      $consult['commnucate_data']->status->statusCode . '' .
-      $consult['commnucate_data']->status->statusMessage;
+      $message =
+        "{$doc->numero()} : " .
+        $consult['commnucate_data']->status->statusCode . '' .
+        $consult['commnucate_data']->status->statusMessage;
     }
 
     return [
@@ -82,7 +84,7 @@ class DocumentConsultStatusController extends Controller
 
     if ($data->cdr_exists) {
       // return response()->file($data->cdr_info->path);
-      return response()->download( $data->cdr_info->path, $data->cdr_info->fileName );
+      return response()->download($data->cdr_info->path, $data->cdr_info->fileName);
     }
 
     $message = sprintf(

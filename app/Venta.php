@@ -1922,9 +1922,8 @@ class Venta extends Model
     return $link;
   }
 
-  public function sendSunatPendiente($checkFirstCheckStatus = true, $empresa = null)
+  public function sendSunatPendiente($checkFirstCheckStatus = true, $empresa = null, int $timeSleep = 0)
   {
-    
     $empresa = $empresa ?? $this->empresa;
     $isOse =  $empresa->is_ose();
     $isProduccion = $empresa->isProduction();
@@ -1939,6 +1938,7 @@ class Venta extends Model
     
     if ($this->isPendiente()) {
       $sent = Sunat::sentPendiente($this, $this->EmpCodi);
+      sleep( $timeSleep );
       $this->searchSunatGetStatus(false);
       return $sent;
     }

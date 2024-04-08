@@ -31,7 +31,7 @@ class SunatController extends Controller
   public function sendSunatVenta($id_venta, $check_status = false)
   {
     $venta = Venta::find($id_venta);
-    $sent = $venta->sendSunatPendiente($check_status);
+    $sent = $venta->sendSunatPendiente($check_status, null , 2);
     $message = isset($sent['message']) ? $sent['message'] : '-';
     $code_http = isset($sent['code_http']) ? $sent['code_http'] : '400';
     return response(['data' => $message], $code_http);    
@@ -40,8 +40,8 @@ class SunatController extends Controller
   public function verificar_pendientes( VentaPendienteRequest $request )
   {
     $venta = Venta::find( $request->id_factura );
-    # New
 
+    # New
     $sent = $venta->sendSunatPendiente(true);
     $message = $sent['message'] ?? $sent['data'] ?? '-';
     $code_http = $sent['code_http'] ?? '400';
