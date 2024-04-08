@@ -155,6 +155,22 @@ class ResumenController extends Controller
         $code = $data->success ? 200 : 400;
       return response()->json(['message' => $message], $code);
     }    
-  }  
+  }
+
+  public function destroy(Request $request, $id_resumen, $docnume)
+  {
+    empresa_bd_tenant($request->empresa_id);
+
+    if (config('app.password_delete_empresa') != $request->password_admin) {
+      return response()->json([
+        'success' => true,
+        'message' => 'Contraseña incorrecta',
+      ], 500);
+    }
+
+    Resumen::findMultiple($id_resumen, $docnume)->delete_all();
+    return response()->json(['message' => 'El Resumen ha sido eliminado Satisfactoriamente']);
+  }
+
 
 }

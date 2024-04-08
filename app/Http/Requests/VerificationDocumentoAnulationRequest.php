@@ -37,6 +37,11 @@ class VerificationDocumentoAnulationRequest extends FormRequest
           return;
         }
 
+        if ($venta->isRechazado()) {
+          $validator->errors()->add('documento', 'El documento Rechazado no se puede anular');
+          return;
+        }
+
         if (!$venta->isAnulable()) {
           $validator->errors()->add('documento', 'Este tipo de documento no se puede anular');
           return;

@@ -222,6 +222,13 @@ class DocumentoController extends Controller
   {
     (new ActiveEmpresaTenant(Empresa::find($request->empresa_id)))->handle();
 
+    if(config('app.password_delete_empresa') != $request->password_admin){
+      return response()->json([
+        'success' => true,
+        'message' => 'Contraseña incorrecta',
+      ], 500);
+    }
+
     Venta::find($documento_id)->deleteComplete();
 
     return response()->json([

@@ -12,6 +12,20 @@
 
       <a href="#" data-url="{{ route('admin.resumenes.validar' , ['numoper' => $model->NumOper, 'docnume' => $model->DocNume ]) }}" class="btn validar-resumen btn-flat pull-right btn-default btn-block"> <span class="fa fa-check"> </span> Validar </a>
 
+
+      <a href="#" data-url="{{ route('admin.resumenes.eliminar' , ['numoper' => $model->NumOper, 'docnume' => $model->DocNume ]) }}" class="btn eliminar-documento btn-flat pull-right btn-default btn-block"> <span class="fa fa-trash"> </span> Eliminar </a>
+
+
+<p>
+  <input 
+    type="password" 
+    name="password_admin"
+    id="random"
+    autocomplete="off"
+    class="mt-x2 form-control input-sm text-center"
+    placeholder="Contraseña">
+</p>
+
     </div>
   </div>
 </div>

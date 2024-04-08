@@ -20,8 +20,6 @@ class SunatAnulacionController extends Controller
     $documento = Venta::find($request->id_factura );
     $is_anulado = false;
 
-    
-
     if( $documento->isDocumentoSunat() && get_empresa()->produccion() ){
 
       $resumen = $documento->createResumenAnulacion();

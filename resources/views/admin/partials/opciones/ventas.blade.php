@@ -2,18 +2,6 @@
   <a href="#" class="btn btn-block btn-default btn-flat"> Consultar Estado </a> 
 </div>
 
-
-{{-- <div class="mt-x10">
-  <a 
-    data-url="{{ route('admin.documentos.delete_pdf', $model->VtaOper) }}"  
-    href="#" 
-    class="btn  btn-default btn-flat eliminar-documento-pdf">
-    <span class="fa fa-trash"></span> Eliminar PDF 
-  </a> 
-  <input type="checkbox" name="re_created" value="1">
-</div> --}}
-{{-- ---- --}}
-
   <div class="mt-x10">
   <div class="btn-group">
     
@@ -26,13 +14,6 @@
 
   </div>
   </div>
-
-{{-- --- --}}
-
-{{-- loremp-ipsum-odlor-loremp-ipsum-odlor-loremp-ipsum-odlor --}}
-{{-- loremp-ipsum-odlor-loremp-ipsum-odlor-loremp-ipsum-odlor --}}
-{{-- loremp-ipsum-odlor-loremp-ipsum-odlor-loremp-ipsum-odlor --}}
-{{-- loremp-ipsum-odlor-loremp-ipsum-odlor-loremp-ipsum-odlor --}}
 
 <div class="mt-x10">
   <a 

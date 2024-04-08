@@ -155,6 +155,7 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::get('/resumenes/search-pending', 'Admin\ResumenController@searchPending')->name('resumenes.search_pendientes');
       Route::post('/resumenes/send-pending', 'Admin\ResumenController@sendPending')->name('resumenes.send_pendientes');
       Route::post('/resumenes/validar/{numoper}/{docnume}', 'Admin\ResumenController@validar')->name('resumenes.validar');
+      Route::post('/resumenes/eliminar/{numoper}/{docnume}', 'Admin\ResumenController@destroy')->name('resumenes.eliminar');
 
       # Actions
       Route::post('actions/change_empresa', "Admin\ActionController@changeEmpresa")->name('actions.change_empresa');
