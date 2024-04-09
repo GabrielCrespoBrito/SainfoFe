@@ -540,7 +540,7 @@ class GuiaSalida extends Model
     $guia->usucodi = $usucodi;;
     $guia->TipCodi = $tipcodi;
     $guia->cpaOper = NULL;
-    $guia->vtaoper = $vtaoper;
+    $guia->vtaoper = is_numeric($vtaoper) ? agregar_ceros($vtaoper,6,0) : $vtaoper;
     $guia->TidCodi = $tidcodi;
     $guia->IGVEsta = 0;
     $guia->GuiNOpe = null;
@@ -1488,21 +1488,15 @@ class GuiaSalida extends Model
     $this->motcodi == MotivoTraslado::EXPORTACION;
   }
 
-
   public function getDocRefReal()
   {
     if($this->motcodi == MotivoTraslado::IMPORTACION || $this->motcodi == MotivoTraslado::EXPORTACION){
       $exportData = $this->getExportData();
-
-
       return (object) [
         'id' => $exportData->documento_id ,
         'tipo' =>  $exportData->tipo_export,
       ];
     }
-
-      //   [ 'id', $this->documento->venta->VtaNume   ],
-      //   [ 'tipo', $this->documento->venta->TidCodi ],
 
     return (object) [
       'id' => $this->venta->VtaNume ,
@@ -1511,9 +1505,4 @@ class GuiaSalida extends Model
 
 
   }
-
-  // $tipo_export = $guia->getTipoExport();
-  // $serie_doc_num = $guia->getSerieDocExport();
-  // $export_doc_num = $guia->getDocNumExport();
-
 }
