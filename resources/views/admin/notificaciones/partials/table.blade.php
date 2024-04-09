@@ -59,8 +59,18 @@
                   name="notification-read[]">
               </td>
               <td> <a style="color:black" href="{{ route('admin.notificaciones.show', $item['id']) }}" target="_blank"> {{ $item['titulo'] }} </a></td>
-
-              <td> {!! $item['descripcion'] !!} </td>
+              @php
+                logger($item);
+              @endphp
+              <td> 
+                @if( is_array($item['descripcion']) )
+                -
+                  {{-- <a href="{!! $item['route'] !!}"> Ver </a> --}}
+                  {{-- http://20603419287.localhost:8004/admin/notificaciones/76187094-ab50-4829-8994-b5ddbe8f5965 --}}
+                @else
+                  {!! $item['descripcion'] !!}
+                @endif
+              </td>
               <td> {{ $item['date'] }} </td>
               @if( !$unread )
               <td> {{ $item['date_read'] }} </td>
