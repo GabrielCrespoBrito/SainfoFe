@@ -80,10 +80,6 @@ trait UtilHelper
 				'exceptions' => true,
 			];
 
-
-			// echo file_get_contents($wsdl);
-			// die();
-
 			$client = new \SoapClient($wsdl, $options);
 			$header = new \SoapHeader('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd','Security', $authValues, false);
 			$client->__setSoapHeaders($header);

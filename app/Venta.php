@@ -1466,6 +1466,7 @@ class Venta extends Model
     $this->update([
       'fe_rpta' => $rpta,
       'fe_obse' =>  $obse,
+      'VtaFMail' =>  StatusCode::CODE_0001,
       'fe_estado' => "ENVIADO SUNAT(" . $rpta . ")",
       'VtaCDR' => 1,
     ]);
@@ -1922,7 +1923,7 @@ class Venta extends Model
     return $link;
   }
 
-  public function sendSunatPendiente($checkFirstCheckStatus = true, $empresa = null, int $timeSleep = 0)
+  public function sendSunatPendiente($checkFirstCheckStatus = true, $empresa = null, $checkStatusAfter = true)
   {
     $empresa = $empresa ?? $this->empresa;
     $isOse =  $empresa->is_ose();
@@ -1938,8 +1939,10 @@ class Venta extends Model
     
     if ($this->isPendiente()) {
       $sent = Sunat::sentPendiente($this, $this->EmpCodi);
-      sleep( $timeSleep );
-      $this->searchSunatGetStatus(false);
+      
+      if($checkStatusAfter){
+        $this->searchSunatGetStatus(false);
+      }
       return $sent;
     }
 

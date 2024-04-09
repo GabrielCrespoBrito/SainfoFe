@@ -171,29 +171,32 @@ class Sunat
     $empcodi = $empresa->empcodi;
 
     
-    if($empresa->produccion()){
-      
-      $sent = self::verificarDocument( $id, false , $empcodi );
-      
-      if(  $empresa->is_ose()  ){
-        if ($sent['status'] && $sent['message'] != "0") {
-          $sent = self::sendFactura($id, true, $empcodi);
-        }
-      }
-
-      else {
-        if ( 
-          $sent['status'] && ($sent['message'] == "127" || $sent['message'] == "0125" || $sent['message'] == 125 || $sent['message'] == 127  )  ) {
-          $sent = self::sendFactura($id, true, $empcodi);
-        }
-      }
-    }
-
-    else {
-      $sent = self::sendFactura($id , true , $empcodi);
-    }
+    return self::sendFactura($id, true, $empcodi);
     
-    return $sent;    
+    
+    // if($empresa->produccion()){
+      
+      // $sent = self::verificarDocument( $id, false , $empcodi );
+      
+    //   if(  $empresa->is_ose()  ){
+    //     if ($sent['status'] && $sent['message'] != "0") {
+    //       $sent = self::sendFactura($id, true, $empcodi);
+    //     }
+    //   }
+
+    //   else {
+    //     if ( 
+    //       $sent['status'] && ($sent['message'] == "127" || $sent['message'] == "0125" || $sent['message'] == 125 || $sent['message'] == 127  )  ) {
+    //       $sent = self::sendFactura($id, true, $empcodi);
+    //     }
+    //   }
+    // }
+
+    // else {
+    //   $sent = self::sendFactura($id , true , $empcodi);
+    // }
+    
+    // return $sent;    
   }
 
 }
