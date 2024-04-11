@@ -57,7 +57,7 @@ class FHelper
     --- Name: Nombre del archivo
     --- sitio: Carpeta a guardar (data,envio,cdr,pdf)
   */
-  public function delete( $name, $sitio )
+  public function delete($name, $sitio)
   {
     // Guardar en local
     if (!$this->is_online && !$this->only_nube) {
@@ -76,7 +76,7 @@ class FHelper
 
   public function deleteCDR($name)
   {
-    $this->delete( $name , self::CDR );    
+    $this->delete($name, self::CDR);
   }
 
   public function deletePDF($name)
@@ -97,7 +97,7 @@ class FHelper
 
   public function delete_img($name)
   {
-    $this->delete($name, self::IMG );
+    $this->delete($name, self::IMG);
   }
 
   public function getTempPath($name)
@@ -151,22 +151,41 @@ class FHelper
   {
     return \Storage::disk('s3')->put($path, $content);
   }
-  
+
   public function getCompletePathL($folder)
   {
-    return get_setting('carpeta_guardado') .  get_setting($folder);
+    $separator = getSeparator();
+    
+    return sprintf(
+      '%s%s%s%s',
+      get_setting('carpeta_guardado'),
+      $this->ruc,
+      $separator,
+      $folder
+    );
+
+
   }
 
   public function setAllPaths()
   {
     $this->paths = [
       self::LOCAL => [
-        'data'  => $this->getCompletePathL('data_path'),
-        'envio' => $this->getCompletePathL('envio_path'),
-        'cdr'   => $this->getCompletePathL('cdr_path'),
-        'cert'  => $this->getCompletePathL('cert_path'),
-        'pdf'   => $this->getCompletePathL('pdf_path'),
-        'img'   => $this->getCompletePathL('img_path'),
+        // 'data'  => $this->getCompletePathL('data_path'),
+        // 'envio' => $this->getCompletePathL('envio_path'),
+        // 'cdr'   => $this->getCompletePathL('cdr_path'),
+        // 'cert'  => $this->getCompletePathL('cert_path'),
+        // 'pdf'   => $this->getCompletePathL('pdf_path'),
+        // 'img'   => $this->getCompletePathL('img_path'),
+
+        'data'  => $this->getCompletePathL('XMLData'),
+        'envio' => $this->getCompletePathL('XMLEnvio'),
+        'cdr'   => $this->getCompletePathL('XMLCDR'),
+        'cert'  => $this->getCompletePathL('XMLCert'),
+        'pdf'   => $this->getCompletePathL('XMLPDF'),
+        'img'   => $this->getCompletePathL('images'),
+
+
       ],
       self::NUBE => [
         'data'  => config('app.path_archivos.xml_data'),
@@ -181,11 +200,13 @@ class FHelper
 
   public function __construct($ruc)
   {
-    $this->setAllPaths = $this->setAllPaths();
+    
     $this->is_online   = is_online();
     $this->save_amazon = hay_internet() ? get_setting('save_amazon') : false;
     $this->ruc = is_null($ruc) ? get_ruc() : $ruc;
-  
+    
+    $this->setAllPaths();
+    
     foreach ($this->paths[self::NUBE] as $name => $value) {
       $separador = getSeparator();
       $path = implode($separador, $value);
@@ -201,26 +222,25 @@ class FHelper
 
   public function deleteAllInfo()
   {
-    $excepts_folder = [ self::IMG , self::CERT ];
+    $excepts_folder = [self::IMG, self::CERT];
     $is_local = !$this->is_online && !$this->only_nube;
     $paths = $is_local ? $this->paths['local'] : $this->paths['nube'];
-    foreach( $paths as $folder => $path_original ){
-      if( !in_array($folder, $excepts_folder )){
+    foreach ($paths as $folder => $path_original) {
+      if (!in_array($folder, $excepts_folder)) {
         $path =  $path_original . "/*";
-        if($is_local){
+        if ($is_local) {
           array_map('unlink', array_filter((array) glob($path)));
-        } 
-        else {
+        } else {
           $files = Storage::disk('s3')->files($path_original);
-          foreach( $files as $file ){
+          foreach ($files as $file) {
             $this->delete_nube($file);
           }
         }
       }
-    } 
+    }
   }
 
-  public function getFileBySite( $sitio , $name )
+  public function getFileBySite($sitio, $name)
   {
     return $this->getFile($this->getPath($this->getAmbito(), $sitio, $name));
   }
