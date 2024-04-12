@@ -251,9 +251,9 @@ function returnValueUnidad($campo, $data, $index, $default_value)
 }
 
 if (!function_exists('FileHelper')) {
-  function FileHelper($ruc = null)
+  function FileHelper($ruc = null, $codigo = '')
   {
-    return new App\Helpers\FHelper($ruc);
+    return new App\Helpers\FHelper($ruc, $codigo);
   }
 }
 
@@ -796,6 +796,12 @@ function periodo()
 function get_ruc()
 {
   return get_empresa('EmpLin1');
+}
+
+
+function get_codigo()
+{
+  return get_empresa('codigo');
 }
 
 

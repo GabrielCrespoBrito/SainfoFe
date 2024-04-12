@@ -1761,7 +1761,7 @@ class Venta extends Model
 
   public function fileExist($type)
   {
-    $fileHelper = new FHelper($this->empresa->EmpLin1);
+    $fileHelper = new FHelper($this->empresa->EmpLin1, $this->empresa->codigo);
     $r = ['success'  => false, 'nameFile' => ''];
 
     switch ($type) {

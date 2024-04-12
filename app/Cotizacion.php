@@ -701,7 +701,7 @@ class Cotizacion extends Model
 
     // 
     if ($save) {
-      FileHelper($empresa->EmpLin1)->save_pdf($namePDF, $pdf->generator->toString());
+      FileHelper($empresa->EmpLin1, $empresa->codigo)->save_pdf($namePDF, $pdf->generator->toString());
     }
 
     if ($saveTemp) {

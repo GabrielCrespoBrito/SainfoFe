@@ -9,12 +9,14 @@ trait BasicTrait
   public function updateDataBasic(UpdateBasicRequest $request, $id)
   {
     $empresa = Empresa::find($id);
-    $data = $request->only('nombre_comercial', 'direccion', 'ubigeo', 'departamento', 'provincia', 'distrito', 'email', 'telefonos', 'rubro', 'active', 'emis_certificado', 'venc_certificado');
+    $data = $request->only('nombre_comercial', 'direccion', 'ubigeo', 'departamento', 'provincia', 'distrito', 'email', 'telefonos', 'rubro', 'codigo', 'active', 'emis_certificado', 'venc_certificado');
     $empresa->EmpLin2 = $data['direccion'];
     $empresa->EmpLin3 = $data['email'];
     $empresa->EmpLin4 = $data['telefonos'];
     $empresa->EmpLin5 = $data['nombre_comercial'];
     $empresa->EmpLin6 = $data['rubro'];
+    $empresa->codigo = $data['codigo'];
+    
     $empresa->setUbigeo($data['ubigeo']);
     if( isset($data['venc_certificado'])  ){
       $empresa->venc_certificado = $data['venc_certificado'];

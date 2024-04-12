@@ -125,6 +125,7 @@ class Empresa extends Model
     "PrecIIGV",
     "fe_version",
     "need_config",
+    'codigo',
     "active",
     "fe_consulta",
     "end_plan",
@@ -746,6 +747,7 @@ class Empresa extends Model
     if ($is_new) {
       $empresa = new Empresa;
       $empresa->empcodi = agregar_ceros(Empresa::max('empcodi'), 3);
+      $empresa->codigo = $empresa->empcodi;
       $empresa->active =  $data['active'] ?? 0;
     }
 
@@ -1710,7 +1712,7 @@ class Empresa extends Model
 
     if ($this->hasLogo(self::LOGO_TICKET)) {
 
-      $fh = fileHelper($this->ruc());
+      $fh = fileHelper($this->ruc(), $this->codigo);
 
       $url_logo_bucket =  config('app.aws_url_bucket') . '/images/' . $this->getNameImgLogoTicket();
 
@@ -1732,7 +1734,7 @@ class Empresa extends Model
     switch ($logo) {
       case self::LOGO_TICKET:
         $logo_content = $this->EmpLogo1;
-        return fileHelper($this->ruc())->save_img($this->getNameImgLogoTicket(), $logo_content);
+        return fileHelper($this->ruc(), $this->codigo)->save_img($this->getNameImgLogoTicket(), $logo_content);
     }
   }
 
@@ -1948,7 +1950,7 @@ class Empresa extends Model
 
   public function deleteAllFiles()
   {
-    $fh = fileHelper($this->ruc());
+    $fh = fileHelper($this->ruc(), $this->codigo);
     $fh->deleteAllInfo();
   }
 

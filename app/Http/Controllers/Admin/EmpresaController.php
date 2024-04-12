@@ -26,7 +26,8 @@ class EmpresaController extends EmpresaMainController
   public function updateDataBasicEscritorio(UpdateBasicRequest $request, $id)
   {
     $empresa = Empresa::find($id);
-    $data = $request->only('nombre_comercial', 'direccion', 'ubigeo', 'departamento', 'provincia', 'distrito', 'email', 'telefonos', 'rubro', 'active', 'venc_certificado', 'emis_certificado', 'fecha_suscripcion');
+    $data = $request->only('nombre_comercial', 'direccion', 'ubigeo', 'departamento', 'provincia', 'distrito', 'email', 'codigo', 'telefonos', 'rubro', 'active', 'venc_certificado', 'emis_certificado', 'fecha_suscripcion');
+
     $empresa->EmpLin2 = $data['direccion'];
     $empresa->EmpLin3 = $data['email'];
     $empresa->EmpLin4 = $data['telefonos'];
@@ -34,6 +35,7 @@ class EmpresaController extends EmpresaMainController
     $empresa->EmpLin6 = $data['rubro'];
     $empresa->venc_certificado = $data['venc_certificado'];
     $empresa->emis_certificado = $data['emis_certificado'];
+    $empresa->codigo = $data['codigo'];
     // $empresa->end_plan = $data['fecha_suscripcion'];
     if(isset($data['ubigeo'])){
       $empresa->setUbigeo($data['ubigeo']);

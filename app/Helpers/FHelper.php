@@ -13,6 +13,8 @@ class FHelper
   public $is_online;
   public $save_amazon = false;
   public $ruc;
+  public $codigo;
+
   public $only_nube = false;
   const NUBE = 'nube';
   const LOCAL = 'local';
@@ -156,10 +158,12 @@ class FHelper
   {
     $separator = getSeparator();
     
+    $empresa_id = $this->codigo . '-' .  $this->ruc;
+
     return sprintf(
       '%s%s%s%s',
       get_setting('carpeta_guardado'),
-      $this->ruc,
+      $empresa_id,
       $separator,
       $folder
     );
@@ -184,8 +188,6 @@ class FHelper
         'cert'  => $this->getCompletePathL('XMLCert'),
         'pdf'   => $this->getCompletePathL('XMLPDF'),
         'img'   => $this->getCompletePathL('images'),
-
-
       ],
       self::NUBE => [
         'data'  => config('app.path_archivos.xml_data'),
@@ -198,12 +200,13 @@ class FHelper
     ];
   }
 
-  public function __construct($ruc)
+  public function __construct($ruc, $codigo = '')
   {
     
     $this->is_online   = is_online();
     $this->save_amazon = hay_internet() ? get_setting('save_amazon') : false;
     $this->ruc = is_null($ruc) ? get_ruc() : $ruc;
+    $this->codigo = $codigo ? $codigo : get_codigo();
     
     $this->setAllPaths();
     

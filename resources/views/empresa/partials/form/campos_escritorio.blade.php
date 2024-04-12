@@ -2,16 +2,26 @@
   $empresa = $empresa ?? null; 
 @endphp
 
+
+
  <div class="row empresa-parametros">
 
-  <div class="form-group col-md-3">  
+
+  <div class="form-group col-md-2">  
+    <div class="input-group">
+      <span class="input-group-addon">Codigo</span>
+      <input value="{{ optional($empresa)->codigo }}" class="form-control input-sm" required name="codigo" type="text" value="">
+    </div>
+  </div>
+
+  <div class="form-group col-md-2">  
     <div class="input-group">
       <span class="input-group-addon">Fecha Emis. Cert</span>
       <input value="{{ optional($empresa)->emis_certificado }}" class="form-control input-sm" required name="emis_certificado" type="date" value="">
     </div>
   </div>
 
-  <div class="form-group col-md-3">  
+  <div class="form-group col-md-2">  
     <div class="input-group">
       <span class="input-group-addon">Fecha Venc. Cert</span>
       <input value="{{ optional($empresa)->venc_certificado }}" class="form-control input-sm" required name="venc_certificado" type="date" value="">

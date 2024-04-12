@@ -156,6 +156,7 @@ abstract class EmpresaMainController extends Controller
   {
     $empresa = get_empresa();
     $data = $request->only('nombre_comercial', 'direccion', 'ubigeo', 'departamento', 'provincia', 'distrito', 'email', 'telefonos', 'rubro', 'logo_principal', 'logo_secundario', 'logo_subtitulo', 'logo_marca_agua', 'imprimir', 'nombre_impresora', 'cant_copias');
+
     Cache::forget('empresa' . $empresa->empcodi);
     Empresa::saveData($data, $empresa, false, true);
 
@@ -174,6 +175,9 @@ abstract class EmpresaMainController extends Controller
    */
   public function updateParametroBasic(EmpresaUpdateParametroBasicRequest $request, $id)
   {
+    _dd($request->all());
+    exit();
+    
     $empresa = get_empresa();
     Cache::forget('empresa' . $empresa->empcodi);
     $empresa->updateParametrosBasic($request);

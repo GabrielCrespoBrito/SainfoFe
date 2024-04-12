@@ -28,9 +28,7 @@
 
 @include('admin.empresa.partials.form_web', [ 'form_sunat' => true, 'form_visualizacion' => true, 'form_parametros' => true, 'form_acciones' => true, 'form_certificado' => true, 'form_tienda' => true ])
 
-
 @endif
-
 
 @endslot
 @endview_data
