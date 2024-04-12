@@ -161,9 +161,11 @@ class FHelper
     $empresa_id = $this->codigo . '-' .  $this->ruc;
 
     return sprintf(
-      '%s%s%s%s',
+      '%s%s%s%s%s%s',
       get_setting('carpeta_guardado'),
       $empresa_id,
+      $separator,
+      'DOCUMENTOS',
       $separator,
       $folder
     );
