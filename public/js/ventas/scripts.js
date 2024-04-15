@@ -2367,27 +2367,25 @@ $(document).ready(function (e) {
           showModalPDF(path, prev)
         }
       }
+      else {
+        if(prev){
+          // Preparar PDF
+          $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
+          let nombre = "";
+          if (prev) {
+            nombre = "Previsualización de documento";
+          }
+          $("#modalData").find('.modal-title').text(nombre);
+          $("#modalData").find('.modal-body').empty();
+          $("#modalData").find('.modal-body').append(`<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`);
+          $("#modalData").modal();
+          // --------- abc
+        }
+      }
 
 
 
-      // // Preparar PDF
-      // $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
-      // let nombre = "";
-      // if (prev) {
-      //   nombre = "Previsualización de documento";
-      // }
-      // else {
-      //   let path_arr = path.split('/');
-      //   nombre = path_arr[path_arr.length - 1];
-      // }
 
-      // $("#modalData").find('.modal-title').text(nombre);
-
-      // const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
-
-      // $("#modalData").find('.modal-body').empty();
-      // $("#modalData").find('.modal-body').append($embedPDF);
-      // $("#modalData").modal();
   }
 
 
