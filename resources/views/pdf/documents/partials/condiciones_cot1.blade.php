@@ -2,6 +2,7 @@
 $class_name = $class_name ?? "";
 $titulo_div_class = $titulo_div_class ?? '';
 $titulo = $titulo ?? 'CONDICIONES';
+$condicion_div_class = $condicion_div_class ?? 'cuenta_text_class pl-x3 font-size-8';
 @endphp
 
 <div class="cuentas {{ $class_name }}">
@@ -11,7 +12,7 @@ $titulo = $titulo ?? 'CONDICIONES';
   @endif
 
   @foreach( $condiciones as $condicion )
-  <div class="cuenta_text_class pl-x3 font-size-8">
+  <div class="{{ $condicion_div_class }}">
     <div> {{ $condicion }} </div>
   </div>
   @endforeach

@@ -126,6 +126,16 @@
       'info_text_consultada_class' => 'no-bold'
       ])
 
+    @include('pdf.documents.partials.condiciones_cot1', [
+      'class_name' => 'col-10 ',
+      'titulo' => 'Condiciones de Venta: ',
+      'class_name_table' => '',
+      'titulo_div_class' => 'mb-x3',
+      'cuenta_text_class' => '',
+      'condicion_div_class' => 'bold',
+      'cuenta_cuenta_text_class' => '',
+      ])
+
     </div>
 
     @endslot
