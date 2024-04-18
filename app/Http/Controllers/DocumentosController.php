@@ -139,6 +139,7 @@ class DocumentosController extends Controller
     $pathEnvio = $ftp->getPath(FtpHelper::FOLDER_ENVIO, $nameEnvio);
     $pathPdf = $ftp->getPath(FtpHelper::FOLDER_PDF, $namePDF);
 
+    
     if ($ftp->exists($pathCdr)) {
       array_push($downloadFiles, ['name' => $nameCdr, 'content' => $ftp->getFile($pathCdr)]);
 
@@ -147,11 +148,13 @@ class DocumentosController extends Controller
       }
 
       if ($ftp->exists($pathPdf)) {
-        array_push($downloadFiles, ['name' => $nameEnvio, 'content' => $ftp->getFile($pathPdf)]);
+        array_push($downloadFiles, ['name' => $namePDF, 'content' => $ftp->getFile($pathPdf)]);
       }
     }
 
-
+    // _dd( $pathPdf );
+    // exit();
+    
     // 
 
     // if( $fileHelper->existsInNube( FHelper::CDR  ,  $nameCdr) ){
@@ -189,7 +192,7 @@ class DocumentosController extends Controller
       array_push($pathsFiles, $pathTemp);
     }
 
-    $nameCompress = $nameEnvio;
+    $nameCompress = date('Ymdhi') . '_' .  $nameEnvio;
     $pathCompress = getTempPath($nameCompress);
 
     $zipper
