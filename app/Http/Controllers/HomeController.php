@@ -10,6 +10,7 @@ use Automattic\WooCommerce\Client;
 use App\Helpers\NotificacionHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\System\CheckIfMonthExists;
+use Illuminate\Support\Facades\Storage;
 use Codexshaper\WooCommerce\Models\Order;
 use App\Http\Controllers\Reportes\Reporte;
 use App\Http\Requests\EmpresaSeleccionadaRequest;
@@ -50,7 +51,7 @@ class HomeController extends Controller
       return view('reportes.ventas_mensual.form_new_contador', compact('routeData', 'routeDate'));
     } else {
       $empresa = Empresa::find(empcodi());
-      (new CheckIfMonthExists)->handle();      
+      (new CheckIfMonthExists)->handle();
       if ($empresa->noSeHaGuardadoInformacionPorDefecto()) {
         try {
           $empresa->saveInformacionDefecto(true);
@@ -65,12 +66,12 @@ class HomeController extends Controller
         }
       }
 
-      return view('dashboard', [
-        // 'data' => $data,
-        'sidebar' => false,
-        // 'data_mes' => $data_mes,
-        // 'data_grafica' => $data_grafica,
-      ]);
+      // dd(1);
+      // exit();
+      // storage_path();
+      // Storage::disk('ftp')->put('avatars/1.txt', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum' );
+
+      return view('dashboard', [ 'sidebar' => false ]);
     }
   }
 
@@ -99,7 +100,7 @@ class HomeController extends Controller
     $hostExists = Hostname::where('fqdn', $fqdn)->exists();
     $puerto = env('SERVER_PORT');
     $port = $request->server('SERVER_PORT') == $puerto ? ":{$puerto}" : '';
-    
+
     if ($hostExists) {
       session()->put('empresa', $empresa->empcodi);
       session()->put('empresa_ruc', $ruc);

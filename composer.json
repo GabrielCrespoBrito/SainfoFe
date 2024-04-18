@@ -20,6 +20,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.7",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "league/flysystem-cached-adapter": "~1.0",
+        "league/flysystem-sftp": "~1.0",
         "maatwebsite/excel": "~2.1.0",
         "mike42/escpos-php": "^3.0",
         "mikehaertl/phpwkhtmltopdf": "^2.4",

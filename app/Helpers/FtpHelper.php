@@ -7,9 +7,13 @@ use App\VentaAmazon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class FHelper
+class FtpHelper
 {
   public $paths;
+  public $folder;
+  public $separator;
+  public $storage;
+  public $directories;
   public $is_online;
   public $save_amazon = false;
   public $ruc;
@@ -27,6 +31,12 @@ class FHelper
   const CDR  = 'cdr';
   const PDF  = 'pdf';
   const DB = "DB";
+
+  const FOLDER_CDR = 'XMLCDR';
+  const FOLDER_DATA = 'XMLData';
+  const FOLDER_PDF = 'XMLPDF';
+  const FOLDER_ENVIO = 'XMLEnvio';
+  const FOLDER_CERTS = 'XMLCert';
 
   /*
     --- name: Nombre del archivo
@@ -182,7 +192,7 @@ class FHelper
   }
 
 
-  public function getPathFTP( $folder )
+  public function getPathFTP()
   {
     $separator = getSeparator();
 
@@ -194,7 +204,6 @@ class FHelper
       $separator,
       'DOCUMENTOS',
       $separator,
-      $folder
     );
   }
 
@@ -238,27 +247,21 @@ class FHelper
     ];
   }
 
-  public function __construct($ruc, $codigo = '')
+  public function __construct( $folder  )
   {
-    $this->carpeta_guardado = get_setting('carpeta_guardado');
-    $this->is_online   = is_online();
-    $this->save_amazon = hay_internet() ? get_setting('save_amazon') : false;
-    $this->ruc = is_null($ruc) ? get_ruc() : $ruc;
-    $this->codigo = $codigo ? $codigo : get_codigo();
-    
-    $this->setAllPaths();
-    
-    foreach ($this->paths[self::NUBE] as $name => $value) {
-      $separador = getSeparator();
-      $path = implode($separador, $value);
-      $newPath = str_replace("{ruc_cliente}", $this->ruc, $path);
-      $this->paths[self::NUBE][$name] = $newPath;
-    }
+    $this->folder = $folder;
+    $this->separator = getSeparator();
+    $this->storage = Storage::disk('ftp');
+    $this->searchDirectories();
   }
 
-  public function getPath($ambito, $sitio, $name)
+
+
+
+  public function getPath($folderInside, $nameFile)
   {
-    return $this->paths[$ambito][$sitio] . getSeparator() .  $name;
+    // 00001 - 10323013760
+    return sprintf('%s%sDOCUMENTOS%s%s%s%s', $this->folder, $this->separator, $this->separator, $folderInside, $this->separator, $nameFile );
   }
 
   public function deleteAllInfo()
@@ -288,20 +291,7 @@ class FHelper
 
   public function getFile($path = "")
   {
-    if ($this->is_online) {
-      return $this->getFileInNube($path);
-    }
-    return $this->getFileInLocal($path);
-  }
-
-  public function getFileInLocal($path)
-  {
-    return file_get_contents($path);
-  }
-
-  public function getFileInNube($path)
-  {
-    return Storage::disk('s3')->get($path);
+    return Storage::disk('ftp')->get($path);
   }
 
   public function getNameCert($ext)
@@ -351,9 +341,9 @@ class FHelper
     return $this->is_online ? self::NUBE : self::LOCAL;
   }
 
-  public function exists($sitio, $name)
+  public function exists($path)
   {
-    return $this->file_exists($this->getPath($this->getAmbito(), $sitio, $name));
+    return Storage::disk('ftp')->exists($path);
   }
 
   public function existsInLocal($sitio, $name)
@@ -547,5 +537,60 @@ class FHelper
       'path' => $pathCompress,
       'name' => $nameCompress
     ];
+  }
+
+  /**
+   * Get the value of folder
+   */ 
+  public function getFolder()
+  {
+    return $this->folder;
+  }
+
+
+  public function existPath( $path,  $exact = true )
+  {
+    if( $exact ){
+      return $this->storage->exists($path);
+    }
+
+    $folder = preg_grep("/{$path}/i", $this->directories);
+
+    return count($folder);
+  }
+
+
+  public function existDirectory($directory,  $exact = true)
+  {
+    // return $this->storage->directories("/{$directory}/i");
+    // return $this->storage->directories($directory);
+    if ($exact) {
+      return (bool) count($this->storage->directories($directory));
+    }
+
+    $folders = preg_grep("/{$directory}/i", $this->directories);
+
+    if( count($folders) ){
+      return array_values($folders)[0];
+    }
+
+    return false;
+  }
+
+  public function searchDirectories()
+  {
+    return $this->directories = $this->storage->directories();
+  }
+
+  /**
+   * Set the value of folder
+   *
+   * @return  self
+   */ 
+  public function setFolder($folder)
+  {
+    $this->folder = $folder;
+
+    return $this;
   }
 }
