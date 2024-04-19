@@ -108,7 +108,7 @@ class printTicket {
   makeEmpresaData() {
     this.conector
       .Iniciar()
-      .EstablecerFuente('Arial')
+      // .EstablecerFuente('Arial')
       .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
 
     if (this.data['empresa_logo_path']) {

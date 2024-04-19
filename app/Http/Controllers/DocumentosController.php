@@ -152,10 +152,6 @@ class DocumentosController extends Controller
       }
     }
 
-    // _dd( $pathPdf );
-    // exit();
-    
-    // 
 
     // if( $fileHelper->existsInNube( FHelper::CDR  ,  $nameCdr) ){
     //   $file = $fileHelper->getFilesInNube( FHelper::CDR , $nameCdr);
