@@ -107,6 +107,76 @@ class DocumentosController extends Controller
 
   public function downloadDocumentos(BusquedaDocumentoRequest $request)
   {
+    $data = $request->all();
+
+    $ruc = trim($request->ruc);
+
+    $name =
+      $ruc . '-' .
+      $request->tipo_documento . '-' .
+      strtoupper($request->serie) . '-' .
+      agregar_ceros($request->numero, 6, 0);
+
+    $nameCdr = 'R-' . $name . '.zip';
+    $namePDF = $name . '.pdf';
+    $nameEnvio = $name . '.zip';
+
+    $fileHelper = new FHelper($ruc);
+    $filesToDownload = [];
+
+    if ($fileHelper->existsInNube(FileHelperr::CDR,  $nameCdr)) {
+      $file = $fileHelper->getFilesInNube(FileHelperr::CDR, $nameCdr);
+      array_push($filesToDownload, ['name' => $nameCdr, 'content' => $file]);
+
+      if ($fileHelper->existsInNube(FileHelperr::PDF,  $namePDF)) {
+        $file = $fileHelper->getFilesInNube(FileHelperr::PDF, $namePDF);
+        array_push($filesToDownload, ['name' => $namePDF, 'content' => $file]);
+      }
+      if ($fileHelper->existsInNube(FileHelperr::ENVIO,  $nameEnvio)) {
+        $file = $fileHelper->getFilesInNube(FileHelperr::ENVIO, $nameEnvio);
+        array_push($filesToDownload, ['name' => $nameEnvio, 'content' => $file]);
+      }
+    }
+
+    if ($request->tipo_documento == "03" && $fileHelper->existsInNube('pdf', $namePDF)) {
+      $file = $fileHelper->getFilesInNube(FileHelperr::PDF, $namePDF);
+      array_push($filesToDownload, ['name' => $namePDF, 'content' => $file]);
+    }
+
+    if (count($filesToDownload)) {
+
+      $zipper = new Zipper();
+
+      $pathsFiles = [];
+
+      foreach ($filesToDownload as $file) {
+
+        $pathTemp = getTempPath($file['name']);
+        $fileHelper->saveTemp($file['content'], $file['name']);
+        chmod($pathTemp, 0755);
+        array_push($pathsFiles, $pathTemp);
+      }
+
+      $nameCompress = str_random(5) . '__' . $nameEnvio;
+      $pathCompress = getTempPath($nameCompress);
+
+      $zipper
+        ->make($pathCompress)
+        ->add($pathsFiles)
+        ->close();
+
+      $headers = ['Content-type' => 'application/zip'];
+      $response = \Response::download($pathCompress, NULL, $headers);
+      ob_end_clean();
+      return $response;
+    } else {
+      notificacion("", "No se ha encontrado ningun documento con los datos suministrados", "error");
+      return redirect()->back();
+    }
+  }
+
+  public function _downloadDocumentos(BusquedaDocumentoRequest $request)
+  {
     $ruc = trim($request->ruc);
 
     $name =
@@ -151,26 +221,6 @@ class DocumentosController extends Controller
         array_push($downloadFiles, ['name' => $namePDF, 'content' => $ftp->getFile($pathPdf)]);
       }
     }
-
-
-    // if( $fileHelper->existsInNube( FHelper::CDR  ,  $nameCdr) ){
-    //   $file = $fileHelper->getFilesInNube( FHelper::CDR , $nameCdr);
-    //   array_push($filesToDownload,['name' => $nameCdr,'content'=>$file]);
-
-    //   if( $fileHelper->existsInNube( FHelper::PDF,  $namePDF)){
-    //     $file = $fileHelper->getFilesInNube(FHelper::PDF , $namePDF);  
-    //     array_push( $filesToDownload,['name' => $namePDF,'content'=>$file]);
-    //   }
-    //   if( $fileHelper->existsInNube( FHelper::ENVIO,  $nameEnvio )){
-    //     $file = $fileHelper->getFilesInNube(FHelper::ENVIO , $nameEnvio); 
-    //     array_push($filesToDownload,['name' => $nameEnvio ,'content' => $file ]  );
-    //   }
-    // }
-
-    // if($request->tipo_documento=="03" && $fileHelper->existsInNube('pdf',$namePDF)){
-    //   $file = $fileHelper->getFilesInNube(FHelper::PDF , $namePDF); 
-    //   array_push($filesToDownload,['name' => $namePDF,'content'=>$file]);      
-    // }
 
     if (count($downloadFiles) == 0) {
       notificacion("", "No se ha encontrado ningun documento con los datos suministrados", "error");
