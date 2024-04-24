@@ -124,22 +124,22 @@ class DocumentosController extends Controller
     $fileHelper = new FHelper($ruc);
     $filesToDownload = [];
 
-    if ($fileHelper->existsInNube(FileHelperr::CDR,  $nameCdr)) {
-      $file = $fileHelper->getFilesInNube(FileHelperr::CDR, $nameCdr);
+    if ($fileHelper->existsInNube(FHelper::CDR,  $nameCdr)) {
+      $file = $fileHelper->getFilesInNube(FHelper::CDR, $nameCdr);
       array_push($filesToDownload, ['name' => $nameCdr, 'content' => $file]);
 
-      if ($fileHelper->existsInNube(FileHelperr::PDF,  $namePDF)) {
-        $file = $fileHelper->getFilesInNube(FileHelperr::PDF, $namePDF);
+      if ($fileHelper->existsInNube(FHelper::PDF,  $namePDF)) {
+        $file = $fileHelper->getFilesInNube(FHelper::PDF, $namePDF);
         array_push($filesToDownload, ['name' => $namePDF, 'content' => $file]);
       }
-      if ($fileHelper->existsInNube(FileHelperr::ENVIO,  $nameEnvio)) {
-        $file = $fileHelper->getFilesInNube(FileHelperr::ENVIO, $nameEnvio);
+      if ($fileHelper->existsInNube(FHelper::ENVIO,  $nameEnvio)) {
+        $file = $fileHelper->getFilesInNube(FHelper::ENVIO, $nameEnvio);
         array_push($filesToDownload, ['name' => $nameEnvio, 'content' => $file]);
       }
     }
 
     if ($request->tipo_documento == "03" && $fileHelper->existsInNube('pdf', $namePDF)) {
-      $file = $fileHelper->getFilesInNube(FileHelperr::PDF, $namePDF);
+      $file = $fileHelper->getFilesInNube(FHelper::PDF, $namePDF);
       array_push($filesToDownload, ['name' => $namePDF, 'content' => $file]);
     }
 
