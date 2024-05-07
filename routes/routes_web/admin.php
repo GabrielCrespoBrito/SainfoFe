@@ -229,6 +229,8 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::get('usuarios_documentos/edit/{id}', "Admin\UserDocumentoController@edit" )->name('usuarios_documentos.edit');  
       Route::put('usuarios_documentos/update/{id}',"Admin\UserDocumentoController@update")->name('usuarios_documentos.update');  
       Route::post('usuarios_documentos/delete/{id}',"Admin\UserDocumentoController@delete")->name('usuarios_documentos.delete');  
+      
+      Route::post('test-print', "UsersDocumentosController@testPrintDirect")->name('usuarios_documento.test_print');
 
       # Roles
       Route::get('usuarios/assign_role/{id_user}',  "Admin\UserRoleController@create")->name('usuarios.assign_role');

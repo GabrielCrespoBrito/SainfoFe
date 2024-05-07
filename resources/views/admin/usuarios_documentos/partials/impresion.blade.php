@@ -16,7 +16,7 @@
       <option value="0" {{ $usuario_documento->impresion_directa == "0" ? 'selected=selected' : '' }}> Inactivo </option>
       <option value="1" {{ $usuario_documento->impresion_directa == "1" ? 'selected=selected' : '' }}> Activo </option>
     </select>
-    <span style="padding: 0;border: 0;margin: 0;vertical-align: bottom;" class="spanBtnBtnTest input-group-addon {{ $usuario_documento->impresion_directa == "1" ? '' : 'hide' }}"> <a href="#" data-route="{{ route('usuario_documento.test_print') }}"  class="btn-md btn btn-flat btn-default print-test"> <span class="fa fa-print"></span> Probar impresiòn </a> </span>
+    <span style="padding: 0;border: 0;margin: 0;vertical-align: bottom;" class="spanBtnBtnTest input-group-addon {{ $usuario_documento->impresion_directa == "1" ? '' : 'hide' }}"> <a href="#" data-route="{{ route('admin.usuarios_documento.test_print') }}"  class="btn-md btn btn-flat btn-default print-test"> <span class="fa fa-print"></span> Probar impresiòn </a> </span>
     </div>
   </div>
 {{-- --}}

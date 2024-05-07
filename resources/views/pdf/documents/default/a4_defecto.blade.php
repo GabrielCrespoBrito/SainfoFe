@@ -93,12 +93,11 @@ $classFooter = '';
 
 
 @if(($cant_items >= 20 && $cant_items <= 45) || ($cant_items>= 88 && $cant_items <= 105) || ($cant_items>= 131))
-
     @php
     $classFooter = 'position-initial';
     @endphp
     <div class="page-break"></div>
-    @endif
+@endif
 
     {{-- FOOTER --}}
     @component('pdf.documents.partials.footer', ['class_name' => "bg-white mt-x4 border-style-solid border-width-1 {$classFooter} "])
