@@ -51,6 +51,10 @@ class VentaTipoPagoReportController extends Controller
       ->get()
       ->groupBy('TpgCodi');
 
+
+      // _dd(  $pagos->first()->first()  );
+      // exit();
+
     if ($pagos->count()) {
       $data = [
         'nombre_reporte' => 'REPORTE DE VENTAS POR TIPO DE PAGO',
