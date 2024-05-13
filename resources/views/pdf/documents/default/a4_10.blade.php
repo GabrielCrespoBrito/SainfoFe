@@ -1,3 +1,8 @@
+@php
+  if($logoMarcaAgua){
+    $logoMarcaAguaSizes['top'] -= 40;
+  }
+@endphp
 @component('pdf.documents.partials.content', [
   'class_name' => 'a4',
   'logoMarcaAgua' => $logoMarcaAgua,
