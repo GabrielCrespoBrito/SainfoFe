@@ -58,16 +58,7 @@ $(document).ready(function()
       }
     };
 
-    console.log( "data", data);
-
     ajaxs( data , url, funcs );
-
-
-    // |||||| a-b-c-d-e-f-g-h-j-k-l-m-n-ñ-o-p-q-r-s-t-u-v-w-x-y-z ||||||
-    console.log("usuario_documento")
-
-
-
     e.preventDefault();
     return false;
   })
@@ -143,7 +134,384 @@ $(document).ready(function()
             notificaciones(error, 'error' );
           }
 
-          let printer = new PrintTest(response.data, response.data.impresora_nombre, successPrint, errorPrint );
+          // 
+var data = {
+    "operaciones": [
+        {
+            "nombre": "Iniciar",
+            "argumentos": []
+        },
+        {
+            "nombre": "EstablecerAlineacion",
+            "argumentos": [
+                1
+            ]
+        },
+        {
+            "nombre": "EstablecerTamañoFuente",
+            "argumentos": [
+                1,
+                1
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                true
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "GEFRANKA\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                false
+            ]
+        },
+        {
+            "nombre": "EstablecerTamañoFuente",
+            "argumentos": [
+                1,
+                1
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Av. Los Faisnes N° 109 - 111 Urb. La Campiña - Chorrillos - Lima -Lima\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "TELF. 251-3639 / 252-0373  Cel. 994 092 470 / 981 535 210\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                true
+            ]
+        },
+        {
+            "nombre": "EstablecerTamañoFuente",
+            "argumentos": [
+                1,
+                1
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "FACTURA ELECTRÓNICA\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "FF11-000150\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerTamañoFuente",
+            "argumentos": [
+                1,
+                1
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                false
+            ]
+        },
+        {
+            "nombre": "EstablecerAlineacion",
+            "argumentos": [
+                0
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Razon Social: CORPORACION SAINFO E.I.R.L. - SAINFO E.I.R.L.\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "RUC 20604067899\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Direccion: CAL. 9 LT. 31 MZ. Y A.H. 1 DE JUNIO - LIMA LIMA SAN JUAN DE MIRAFLORES\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Fecha:                2024-05-10               \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Vendedor:             OFICINA                  \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Forma de Pago:        CONTADO                  \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                true
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Unid   Descripcion                             \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Cant.          P.Unit.                  Importe\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                false
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "NIU    ANGULO 3/4\" X 2.0 X 6MTS                \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "1              136.360                  136.360\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "NIU    ANGULO 3/4\" X 2.5 X 6MTS                \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "66             118.000                 7788.000\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "NIU    CAMISETA DE DREAY                       \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "6              25.000                   150.000\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "NIU    TELA                                    \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "2              6.000                     12.000\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "NIU    TANQUE TOROHIDAL ATIKA                  \n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "6              140.000                  840.000\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                true
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Son: OCHO MIL NOVECIENTOS VEINTISÉIS CON 36/100 SOLES\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                false
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                true
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "OP. GRAVADAS.:           S./             7564.7\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "TOTAL.:                  S./             8926.4\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                false
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                true
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "CUENTAS\n"
+            ]
+        },
+        {
+            "nombre": "EstablecerEnfatizado",
+            "argumentos": [
+                false
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "BCP S/.11111\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "-----------------------------------------------\n"
+            ]
+        },
+        {
+            "nombre": "EscribirTexto",
+            "argumentos": [
+                "Hora: 15:11:58\n"
+            ]
+        },
+        {
+            "nombre": "Corte",
+            "argumentos": [
+                1
+            ]
+        }
+    ],
+    "nombreImpresora": "POS",
+    "serial": ""
+};
+          //
+
+          let printer = new PrintTest(data, response.data.impresora_nombre, successPrint, errorPrint );
           printer.errorFunc = errorPrint;
           printer.print();
         }
