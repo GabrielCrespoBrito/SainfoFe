@@ -146,11 +146,8 @@ $classFooter = '';
     <div class="row">
         @php
           $imagen = base64_encode(file_get_contents(public_path('images/pie_custom.png')));
-        // <img style="padding: 0;margin: 0;z-index:-1000" src="data:image/png;base64, {!! base64_encode($qr) !!} ">
-
         @endphp
         <img style="padding: 0;margin: 0;z-index:-1000" src="data:image/png;base64, {!! $imagen !!} ">
-
     </div>
 
     @endslot
