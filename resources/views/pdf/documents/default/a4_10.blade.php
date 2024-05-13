@@ -79,7 +79,7 @@ $classFooter = '';
 @include('pdf.documents.partials.table', [
 'complete_tds_spaces' => true,
 'thead_class' => 'font-size-9 pt-x2 pl-x3 pb-x2 c-white border-bottom-style-solid border-width-1',
-'tbody_class' => 'pt-x2 pl-x3 pb-x2 border-bottom-width-1 border-bottom-color-gray border-bottom-style-dotted border-right-style-solid border-width-1 font-size-8',
+'tbody_class' => 'pt-x2 pl-x3 pb-x2 font-size-8',
 'class_name' => 'col-12 border-style-solid border-width-1',
 'class_name_table' => 'col-md-12 table-with-border ',
 'class_orden' => 'text-center border-right-style-solid border-width-1',
