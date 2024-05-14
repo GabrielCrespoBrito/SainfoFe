@@ -19,7 +19,7 @@
       <td> {{ $item->VtaOper }} </td>
       <td> {{ $item->PagFech }} </td>
       <td> {{ $item->PagBoch }} </td>
-      <td> {{ $item->cliente->PCNomb }} </td>
+      <td> {{ optional($item->cliente)->PCNomb ?? $item->PCNomb }} </td>
       <td> {{ $item->CtoOper }} </td>
       <td> {{ $item->Bannomb }} </td>
       <td> {{ $item->MonCodi }} </td>
