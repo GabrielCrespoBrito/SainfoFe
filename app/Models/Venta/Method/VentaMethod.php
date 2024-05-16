@@ -300,11 +300,12 @@ trait VentaMethod
       return '';
     }
     
-    if (!$this->hasGuiaReferenciaElectronica()) {
-      return $this->GuiOper;
+    if ($this->hasGuiaReferenciaElectronica()) {
+      return $this->guiaReferenciaCorrelative();
     }
     
-    return $this->guiaReferenciaCorrelative();
+
+    return '';
   }
 
   /**
