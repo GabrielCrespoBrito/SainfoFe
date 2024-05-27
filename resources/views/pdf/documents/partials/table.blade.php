@@ -2,7 +2,7 @@
 $cant_items = $cant_items ?? 0;
 $complete_tds_spaces = $complete_tds_spaces ?? false;
 $cant_tds_to_add = 0;
-$cantAddNV = $cantAddNV ?? 30;
+$cantAddNV = $cantAddNV ?? 40;
 $cantAddDoc =  $cantAddDoc ?? 35;
 
 if ($complete_tds_spaces) {
