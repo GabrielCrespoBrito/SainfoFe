@@ -558,7 +558,6 @@ function get_value_in_array($arr, $field, $defualtValue = '')
 
 function getFilenameFromZip($content, $ext = '.xml')
 {
-
   // $folderExtract = str_random(5);    
   $file_name = str_random(5) . '.zip';
   $path = getTempPath($file_name, $content);

@@ -1502,7 +1502,5 @@ class GuiaSalida extends Model
       'id' => $this->venta->VtaNume ,
       'tipo' =>  $this->venta->TidCodi,
     ];
-
-
   }
 }
