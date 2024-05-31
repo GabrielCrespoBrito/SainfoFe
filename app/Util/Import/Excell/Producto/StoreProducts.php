@@ -99,8 +99,6 @@ class StoreProducts
       $this->storeModels();
       DB::connection('tenant')->commit();
     } catch (Throwable $th) {
-      _dd($th);
-      exit();
       $this->addError($th->getMessage());
       DB::connection('tenant')->rollback();
     }
