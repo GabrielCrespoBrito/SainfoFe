@@ -2417,8 +2417,8 @@ $(document).ready(function (e) {
     $("#modalData").find('.modal-body').append($embedPDF);
     $("#modalData").modal();
     
-    console.log("imprimir")
-    printJS(path)
+    console.log("imprimir", path)
+    printJS(path.replace('\\', '/'))
     console.log("end imprimir")
   
   }
