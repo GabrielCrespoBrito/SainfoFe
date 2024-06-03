@@ -65,8 +65,6 @@ class ImportController extends Controller
 
     $path = public_path(file_build_path('static', 'excell', $name ));
     
-    // _dd( $path );
-    // exit();
     return response()->download( $path, $name );
   } 
 }

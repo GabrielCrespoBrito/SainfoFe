@@ -23,11 +23,13 @@ class ImportProductosController extends ImportController
       [ 'excel' => 'required|mimes:xlsx|max:1024'],
       [ 'excel.required'  => 'Tiene que subir un archivo excel']
     );
-    
+
     $importer = new ImportExcellProducts($request->file('excel'));
+
     $result = $importer
     ->handle()
     ->getResult();
+
 
     $message = $result->success ? 'Importación Exitosa' : 'Error en la importaciòn';
     $code = $result->success ? 200 : 400;

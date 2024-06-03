@@ -2410,11 +2410,17 @@ $(document).ready(function (e) {
 
     const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
 
+    
     console.log( "embedPDF", $embedPDF )
-
+    
     $("#modalData").find('.modal-body').empty();
     $("#modalData").find('.modal-body').append($embedPDF);
     $("#modalData").modal();
+    
+    console.log("imprimir")
+    printJS(path)
+    console.log("end imprimir")
+  
   }
 
 

@@ -61,7 +61,7 @@ class ImportExcellProducts
   }
 
   public function handle()
-  {  
+  {
     if( $this->validate() == false ){
       return $this;
     }

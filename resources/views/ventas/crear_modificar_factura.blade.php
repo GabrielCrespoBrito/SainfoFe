@@ -26,6 +26,7 @@
 <script type="text/javascript" src="{{ asset('js/numero_palabra.js')}}"></script>
 <script type="text/javascript" src="{{ asset(mix('js/mix/ConectorPlugin.js'))}}"></script>
 <script type="text/javascript" src="{{ asset(mix('js/mix/print_ticket.js'))}}"></script>
+<script type="text/javascript" src="{{ asset('plugins/print/print.js') }}"></script>
 {{-- <script type="text/javascript" src="{{ asset(mix('js/print_js/ConectorPlugin.js'))}}"></script> --}}
 {{-- <script type="text/javascript" src="{{ asset(mix('js/ventas/print_ticket.js'))}}"></script> --}}
 
