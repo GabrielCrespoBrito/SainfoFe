@@ -139,6 +139,7 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::get('/guias/search-pending', 'Admin\GuiaController@searchPending')->name('guias.search_pendientes');
       Route::post('/guias/send-pending', 'Admin\GuiaController@sendPending')->name('guias.send_pendientes');
       Route::post('/guias/delete-pdf/{id?}/{create?}', 'Admin\GuiaController@deletePdf')->name('guias.delete_pdf');
+      Route::post('/guias/update-fecha/{id?}', 'Admin\GuiaController@updateFecha')->name('guias.update_fecha');
 
 
       # ----------------------- TipoPago -----------------------------

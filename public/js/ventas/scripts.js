@@ -2409,18 +2409,12 @@ $(document).ready(function (e) {
     $("#modalData").find('.modal-title').text(nombre);
 
     const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
-
-    
-    console.log( "embedPDF", $embedPDF )
     
     $("#modalData").find('.modal-body').empty();
     $("#modalData").find('.modal-body').append($embedPDF);
     $("#modalData").modal();
     
-    console.log("imprimir", path)
     printJS(path.replace('\\', '/'))
-    console.log("end imprimir")
-  
   }
 
 

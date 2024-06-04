@@ -169,6 +169,36 @@ class GuiaController extends Controller
     ], 200);
   }
 
+  /**
+   * Cambiar la fecha de un documento
+   * 
+   */
+  public function updateFecha(Request $request, $documento_id)
+  {
+    $empresa = Empresa::find($request->empresa_id);
+    (new ActiveEmpresaTenant($empresa))->handle();
+    
+    $guia = GuiaSalida::find($documento_id);
+    
+    if( $guia->pendiente() == false || $guia->hasFormato() == false || $guia->isSalida() == false ) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Esta Guia No se puede Cambiar de Fecha',
+      ], 500);
+    }
+
+    $guia->GuiFemi = hoy();
+    $guia->GuiFDes = hoy();
+    $guia->PanAno = date('Y');
+    $guia->PanPeri = date('m');
+    $guia->mescodi = date('Ym');
+    $guia->save();
+
+    return response()->json([
+      'success' => true,
+    ], 200);
+  }
+
   
   
 }

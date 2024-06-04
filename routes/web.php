@@ -11,7 +11,6 @@ include('routes_web/ubigeo.php');
 # Area Administrativa
 include('routes_web/admin.php');
 
-
 Auth::routes();
 
 // Logearse en el area de administración

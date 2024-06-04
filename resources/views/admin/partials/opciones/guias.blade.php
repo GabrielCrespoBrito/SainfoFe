@@ -7,5 +7,8 @@
   <button type="button"  data-url="{{ route('admin.guias.delete_pdf', [ 'id'=> $model->GuiOper, 'create' => '1' ] )}}"  
   class="btn btn-default btn-flat eliminar-documento-pdf"> <span class="fa fa-file-text-o"></span> Crear Nuevo PDF  </button>
 
+  <button type="button"  data-url="{{ route('admin.guias.update_fecha', [ 'id'=> $model->GuiOper ] )}}"  
+  class="btn btn-default btn-flat eliminar-documento-pdf"> <span class="fa fa-file-text-o"></span> Actualizar Fecha  </button>
+
 </div>
 </div>
