@@ -180,7 +180,7 @@ class GuiaController extends Controller
     
     $guia = GuiaSalida::find($documento_id);
     
-    if( $guia->pendiente() == false || $guia->hasFormato() == false || $guia->isSalida() == false ) {
+    if( $guia->hasFormato() == false || $guia->isSalida() == false ) {
       return response()->json([
         'success' => false,
         'message' => 'Esta Guia No se puede Cambiar de Fecha',
