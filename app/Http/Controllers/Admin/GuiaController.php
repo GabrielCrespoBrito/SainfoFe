@@ -181,9 +181,12 @@ class GuiaController extends Controller
     $guia = GuiaSalida::find($documento_id);
     
     if( $guia->hasFormato() == false || $guia->isSalida() == false ) {
+
+      $message = $guia->pendiente() ? 'Esta Guia Falta Despacho' : 'Esta Guia No se puede Cambiar de Fecha';
+
       return response()->json([
         'success' => false,
-        'message' => 'Esta Guia No se puede Cambiar de Fecha',
+        'message' => $message
       ], 500);
     }
 
