@@ -148,8 +148,21 @@ class CotizacionAbstractController extends Controller
     $cliente_info['PCMail']  = $cliente->PCMail;
     $cliente_info['tipo_documento']  = $cliente->tipo_documento_c->TdocNomb;
 
+
+    // dd($documento->items->sortBy('DetItem'));
+    // exit();
+
+    // dd( $documento->load(['items' => function($q){
+    // }])  items->sortBy('DetItem') );
+    // exit();
+
+    // ->orderByRaw('section * 1 desc') 
+
+    $count = $documento->items->count();
+
     foreach ($documento->items as $item) {
       $data = [];
+      $data['Index'] = (int) $item->DetItem;
       $data['Unidades'] = $item->producto->unidades;
       $data['Marca'] = $item->MarNomb;
       $data['cliente'] = $documento->MarNomb;
@@ -182,6 +195,19 @@ class CotizacionAbstractController extends Controller
       $data['DetISC'] = $item->cotisc;
       array_push($items, $data);
     }
+
+    // $items2 = $items;
+
+    if( $count > 99 ){
+      $items2 = collect($items)->sortBy('Index')->toArray();
+      $items = [];
+      foreach( $items2 as $item ){
+      array_push($items, $item);
+      }
+    }
+
+    // dd( $items, $items2 );
+    // exit();
 
     $data = [
       'nume' => $nume,
