@@ -515,15 +515,17 @@ class Venta extends Model
 
   public static function getNotaVentaVtaOper()
   {
-    $countNotaVenta = Venta::OrderByDesc("VtaOper")
+    $nvLast = Venta::OrderByDesc("VtaOper")
       ->where('EmpCodi', empcodi())
       ->where('TidCodi', TipoDocumentoPago::NOTA_VENTA)
-      ->count();
+      ->first();
+    $vtaOper = 1;
 
-    $vtaOper = math()->addCero($countNotaVenta + 1, 6);
-    // $vtaOper = math()->addCero($vtaOper , 6);
+    if( $nvLast ){
+      $vtaOper = ((int) substr($nvLast->VtaOper,1)) + 1;
+    }
 
-    return 'N' . $vtaOper;
+    return  'N' . math()->addCero( $vtaOper, 6);;
   }
 
   public static function findByNume($nume)
