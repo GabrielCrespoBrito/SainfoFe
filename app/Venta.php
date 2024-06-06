@@ -1821,6 +1821,7 @@ class Venta extends Model
     foreach ($this->pagos as $pago) {
       $pago->anularPayment();
       $pago->updateMovimiento();
+      $pago->delete();
     }
   }
 

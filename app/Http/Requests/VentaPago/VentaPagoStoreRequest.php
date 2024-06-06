@@ -56,6 +56,11 @@ class VentaPagoStoreRequest extends FormRequest
 					return;
 				}
 
+        if ($venta->isAnulada()) {
+          $validator->errors()->add('deuda', 'El Documento se Encuentra Anulado, no se peuden hacer pagos');
+          return;
+        }
+
         if ($venta->isCanje()) {
           $validator->errors()->add('deuda', 'Un Documento de Canje No es Necesario Registrar Su Pago');
           return;
