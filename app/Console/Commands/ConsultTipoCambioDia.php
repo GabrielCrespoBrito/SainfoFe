@@ -48,9 +48,9 @@ class ConsultTipoCambioDia extends Command
   {
     $tc = TipoCambioPrincipal::getToday();
 
-    if (optional($tc)->isSameDay()) {
-      return;
-    }
+    // if (optional($tc)->isSameDay()) {
+      // return;
+    // }
 
     if ( ! $tc) {
       $tc = new TipoCambioPrincipal(); 
@@ -75,18 +75,20 @@ class ConsultTipoCambioDia extends Command
       return;
     }
 
-    if(  $tc->TipFechReal == $data_consult->fecha ){
-      return;
-    }
+    // if(  $tc->TipFechReal == $data_consult->fecha ){
+      // return;
+    // }
 
     // Save Tipo Cambio
     $tc->TipFech = $data_consult->fecha;
     $tc->TipComp = $data_consult->precio_compra;
     $tc->TipVent = $data_consult->precio_venta;
     $tc->TipFechReal = $data_consult->fecha;
-    $tc->save();
 
-    Cache::forget('ultimo_tc');
+    if(  $tc->isDirty() ){
+      $tc->save();
+      Cache::forget('ultimo_tc');
+    }
   }
 
 }

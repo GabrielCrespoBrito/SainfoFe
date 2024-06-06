@@ -68,7 +68,7 @@ class Kernel extends ConsoleKernel
     # Actualizar el tipo de cambio diariamente
     $schedule->command('system_task:actualizar_tipo_cambio')
       ->hourly()
-      ->between('00:00', '12:00');
+      ->between('00:02', '12:00');
 
     $schedule->command('system_task:enviar_doc_pendientes')->dailyAt('23:00');
     $schedule->command('system_task:enviar_doc_pendientes')->dailyAt('13:00');

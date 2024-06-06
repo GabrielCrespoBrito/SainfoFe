@@ -25,7 +25,7 @@ class TipoCambioPrincipal extends Model
 
   public static function getToday()
   {
-    return $tc = self::where('TipFech', date('Y-m-d'))->first();
+    return self::where('TipFech', date('Y-m-d'))->first();
   }
 
   public static function getTodayInfo()
@@ -221,6 +221,7 @@ class TipoCambioPrincipal extends Model
   
   /**
    * Si el tipo de cambio es del mismo dia
+   * 
    */
   public function isSameDay()
   {

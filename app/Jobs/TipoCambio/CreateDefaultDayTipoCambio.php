@@ -17,7 +17,7 @@ class CreateDefaultDayTipoCambio
      */
     public function __construct()
     {
-        //
+      //
     }
 
     /**
