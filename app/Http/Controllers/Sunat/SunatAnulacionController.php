@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sunat;
 use App\Venta;
 use App\Resumen;
 use App\Http\Controllers\Controller;
+use App\ModuloMonitoreo\StatusCode\StatusCode;
 use App\Http\Requests\VerificationDocumentoAnulationRequest;
 
 class SunatAnulacionController extends Controller
@@ -38,7 +39,9 @@ class SunatAnulacionController extends Controller
     }
 
     else {
-      $documento->anular();
+      $documento->updateStatusCode(StatusCode::EXITO_0003['code']);
+      $documento->saveStatus0003();
+      $documento->anularPago();
       $is_anulado = true;
     }
 
