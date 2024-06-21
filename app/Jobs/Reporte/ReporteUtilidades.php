@@ -17,18 +17,20 @@ class ReporteUtilidades
   protected $fecha_hasta;
   protected $local;
   protected $grupo;
+  protected $vendedor;
 
   /**
    * Create a new job instance.
    *
    * @return void
    */
-  public function __construct( $fecha_desde, $fecha_hasta, $local, $grupo )
+  public function __construct( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor )
   {
     $this->fecha_desde = $fecha_desde;
     $this->fecha_hasta = $fecha_hasta;
     $this->local = strtolower($local) == "todos" ? null : $local;
     $this->grupo = strtolower($grupo) == "todos" ? null : $grupo;
+    $this->vendedor = strtolower($vendedor) == "todos" ? null : $vendedor;
     $this->handle();
   }
 
@@ -56,8 +58,9 @@ class ReporteUtilidades
       $query->where('LocCodi', $this->local );
     }
 
-    // dd( $query->get()->first() );
-    // exit();
+    if ($this->vendedor) {
+      $query->where('Vencodi', $this->vendedor);
+    }
       
     return
     $query

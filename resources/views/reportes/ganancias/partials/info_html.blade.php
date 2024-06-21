@@ -12,7 +12,9 @@ $tableInHtml = $tableInHtml ?? false;
       'fecha_desde' => $fecha_desde,
       'fecha_hasta' => $fecha_hasta,
       'local' => $local,
-      'grupo' => $grupo ]) }}"> 
+      'grupo' => $grupo,
+      'vendedor' => $vendedor,
+       ]) }}"> 
         <span class="fa fa-file-pdf-o"> </span> Ver en PDF </a>
   </div>
 </div>

@@ -25,6 +25,9 @@
       @if($grupo)
       <td><span class="campo"> Grupo:</span> {{ $grupo }}</td>
       @endif
+      @if($vendedor)
+      <td><span class="campo"> Vendedor:</span> {{ $vendedor }}</td>
+      @endif
     </tr>
   </table>
 </div>

@@ -13,7 +13,7 @@ $tableInHtml = false;
   @include('reportes.utilidades_ventas.pdf.css')
 </style>
 <body>
-  @include('reportes.utilidades_ventas.pdf.header', [ 'local' => $local , 'grupo' => $grupo ])
+  @include('reportes.utilidades_ventas.pdf.header', [ 'local' => $local , 'grupo' => $grupo, 'vendedor' => $vendedor ])
   @include('reportes.ganancias.partials.table_dias', ['class_table' => 'table_items' ])
 </body>
 </html>
