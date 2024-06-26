@@ -297,14 +297,6 @@ function makeCalculate(e) {
       AppCalculate.calculateMargen(false);
     }
 
-    // setValueInput($("[name=costoSol]", $tr), AppCalculate.getCostoSol(), name);
-    // setValueInput($("[name=costoDolar]", $tr), AppCalculate.getCostoDolar(), name);
-    // setValueInput($("[name=margen]", $tr), AppCalculate.getMargen(), name);
-    // setValueInput($("[name=precioVentaSol]", $tr), AppCalculate.getPrecioVentaSol(), name);
-    // setValueInput($("[name=precioVentaDolar]", $tr), AppCalculate.getPrecioVentaDolar(), name);
-    // setValueInput($("[name=precioMinVentaSoles]", $tr), AppCalculate.getPrecioMinVentaSol(), name);
-    // setValueInput($("[name=precioMinVentaDolar]", $tr), AppCalculate.getPrecioMinVentaDolar(), name);
-
     setValueInput($("[name=costoSol]", $tr), AppCalculate.getCostoSol(), name);
     setValueInput($("[name=costoDolar]", $tr), AppCalculate.getCostoDolar(), name);
     setValueInput($("[name=margen]", $tr), AppCalculate.getMargen(), name);

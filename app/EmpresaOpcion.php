@@ -74,6 +74,7 @@ class EmpresaOpcion extends Model
   const MODULO_RESTRICCION_VENTA_STOCK =  'modulo_restriccion_venta_por_stock';
   const MODULO_PRODUCCION_MANUAL =  'modulo_produccion_manual';
   const MODULO_VENTA_RAPIDA =  'modulo_venta_rapida';
+  const NO_ACTUALIZAR_COSTO_POR_COMPRA =  'no_actualizar_costo_por_compra';
   
   const MODULOS = [
     self::MODULO_CANJE,
@@ -82,6 +83,7 @@ class EmpresaOpcion extends Model
     self::MODULO_RESTRICCION_VENTA_STOCK,
     self::MODULO_PRODUCCION_MANUAL,
     self::MODULO_VENTA_RAPIDA,
+    self::NO_ACTUALIZAR_COSTO_POR_COMPRA,
   ];
 
   const FIELDS_MODIFY = [

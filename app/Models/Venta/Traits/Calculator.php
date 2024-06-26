@@ -136,13 +136,10 @@ class Calculator
     $valor_noonorosa = $isGratuito ? $this->precio : 0;
     
     if( $this->isc_porc ){
-      // $valor_unitario =  $valor_unitario / math()->factorDivider($this->isc_porc);
       $valor_unitario =  $valor_unitario;
       $precio_unitario =  $precio_unitario * math()->factorDivider($this->isc_porc);
-      // 
     }
 
-    # $valor_venta_bruto =  $valor_unitario * $this->cantidad;
     $valor_venta_bruto =  ($isGratuito ? $valor_noonorosa : $valor_unitario) * $this->cantidad;
 
     # Descuento

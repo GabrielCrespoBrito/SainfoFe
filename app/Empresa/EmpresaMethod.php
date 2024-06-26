@@ -27,7 +27,6 @@ trait EmpresaMethod
       ->getResult();
   }
 
-
   public function getOrGenerateSireTokenApi()
   {
     return (new GenerateTokenSire($this))
@@ -35,6 +34,10 @@ trait EmpresaMethod
       ->getResult();
   }
 
+  public function updateCostoByCompra()
+  {
+    return true;
+  }
 
   public function getClienteGuiaId()
   {

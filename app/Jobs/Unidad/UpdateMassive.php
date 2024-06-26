@@ -119,14 +119,6 @@ class UpdateMassive
         $result->precio_dolares = decimal($result->precio_dolares, $this->decimales->dolares);
         $result->precio_soles = decimal($result->precio_soles, $this->decimales->soles);
           
-        // $unidad->UNIPUVD,
-          // $unidad->UNIPUVS,
-        // $result->precio_dolares 
-        // "ProPUVD" => $result->precio_dolares,
-        // "ProPUVS" => $result->precio_soles,
-
-
-        // --------
         DB::connection('tenant')->table('unidad')
           ->where('Unicodi', $unidad->Unicodi)
           ->update([

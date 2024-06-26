@@ -33,15 +33,21 @@ class CreatedCompraItems
    */
   public function handle()
   {
-    
+
+    $empresa = get_empresa();
+
+    $noActualizarPorCompra = $empresa->getDataAditional('no_actualizar_costo_por_compra');
+
     for ($i = 0, $index = 1; $i < count($this->items); $i++, $index++) {
       $data = $this->items[$i];
       
       $unidad = Unidad::find($data['UniCodi']);
       $totales  = (object) $data['totales'];
       
-      if( (int) $data['update_costo'] ){
-        $unidad->updateCosto( $totales->costo_soles / $totales->cantidad , $totales->costo_dolares / $totales->cantidad , true );
+      if( $noActualizarPorCompra == false ){
+        if( (int) $data['update_costo'] ){
+          $unidad->updateCosto( $totales->costo_soles / $totales->cantidad , $totales->costo_dolares / $totales->cantidad , true );
+        }
       }
 
       $abreviatura = optional($unidad)->UniAbre;

@@ -5,6 +5,7 @@
   $modulo_produccion_manual = $empresa->getDataAditional('modulo_produccion_manual');
   $modulo_restriccion_venta_por_stock = $empresa->getDataAditional('modulo_restriccion_venta_por_stock');
   $modulo_venta_rapida = $empresa->getDataAditional('modulo_venta_rapida');
+  $no_actualizar_costo_por_compra = $empresa->getDataAditional('no_actualizar_costo_por_compra');
   
   
 @endphp
@@ -46,6 +47,10 @@
       <label for="modulo_venta_rapida" class="oneline"> <input id="modulo_venta_rapida" value="1" {{ $modulo_venta_rapida ? 'checked=checked' : '' }} type="checkbox" name="modulo_venta_rapida" />  Venta Rapida  </label>
     </div>
 
+
+    <div class="form-group col-md-2">
+      <label for="no_actualizar_costo_por_compra" class="oneline"> <input id="no_actualizar_costo_por_compra" value="1" {{ $no_actualizar_costo_por_compra ? 'checked=checked' : '' }} type="checkbox" name="no_actualizar_costo_por_compra" />  No Actualizar Costos por Compra  </label>
+    </div>
 
     </div>    
 

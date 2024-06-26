@@ -18,7 +18,7 @@
               @endphp
 
             @foreach( $vendedores as $vendedor )
-              <option value="{{ $vendedor->Vencodi }}"> {{ $vendedor->vennomb }}</option>
+              <option {{ $vendedor->isUserLoginVendedor() ? 'selected' : ''   }} value="{{ $vendedor->Vencodi }}"> {{ $vendedor->vennomb }}</option>
             @endforeach
           </select>
 
