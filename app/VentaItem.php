@@ -280,7 +280,13 @@ class VentaItem extends Model
     return self::agregate_cero( $num , 1);
   }
 
-  public static function createItem( $id_factura , $items, $con_productos_enviados = false, $totales_items = null, $placa = null, $save = true )
+  public static function createItem( 
+    $id_factura,
+    $items,
+    $con_productos_enviados = false,
+    $totales_items = null,
+    $placa = null,
+    $save = true )
   {
     $empcodi = empcodi();
     $index_item = 0;
@@ -317,6 +323,7 @@ class VentaItem extends Model
       $it->lote = $totales_item;
       $it->DetCSol = $totales_item['costos']->sol;
       $it->DetCDol = $totales_item['costos']->dolar;
+      // Ganancia
       $it->DetVSol = $totales_item['costo_soles'];
       $it->DetVDol = $totales_item['costo_dolares'];      
       $it->GuiOper = null;

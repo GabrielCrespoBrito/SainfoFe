@@ -18,6 +18,8 @@ class GetLastCostos
   protected $ultima_compra;
   protected $incluye_igv;
   protected $noSearchUltimaCompra;
+
+
   public function __construct(
     $procodi, 
     $unidad_costo_soles, 
@@ -60,7 +62,9 @@ class GetLastCostos
 
     else {
       $costo_sol_unitario = $this->incluye_igv ? ($this->unidad_costo_soles / $igv->igvBaseUno) : $this->unidad_costo_soles;
+
       $costo_dolar_unitario = $this->incluye_igv ?  ($this->unidad_costo_dolar / $igv->igvBaseUno ) : $this->unidad_costo_dolar;
+      
       $factor_costo = $this->unidad_factor;
     }
 
@@ -70,6 +74,7 @@ class GetLastCostos
     else {
       $factor_multiplicador = $this->factor_venta / $factor_costo;
     }
+
     $costo_sol = $costo_sol_unitario * ($this->cantidad * $factor_multiplicador);
     $costo_dolar = $costo_dolar_unitario * ($this->cantidad * $factor_multiplicador);
     

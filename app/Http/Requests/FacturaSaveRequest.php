@@ -318,8 +318,15 @@ class FacturaSaveRequest extends FormRequest
     $this->merge(['anticipoValue' => $anticipo_value]);
     
     if ($total_calculado != $total_request) {
-      $validator->errors()->add('total', "El total suministrado {$this->total_importe} no coincide con el total correcto calculado ({$totales->total_cobrado})");
-      return false;
+    
+      // @TODO FIXED 
+      if( $this->empresa->empcodi != "009" && ($this->total_cobrado - $this->total_importe) > 0.1  ){
+
+        $validator->errors()->add('total', "El total suministrado {$this->total_importe} no coincide con el total correcto calculado ({$totales->total_cobrado})");
+        return false;
+
+      }
+
     }
 
     if (0 >  $total_calculado) {
