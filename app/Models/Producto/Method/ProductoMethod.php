@@ -86,9 +86,6 @@ trait ProductoMethod
 		]);
 	}
 
-
-
-
 	public function getFormatEdicion($precio, $cantidad)
 	{
 		$unidadPrincipal = $this->getUnidadPrincipal();

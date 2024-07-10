@@ -37,6 +37,14 @@ class CreateUnidadTable extends Migration
 			$table->string('empcodi');
 			$table->string('UniPUVD1')->nullable();
 			$table->string('LisCodi')->nullable();
+      
+      $table->string('User_Crea')->nullable();
+      $table->dateTime('User_FCrea')->nullable();
+      $table->string('User_ECrea')->nullable();
+      $table->string('User_Modi')->nullable();
+      $table->dateTime('User_FModi')->nullable();
+      $table->string('User_EModi')->nullable();
+
 			// $table->primary(['empcodi', 'Unicodi'], 'primary_full');
 		});
 	}

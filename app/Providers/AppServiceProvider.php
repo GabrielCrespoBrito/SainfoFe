@@ -4,14 +4,18 @@ namespace App\Providers;
 
 use App\User;
 use App\Local;
+use App\Unidad;
 use App\Resumen;
+use App\Producto;
 use App\Vendedor;
 use App\FormaPago;
 use App\TipoCambioMoneda;
 use App\TipoCambioPrincipal;
 use Illuminate\Support\Carbon;
 use App\Observers\LocalObserver;
+use App\Observers\UnidadObserver;
 use App\Observers\ResumenObserver;
+use App\Observers\ProductoObserver;
 use App\Observers\VendedorObserver;
 use Illuminate\Support\Facades\URL;
 use App\Observers\FormaPagoObserver;
@@ -78,6 +82,8 @@ class AppServiceProvider extends ServiceProvider
     Vendedor::observe(VendedorObserver::class);
     FormaPago::observe(FormaPagoObserver::class);
     Local::observe(LocalObserver::class);
+    Producto::observe(ProductoObserver::class);
+    Unidad::observe(UnidadObserver::class);
 
     view()->composer(['layouts.admin.partials.header_notificacion'], 
       function ($view) {                
