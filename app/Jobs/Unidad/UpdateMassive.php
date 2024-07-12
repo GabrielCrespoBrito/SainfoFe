@@ -20,7 +20,7 @@ class UpdateMassive
   protected $empresa;
   protected $empcodi;
   protected $decimales;
-  
+
   /**
    * Create a new job instance.
    *
@@ -118,7 +118,9 @@ class UpdateMassive
 
         $result->precio_dolares = decimal($result->precio_dolares, $this->decimales->dolares);
         $result->precio_soles = decimal($result->precio_soles, $this->decimales->soles);
-          
+
+        $auditValues = auditValues();
+
         DB::connection('tenant')->table('unidad')
           ->where('Unicodi', $unidad->Unicodi)
           ->update([
@@ -127,10 +129,13 @@ class UpdateMassive
             "UniMarg" => $result->margen,
             "UNIPUVD" => $result->precio_dolares,
             "UNIPUVS" => $result->precio_soles,
+            "User_Modi" => $auditValues->user,
+            "User_FModi" => $auditValues->fecha,
+            "User_EModi" => $auditValues->equipo,
+
           ]);
 
         $this->updateProducto($unidad, $result);
-
       }
     }
   }
@@ -157,11 +162,11 @@ class UpdateMassive
 
 
         DB::connection('tenant')->table('unidad')
-        ->where('Unicodi', $unidad->Unicodi)
-        ->update([
-          "UniPMVD" => $result->precio_dolares,
-          "UniPMVS" => $result->precio_soles,
-        ]);
+          ->where('Unicodi', $unidad->Unicodi)
+          ->update([
+            "UniPMVD" => $result->precio_dolares,
+            "UniPMVS" => $result->precio_soles,
+          ]);
 
         $this->updateProducto($unidad, $result);
       }
@@ -173,15 +178,12 @@ class UpdateMassive
     $data = [];
 
     if ($this->campo == "precios_min") {
-      
+
       $data = [
         "ProPMVS" => $result->precio_soles,
         "ProPMVD" => $result->precio_dolares,
       ];
-
-    } 
-    
-    else {
+    } else {
       $data = [
         "ProPUCD" => $result->costo_dolares,
         "ProPUCS" => $result->costo_soles,

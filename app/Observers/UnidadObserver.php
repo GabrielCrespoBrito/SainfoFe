@@ -14,9 +14,11 @@ class UnidadObserver
    */
   public function creating(Unidad $unidad)
   {
-    $unidad->User_Crea = optional(auth()->user())->usulogi;
-    $unidad->User_FCrea = date('Y-m-d H:i:s');
-    $unidad->User_ECrea = gethostname();
+    $auditValues = auditValues();
+
+    $unidad->User_Crea = $auditValues->user;
+    $unidad->User_FCrea = $auditValues->fecha;
+    $unidad->User_ECrea = $auditValues->equipo;
   }
 
   /**
@@ -27,8 +29,10 @@ class UnidadObserver
    */
   public function updating(Unidad $unidad)
   {
-    $unidad->User_Modi = optional(auth()->user())->usulogi;
-    $unidad->User_FModi = date('Y-m-d H:i:s');
-    $unidad->User_EModi = gethostname();
+    $auditValues = auditValues();
+
+    $unidad->User_Modi = $auditValues->user;
+    $unidad->User_FModi = $auditValues->fecha;
+    $unidad->User_EModi = $auditValues->equipo;
   }
 }

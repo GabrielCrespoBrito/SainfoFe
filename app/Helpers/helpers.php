@@ -38,6 +38,15 @@ function nombreDocumentoCliente($tipo)
 }
 
 
+function auditValues()
+{
+  return (object) [
+    'user' => optional(auth()->user())->usulogi,
+    'fecha' => date('Y-m-d H:i:s'),
+    'equipo' => gethostname()
+  ];
+}
+
 function xmlHelper()
 {
   return new XmlHelper();

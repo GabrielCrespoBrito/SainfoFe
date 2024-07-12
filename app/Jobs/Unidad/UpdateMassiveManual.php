@@ -67,7 +67,7 @@ class UpdateMassiveManual
 
       $productData = &$this->productsUpdates[$unidad['id']];
 
-      if ( $productData['update'] == false) {
+      if ($productData['update'] == false) {
         if ($unidad['Unicodi'] == $productData['unidad_principal_id']) {
           $this->productsUpdates[$unidad['id']]['update'] = true;
           $this->setUpdateProducto($unidad);
@@ -83,7 +83,7 @@ class UpdateMassiveManual
         'unidad_principal_id' => $unidad_principal
       ];
 
-      if($isUnidadPrincpal){
+      if ($isUnidadPrincpal) {
         $this->setUpdateProducto($unidad);
       }
     }
@@ -92,17 +92,22 @@ class UpdateMassiveManual
 
   public function setUpdateProducto($unidad)
   {
+    $auditValues = auditValues();
+
     DB::connection('tenant')->table('productos')
-    ->where('ID', $unidad['id'])
-    ->update([
-      "ProPUCD" => $unidad['UniPUCD'],
-      "ProPUCS" => $unidad['UniPUCS'],
-      "ProMarg" => $unidad['UniMarg'],
-      "ProPUVD" => $unidad['UNIPUVD'],
-      "ProPUVS" => $unidad['UNIPUVS'],
-      "ProPMVS" => $unidad['UNIPMVS'],
-      "ProPMVD" => $unidad['UNIPMVD'],
-    ]);
+      ->where('ID', $unidad['id'])
+      ->update([
+        "ProPUCD" => $unidad['UniPUCD'],
+        "ProPUCS" => $unidad['UniPUCS'],
+        "ProMarg" => $unidad['UniMarg'],
+        "ProPUVD" => $unidad['UNIPUVD'],
+        "ProPUVS" => $unidad['UNIPUVS'],
+        "ProPMVS" => $unidad['UNIPMVS'],
+        "ProPMVD" => $unidad['UNIPMVD'],
+        "User_Modi" => $auditValues->user,
+        "User_FModi" => $auditValues->fecha,
+        "User_EModi" => $auditValues->equipo,
+      ]);
   }
 
 
@@ -116,6 +121,7 @@ class UpdateMassiveManual
   public function updatePrices()
   {
     $unidades = $this->data;
+    $auditValues = auditValues();
 
     foreach ($unidades as $unidad) {
 
@@ -129,6 +135,9 @@ class UpdateMassiveManual
           "UNIPUVS" => $unidad['UNIPUVS'],
           "UniPMVS" => $unidad['UNIPMVS'],
           "UniPMVD" => $unidad['UNIPMVD'],
+          "User_Modi" => $auditValues->user,
+          "User_FModi" => $auditValues->fecha,
+          "User_EModi" => $auditValues->equipo,
         ]);
 
       $this->updateProducto($unidad);

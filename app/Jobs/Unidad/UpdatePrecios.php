@@ -78,6 +78,7 @@ class UpdatePrecios
         ->get()
         ->chunk(250);
 
+      $auditValues = auditValues();
 
       foreach ($busqueda as $unidades) {
 
@@ -94,6 +95,9 @@ class UpdatePrecios
               "UniPUCS" => $result->costo_soles,
               "UNIPUVS" => $result->precio_soles,
               "UniPMVS" => $result->precio_min_soles,
+              "User_Modi" => $auditValues->user,
+              "User_FModi" => $auditValues->fecha,
+              "User_EModi" => $auditValues->equipo,
             ]);
 
           $this->updateProducto($unidad, $result);
@@ -105,12 +109,17 @@ class UpdatePrecios
 
   public function saveUpdate($unidad, $result)
   {
+    $auditValues = auditValues();
+
     DB::connection('tenant')->table('productos')
       ->where('ID', $unidad->Id)
       ->update([
         "ProPUCS" => $result->costo_soles,
         "ProPUVS" => $result->precio_soles,
         "ProPMVS" => $result->precio_min_soles,
+        "User_Modi" => $auditValues->user,
+        "User_FModi" => $auditValues->fecha,
+        "User_EModi" => $auditValues->equipo,
       ]);
   }
 
