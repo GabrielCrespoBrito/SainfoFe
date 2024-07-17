@@ -91,7 +91,8 @@ class UnidadController extends Controller
       'unidad.UNIPUVS',
       'unidad.UNIPUVD',
       'unidad.UNIPMVS',
-      'unidad.UNIPMVD',      
+      'unidad.UNIPMVD',
+      'lista_precio.LisNomb',   
       'productos.ID as id_producto',
       'productos.ProCodi',
       'productos.ProUltC',
@@ -105,7 +106,7 @@ class UnidadController extends Controller
     else {
       $busqueda->orderBy('productos.ProCodi', 'asc');
     }
-    
+
     return \DataTables::of($busqueda)  
     ->addColumn( 'producto_link', 'unidad.partials.columns.producto' )
     ->addColumn( 'moneda', 'unidad.partials.columns.moneda' )

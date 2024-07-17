@@ -526,13 +526,13 @@ function appendInput(value, type, row, meta) {
 
   let names =
   {
-    5: { name : 'costoDolar' , decimales : 2 } ,
-    6: { name : 'costoSol' , decimales : 2 } ,
-    7: { name : 'margen' , decimales : 0 } ,
-    8: { name : 'precioVentaSol' , decimales : decimal_soles } ,
-    9: { name : 'precioVentaDolar' , decimales : decimal_dolares } ,
-    10: { name :'precioMinVentaSoles' , decimales : decimal_soles } ,
-    11: { name :'precioMinVentaDolar' , decimales : decimal_dolares } ,
+    6: { name : 'costoDolar' , decimales : 2 } ,
+    7: { name : 'costoSol' , decimales : 2 } ,
+    8: { name : 'margen' , decimales : 0 } ,
+    9: { name : 'precioVentaSol' , decimales : decimal_soles } ,
+    10: { name : 'precioVentaDolar' , decimales : decimal_dolares } ,
+    11: { name :'precioMinVentaSoles' , decimales : decimal_soles } ,
+    12: { name :'precioMinVentaDolar' , decimales : decimal_dolares } ,
   }
 
   if (meta.row === 0) {
@@ -751,6 +751,7 @@ function initDatable()
     },
     "columns": [
       { data: 'ProCodi', orderable: false, searchable: false },
+      { data: 'LisNomb', orderable: false, searchable: false },
       { data: 'UniAbre', orderable: false, searchable: false },
       { data: 'producto_link', orderable: false, searchable: false },
       { data: 'ProUltC', orderable: false, searchable: false },
@@ -970,7 +971,7 @@ function updateMasive()
 const setBtnsToMassiveModify = () => {
 
   const $table = $("#datatable");
-  let $tdMassive = $table.find('thead tr td:eq(12)');
+  let $tdMassive = $table.find('thead tr td:eq(13)');
 
   $tdMassive.empty();
 
