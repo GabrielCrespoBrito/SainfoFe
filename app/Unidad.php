@@ -24,7 +24,7 @@ class Unidad extends Model
     protected $primaryKey = "Unicodi";
     protected $keyType = "string";
     public $timestamps = false;
-  public $fillable = [
+    public $fillable = [
     "Id",
     "UniEnte",
     "UniMedi",
