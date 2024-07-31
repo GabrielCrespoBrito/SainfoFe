@@ -540,7 +540,7 @@ class GuiaSalida extends Model
     $guia->usucodi = $usucodi;;
     $guia->TipCodi = $tipcodi;
     $guia->cpaOper = NULL;
-    $guia->vtaoper = is_numeric($vtaoper) ? agregar_ceros($vtaoper,6,0) : $vtaoper;
+    $guia->vtaoper = is_numeric($vtaoper) ? agregar_ceros($vtaoper, 6, 0) : $vtaoper;
     $guia->TidCodi = $tidcodi;
     $guia->IGVEsta = 0;
     $guia->GuiNOpe = null;
@@ -602,7 +602,7 @@ class GuiaSalida extends Model
       $this->GuiUni =  sprintf('%s-%s-%s', $this->getTipoDocumento(), $serie, $numero);
     }
 
-    
+
     $motivoTraslado = $data['motivo_traslado'] ?? null;
 
     $this->DCodi = $data['destinatario'] ?? null;
@@ -622,19 +622,19 @@ class GuiaSalida extends Model
     $this->GuiFDes = date('Y-m-d');
     $this->motcodi = $motivoTraslado;
 
-    if( $motivoTraslado == MotivoTraslado::IMPORTACION || $motivoTraslado == MotivoTraslado::EXPORTACION ){
+    if ($motivoTraslado == MotivoTraslado::IMPORTACION || $motivoTraslado == MotivoTraslado::EXPORTACION) {
       //        "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
 
-      $this->docrefe = sprintf('%s-%s', $data['tipo_export'] , $data['export_doc_num'] );
+      $this->docrefe = sprintf('%s-%s', $data['tipo_export'], $data['export_doc_num']);
     }
 
 
 
-      // "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-      // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-      // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+    // "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+    // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+    // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
 
 
 
@@ -1465,13 +1465,13 @@ class GuiaSalida extends Model
 
   public function getExportData()
   {
-    if( $this->isTipoExport() ){
+    if ($this->isTipoExport()) {
       $docExport =  explode('-', $this->docrefe);
 
 
       return (object) [
         'tipo_export' => $docExport[0],
-        'documento_id' => sprintf('%s-%s-%s-%s' , $docExport[1]  , $docExport[2], $docExport[3], $docExport[4]),
+        'documento_id' => sprintf('%s-%s-%s-%s', $docExport[1], $docExport[2], $docExport[3], $docExport[4]),
       ];
     }
 
@@ -1479,27 +1479,26 @@ class GuiaSalida extends Model
       'tipo_export' => null ?? 52,
       'documento_id' => null,
     ];
-
   }
 
   public function isTipoExport()
   {
     return $this->motcodi == MotivoTraslado::IMPORTACION ||
-    $this->motcodi == MotivoTraslado::EXPORTACION;
+      $this->motcodi == MotivoTraslado::EXPORTACION;
   }
 
   public function getDocRefReal()
   {
-    if($this->motcodi == MotivoTraslado::IMPORTACION || $this->motcodi == MotivoTraslado::EXPORTACION){
+    if ($this->motcodi == MotivoTraslado::IMPORTACION || $this->motcodi == MotivoTraslado::EXPORTACION) {
       $exportData = $this->getExportData();
       return (object) [
-        'id' => $exportData->documento_id ,
+        'id' => $exportData->documento_id,
         'tipo' =>  $exportData->tipo_export,
       ];
     }
 
     return (object) [
-      'id' => $this->venta->VtaNume ,
+      'id' => $this->venta->VtaNume,
       'tipo' =>  $this->venta->TidCodi,
     ];
   }
