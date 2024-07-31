@@ -42,10 +42,10 @@ class GuiaSalidaController extends GuiaController
   {
     $this->tipo = Guia::SALIDA;
     $this->model = new GuiaSalida;
-    $this->middleware('guia.seriecreada')->only('create', 'edit', 'store', 'pdf');    
+    $this->middleware('guia.seriecreada')->only('create', 'edit', 'store', 'pdf');
     $this->middleware(p_midd('A_GUIA', 'R_REPORTE'))->only('reporte');
     $this->middleware(p_midd('A_INDEX', 'R_GUIASALIDA'))->only('index');
-    $this->middleware(p_midd('A_CREATE', 'R_GUIASALIDA'))->only('create' , 'store', 'createSimply', 'storeSimply');
+    $this->middleware(p_midd('A_CREATE', 'R_GUIASALIDA'))->only('create', 'store', 'createSimply', 'storeSimply');
     $this->middleware(p_midd('A_SHOW', 'R_GUIASALIDA'))->only('show');
     $this->middleware(p_midd('A_IMPRIMIR', 'R_GUIASALIDA'))->only('pdf');
     $this->middleware(p_midd('A_RECURSO', 'R_GUIASALIDA'))->only('file');
@@ -70,7 +70,7 @@ class GuiaSalidaController extends GuiaController
       'tipo_documento' => GuiaSalida::TIPO_GUIA_REMISION,
       'mes' => $mes,
       'status' => $status,
-      'motivo_traslado' => $motivo_traslado      
+      'motivo_traslado' => $motivo_traslado
     ]);
   }
 
@@ -91,39 +91,39 @@ class GuiaSalidaController extends GuiaController
     return "Guardado Guia de Salida";
   }
 
-  public function pendientes( Request $request )
+  public function pendientes(Request $request)
   {
-    $mes = $request->input('mes' , date('Ym'));
-    return view('guia_remision.pendientes', [ 'mes' => $mes ]);
+    $mes = $request->input('mes', date('Ym'));
+    return view('guia_remision.pendientes', ['mes' => $mes]);
   }
-  
-  public function getPendientes( $empcodi, $mescodi )
+
+  public function getPendientes($empcodi, $mescodi)
   {
     return GuiaSalida::query()
-    ->with([
-      'almacen' => function ($q) use ($empcodi) {
-        $q->where('EmpCodi', $empcodi);
-      },
-      'cli' => function ($q) use ($empcodi) {
-        $q->where('EmpCodi', $empcodi)
-          ->where('TipCodi', 'C')
-          ->get();
-      }
-    ])
-    ->where('mescodi', '=', $mescodi )
-    ->where('GuiEFor', '=', "1")
-    ->where('EntSal', '=', GuiaSalida::SALIDA )    
-    ->whereIn('fe_rpta', [ 9, 99, 98] )
-    ->orderBy('GuiOper', 'desc');    
+      ->with([
+        'almacen' => function ($q) use ($empcodi) {
+          $q->where('EmpCodi', $empcodi);
+        },
+        'cli' => function ($q) use ($empcodi) {
+          $q->where('EmpCodi', $empcodi)
+            ->where('TipCodi', 'C')
+            ->get();
+        }
+      ])
+      ->where('mescodi', '=', $mescodi)
+      ->where('GuiEFor', '=', "1")
+      ->where('EntSal', '=', GuiaSalida::SALIDA)
+      ->whereIn('fe_rpta', [9, 99, 98])
+      ->orderBy('GuiOper', 'desc');
   }
-  
+
 
   public function search_pendientes(Request $request)
   {
     $empcodi = empcodi();
-    $busqueda = $this->getPendientes( $empcodi , $request->mes );
-    
-    return DataTables::of( $busqueda )
+    $busqueda = $this->getPendientes($empcodi, $request->mes);
+
+    return DataTables::of($busqueda)
       ->addColumn('nrodocumento', 'guia_remision.partials.nrodocumento')
       ->addColumn('estado', 'guia_remision.partials.column_estado')
       ->addColumn('accion', 'guia_remision.partials.column_accion')
@@ -165,10 +165,10 @@ class GuiaSalidaController extends GuiaController
   public function store(GuiaSaveRequest $request)
   {
     $id_guia = null;
-    DB::connection('tenant')->transaction(function () use ($request, &$id_guia){
+    DB::connection('tenant')->transaction(function () use ($request, &$id_guia) {
       $fromVenta = false;
       $data = $request->all();
-      $id_guia = GuiaSalida::createGuia($data, $fromVenta, $request->id_almacen, $request->id_movimiento,false,'', $request->fecha_emision, false);
+      $id_guia = GuiaSalida::createGuia($data, $fromVenta, $request->id_almacen, $request->id_movimiento, false, '', $request->fecha_emision, false);
       GuiaSalidaItem::createItems($id_guia, $request->items);
       GuiaSalida::find($id_guia)->calculateTotal();
       event(new GuiaHasCreate($id_guia));
@@ -180,7 +180,7 @@ class GuiaSalidaController extends GuiaController
 
   public function update(GuiaUpdateRequest $request, $id_guia)
   {
-    $guia = GuiaSalida::find( $id_guia );    
+    $guia = GuiaSalida::find($id_guia);
     $guia->updateGuia($request);
     noti()->success('Guia Actualizada correctamente');
     $route_redirect = route('guia.index');
@@ -198,26 +198,24 @@ class GuiaSalidaController extends GuiaController
     //   $guia->saveSuccess();
     // }
     // return response()->json(['message' =>  $data['message']], $data['code_http']);
-    
+
     $guia = GuiaSalida::find($id_guia);
     $res = $guia->sendApi();
-    return response()->json([ 'message' => $res->data ], $res->success ? 200 : 400);
+    return response()->json(['message' => $res->data], $res->success ? 200 : 400);
   }
 
   public function pdf($id_guia, $formato = 'a4')
   {
     $guia = GuiaSalida::find($id_guia);
 
-    if( $guia->isSalida() && $guia->hasFormato() ){
-      if( $guia->pendiente() ){
+    if ($guia->isSalida() && $guia->hasFormato()) {
+      if ($guia->pendiente()) {
         noti()->warning('Para imprimir La Guia de Remisión, primero tiene que llenar los datos de traslado');
-        return redirect()->route('guia.edit', [ 'id' =>  $guia->GuiOper, 'despachar' => true ]);
+        return redirect()->route('guia.edit', ['id' =>  $guia->GuiOper, 'despachar' => true]);
       }
-      else {
-        if( $guia->fe_rpta != "0" ){
-          // noti()->warning('Para imprimir La Guia de Remisión tiene que estar enviado a la sunat');
-          // return redirect()->route('guia.pendientes');
-        }
+      if ($guia->fe_rpta != "0") {
+        noti()->warning('Para imprimir La Guia de Remisión tiene que estar enviado a la sunat');
+        return redirect()->route('guia.pendientes');
       }
     }
 
@@ -225,13 +223,12 @@ class GuiaSalidaController extends GuiaController
     $fileHelper = filehelper(get_empresa()->ruc());
 
 
-    if( $formato == PDFPlantilla::FORMATO_A4 ){
-      if( $fileHelper->pdfExist($namePdf)) {
+    if ($formato == PDFPlantilla::FORMATO_A4) {
+      if ($fileHelper->pdfExist($namePdf)) {
         $content = $fileHelper->getPdf($namePdf);
         $path = $fileHelper->saveTemp($content, $namePdf);
         return response()->file($path);
-      }
-      else {
+      } else {
         $pathTemp = $guia->generatePdf(
           $guia->hasFormato(),
           true,
@@ -239,9 +236,7 @@ class GuiaSalidaController extends GuiaController
         );
         return response()->file(public_path($pathTemp));
       }
-
-    }
-    else {
+    } else {
       $pathTemp = $guia->generatePdf(
         $guia->hasFormato(),
         true,
@@ -280,11 +275,11 @@ class GuiaSalidaController extends GuiaController
   public function anularGuia(GuiaAnulacionRequest $request, $guia_id)
   {
     $guia = GuiaSalida::find($request->guia_id);
-    
+
     // $guia->anular();
     $guia->anular(true);
 
-    if( $guia->haSidoTrasladada()){
+    if ($guia->haSidoTrasladada()) {
       // $guia->guiaIngreso->anular();
       $guia->guiaIngreso->anular(true);
     }
@@ -355,7 +350,7 @@ class GuiaSalidaController extends GuiaController
 
   public function guiaSuccess($guia, $data)
   {
-    return self::guiaSuccessMake($guia,$data);
+    return self::guiaSuccessMake($guia, $data);
   }
 
   public static function guiaSuccessMake($guia, $data)
@@ -423,11 +418,11 @@ class GuiaSalidaController extends GuiaController
     return response()->json([
       'message' => 'Se ha creado exitosamente la guìa'
     ]);
-  }  
+  }
 
   public function traslado(GuiaSalidaTrasladoRequest $request, $id)
   {
-    $guia_ingreso_id = GuiaSalida::findOrfail($id)->traslado( $request->all() );
+    $guia_ingreso_id = GuiaSalida::findOrfail($id)->traslado($request->all());
     $route = route('guia_ingreso.edit', $guia_ingreso_id);
 
     if ($request->input('json_response')) {
@@ -440,20 +435,20 @@ class GuiaSalidaController extends GuiaController
     return back()->with('N_hideAfter', false);
   }
 
-  public function saveSuccessValidacion( $id )
+  public function saveSuccessValidacion($id)
   {
     GuiaSalida::find($id)->saveSuccess();
     notificacion('Acciòn exitosa', 'Se han validado la guia exitosamente', 'success');
     return back();
   }
 
-  public function prepareGuias( $mescodi )
+  public function prepareGuias($mescodi)
   {
     $guia_id = env('GUIA_SALIDA_PLANTILLA');
     // loremp-ipsum-odlor-loremp-ipsum-odlor
-    $pendientes = $this->getPendientes( empcodi(), $mescodi );
+    $pendientes = $this->getPendientes(empcodi(), $mescodi);
     $ids = $pendientes->get()->pluck('GuiOper');
-    GuiaSalida::prepareGuias( $ids , $guia_id );
+    GuiaSalida::prepareGuias($ids, $guia_id);
     notificacion('Acciòn exitosa', 'Se han prearado exitosamente', 'success');
     return back();
   }
@@ -474,33 +469,32 @@ class GuiaSalidaController extends GuiaController
     ]);
   }
 
-  public function consultTicket( Request $request, $id)
+  public function consultTicket(Request $request, $id)
   {
     $guia = GuiaSalida::findOrfail($id);
 
-    if( $guia->isIngreso() ){
-      return response()->json(['message' => 'Tiene que ser una guia de salida enviada a la sunat'], 400 );
+    if ($guia->isIngreso()) {
+      return response()->json(['message' => 'Tiene que ser una guia de salida enviada a la sunat'], 400);
     }
 
-    if( !$guia->hasFormato() ){
+    if (!$guia->hasFormato()) {
       return response()->json(['message' => 'Esta guia no es una Guia de Remisión Electronica'], 400);
     }
 
     if (!$guia->isCerrada()) {
       $link = route('guia.edit', ['id' =>  $guia->GuiOper, 'despachar' => true]);
-      return response()->json(['message' => sprintf('Esta guia falta realizar su <a href="%s">DESPACHO</a>', $link  )  ], 400);
+      return response()->json(['message' => sprintf('Esta guia falta realizar su <a href="%s">DESPACHO</a>', $link)], 400);
     }
 
-    if (!$guia->fe_ticket ) {
+    if (!$guia->fe_ticket) {
       $link = route('guia.pendientes');
       return response()->json(['message' => sprintf('Esta guia no tiene ticket asociado, por favor procesar a enviarla en <a href="%s">PENDIENTES</a>', $link)], 400);
     }
-    
+
     $res = (new ValidateTicket($guia))
-    ->handle()
-    ->getResult();
+      ->handle()
+      ->getResult();
 
-    return response()->json([ 'message' => $res->data ], $res->success ? 200 : 400);
+    return response()->json(['message' => $res->data], $res->success ? 200 : 400);
   }
-
 }
