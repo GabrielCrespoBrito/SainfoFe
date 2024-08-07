@@ -61,6 +61,7 @@ class ReporteVendedorVentaProducto
       ->join('marca', function ($join) {
         $join->on('marca.MarCodi', '=', 'productos.marcodi');
       })
+      ->where('productos.UDelete',  "0" )
       ->whereBetween('ventas_cab.VtaFvta', [ $this->fecha_desde, $this->fecha_hasta ]);
 
     $tiposDoc = $this->tipodocumento_id ?
