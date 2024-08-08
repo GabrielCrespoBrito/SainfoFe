@@ -14,7 +14,8 @@ class GuiaRemision_2_1Api extends XmlHelperNew
   {
     $this->change_datas([
       ["codigo", $this->correlativo],
-      ['fecha', $this->documento->GuiFemi],
+      // ['fecha', $this->documento->GuiFemi],
+      ['fecha', date('Y-m-d') ],
       ['tiempo', $this->documento->getTime()],
       ['guiaTypeCode', $this->documento->getTipoDocumento() ],
       ['nota', $this->documento->getNotaXML() ],
@@ -245,7 +246,8 @@ class GuiaRemision_2_1Api extends XmlHelperNew
       ["unidad", $this->documento->DetUnid],
       ["peso", $this->documento->guiporp],
       // -----------------------------------------------------------
-      ["fecha_transporte", $this->documento->GuiFDes],
+      // ["fecha_transporte", $this->documento->GuiFDes],
+      ["fecha_transporte", date('Y-m-d') ],
       ["cantidad", $this->documento->guicant],
       // -----------------------------------------------------------
       ["ubigeo_partida", $ubigeo_partida],
