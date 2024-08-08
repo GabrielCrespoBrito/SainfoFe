@@ -92,7 +92,7 @@ class ReporteVendedorVentaProducto
       'vendedores.vennomb as vendedor_nombre',
       'vendedores.ventel1 as vendedor_telefono',
       'marca.MarNomb as marca_nombre',
-      'ventas_detalle.DetNomb as producto_nombre',
+      'productos.ProNomb as producto_nombre',
       'productos.unpcodi as unidad_nombre'
     )
     ->orderBy('numero')
