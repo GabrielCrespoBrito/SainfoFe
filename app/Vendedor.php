@@ -19,8 +19,24 @@ class Vendedor extends Model
 	protected $fillable = ["empcodi" , 'Vencodi' , 'vennomb' , 'vendire' , 'ventel1' , 'venmail' , 'usucodi', 'defecto' ];
 
 	use 
-	UsesTenantConnection,
-	ModelEmpresaScope;
+	UsesTenantConnection;
+
+
+ protected static function boot()
+  {
+    parent::boot();
+
+    static::addGlobalScope('empresa', function ($query) {
+      return $query->where( 'empcodi' , empcodi() );
+    });
+
+
+    static::addGlobalScope('noEliminados', function ($query) {
+      return $query->where('UDelete', '=', '0');
+    });
+
+    
+  }  
 
 	public function isDefault(){
 		return $this->defecto == 1;

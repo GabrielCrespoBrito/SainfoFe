@@ -26,6 +26,7 @@ class CreateVendedoresTable extends Migration
             $table->string('usucodi')->nullable();
             $table->string('empcodi');
             $table->string('defecto')->nullable();
+            $table->string('UDelete', 1)->default(0);
             $table->primary(['empcodi', 'Vencodi'], 'primary_full');
         });
     }
