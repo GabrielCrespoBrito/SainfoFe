@@ -209,6 +209,7 @@ class FacturaSaveRequest extends FormRequest
 
     $index = 0;
     foreach ($items as $item) {
+      $indexReal = $index+1;
       $producto = Producto::where('ProCodi', $item['DetCodi'])->first();
       $cant_caracteres = strlen($item['DetNomb']) + strlen($item['DetCome']);
 
@@ -223,7 +224,7 @@ class FacturaSaveRequest extends FormRequest
       } else {
         $unidad = $producto->unidades->where('Unicodi', $item['UniCodi'])->first();
         if (is_null($unidad)) {
-          $validator->errors()->add('UniCodi', "El codigo de la unidad {$item['UniCodi']} del item {$index+1} es incorrecto cuyo nombre es {$item['DetNomb']}");
+          $validator->errors()->add('UniCodi', "El codigo de la unidad {$item['UniCodi']} del item {$indexReal} es incorrecto cuyo nombre es {$item['DetNomb']}");
           return false;
         }
       }
