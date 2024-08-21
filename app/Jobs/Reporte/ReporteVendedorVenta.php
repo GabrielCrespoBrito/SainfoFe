@@ -48,7 +48,9 @@ class ReporteVendedorVenta
   {
     $query = Venta::with(['cliente_with' => function ($query) {
       $query->where('TipCodi', 'C');
-    }, 'vendedor', 'forma_pago'])
+    }, ['vendedor' => function($query){
+      $query->where('UDelete', "0");
+    }], 'forma_pago'])
       ->whereBetween('VtaFvta', [$this->fecha_desde, $this->fecha_hasta])
       ->whereIn('TidCodi', [ Venta::BOLETA, Venta::FACTURA, Venta::NOTA_DEBITO,  Venta::NOTA_CREDITO, Venta::NOTA_VENTA ]);
 
