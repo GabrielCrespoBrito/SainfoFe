@@ -325,7 +325,7 @@ class Venta extends Model
 
   public function vendedor()
   {
-    return $this->belongsTo(Vendedor::class, 'Vencodi', 'Vencodi');
+    return $this->belongsTo(Vendedor::class, 'Vencodi', 'Vencodi')->withoutGlobalScopes();
   }
 
   public function forma_pago()
