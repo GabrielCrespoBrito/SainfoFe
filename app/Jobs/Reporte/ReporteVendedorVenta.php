@@ -49,7 +49,7 @@ class ReporteVendedorVenta
     $query = Venta::with(['cliente_with' => function ($query) {
       $query->where('TipCodi', 'C');
     }, 'vendedor' => function($query){
-      $query->where('UDelete', "0");
+      $query->withoutGlobalScopes();
     }, 'forma_pago'])
       ->whereBetween('VtaFvta', [$this->fecha_desde, $this->fecha_hasta])
       ->whereIn('TidCodi', [ Venta::BOLETA, Venta::FACTURA, Venta::NOTA_DEBITO,  Venta::NOTA_CREDITO, Venta::NOTA_VENTA ]);
@@ -89,8 +89,9 @@ class ReporteVendedorVenta
   {
     $query =  $this->getQuery();
     
-    _dd( $query );
-    exit();
+    // _dd( $query->first()->first() );
+    // exit();
+
     // Si no existen registros, deter el resto del script
     if( $query->count() === 0 ){
       return;
@@ -112,6 +113,7 @@ class ReporteVendedorVenta
   {
     // foreach ($vendedores_group as $fecha => $ventas_fecha) {
     foreach ($vendedores_group as $vendedor_id => $ventas_vendedor ) {
+      
       $this->current_fecha = $vendedor_id;
       $data['items'][$vendedor_id] = [];
       $add = &$data['items'][$vendedor_id];
