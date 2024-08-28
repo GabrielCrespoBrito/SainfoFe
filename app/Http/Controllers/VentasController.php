@@ -371,7 +371,7 @@ class VentasController extends Controller
 
   public function checkDeudas(ClienteExistsRequest $request)
   {
-    $cliente = ClienteProveedor::findByRuc($request->id_cliente);
+    $cliente = ClienteProveedor::findCliente($request->id_cliente);
     return $cliente ? $cliente->deudas() : "false";
   }
 
