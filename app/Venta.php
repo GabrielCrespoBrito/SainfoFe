@@ -1414,7 +1414,7 @@ class Venta extends Model
         return 'FACTURA ELECTRÓNICA';
         break;
       case '03':
-        return 'BOLETA ELETRÓNICA';
+        return 'BOLETA ELECTRÓNICA';
         break;
       case '07':
         return 'NOTA DE CREDITO ELETRÓNICA';
