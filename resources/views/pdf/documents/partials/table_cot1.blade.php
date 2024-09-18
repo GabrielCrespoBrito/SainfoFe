@@ -54,7 +54,7 @@ $theads[] = [
 //if($orden_campos['precio_unitario'] ){
   $theads[] = [
   'class_name' => 'bg-black c-white pr-x3 pl-x3 text-right',
-  'text' => 'P.Unit',
+  'text' =>   'P.Unit',
   ];
 //}
 
@@ -94,7 +94,7 @@ $cant_items_add = $completar_tds ? ($cant_items_add - count($items)) : false;
         </td>
         @endif --}}
 
-        <td class="text-right {{ $borderTbody ? 'border-right-style-solid' : ''  }}  pr-x3 pl-x3 vertical-align-top"> {{ decimal($item->precioUnitario(), $decimals ) }}</td>
+        <td class="text-right {{ $borderTbody ? 'border-right-style-solid' : ''  }}  pr-x3 pl-x3 vertical-align-top"> {{ $item->getPrecio($orden_campos['precio_unitario']) }}</td>
 
         {{-- @if($orden_campos['precio_unitario'] ) --}}
         {{-- <td class="text-right border-right-style-solid pr-x3 pl-x3 vertical-align-top"> {{ decimal($item->precioUnitario(), $decimals ) }}</td> --}}

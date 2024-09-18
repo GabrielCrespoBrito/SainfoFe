@@ -74,6 +74,14 @@ class CotizacionItem extends Model
 		return decimal($this->getCalculos()['valor_unitario']);
 	}
 
+  public function getPrecio($pUnitario = true)
+  {
+    return $pUnitario ? 
+      decimal($this->getCalculos()['precio_unitario']) : 
+      decimal($this->getCalculos()['valor_unitario']);
+  }
+
+
 	/**
 	 * Si se le aplica igv
 	 * 

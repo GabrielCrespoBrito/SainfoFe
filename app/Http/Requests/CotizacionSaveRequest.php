@@ -102,8 +102,8 @@ class CotizacionSaveRequest extends FormRequest
     $total_request = (float) trim($this->total_importe);
 
     if ($total_calculado != $total_request) {
-      // $validator->errors()->add('total', "El total suministrado {$this->total_importe} no coincide con el total correcto calculado ({$totales->total_cobrado})");
-      // return false;
+      $validator->errors()->add('total', "El total suministrado {$this->total_importe} no coincide con el total correcto calculado ({$totales->total_cobrado})");
+      return false;
     }
 
     if (0 >  $total_calculado) {
