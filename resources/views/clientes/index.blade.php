@@ -7,6 +7,7 @@
   var url_consulta_sunat = "{{ route('clientes.consulta_ruc') }}";
   var url_consulta_codigo = "{{ route('clientes.consulta_codigo') }}";
   var url_eliminar_cliente = "{{ route('clientes.eliminar') }}";
+  var url_restaurar = "{{ route('clientes.restaurar') }}";
   var url_consultar_cliente = "{{ route('clientes.consultar_datos') }}";
   var accion_default = "{{ $accion }}";
   var ruc_crear = "{{ $ruc }}"
@@ -32,7 +33,8 @@
   var ruc_crear = "{{ $ruc }}"
   var table; 
 
-  $(function () {    
+  $(function () {
+
     table = $('#datatable').DataTable({
       "processing" : true,
     	"serverSide" : true,
@@ -40,7 +42,8 @@
         url : "{{ route('clientes.consulta') }}",
         data : function(d) {
          return $.extend( {} , d , {
-            'tipoentidad_id' : $("[name=tipoentidad_id] option:selected").val()
+            'tipoentidad_id' : $("[name=tipoentidad_id] option:selected").val(),
+            'deleted': $("[name=deleted]:checked").val(), 
           })
         }
       },
@@ -50,7 +53,6 @@
     		{ data : 'PCRucc'  } ,
         { data : 'PCNomb' } ,
     		{ data : 'PCDire'  , render : function(value){
-          console.log(arguments);
 
           if(value){
             let short = value.length > 70 ? value.substr(0,70).concat('...') : value;
@@ -87,11 +89,19 @@
 
   <div class="row">
 
-    <div class="form-group  col-md-4">
+    <div class="form-group  col-md-3">
       {!! Form::select('tipoentidad_id' , cacheHelper('tipocliente.all')->pluck( 'TippNomb', 'TippCodi') , null, ['class' => 'form-control'] )  !!} 
     </div> 
+
+  <div class="form-group col-md-3">
+    <div style="margin-top:5px;">
+      <label> <input type="checkbox" name="deleted" value="1"> Mostrar eliminados </label>
+    </div>
+  </div>
+
+
     
-    <div class="col-md-8">
+    <div class="col-md-6">
       <a href="#" class="btn btn-primary btn-flat pull-right crear-nuevo-cliente"> <span class="fa fa-plus"></span> Nuevo </a>
     </div>
 

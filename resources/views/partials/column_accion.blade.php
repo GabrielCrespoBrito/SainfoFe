@@ -9,6 +9,8 @@
 				data-id="{{ $link['id'] ?? '' }}" 
 				class="{{ $link['class'] ?? '' }}" 
 				href="{{ $link['src'] }}" 
+        @isset($link['data-codigo']) data-codigo="{{ $link['data-codigo'] }}" @endisset
+        @isset($link['data-tipo']) data-tipo="{{ $link['data-tipo'] }}" @endisset
 				target="{{ $link['target'] ?? '_self' }}">  
 					{!! $link['texto'] !!} 
 				</a> 

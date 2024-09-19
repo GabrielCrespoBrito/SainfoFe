@@ -297,6 +297,31 @@
 
   }
 
+  function restaurar_cliente(e){
+    
+    e.preventDefault();
+
+    const $btn = $(e.target);
+    const codigo = $btn.attr('data-codigo');
+    const tipo = $btn.attr('data-tipo');
+
+
+    let funcs = {
+      success : function(){
+        notificaciones("Cliente restaurado exitosamente", "success")
+        table.draw()
+      }
+    };
+
+    let data = {
+      'codigo' : codigo,
+      'tipo' : tipo,      
+    };
+
+    ajaxs(data, url_restaurar , funcs );
+  }
+
+
   function eliminacion_cliente(){
 
     let codigo = tr_cliente.find("td:eq(0)").text();
@@ -413,37 +438,8 @@
     poner_data_form( "telefono_avalista" , data.PCATel );    
     poner_data_form( "email_avalista" , data.PCAEma );   
     
-    // $("#form_cliente #ubigeo")
-    // .select2('destroy')
-    // .empty()
-    // .attr({
-    //   'data-value'   : "",
-    //   'data-text' : ""
-    // });
-
-    // resetSelect2Ubigeo();
-
-    console.log(data);
-    
     if( data.ubigeo ){
-
-      console.log(  "Accediendo data");
-
       let text = `(${data.ubigeo.ubicodi}) - ${data.ubigeo.departamento.depnomb} - ${data.ubigeo.provincia.provnomb} - ${data.ubigeo.ubinomb}`;
-
-
-      // "(" +  + ")" + ""  
-      //    + ' - ' + data.ubigeo.ubinomb
-
-      //   //
-      // $text = sprintf("(%s) %s - %s - %s",
-      //   $dataUbigeo['ubicodi'],
-      //   $dataUbigeo['departamento']['depnomb'],
-      //   $dataUbigeo['provincia']['provnomb'],
-      //   $dataUbigeo['ubinomb']
-      // );
-        //
-
       $("#form-cliente #ubigeo")
       .attr({
         'data-id': data.ubigeo.ubicodi,
@@ -687,6 +683,13 @@
 
     // abrir modal de eliminación del cliente
     $("#datatable").on( 'click', ".eliminar_user", modal_eliminacion_cliente );
+
+    $("#datatable").on('click', '.restaurar_elemento', restaurar_cliente);
+
+    $("[name=deleted]").on('change', function(){
+      table.draw();
+    });
+
 
    // abrir modal de eliminación del cliente
     $(".aceptar_eliminacion").on( 'click', eliminacion_cliente );

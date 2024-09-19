@@ -51,40 +51,47 @@ class ClienteProveedorEliminarRequest extends FormRequest
             return;
           }
 
-          switch( $cliente->TipCodi )
-          {
-            // Cliente
-            case ClienteProveedor::TIPO_CLIENTE:
-              if ( $cliente->ventas->count() ) {
-                $validator->errors()->add('codigo', $this->getMessage('ventas'));
-                return;
-              }		
-            break;
-
-            // Proveedor
-            case ClienteProveedor::TIPO_PROVEEDOR:
-              if ( $cliente->compras->count() ) {
-                $validator->errors()->add('codigo', $this->getMessage('compras'));
-                return;
-              }
-            break;
-          }
-
-
-          if ( $cliente->cotizaciones->count() ) {
-            $validator->errors()->add('codigo', $this->getMessage('cotizaciones'));
+          if ($cliente->isSoftDeleted()) {
+            $validator->errors()->add('codigo', 'Los clientes/proveedores no se puede eliminar porque ya esta oculto');
             return;
           }
 
-          if ( $cliente->guias->count() ) {
-            $validator->errors()->add('codigo', $this->getMessage('compras'));
-            return;
-          }
+          // switch( $cliente->TipCodi )
+          // {
+          //   // Cliente
+          //   case ClienteProveedor::TIPO_CLIENTE:
+          //     if ( $cliente->ventas->count() ) {
+          //       $validator->errors()->add('codigo', $this->getMessage('ventas'));
+          //       return;
+          //     }		
+          //   break;
 
-          if (  ContrataEntidad::where('entidad_id', $cliente->PCRucc)->count()) {
-            $validator->errors()->add('codigo', 'No se puede eliminar este cliente por que tiene un contrato asociado');
-            return;
-          }
+          //   // Proveedor
+          //   case ClienteProveedor::TIPO_PROVEEDOR:
+          //     if ( $cliente->compras->count() ) {
+          //       $validator->errors()->add('codigo', $this->getMessage('compras'));
+          //       return;
+          //     }
+          //   break;
+          // }
+
+
+          // if ( $cliente->cotizaciones->count() ) {
+          //   $validator->errors()->add('codigo', $this->getMessage('cotizaciones'));
+          //   return;
+          // }
+
+          // if ( $cliente->guias->count() ) {
+          //   $validator->errors()->add('codigo', $this->getMessage('compras'));
+          //   return;
+          // }
+
+          // if (  ContrataEntidad::where('entidad_id', $cliente->PCRucc)->count()) {
+          //   $validator->errors()->add('codigo', 'No se puede eliminar este cliente por que tiene un contrato asociado');
+          //   return;
+          // }
+
+          
         }
       });
     }

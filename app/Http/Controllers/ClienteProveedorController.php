@@ -147,7 +147,14 @@ class ClienteProveedorController extends Controller
    */
   public function search(Request $request)
   {
-    $busqueda = ClienteProveedor::where('TipCodi', $request->tipoentidad_id);
+    $deleted = $request->input('deleted', 0);
+
+    $busqueda = ClienteProveedor::where('TipCodi', $request->tipoentidad_id)
+      ->when($deleted, function ($query) {
+        $query->withoutGlobalScope('noEliminados');
+        $query->where('UDelete', '=', "*");
+      });
+
     return DataTables::of($busqueda)
       ->addColumn('acciones', 'clientes.partials.column_accion')
       ->rawColumns(['acciones'])
@@ -183,11 +190,32 @@ class ClienteProveedorController extends Controller
   {
     $this->authorize(p_name('A_DELETE', 'R_CLIENTE'));
 
-
-    $cliente_proveedor =
+    $clienteProveedor =
       $this->cliente_proveedor->show_cliente_exacto($request->codigo,  $request->tipo);
 
-    $cliente_proveedor->delete();
+    //
+    $isUse = $clienteProveedor->isUse();
+
+    if ($isUse->success) {
+      $clienteProveedor->toggleSoftDelete();
+      // $message = $isUse->message;
+      // return response()->json(['message' => $message], 400);
+    } else {
+      $clienteProveedor->delete();
+    }
+  }
+
+
+  public function restaurar(Request $request)
+  {
+    $this->authorize(p_name('A_DELETE', 'R_CLIENTE'));
+
+
+    $cp = ClienteProveedor::withoutGlobalScope('noEliminados')
+      ->where('TipCodi', $request->tipo)
+      ->where('PCCodi', $request->codigo)->first();
+
+    $cp->toggleSoftDelete();
   }
 
 
@@ -195,7 +223,7 @@ class ClienteProveedorController extends Controller
   {
     $this->authorize(p_name('A_SHOW', 'R_CLIENTE'));
 
-    $cliente_proveedor = ClienteProveedor::with([ 'ubigeo.departamento', 'ubigeo.provincia'])
+    $cliente_proveedor = ClienteProveedor::with(['ubigeo.departamento', 'ubigeo.provincia'])
       ->where('PCCodi', $request->codigo)
       ->where('EmpCodi', empcodi())
       ->where('TipCodi', 'C')

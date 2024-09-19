@@ -695,6 +695,31 @@ function eliminar_producto(e) {
   }
 }
 
+
+function restaurar_producto(e) {
+  e.preventDefault();
+  let tr = $(this).parents("tr");
+  if (confirm("Esta seguro que desea restaurar?")) {
+    let formData = new FormData();
+    formData.append('id', tr.find(':eq(0)').text());
+    ajaxs(
+      formData,
+      url_restaurar,
+      {
+        success: function (data) {
+          notificaciones(data.message, 'success', 'Accion exitosa')
+          poner_value_codigo(data.codigo);
+          table.draw();
+        },
+        complete: () => {
+          $(".select-field-producto").find('option[value=codigo]').prop('selected', true);
+          table.draw();
+        }
+      });
+  }
+}
+
+
 function poner_stocks(stocks) {
   $("[name=almacen_n1]", form_accion).val(stocks.prosto1);
   $("[name=almacen_n2]", form_accion).val(stocks.prosto2);
@@ -796,6 +821,7 @@ function events() {
   });
 
   $("table").on('click', '.eliminar_elemento', eliminar_producto);
+  $("table").on('click', '.restaurar_elemento', restaurar_producto);
 
   // Actualizar stock
   $(".update-stock").on('click', updateStock);
@@ -812,7 +838,7 @@ function events() {
   $("#ProSTem", "#form-accion").on('change', handleManejo);
   $("[name=grupo_filter]").on('change', consultar_grupo_filter);
 
-  $("[name=familia_filter]").on('change', () => {
+  $("[name=familia_filter], [name=deleted]").on('change', () => {
     table.draw()
   });
 

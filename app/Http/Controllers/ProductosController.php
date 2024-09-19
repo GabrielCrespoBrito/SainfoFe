@@ -74,8 +74,9 @@ class ProductosController extends Controller
     $grupo = $request->input('grupo');
     $familia = $request->input('familia');
     $marca = $request->input('marca');
+    $deleted = $request->input('deleted', 0);
 
-    $busqueda = Producto::query()
+    $busqueda =  Producto::query()
       ->with([
         'marca_',
         'marca',
@@ -83,21 +84,25 @@ class ProductosController extends Controller
           $q->whereIn('LisCodi', $listas);
         },
         'unidades_.lista'
-      ])->whereHas('unidades_', function($q) use($listas) {
-          $q->whereIn('LisCodi', $listas);
+      ])->whereHas('unidades_', function ($q) use ($listas) {
+        $q->whereIn('LisCodi', $listas);
+      })
+      ->when($deleted, function ($query) {
+        $query->withoutGlobalScope('noEliminados');
+        $query->where('UDelete', '*');
       });
 
 
     if ($campo == "codigo") {
       $busqueda
-      ->where('ProCodi', 'LIKE', $term . '%')
-      ->orderBy('ProCodi', 'asc');
+        ->where('ProCodi', 'LIKE', $term . '%')
+        ->orderBy('ProCodi', 'asc');
     } elseif ($campo == "codigo_barra") {
       $busqueda->where('ProCodi1', 'LIKE', $term . '%');
     } elseif ($campo == "nombre") {
       $busqueda
-      ->where('ProNomb', 'LIKE', '%' . $term . '%')
-      ->orderBy('ProCodi', 'asc');
+        ->where('ProNomb', 'LIKE', '%' . $term . '%')
+        ->orderBy('ProCodi', 'asc');
     }
 
     if ($grupo) {
@@ -110,6 +115,11 @@ class ProductosController extends Controller
     if ($marca) {
       $busqueda->where('marcodi', $marca);
     }
+
+    if ($deleted) {
+      $busqueda->where('UDelete', '*');
+    }
+
 
     return datatables()->of($busqueda)
       ->addColumn('accion', 'productos.partials.column_accion')
@@ -263,11 +273,11 @@ class ProductosController extends Controller
     $data['ProPUCD'] = $cambios_moneda_compra['dolar'];
     $data['ProPUCS'] = $cambios_moneda_compra['sol'];
     $data['ProMarg'] = $request->utilidad;
-    $precios_venta = Producto::calcularPrevioVentaStatic($request->precio_venta, $data['moncodi'] );
+    $precios_venta = Producto::calcularPrevioVentaStatic($request->precio_venta, $data['moncodi']);
     $data['ProPUVD'] = decimal($precios_venta["dolar"], $decimales->dolares);
     $data['ProPUVS'] = decimal($precios_venta["sol"], $decimales->dolares);
     $precios_min_venta = Producto::calcularPrecioMin($request->precio_min_venta, $data['moncodi']);
-    $data['ProPMVS'] = decimal($precios_min_venta["sol"], $decimales->soles);    
+    $data['ProPMVS'] = decimal($precios_min_venta["sol"], $decimales->soles);
     $data['ProPMVD'] = decimal($precios_min_venta["dolar"], $decimales->dolares);
     $data['provaco'] = 0;
     $data['proigco'] = 0;
@@ -306,9 +316,9 @@ class ProductosController extends Controller
     $data['User_Crea'] = auth()->user()->usulogi;
     $data['User_ECrea'] = gethostname();
     $productoId = Producto::insertGetId($data);
-    Unidad::createFromProducto($productoId, $data, null );
+    Unidad::createFromProducto($productoId, $data, null);
     get_empresa()->sumarConsumo('productos');
-    return [ 'ProCodi' => $data['ProCodi'] ];
+    return ['ProCodi' => $data['ProCodi']];
   }
 
   public function update(ProductoUpdateRequest $request)
@@ -389,11 +399,10 @@ class ProductosController extends Controller
 
     $producto = Producto::findByProCodi($request->id);
     $result = $producto->useInDocument();
-    
-    if ( ! $result->success   ) {
-      if( $result->codigo_sitio == "toma_inventario" ){
-        return response()->json(['message' => sprintf("No puede cambiar eliminar el producto por que esta siendo utiliza en Toma de Inventario")], 400);
 
+    if (! $result->success) {
+      if ($result->codigo_sitio == "toma_inventario") {
+        return response()->json(['message' => sprintf("No puede cambiar eliminar el producto por que esta siendo utiliza en Toma de Inventario")], 400);
       }
     }
 
@@ -402,9 +411,7 @@ class ProductosController extends Controller
       $producto->UDelete = "*";
       $producto->save();
       return response()->json(['message' => 'Producto Ocultado'], 200);
-    } 
-
-    else {
+    } else {
       foreach ($producto->unidades as $unidad) {
         Unidad::destroy($unidad->Unicodi);
         $unidad->delete();
@@ -414,6 +421,14 @@ class ProductosController extends Controller
     }
   }
 
+
+  public function restaurar(Request $request)
+  {
+    $this->authorize(p_name('A_DELETE', 'R_PRODUCTO'));
+    $producto = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $request->id)->first();
+    $producto->UDelete = 0;
+    $producto->save();
+  }
 
   public function import_data()
   {
@@ -466,9 +481,7 @@ class ProductosController extends Controller
     return response()->download($path);
   }
 
-  public function downloadProduct()
-  {
-  }
+  public function downloadProduct() {}
 
 
   public function reprocesar()
@@ -544,12 +557,12 @@ class ProductosController extends Controller
     ]);
   }
 
-  public function updateUltimoCosto ()
+  public function updateUltimoCosto()
   {
-    $productosGroup = Producto::all()->chunk(100);  
+    $productosGroup = Producto::all()->chunk(100);
 
-    foreach( $productosGroup as $productoGroup ){
-      foreach( $productoGroup as $producto ){
+    foreach ($productosGroup as $productoGroup) {
+      foreach ($productoGroup as $producto) {
         $producto->updateProductUltimoCosto();
       }
     }
@@ -557,7 +570,4 @@ class ProductosController extends Controller
     noti()->success('Acción exitosa', 'Se ha actualizado el ultimo costo de los productos');
     return back();
   }
-
 }
-
-

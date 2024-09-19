@@ -21,7 +21,8 @@ Route::prefix('clientes')->group(function(){
 
 	Route::post('clientes/consultar_codigo', 'ClienteProveedorController@consulta_codigo')->name('clientes.consulta_codigo');
 
-	Route::post('clientes/eliminar', 'ClienteProveedorController@eliminar')->name('clientes.eliminar');		
+	Route::post('clientes/eliminar', 'ClienteProveedorController@eliminar')->name('clientes.eliminar');
+	Route::post('clientes/restaurar', 'ClienteProveedorController@restaurar')->name('clientes.restaurar');
 
 	Route::post('clientes/consultar_datos', 'ClienteProveedorController@consultar_datos')->name('clientes.consultar_datos');	
 

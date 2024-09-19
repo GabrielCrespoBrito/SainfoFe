@@ -22,6 +22,7 @@
   var url_consultar_codigo = "{{ route('productos.consultar_codigo') }}";
   var url_consultar_datos = "{{ route('productos.consultar_datos') }}";
   var url_eliminar = "{{ route('productos.eliminar') }}";
+  var url_restaurar = "{{ route('productos.restaurar') }}";
   var search_parameter = "{{ $search_parameter }}";
 
   $("#datatable").one("preInit.dt", function() {
@@ -58,6 +59,7 @@
             "campo_busqueda": $(".select-field-producto").val(),
             "grupo": $("[name=grupo_filter] option:selected").val(),
             "familia": $("[name=familia_filter] option:selected").val(),
+            "deleted": $("[name=deleted]:checked").val(), 
           });
         }
       },
@@ -102,9 +104,9 @@
 
   <!--  -->
   <div class="form-group col-md-3">
-    <div class="input-group">
+    <div class="">
       <select name="grupo_filter" required="required" class="form-control">
-        <option data-familias="" value=""> -- SELECCIONAR GRUPO -- </option>
+        <option data-familias="" value=""> -- GRUPO -- </option>
         @foreach( $grupos as $grupo )
         <option data-familias="{{ $loop->first ? $grupo->familias() : '' }}" value="{{ $grupo->GruCodi }}">{{ $grupo->GruNomb }}</option>
         @endforeach
@@ -112,13 +114,22 @@
     </div>
   </div>
 
-  <div class="form-group col-md-3">
-    <div class="input-group">
+  <div class="form-group col-md-2">
+    <div class="">
       <select name="familia_filter" required="required" class="form-control">
-        <option data-familias="" value=""> -- SELECCIONAR FAMILIA -- </option>
+        <option data-familias="" value=""> -- FAMILIA -- </option>
       </select>
     </div>
   </div>
+
+  <div class="form-group col-md-2">
+    <div style="margin-top:5px;">
+      <label> <input type="checkbox" name="deleted" value="1"> Mostrar eliminados </label>
+    </div>
+  </div>
+
+
+
   <!--  -->
 
   <a href="#" class="btn btn-primary btn-flat pull-right crear-nuevo"> <span class="fa fa-plus"></span> Nuevo </a>
