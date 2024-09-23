@@ -442,7 +442,7 @@ class Producto extends Model
    */
   public static function findByCodigoBarra($codigo_barra)
   {
-    return self::where('ProCodi1', $codigo_barra)->first();
+    return self::withoutGlobalScope('noEliminados')->where('ProCodi1', $codigo_barra)->first();
   }
 
   public static function getProductoByNombre($nombre, $empcodi, $lista)
