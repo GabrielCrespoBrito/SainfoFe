@@ -1,5 +1,9 @@
+@php
+ $showAllText = empcodi() == '058';
+ @endphp
+
 <div class="col-md-12 col-xs-12 content_ventas div_table_content no_pl" style="overflow-x: scroll;">
-  <table data-url="{{ route('admin.documentos.search')  }}" style="width: 100% !important;" class="table sainfo-table sainfo-noicon oneline" id="datatable">
+  <table data-url="{{ route('admin.documentos.search')  }}" style="width: 100% !important;" class="table sainfo-table sainfo-noicon oneline" id="datatable" data-text="{{ $showAllText }}">
     <thead>
       <tr>
         <td class="nro_venta"> N° Venta </td>

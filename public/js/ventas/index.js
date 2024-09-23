@@ -102,6 +102,9 @@ function initTags() {
 }
 
 function initDatable() {
+
+  const showAllColumnName = $('#datatable').attr('data-text') == 1; 
+
   table = $('#datatable').DataTable({
     "pageLength": 10,
     "responsive": true,
@@ -139,7 +142,9 @@ function initDatable() {
         }
       },
       { data: 'VtaFvta', orderable: false, searchable: false },
-      { data: 'PCNomb',  orderable: false, searchable: false, render: function (data) { return data.slice(0, 15).concat("...") } },
+      { data: 'PCNomb',  orderable: false, searchable: false, render: function (data) { 
+        return showAllColumnName ?  data : data.slice(0, 15).concat("...") 
+      } },
       { data: 'monabre', orderable: false, searchable: false },
       { data: 'VtaImpo', orderable: false, searchable: false, render: fixedNumber, className: 'text-right-i' },
       { data: 'VtaPago', orderable: false, searchable: false, render: fixedNumber, className: 'text-right-i' },
