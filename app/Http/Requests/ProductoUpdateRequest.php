@@ -84,7 +84,8 @@ class ProductoUpdateRequest extends FormRequest
           return;
 				}
 
-				$producto_procodi = Producto::findByProCodi($this->numero_operacion);
+				// $producto_procodi = Producto::findByProCodi($this->numero_operacion);
+        $producto_procodi = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $this->numero_operacion)->first();
 				
 				if( $producto_procodi ){
 					if( $producto->ID != $producto_procodi->ID ){
