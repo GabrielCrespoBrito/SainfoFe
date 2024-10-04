@@ -9,7 +9,7 @@ Route::prefix('grupos')->group(function(){
 		Route::post('guardar','GruposController@guardar')->name('guardar');
 		Route::post('editar','GruposController@editar')->name('editar');
 		Route::post('delete','GruposController@eliminar')->name('borrar');
-
+    Route::get('revert/{id}','GruposController@restaurar')->name('restaurar');
 
 	});
 	

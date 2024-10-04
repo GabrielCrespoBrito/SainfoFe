@@ -139,7 +139,7 @@ class CacheHelper
   public function grupo_allCacheable($nameCache)
   {
     return Cache::rememberForever($nameCache, function () {
-      return Grupo::all();
+      return Grupo::noDeleted()->get();
     });
   }
 

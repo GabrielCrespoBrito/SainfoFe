@@ -25,7 +25,7 @@ class VendedorVentaProductoReportController extends Controller
   {
     return view('reportes.vendedor.venta_producto_create', [
       'vendedores' => Vendedor::all(),
-      'marcas' => Marca::all(),
+      'marcas' => Marca::NoDeleted()->get(),
       'tdocumentos' =>  TipoDocumentoPago::getTiposVentas(),
     ]);
   }

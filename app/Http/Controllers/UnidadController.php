@@ -300,8 +300,8 @@ class UnidadController extends Controller
       'locales' => $locales,
       'listas' => $listas,
       'local_current' => $local,
-      'grupos' => Grupo::all(),
-      'marcas' => Marca::all()
+      'grupos' => Grupo::noDeleted()->get(),
+      'marcas' => Marca::NoDeleted()->get()
     ]);
   }
 

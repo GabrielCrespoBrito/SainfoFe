@@ -28,7 +28,7 @@ class VendedorProductoReportController extends Controller
   {
     return view('reportes.vendedor.producto_create', [
       'vendedores' => Vendedor::all(),
-      'marcas' => Marca::all()
+      'marcas' => Marca::NoDeleted()->get(),
     ]);
   }
   

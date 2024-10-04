@@ -10,7 +10,7 @@ class MarcaSupplier extends SupplierAbstract
 
   public function setInitData()
   {
-    $this->entidadData = Marca::all()->sortBy('MarCodi')->pluck('MarCodi', 'MarNomb')->toArray();
+    $this->entidadData = Marca::NoDeleted()->get()->sortBy('MarCodi')->pluck('MarCodi', 'MarNomb')->toArray();
   }
 
   public function getLastId()

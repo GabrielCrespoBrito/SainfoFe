@@ -45,34 +45,6 @@ class GrupoDeleteRequest extends FormRequest
 					$validator->errors()->add('MarCodi', 'El codigo del grupo es incorrecto' );
 				}
 
-				else {
-
-					$error = false;
-
-			    if (
-						Familia::where('gruCodi' , $id) 
-						->where('empcodi' , $grupo_current->empcodi )
-						->count()){
-			    	$error = true;
-			      $message_error = "No se puede borrar este grupo por que contiene una familia asociada";
-					}
-
-					if(
-						Producto::where('grucodi' , $id)
-						->where('empcodi' , empcodi())
-						->count()){
-
-			      $error = true;      
-			      $message_error = "No se puede borrar este grupo, por que hay productos asociados";
-			    }
-
-			    if($error){
-						$validator->errors()->add('gruCodi', $message_error );
-			    }
-
-				}
-				// else
-
 			});    
 		
 		}

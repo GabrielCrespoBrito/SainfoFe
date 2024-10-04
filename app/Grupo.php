@@ -5,25 +5,27 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Helpers\ModelHelper;
+use App\Traits\ModelTrait;
 use App\Util\ModelUtil\ModelEmpresaScope;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
 use Illuminate\Database\Eloquent\Builder;
 
 class Grupo extends Model
 {
-  use 
-  UsesTenantConnection,
-  ModelEmpresaScope;
-  
-  protected $table       = 'grupos';  
+  use
+    ModelTrait,
+    UsesTenantConnection,
+    ModelEmpresaScope;
+
+  protected $table       = 'grupos';
   public $timestamps   = false;
-  protected $primaryKey = 'GruCodi'; 
-  const PRIMARY_KEY = 'GruCodi'; 
+  protected $primaryKey = 'GruCodi';
+  const PRIMARY_KEY = 'GruCodi';
   const EMPCODI_FIELD = 'empcodi';
   const EMPRESA_CAMPO = "empcodi";
-  protected $keyType = 'string'; 
+  protected $keyType = 'string';
   public $incrementing = false;
-  public $fillable = ["GruCodi", "GruNomb" , "GruEsta", 'empcodi'];
+  public $fillable = ["GruCodi", "GruNomb", "GruEsta", 'empcodi'];
   const INIT = "01";
 
 
@@ -32,18 +34,35 @@ class Grupo extends Model
     return $query->where('UDelete', '!=', '*');
   }
 
+  public function deleteSoft()
+  {
+    if ($this->productos->count() || $this->fams->count()) {
+      $this->deleteDb();
+      return true;
+    }
+
+    return $this->delete();
+  }
+
+  public function productos()
+  {
+    return $this->hasMany(Producto::class, 'grucodi', 'GruCodi');
+  }
+
+
   public static function last_id()
   {
-    if ( $codigo =  self::where('empcodi', empcodi())->get()->max('GruCodi') ){
-      return agregar_ceros( $codigo , 2 , 1 );
+    if ($codigo =  self::where('empcodi', empcodi())->get()->max('GruCodi')) {
+      return agregar_ceros($codigo, 2, 1);
     }
 
     return self::INIT;
   }
 
-  public function familias(){
-  	// return $this->hasMany(Familia::class, 'gruCodi', 'GruCodi')->where('empcodi', empcodi())->get();
-    return $this->hasMany( Familia::class, 'gruCodi' , 'GruCodi' )->get();
+  public function familias()
+  {
+    // return $this->hasMany(Familia::class, 'gruCodi', 'GruCodi')->where('empcodi', empcodi())->get();
+    return $this->hasMany(Familia::class, 'gruCodi', 'GruCodi')->get();
   }
 
   public function fams()
@@ -51,11 +70,12 @@ class Grupo extends Model
     return $this->hasMany(Familia::class, 'gruCodi', 'GruCodi');
   }
 
-  public function familias_(){
-    return 
-    Familia::where('gruCodi' , $this->GruCodi )
-    ->where('empcodi', $this->empcodi )
-    ->get();
+  public function familias_()
+  {
+    return
+      Familia::where('gruCodi', $this->GruCodi)
+      ->where('empcodi', $this->empcodi)
+      ->get();
   }
 
 
@@ -66,13 +86,13 @@ class Grupo extends Model
 
   public function ultimo_id()
   {
-    return Familia::last_id($this->GruCodi , $this->empcodi );
+    return Familia::last_id($this->GruCodi, $this->empcodi);
   }
 
 
   public function delete_all()
   {
-    foreach($this->familias as $familia){
+    foreach ($this->familias as $familia) {
       $famlia->delete();
     }
     $this->delete();
@@ -102,9 +122,9 @@ class Grupo extends Model
   public function getFamiliaLastId()
   {
     $last_id = $this->fams->max('famCodi');
-    
-    if( is_numeric($last_id) ){
-      return math()->addCero(($last_id +1), 2);
+
+    if (is_numeric($last_id)) {
+      return math()->addCero(($last_id + 1), 2);
     }
 
     $last_id_numeric = -1;
@@ -126,13 +146,11 @@ class Grupo extends Model
       return '00';
     }
 
-    return math()->addCero( $last_id_numeric + 1, 2 );
+    return math()->addCero($last_id_numeric + 1, 2);
   }
 
   public function createFamiliaDefault($name = null, $famcodi = null)
   {
-    return Familia::createDefault( $this->empcodi, $this->GruCodi, $name, $famcodi );
+    return Familia::createDefault($this->empcodi, $this->GruCodi, $name, $famcodi);
   }
-
 }
-

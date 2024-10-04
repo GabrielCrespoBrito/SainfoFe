@@ -61,7 +61,7 @@ class UtilidadesController extends Controller
    */
   public function create()
   {
-    $grupos = Grupo::all();   
+    $grupos = Grupo::noDeleted()->get();   
     return view('reportes.ganancias.create', compact('grupos'));
   }
 

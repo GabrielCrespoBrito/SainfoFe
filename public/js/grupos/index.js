@@ -146,10 +146,16 @@ function initDatable()
     "order": [[ 0, "asc" ]],
     "ajax": { 
       "url" : url_consulta,   
+      "data": function (d) {
+        return $.extend({}, d, {
+          "deleted": $("[name=deleted]:checked").val(), 
+        });
+      }
     },
     "columns" : [      
       { data : 'GruCodi' },
       { data : 'GruNomb' },
+      { data : 'acciones', 'searchable' : false }
     ]
   });
 
@@ -301,6 +307,10 @@ function events()
 
 
   $("#datatable").on( 'click' , 'tbody tr', seleccionar_factura);    
+  $("[name=deleted]").on('change', () => {
+    table.draw()
+  });
+
   $(".save").on( 'click' , guardar_grupo );
   $("#nuevo_grupo").on( 'click' , nuevo_grupo );     
   $("#editar_grupo").on( 'click' , editar_grupo );   

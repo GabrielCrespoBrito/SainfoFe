@@ -19,7 +19,7 @@ class ReporteListaPrecioController extends Controller
 
   public function create()
   {
-    $grupos = Grupo::all();
+    $grupos = Grupo::noDeleted()->get();
     $listas = get_empresa()->listas;
     return view('reportes.listaprecio.show', ['grupos' => $grupos, 'listas' => $listas]);
   }

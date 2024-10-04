@@ -18,7 +18,7 @@ class ProductoController extends Controller
 
   public function create()
   {
-    return view('reportes.productos_mas_vendidos.form', ['grupos' => Grupo::all()]);
+    return view('reportes.productos_mas_vendidos.form', ['grupos' => Grupo::noDeleted()->get()]);
   }
 
   public function showPDF(Request $request)
