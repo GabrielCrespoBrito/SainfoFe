@@ -44,20 +44,7 @@ class FamiliaDeleteRequest extends FormRequest
 	    if( is_null($familia)){
 	    	$validator->errors()->add('error', 'El codigo de la familia/grupo es incorrecto');
 	    }
-	    else {
 
-				$cant_productos = Producto::
-				where('famcodi' , $familia->famCodi )
-				->where('grucodi', $familia->gruCodi )
-				->where('empcodi', empcodi() )
-				->count();
-
-				if ( $cant_productos ){
-	    		$validator->errors()->add('error', 'Esta familia esta asociada en al menos un producto, tiene que eliminar el producto primero para eliminar la familia');
-				}
-
-
-	    }
 			
 		}
 

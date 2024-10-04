@@ -14,6 +14,7 @@ Route::prefix('familias')->group(function(){
 
 		Route::post('borrar','FamiliasController@borrar')->name('borrar');
 
+    Route::get('revert/{id?}/{id_grupo?}','FamiliasController@restaurar')->name('restaurar');
 
 	});
 	

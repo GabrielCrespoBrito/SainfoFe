@@ -49,7 +49,7 @@ class GruposController extends Controller
   {
     $grupo = Grupo::find($id);
     $grupo->deleteRevert();
-    noti()->success('Acción exitosa', 'Se ha restaurado la grupo');
+    noti()->success('Acción exitosa', 'Se ha restaurado el grupo');
     return back();
   }
 

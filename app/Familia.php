@@ -1,13 +1,16 @@
 <?php
 
 namespace App;
+
+use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 class Familia extends Model
 {
-  use UsesTenantConnection;
+  use UsesTenantConnection,
+  ModelTrait;
 
   protected $table       = 'familias';  
   protected $keyType = 'string';
@@ -19,6 +22,22 @@ class Familia extends Model
   public function grupo()
   {
     return $this->belongsTo( Grupo::class, 'gruCodi', 'GruCodi');
+  }
+
+  public function deleteSoft()
+  {
+
+    $pQty = Producto::where('famcodi' , $this->famCodi )
+    ->where('grucodi', $this->gruCodi )
+    ->where('empcodi', $this->empcodi  )
+    ->count();
+
+    
+    if($pQty){
+      $this->deleteDb();
+      return true;
+    }
+    return $this->delete();
   }
 
 
@@ -40,6 +59,18 @@ class Familia extends Model
   public static function find($famcodi){
     return self::where('famCodi',$famcodi)->where('empcodi', empcodi())->first();
   }
+
+
+  public static function findComplete( $famcodi, $grucodi)
+  {
+    return 
+    self::
+    where('famCodi', $famcodi)
+    ->where('gruCodi', $grucodi)
+    ->first();
+  }
+
+
   public function setFamNombAttribute($value)
   {
     $this->attributes['famNomb'] = strtoupper($value);

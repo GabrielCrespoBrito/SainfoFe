@@ -129,15 +129,21 @@ function initDatable()
 	"order": [[ 0, "asc" ]],
 	"ajax": { 
 	  "url" : url_consulta,   
+      "data": function (d) {
+        return $.extend({}, d, {
+          "deleted": $("[name=deleted]:checked").val(), 
+        });
+      }
 	},
 	"columns" : [      
 	  { data : 'famCodi' , search : true },
 	  { data : 'famNomb' , search : true },    
-	  { data : 'grupo.GruNomb' ,  
+	  { data : 'grupo.GruNomb',
     render : function( info , display , data , adicional_info ){
 		  return "" + data.grupo.GruCodi + " " +   " -" + data.grupo.GruNomb;
-    }
-  },      
+    }, searchable : false
+    },
+    { data : 'acciones', 'searchable' : false }
 	]
   });
 
@@ -334,6 +340,9 @@ function events()
   $("#editar_grupo").on( 'click' , editar_grupo );   
 
   $("[name=id_grupo]").on( 'change' , poner_id );
+  $("[name=deleted]").on('change', () => {
+    table.draw()
+  });
   // $("#borrar_grupo").on( 'click' , borrar_grupo );   
 
 

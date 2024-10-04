@@ -23,16 +23,31 @@ class FamiliasController extends Controller
 		return view('familias.index', compact('grupos','create') );
 	}
 
-	public function search()
+	public function search( Request $request )
 	{
+
+    $deleted = $request->input('deleted', 0);
+    $condition = $deleted ? '=' : '!=';
     $search = Familia::query()
-    ->where('empcodi', empcodi())      
+    ->where('UDelete', $condition, "*")
     ->with(['grupo' => function($query){
       $query->where('empcodi', empcodi());
     }]);
 
-		return datatables()->of($search)->toJson();
+		return datatables()->of($search)
+    ->addColumn('acciones', 'familias.partials.column_acciones')
+    ->rawColumns(['acciones'])
+    ->toJson();
 	}
+
+  public function restaurar($id, $id_grupo = null)
+  {
+    $familia = Familia::findComplete($id, $id_grupo);
+    $familia->deleteRevert();
+    noti()->success('Acción exitosa', 'Se ha restaurado la familia');
+    return back();
+  }
+
 
 
 	public function buscar_grupo(Request $request)
@@ -75,8 +90,13 @@ class FamiliasController extends Controller
     ->where('gruCodi', $request->id_grupo)
     ->where('empcodi', empcodi())   
     ->first()
-    ->delete();
+    ->deleteSoft();
 
+
+
+    
+
+    
     return response()->json(['data' => 'Familia eliminada exitosamente' , 'last_id' => Familia::last_id($request->id_grupo) ]);
   }
 
