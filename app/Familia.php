@@ -21,6 +21,12 @@ class Familia extends Model
     return $this->belongsTo( Grupo::class, 'gruCodi', 'GruCodi');
   }
 
+
+  public function scopeNoDeleted($query)
+  {
+    return $query->where('UDelete', '!=', '*');
+  }
+
   public static function last_id($grucodi, $empcodi = null ){
     $empcodi = $empcodi ?? empcodi();
 
@@ -85,6 +91,8 @@ class Familia extends Model
   {
     return $this->famNomb;
   }
+
+
 
 
 }

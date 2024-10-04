@@ -18,6 +18,7 @@ class CreateMarcaTable extends Migration
             $table->string('MarNomb');
             $table->string('empcodi');
             $table->primary(['EmpCodi', 'MarCodi'], 'primary_full' );
+            $table->string('UDelete')->nullable()->default(0);
         });
     }
 

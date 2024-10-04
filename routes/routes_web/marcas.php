@@ -12,7 +12,7 @@ Route::middleware('tenant.exists')->group(function () {
 			Route::post('guardar','MarcasController@guardar')->name('guardar');
 			Route::post('editar','MarcasController@editar')->name('editar');
 			Route::post('borrar','MarcasController@eliminar')->name('borrar');
-
+			Route::get('revert/{id}','MarcasController@restaurar')->name('restaurar');
 		});
 		
 	});

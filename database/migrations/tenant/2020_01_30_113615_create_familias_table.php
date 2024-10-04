@@ -20,6 +20,7 @@ class CreateFamiliasTable extends Migration
             $table->string('famesta')->nullable();            
             $table->string('empcodi')->default("001");
             $table->primary(['famCodi', 'empcodi', 'gruCodi'], 'primary_full');
+            $table->string('UDelete')->nullable()->default(0);
         });
     }
 

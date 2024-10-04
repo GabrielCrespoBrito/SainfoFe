@@ -19,7 +19,7 @@ class CreateGruposTable extends Migration
             $table->string( 'GruEsta' )->nullable();
             $table->string( 'empcodi' );
             $table->primary([ 'GruCodi' , 'empcodi' ], 'primary_full');
-
+            $table->string('UDelete')->nullable()->default(0);
         });
     }
 

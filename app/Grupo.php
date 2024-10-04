@@ -27,6 +27,11 @@ class Grupo extends Model
   const INIT = "01";
 
 
+  public function scopeNoDeleted($query)
+  {
+    return $query->where('UDelete', '!=', '*');
+  }
+
   public static function last_id()
   {
     if ( $codigo =  self::where('empcodi', empcodi())->get()->max('GruCodi') ){

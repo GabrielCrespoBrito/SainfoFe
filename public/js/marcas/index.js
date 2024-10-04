@@ -127,7 +127,12 @@ function initDatable()
 	"serverSide" : true,
 	"order": [[ 0, "asc" ]],
 	"ajax": { 
-	  "url" : url_consulta,   
+	  "url" : url_consulta,
+    "data": function (d) {
+      return $.extend({}, d, {
+        "deleted": $("[name=deleted]:checked").val(),
+      });
+    }
 	},
 	"columns" : [      
 		{ data: 'MarCodi' },
@@ -160,6 +165,10 @@ function eliminar_ele(e)
   }
 }
 
+
+$("[name=familia_filter], [name=deleted]").on('change', () => {
+  table.draw()
+});
 
 function borradoExitoso(data){
 

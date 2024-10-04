@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\ModelTrait;
 use App\Util\ModelUtil\ModelEmpresaScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,6 +12,7 @@ class Marca extends Model
 {
   use 
   ModelEmpresaScope,
+  ModelTrait,
   UsesTenantConnection;
   
   protected $table       = 'marca';  
@@ -20,6 +22,28 @@ class Marca extends Model
   protected $primaryKey = "MarCodi";
   public $fillable = [ "MarCodi", 'MarNomb' , 'empcodi'];
   const EMPRESA_CAMPO = "empcodi";
+
+  public function productos()
+  {
+    return $this->hasMany(Producto::class, 'marcodi', 'MarCodi');
+  }
+
+  public function scopeNoDeleted($query)
+  {
+    return $query->where('UDelete', '!=', '*');
+  }
+
+  public function deleteSoft()
+  {
+    if( $this->productos->count() ){
+      $this->deleteDb();
+      return true;
+    }
+
+    return $this->delete();
+  }
+
+
 
 
   public static function last_id($agregate = 1)

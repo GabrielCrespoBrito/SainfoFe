@@ -46,14 +46,14 @@ class MarcaDeleteRequest extends FormRequest
                     $validator->errors()->add('MarCodi', 'El codigo de la marca es incorrecto' );
                 }
 
-                else {
-                    $productos_with_marca = Producto::where('marcodi', $this->MarCodi)->count();  
+                // else {
+                //     $productos_with_marca = Producto::where('marcodi', $this->MarCodi)->count();  
                     
-                    if( $productos_with_marca ){
+                //     if( $productos_with_marca ){
                       
-                        $validator->errors()->add('field', "No puede borrar esta marca, por que esta siendo usada en algun producto" );     
-                    }
-                }
+                //         $validator->errors()->add('field', "No puede borrar esta marca, por que esta siendo usada en algun producto" );     
+                //     }
+                // }
 
             });         
         

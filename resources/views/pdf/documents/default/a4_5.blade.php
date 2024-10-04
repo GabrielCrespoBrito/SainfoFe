@@ -75,6 +75,7 @@ $classFooter = '';
 
 @include('pdf.documents.partials.table', [
 'complete_tds_spaces' =>  $footerBreak ? false : true,
+'cantAddDoc' => 43,
 'class_name' => 'col-12  border-style-solid border-width-1 border-color-blue-light ' . $footerBreak ? '' : 'container-table-height',
 'class_name_table' => 'col-md-12 col-10 border-style-solid border-width-1 border-color-blue-light',
 'thead_class' => 'font-size-9 pt-x2 pl-x3 pb-x2 border-right-style-solid border-bottom-style-solid border-width-1 bg-white c-black border-color-blue-light',

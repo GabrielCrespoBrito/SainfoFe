@@ -10,6 +10,17 @@ trait ModelTrait {
     return $this->ceroCorrelative ?? 3;
   }
 
+  public function deleteDb()
+  {
+    $this->UDelete = "*";
+    $this->save();
+  }
+
+  public function deleteRevert()
+  {
+    $this->UDelete = 0;
+    $this->save();
+  }
 
   /**
    * Poner ultimo codigo de un campo determinado

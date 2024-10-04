@@ -28,6 +28,10 @@
 @section('contenido')
 
 <div class="col-md-12 acciones-div ww">
+
+
+      <label> <input type="checkbox" name="deleted" value="1"> Mostrar eliminados </label>
+
   <a href="#" id="borrar_grupo" data-toggle="tooltip" title="Eliminar" class="btn btn-danger disabled btn-flat pull-right eliminar-accion"> <span class="fa fa-trash"></span>  </a>
   <a href="#" id="editar_grupo"  data-toggle="tooltip" title="Modificar" class="btn btn-default disabled btn-flat pull-right modificar-accion"> <span class="fa fa-pencil"></span> </a>
   <a href="#" id="nuevo_grupo" class="btn btn-primary btn-flat pull-right crear-nuevo"> <span class="fa fa-plus"></span>  Nueva</a>

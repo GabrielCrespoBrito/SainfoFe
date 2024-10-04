@@ -8,16 +8,12 @@ $cantAddDoc =  $cantAddDoc ?? 32;
 if ($complete_tds_spaces) {
   if ($cant_items) {
     $cant_items += (int) $venta2->hasAnticipo();
-    ;
     if ($cant_items < 24) {
       $complete_tds_spaces = true;
       $cant_tds_to_add = ($venta2->isNotaVenta() ? $cantAddNV : $cantAddDoc) - $cant_items;
     }
   }
 }
-
-// dd($class_name);
-
 
 $class_name = $class_name ?? '';
 $class_name_table = $class_name_table ?? '';
