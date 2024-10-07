@@ -44,7 +44,7 @@ class InventarioValorizadoReportData
           ->where('unidad.UniEnte', '=', "1")
           ->where('unidad.UniMedi', '=', "1");
       })
-      ->where('UDelete' , '=' , "0");
+      ->where('productos.UDelete' , '=' , "0");
 
       if($this->tipo_existencia){
         $query->where('productos.tiecodi', $this->tipo_existencia );
