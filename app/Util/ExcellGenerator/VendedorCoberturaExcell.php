@@ -13,7 +13,8 @@ class VendedorCoberturaExcell extends ExcellGenerator
     "Cod. Vendedor",
     "Nomb. Vendedor", 
     "Unidades",
-    "Soles"
+    "Soles",
+    "Cobertura"
   ];
 
 
@@ -111,11 +112,14 @@ class VendedorCoberturaExcell extends ExcellGenerator
       // Iterar por cada cobertura
       foreach($vendedorData['items'] as $coberturaId => $cobertura ){
 
+        // dd($cobertura);
+
         $this->sheet->row($this->getLineaAndSum(), [
           $vendedorData['info']['id'],
           $vendedorData['info']['nombre_complete'], 
           $cobertura['total']['cantidad'],
           $cobertura['total']['importe'],
+          $cobertura['info']['cliente_codigo'],
         ]);
 
       }
