@@ -344,6 +344,8 @@ function set_data_modal(data) {
   $("[name=precio_min_venta]", form_accion).val(precio_min_venta);
   $("[name=peso]", form_accion).val(data.ProPeso);
   $("[name=isc]", form_accion).val(data.ISC);
+  $("[name=porc_com_vend]", form_accion).val(data.porc_com_vend);
+
   $("[name=ubicacion]", form_accion).val(data.proubic);
   
   const handleStock = Boolean(Number(data.ProSTem));

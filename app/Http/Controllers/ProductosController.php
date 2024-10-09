@@ -365,6 +365,7 @@ class ProductosController extends Controller
     $producto->proigvv = $request->igv_porc;
     $producto->ProPeso = $request->peso;
     $producto->ISC = $request->isc;
+    $producto->porc_com_vend = $request->porc_com_vend;
     $producto->icbper = $request->input('icbper', 0);
     $producto->incluye_igv = $request->input('incluye_igv', 0);
     $producto->ProPerc = $request->input('ProPerc', 0);

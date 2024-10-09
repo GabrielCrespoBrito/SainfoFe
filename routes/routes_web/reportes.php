@@ -121,6 +121,11 @@ Route::prefix('reportes')->group(function () {
   Route::get('vendedor-ventas', 'Reportes\VendedorVentaReportController@create')->name('reportes.vendedor_venta.create');
   Route::post('vendedor-ventas/report', 'Reportes\VendedorVentaReportController@report')->name('reportes.vendedor_venta.report');
 
+  # Reportes de vendedor-ventas
+  Route::get('vendedor-cobertura', 'Reportes\VendedorCoberturaReportController@create')->name('reportes.vendedor_cobertura.create');
+  Route::post('vendedor-cobertura/report', 'Reportes\VendedorCoberturaReportController@report')->name('reportes.vendedor_cobertura.report');
+
+
   # Reportes de vendedor-producto
   Route::get('vendedor-producto', 'Reportes\VendedorProductoReportController@create')->name('reportes.vendedor_producto.create');
   Route::post('vendedor-producto/report', 'Reportes\VendedorProductoReportController@report')->name('reportes.vendedor_producto.report');

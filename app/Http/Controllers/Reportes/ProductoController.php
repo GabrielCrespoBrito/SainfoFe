@@ -23,8 +23,6 @@ class ProductoController extends Controller
 
   public function showPDF(Request $request)
   {
-    // _dd($request->all());
-    // exit();
     $fecha_desde = $request->fecha_desde;
     $fecha_hasta = $request->fecha_hasta;
     $local = $request->local;

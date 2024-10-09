@@ -193,16 +193,22 @@
           <input name="peso" data-default="0" value="0" required="required" class="form-control" type="text">
         </div>
 
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2">
           <label> ISC </label>
           <input name="isc" data-default="0" value="0" required="required" class="form-control" type="text">
         </div>        
-        
-        <div class="form-group col-md-3">
+                
+
+        <div class="form-group col-md-2">
           <label> Ubicación </label>
           <input name="ubicacion" required="required" class="form-control" type="text">
         </div>
         
+        <div class="form-group col-md-2">
+          <label title="Porcentaje de comisión del vendedor"> % Comc. Vend </label>
+          <input name="porc_com_vend" data-default="0" value="0" required="required" class="form-control" type="text">
+        </div>       
+
         {{--
         <div class="form-group col-md-3">
           <label> Stock minimo (%) </label>

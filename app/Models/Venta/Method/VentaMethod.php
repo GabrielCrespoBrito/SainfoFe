@@ -1067,6 +1067,7 @@ trait VentaMethod
     return [
       'importe' => convertNegativeIfTrue($this->VtaImpo * $multiplicador, $convertNegative),
       'pago' => convertNegativeIfTrue($this->VtaPago * $multiplicador, $convertNegative),
+      'cantidad' => convertNegativeIfTrue($this->Vtacant, $convertNegative),
       'saldo' => convertNegativeIfTrue($this->VtaSald * $multiplicador, $convertNegative),
     ];
   }

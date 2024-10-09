@@ -34,6 +34,7 @@
         <li><a href="{{ route('reportes.vendedor_estadistica.create') }}"><i class="fa fa-circle-o"></i> Estadisticas </a></li>
         <li><a href="{{ route('reportes.vendedor_venta_productos.create') }}"><i class="fa fa-circle-o"></i> Ventas-Productos </a></li>
         <li><a href="{{ route('reportes.vendedor_cliente.create') }}"><i class="fa fa-circle-o"></i> Clientes  </a></li>
+        <li><a href="{{ route('reportes.vendedor_cobertura.create') }}"><i class="fa fa-circle-o"></i> Coberturas  </a></li>
 
       </ul>
     </li>

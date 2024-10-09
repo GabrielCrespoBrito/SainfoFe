@@ -55,9 +55,6 @@ class ReporteProductoStock
       ->where('productos.famcodi', $this->familiaId);
     }
 
-    // dd( $this->grupoId, $this->familiaId, $this->marcaId, $this->localId, $this->stockMinimo, $query->get() );
-    // exit();
-
     if ($this->marcaId) {
       $query->where('productos.marcodi', $this->marcaId);
     }
