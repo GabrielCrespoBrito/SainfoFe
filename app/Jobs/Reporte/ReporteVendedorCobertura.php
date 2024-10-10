@@ -2,11 +2,12 @@
 
 namespace App\Jobs\Reporte;
 
-use App\ClienteProveedor;
 use App\Local;
-use App\ModuloMonitoreo\StatusCode\StatusCode;
+use App\Marca;
 use App\Venta;
 use App\Vendedor;
+use App\ClienteProveedor;
+use App\ModuloMonitoreo\StatusCode\StatusCode;
 
 class ReporteVendedorCobertura
 {
@@ -23,19 +24,21 @@ class ReporteVendedorCobertura
   protected $fecha_desde;
   protected $fecha_hasta;
   protected $cliente;
+  protected $marcaId;
 
   /**
    * Create a new job instance.
    *
    * @return void
    */
-  public function __construct($vendedor, $local, $fecha_desde, $fecha_hasta, $cliente)
+  public function __construct($vendedor, $local, $fecha_desde, $fecha_hasta, $cliente, $marcaId = null)
   {
     $this->vendedor = $vendedor;
     $this->local = $local;
     $this->fecha_desde = $fecha_desde;
     $this->fecha_hasta = $fecha_hasta;
     $this->cliente = $cliente;
+    $this->marcaId = $marcaId;
     $this->handle();
   }
 
@@ -45,28 +48,50 @@ class ReporteVendedorCobertura
    */
   public function getQuery()
   {
-    $query = Venta::with(['cliente_with' => function ($query) {
-      $query->where('TipCodi', 'C');
-    }, 'vendedor' => function ($query) {
-      $query->withoutGlobalScopes();
-    }, 'forma_pago'])
+    $marcaId = $this->marcaId;
+
+    $query = Venta::with([
+      'cliente_with' => function ($query) {
+        $query->where('TipCodi', 'C');
+      },
+      'items.producto',
+      'vendedor' => function ($query) {
+        $query->withoutGlobalScopes();
+      },
+      'forma_pago'
+    ])
       ->whereBetween('VtaFvta', [$this->fecha_desde, $this->fecha_hasta])
-      ->whereIn('VtaFMail', [  StatusCode::CODE_0001, StatusCode::CODE_0011 ])
-      ->whereIn('TidCodi', [Venta::BOLETA, Venta::FACTURA, Venta::NOTA_DEBITO,  Venta::NOTA_CREDITO, Venta::NOTA_VENTA]);
+      ->whereIn('VtaFMail', [StatusCode::CODE_0001, StatusCode::CODE_0011])
+      ->whereIn('TidCodi', [Venta::BOLETA, Venta::FACTURA, Venta::NOTA_DEBITO,  Venta::NOTA_CREDITO, Venta::NOTA_VENTA])
+      ->when($marcaId, function ($query) use ($marcaId) {
+        $query->whereHas('items.producto', function ($query) use ($marcaId) {
+          $query->where('marcodi', $marcaId);
+        });
+      })
+      ->when($this->local, function ($query) {
+        $query->where('LocCodi', $this->local);
+      })
+      ->when($this->cliente, function ($query) {
+        $query->where('PCCodi', $this->cliente);
+      })
+      ->when($this->vendedor, function ($query) {
+        $query->where('Vencodi', $this->vendedor);
+      });
 
-    if ($this->local) {
-      $query->where('LocCodi', $this->local);
-    }
 
-    if ($this->cliente) {
-      $query->where('PCCodi', $this->cliente);
-    }
+    // if ($this->local) {
+    //   $query->where('LocCodi', $this->local);
+    // }
 
-    if ($this->vendedor) {
-      $query->where('Vencodi', $this->vendedor);
-    }
+    // if ($this->cliente) {
+    //   $query->where('PCCodi', $this->cliente);
+    // }
 
+    // if ($this->vendedor) {
+    //   $query->where('Vencodi', $this->vendedor);
+    // }
 
+    // dd($query->get());
 
     return
       $query
@@ -152,10 +177,23 @@ class ReporteVendedorCobertura
       $total_cobertura = &$add['total'];
 
       foreach ($ventas as $venta) {
-        $data_utilidad = (object) $venta->getTotalesPago();
-        $this->addToTotal($total_reporte, $data_utilidad);
-        $this->addToTotal($total_vendedor, $data_utilidad);
-        $this->addToTotal($total_cobertura, $data_utilidad);
+
+        if( $this->marcaId ){
+
+          foreach( $venta->items as $item ){
+            $data_utilidad = (object) $item->dataUtilidad();
+            $this->addToTotal($total_reporte, $data_utilidad);
+            $this->addToTotal($total_vendedor, $data_utilidad);
+            $this->addToTotal($total_cobertura, $data_utilidad);
+          }
+        }
+
+        else {
+          $data_utilidad = (object) $venta->getTotalesPago();
+          $this->addToTotal($total_reporte, $data_utilidad);
+          $this->addToTotal($total_vendedor, $data_utilidad);
+          $this->addToTotal($total_cobertura, $data_utilidad);
+        }
       }
     }
   }
@@ -163,9 +201,7 @@ class ReporteVendedorCobertura
   public function addToTotal(&$total, $data_utilidad)
   {
     $total['importe'] += $data_utilidad->importe;
-    $total['pago'] += $data_utilidad->pago;
     $total['cantidad'] += $data_utilidad->cantidad;
-    $total['saldo'] += $data_utilidad->saldo;
   }
 
   /**
@@ -200,10 +236,14 @@ class ReporteVendedorCobertura
     $vendedor =  $this->vendedor ? Vendedor::find($this->vendedor)->LocNomb : 'TODOS';
     $cliente = $this->cliente ? ClienteProveedor::findCliente($this->cliente)->PCNomb : 'TODOS';
     $empresa = get_empresa();
+    $marca = $this->marcaId ? Marca::find($this->marcaId)->MarNomb : 'TODOS';
+
     return [
       'reporte_nombre' => self::REPORTE_NOMBRE,
       'empresa_nombre' => $empresa->nombre(),
       'empresa_ruc' => $empresa->ruc(),
+      'marcaId' => $this->marcaId,
+      'marca' => $marca,
       'fecha_generacion' => date('Y-m-d H:i:s'),
       'vendedor' => $vendedor,
       'local' => $local,

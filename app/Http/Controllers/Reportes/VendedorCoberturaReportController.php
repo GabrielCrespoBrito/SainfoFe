@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reportes;
 
 use App\Local;
+use App\Marca;
 use App\Vendedor;
 use App\PDFPlantilla;
 use Illuminate\Http\Request;
@@ -30,7 +31,8 @@ class VendedorCoberturaReportController extends Controller
   {
     return view('reportes.vendedor.coberturas_create', [
       'vendedores' => Vendedor::all(),
-      'locales' => Local::all()
+      'locales' => Local::all(),
+      'marcas' => Marca::noDeleted()->get()
     ]);
   }
 
@@ -44,12 +46,10 @@ class VendedorCoberturaReportController extends Controller
       $request->fecha_desde,
       $request->fecha_hasta,
       $request->cliente_id,
-      $request->saldo,
+      $request->marca_id,
     );
 
     $data_reporte = $reporter->getData();
-
-    // dd( $data_reporte );
 
     if (! $data_reporte) {
       noti()->warning('No existen registros, bajos los parametros seleccionados');
@@ -58,15 +58,15 @@ class VendedorCoberturaReportController extends Controller
 
 
     // pdf
-    // if ($request->tipo_reporte === "0") {
-    //   $view = view('reportes.vendedor.ventas_pdf', $data_reporte);
-    //   $pdf = new PDFGenerator($view, PDFGenerator::HTMLGENERATOR);
-    //   $pdf->generator->setGlobalOptions(PDFHtmlPdf::getSetting(PDFPlantilla::FORMATO_A4, false));
-    //   return $pdf->generate();
-    // }
+    if ($request->tipo_reporte === "0") {
+      $view = view('reportes.vendedor.coberturas_pdf', $data_reporte);
+      $pdf = new PDFGenerator($view, PDFGenerator::HTMLGENERATOR);
+      $pdf->generator->setGlobalOptions(PDFHtmlPdf::getSetting(PDFPlantilla::FORMATO_A4, false));
+      return $pdf->generate();
+    }
 
     // excell
-    // elseif ($request->tipo_reporte === "1") {
+    elseif ($request->tipo_reporte === "1") {
       ob_end_clean();
 
       $excellExport = new VendedorCoberturaExcell($data_reporte, 'reporte_vendedor_ventas');
@@ -76,6 +76,6 @@ class VendedorCoberturaReportController extends Controller
         ->store();
 
       return response()->download($info['full'], $info['file']);
-    // }
+    }
   }
 }

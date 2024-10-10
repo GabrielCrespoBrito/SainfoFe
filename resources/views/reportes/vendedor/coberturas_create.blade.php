@@ -16,9 +16,9 @@
     @slot('content')
 
     {{--  --}}
-      @component('components.report_form.fieldset', ['nameField' => 'Vendedor y Local'])
+      @component('components.report_form.fieldset', ['nameField' => 'Vendedor - Local - Marca'])
         @slot('content')
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div class="form-group">
               <select name="vendedor_id"  class="form-control input-sm">
                 <option value=""> -- TODOS -- </option>
@@ -29,7 +29,7 @@
             </div>
           </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group">
               <select name="local_id"  class="form-control input-sm">
                 <option value=""> -- TODOS -- </option>
@@ -39,6 +39,18 @@
               </select>
             </div>
           </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+              <select name="marca_id"  class="form-control input-sm">
+                <option value=""> -- TODOS -- </option>
+                @foreach( $marcas as $marca )
+                <option value="{{ $marca->MarCodi }}">  {{ $marca->MarNomb }} </option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
         @endslot
       @endcomponent
 
@@ -68,6 +80,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <select name="tipo_reporte"  class="form-control input-sm">
+                <option value="0"> PDF </option>
                 <option value="1"> Excell </option>
               </select>
             </div>

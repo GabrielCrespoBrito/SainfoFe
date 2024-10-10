@@ -176,6 +176,14 @@ class VentaItem extends Model
     return $this->belongsTo( Producto::class, 'DetCodi', 'ProCodi' );
   }
 
+  public function dataUtilidad()
+  {
+    return (object) [
+      'cantidad' => $this->DetCant,
+      'importe' => $this->DetImpo,
+    ];
+  }
+
   /**
    * Obtener el valor de venta por unidad aplicando el igv y el isc, si aplica
    * - Calculo revizado

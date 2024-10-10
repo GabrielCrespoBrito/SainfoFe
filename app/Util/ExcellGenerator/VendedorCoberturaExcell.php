@@ -119,7 +119,7 @@ class VendedorCoberturaExcell extends ExcellGenerator
           $vendedorData['info']['nombre_complete'], 
           $cobertura['total']['cantidad'],
           $cobertura['total']['importe'],
-          $cobertura['info']['cliente_codigo'],
+          sprintf('%s - %s ', $cobertura['info']['cliente_codigo'], $cobertura['info']['cliente']),
         ]);
 
       }
