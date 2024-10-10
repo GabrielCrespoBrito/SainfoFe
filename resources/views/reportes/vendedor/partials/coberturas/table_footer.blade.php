@@ -3,4 +3,5 @@
     'codigo' => '',
     'cantidad' => decimal($total['cantidad']),
     'importe' => decimal($total['importe']),
+    'total' => $total['total_coberturas'],
 ]) 

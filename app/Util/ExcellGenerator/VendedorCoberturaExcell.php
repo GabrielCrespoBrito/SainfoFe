@@ -14,7 +14,8 @@ class VendedorCoberturaExcell extends ExcellGenerator
     "Nomb. Vendedor", 
     "Unidades",
     "Soles",
-    "Cobertura"
+    "Cod. Cobertura",
+    "Nomb. Cobertura"
   ];
 
 
@@ -119,7 +120,8 @@ class VendedorCoberturaExcell extends ExcellGenerator
           $vendedorData['info']['nombre_complete'], 
           $cobertura['total']['cantidad'],
           $cobertura['total']['importe'],
-          sprintf('%s - %s ', $cobertura['info']['cliente_codigo'], $cobertura['info']['cliente']),
+          $cobertura['info']['cliente_codigo'], 
+          $cobertura['info']['cliente']
         ]);
 
       }
@@ -130,6 +132,7 @@ class VendedorCoberturaExcell extends ExcellGenerator
           'TOTAL VENDEDOR',
           $vendedorData['total']['cantidad'],
           $vendedorData['total']['importe'],
+          $vendedorData['total']['total_coberturas'],
         ]);
 
 
@@ -148,9 +151,7 @@ class VendedorCoberturaExcell extends ExcellGenerator
       'TOTAL GENERAL',
       $this->data['total']['cantidad'],
       $this->data['total']['importe'],
-      // $this->data['total']['importe'],
-      // $this->data['total']['pago'],
-      // $this->data['total']['saldo'],
+      $this->data['total']['total_coberturas'],
     ]);
 
     $this->sheet->row($this->getLastLine(),

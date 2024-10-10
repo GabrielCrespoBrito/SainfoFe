@@ -38,8 +38,6 @@ class VendedorCoberturaReportController extends Controller
 
   public function report(VendedorCoberturaReportRequest $request)
   {
-    // dd($request->all());
-
     $reporter = new ReporteVendedorCobertura(
       $request->vendedor_id,
       $request->local_id,
@@ -50,6 +48,8 @@ class VendedorCoberturaReportController extends Controller
     );
 
     $data_reporte = $reporter->getData();
+
+    // dd($data_reporte);
 
     if (! $data_reporte) {
       noti()->warning('No existen registros, bajos los parametros seleccionados');

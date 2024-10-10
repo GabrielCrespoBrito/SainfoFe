@@ -9,11 +9,12 @@
 
 
     <tr class="border-bottom-stripe">
-      <td> {{ $vendedorData['info']['id'] }} </td>
-      <td> {{ $vendedorData['info']['nombre_complete'] }} </td>
-      <td class="text-align-right"> {{ decimal($cobertura['total']['cantidad']) }} </td>
-      <td class="text-align-right"> {{ decimal($cobertura['total']['importe']) }} </td>
-      <td class="text-align-right"> {{ sprintf('%s - %s', $cobertura['info']['cliente_codigo'] , $cobertura['info']['cliente'])   }}  </td>
+      <td style="padding: 0 5px"> {{ $vendedorData['info']['id'] }} </td>
+      <td style="padding: 0 5px"> {{ $vendedorData['info']['nombre_complete'] }} </td>
+      <td class="text-align-right" style="padding: 0 5px"> {{ decimal($cobertura['total']['cantidad']) }} </td>
+      <td class="text-align-right" style="padding: 0 5px"> {{ decimal($cobertura['total']['importe']) }} </td>
+      <td class="text-align-right" style="padding: 0 5px"> {{  $cobertura['info']['cliente_codigo'] }}  </td>
+      <td class="text-align-left" style="padding: 0 5px"> {{  $cobertura['info']['cliente']   }}  </td>
     </tr>
 
 
@@ -23,7 +24,9 @@
       'nameTotal' => "TOTAL VENDEDOR", 
       'codigo' => $vendedorId,
       'cantidad' => decimal($vendedorData['total']['cantidad']), 
-      'importe' => decimal($vendedorData['total']['importe']),  ])
+      'importe' => decimal($vendedorData['total']['importe']), 
+      'total' => $vendedorData['total']['total_coberturas']
+    ])
 
   @endforeach
 

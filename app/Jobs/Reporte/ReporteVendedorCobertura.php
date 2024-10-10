@@ -57,9 +57,7 @@ class ReporteVendedorCobertura
       'items.producto',
       'vendedor' => function ($query) {
         $query->withoutGlobalScopes();
-      },
-      'forma_pago'
-    ])
+      }])
       ->whereBetween('VtaFvta', [$this->fecha_desde, $this->fecha_hasta])
       ->whereIn('VtaFMail', [StatusCode::CODE_0001, StatusCode::CODE_0011])
       ->whereIn('TidCodi', [Venta::BOLETA, Venta::FACTURA, Venta::NOTA_DEBITO,  Venta::NOTA_CREDITO, Venta::NOTA_VENTA])
@@ -146,16 +144,15 @@ class ReporteVendedorCobertura
         'id' => $vendedor_id,
         'nombre' => $vendedor->vennomb,
         'nombre_complete' =>
-        sprintf(
-          "%s %s",
-          $vendedor->vennomb,
-          $vendedor->ventel1
-        ),
-        'count_ventas' => count($coberturas_vendedor),
+        sprintf( "%s %s", $vendedor->vennomb, $vendedor->ventel1),
       ];
 
       $this->addToData($add, $vendedor_info);
       $total_vendedor = &$add['total'];
+      $total_vendedor['total_coberturas'] = count($coberturas_vendedor);
+      $total_reporte['total_coberturas'] += count($coberturas_vendedor); 
+
+
       $this->processCoberturas($coberturas_vendedor, $add, $data, $total_reporte, $total_vendedor);
     }
   }
@@ -222,7 +219,7 @@ class ReporteVendedorCobertura
     // Total
     $arrAdd['total'] = [
       'importe' => 0,
-      'pago' => 0,
+      'total_coberturas' => 0,
       'cantidad' => 0,
       'saldo' => 0,
     ];
