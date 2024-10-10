@@ -18,6 +18,7 @@ mix
   .js('public/js/ventas/scripts.js', 'public/js/ventas/mix/')
   .js('public/js/dashboard.js', 'public/js/mix/')
   .js('public/js/ventas/index.js', 'public/js/ventas/mix/')
+  .js('public/js/productos/index.js', 'public/js/productos/mix/')
   .js('public/js/ventas/canje.js', 'public/js/ventas/mix/')
   .js('public/js/clientes/scripts.js', 'public/js/clientes/mix/')
   .js('public/js/cajas/pagos.js', 'public/js/cajas/mix/')

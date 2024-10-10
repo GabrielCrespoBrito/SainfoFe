@@ -333,7 +333,18 @@ class VentaItem extends Model
       $it->DetCDol = $totales_item['costos']->dolar;
       // Ganancia
       $it->DetVSol = $totales_item['costo_soles'];
-      $it->DetVDol = $totales_item['costo_dolares'];      
+      $it->DetVDol = $totales_item['costo_dolares'];
+
+      // Porc Vendedor 
+
+      $porcVendedor = $unidad->porc_com_vend;
+
+      if($porcVendedor){
+        $it->DetPorcVend = $porcVendedor;
+        $it->DetPorcVenSol =  math()->porc( $porcVendedor, $it->DetVSol );
+        $it->DetPorcVenDol =  math()->porc($porcVendedor, $it->DetVDol);
+      }
+
       $it->GuiOper = null;
       $it->DetSdCa = $con_productos_enviados ? 0 : $item['DetCant'];
       $it->DetDcto = $item['DetDcto'];
