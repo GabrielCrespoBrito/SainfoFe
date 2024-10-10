@@ -84,7 +84,8 @@
   });
 </script>
 <script src="{{ asset(mix('js/mix/helpers.js')) }}"> </script>
-<script src="{{ asset('js/mix/productos/index.js') }}"> </script>
+<script src="{{ asset(mix('js/productos/mix/index.js')) }}"> </script>
+{{-- <script src="{{ asset(mix('js/mix/productos/index.js')) }}"> </script> --}}
 
 @endsection
 
