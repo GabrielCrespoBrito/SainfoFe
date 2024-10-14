@@ -74,6 +74,15 @@ class VentaItem extends Model
     return $campo ? $this->totals[$campo] : $this->totals;
   }
 
+  public function getPrecio($pUnitario = true)
+  {
+    return $pUnitario ? 
+      $this->getTotal('precio_unitario') : 
+      $this->getTotal('valor_unitario'); 
+  }
+
+
+
   public static function boot(){
     parent::boot();
 
