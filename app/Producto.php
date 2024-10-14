@@ -54,6 +54,7 @@ class Producto extends Model
     'BaseIGV',
     'tiecodi',
     'ProCodi1',
+    'porc_com_vend',
     'Promini',
     'ProPerc',
     'prosto1',
@@ -496,6 +497,7 @@ class Producto extends Model
       'UniMarg' => $this->ProMarg,
       'UNIPUVD' => $this->ProPUVD,
       'UNIPUVS' => $this->ProPUVS,
+      'porc_com_vend' => $this->porc_com_vend,
       'UniPeso' => $this->UNIPUVS
     ]);
   }

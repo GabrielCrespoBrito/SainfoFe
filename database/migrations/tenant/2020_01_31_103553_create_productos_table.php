@@ -83,7 +83,7 @@ class CreateProductosTable extends Migration
             $table->string('UDelete')->default(0);
             $table->string('BaseIGV')->nullable();
             $table->float('ISC')->nullable();
-            $table->integer('porc_com_vend')->nullable();
+            $table->float('porc_com_vend')->nullable();
             $table->boolean('icbper')
             ->nullable()
             ->default(0);

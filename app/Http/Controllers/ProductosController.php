@@ -301,6 +301,7 @@ class ProductosController extends Controller
     $data['prouso'] = $request->modo_uso;
     $data['proingre'] = $request->ingredientes;
     $data['ProSTem'] = $request->input('ProSTem');
+    $data['porc_com_vend'] = $request->input('porc_com_vend');
     $data['ProcCodi'] = 0;
     $data['BASEIGV'] = $request->base_igv;
     $data['proigvv'] = $request->igv_porc;

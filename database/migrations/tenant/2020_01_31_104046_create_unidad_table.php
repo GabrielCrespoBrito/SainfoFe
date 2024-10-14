@@ -28,6 +28,7 @@ class CreateUnidadTable extends Migration
 			$table->float('UniPAdi')->nullable();
 			$table->float('UniMarg1')->nullable();
 			$table->float('UniPUVS1')->nullable();
+      $table->float('porc_com_vend')->nullable();
       $table->string('UniPMVS')
       ->nullable()
       ->default(0);

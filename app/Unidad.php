@@ -142,6 +142,7 @@ class Unidad extends Model
       $data['UNIPMVD'] = $productData['ProPMVD'] ?? 0;
       $data['UNIPMVS'] = $productData['ProPMVS'] ?? 0;
       $data['UniPeso'] = $productData['ProPeso'];
+      $data['porc_com_vend'] = $productData['porc_com_vend'];
       $data['UniPAdi']  = 0;
       $data['UniMarg1'] = 0;
       $data['UniPUVS1'] = 0;

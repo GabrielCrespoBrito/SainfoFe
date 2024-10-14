@@ -52,10 +52,12 @@ $theads[] = [
 */
 
 //if($orden_campos['precio_unitario'] ){
+  
   $theads[] = [
   'class_name' => 'bg-black c-white pr-x3 pl-x3 text-right',
   'text' =>   'P.Unit',
   ];
+
 //}
 
 $theads[] = [
