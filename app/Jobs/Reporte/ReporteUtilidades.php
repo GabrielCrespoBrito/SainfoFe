@@ -233,8 +233,8 @@ class ReporteUtilidades
     return[ 
       'data' => $venta->VtaNume,
       'route' => route('ventas.show', $venta->VtaOper ),
-      'cliente' => $venta->cliente_with->PCNomb,
-      'cliente_ruc' => $venta->cliente_with->PCRucc,
+      'cliente' => optional($venta->cliente_with)->PCNomb,
+      'cliente_ruc' => optional($venta->cliente_with)->PCRucc,
       'count' => count($venta->items)
     ];
   }

@@ -30,7 +30,7 @@ class VentaAnualReportData
 
     $searchNC ?
       $query->where('ventas_cab.TidCodi',  Venta::NOTA_CREDITO ) :
-      $query->whereIn('ventas_cab.TidCodi',  [Venta::FACTURA, Venta::BOLETA,Venta::NOTA_DEBITO ] );
+      $query->whereIn('ventas_cab.TidCodi',  [Venta::FACTURA, Venta::BOLETA,Venta::NOTA_DEBITO, Venta::NOTA_CREDITO, Venta::NOTA_VENTA ] );
 
     return $query->sum('ventas_cab.VtaImpo');
   }

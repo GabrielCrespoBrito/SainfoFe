@@ -49,6 +49,10 @@ class GruposController extends Controller
   {
     $grupo = Grupo::find($id);
     $grupo->deleteRevert();
+    
+
+    cacheHelper()->forget('grupo.all');
+
     noti()->success('Acción exitosa', 'Se ha restaurado el grupo');
     return back();
   }
@@ -91,6 +95,9 @@ class GruposController extends Controller
       ->where('empcodi', empcodi())
       ->first()
       ->deleteSoft();
+
+
+
 
     return response()->json(['data' => 'Grupo eliminado exitosamente', 'last_id' => Grupo::last_id()]);
   }

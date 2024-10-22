@@ -33,7 +33,7 @@ abstract class UpdatePendiente
   }
 
   /**
-   * Hacer la busqueda pertinente, correspondiente
+   * Hacer la busqueda pertinente, correspondiente . Reescrito en clases hija
    */
   public function searchInEmpresa( Empresa $empresa )
   {
@@ -82,11 +82,14 @@ abstract class UpdatePendiente
             $this->addToData($empresa->id(), $cant_pendiente);
           }
           //code...
-        } catch (\Throwable $th) {
+        } 
+
+        catch (\Throwable $th) {
           logger(['@ERROR en UpdatePendiente', 'empresa' => $empresa->id(), 'error' => $th->getMessage()]);
         }
       }
   }
+
   }
 
   /**

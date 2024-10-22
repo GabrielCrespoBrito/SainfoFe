@@ -41,7 +41,14 @@ class Grupo extends Model
       return true;
     }
 
-    return $this->delete();
+    $deleted = $this->delete();
+
+    $ch = cacheHelper();
+
+    $ch->forget('grupo.all');
+  
+    return $deleted;
+
   }
 
   public function productos()

@@ -110,11 +110,13 @@ class ReportesController extends Controller
       if ($is_venta) {
 
         if ($tipo_documento == "todos") {
-          // $model->whereNotIn('TidCodi', [ TipoDocumentoPago::COTIZACION, TipoDocumentoPago::PREVENTA, TipoDocumentoPago::ORDEN_PAGO  ]);
+          $model->whereIn('TidCodi', [ TipoDocumentoPago::FACTURA, TipoDocumentoPago::BOLETA, TipoDocumentoPago::NOTA_DEBITO  , TipoDocumentoPago::NOTA_CREDITO, TipoDocumentoPago::NOTA_VENTA  ]);
         } else {          
           $model->where('TidCodi', $tipo_documento);
         }
-      } else {
+      } 
+      
+      else {
 
         if ($tipo_documento != "999") {
           $model->where('fe_rpta', $tipo_documento);
@@ -377,6 +379,7 @@ class ReportesController extends Controller
     $producto = Producto::find($request->articulo_desde);
     // _dd($producto);
     // exit();
+
     return $this->kardexFisico(
       $request->input('LocCodi', 'todos'),
       $request->fecha_desde,

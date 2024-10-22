@@ -60,7 +60,7 @@
           <td  style="text-align: right">{{ $venta->Vtabase }}</td>                
           <td  style="text-align: right">{{ $venta->VtaIGVV }}</td>        
           <td  style="text-align: right">{{ $venta->VtaTota }}</td>                
-          <td  style="text-align: right">{{ $venta->VtaTota }}</td>        
+          <td  style="text-align: right">{{ $venta->VtaImpo }}</td>        
           <td  style="text-align: right"> {{ $venta->VtaTcam }} </td>        
         </tr>
 
@@ -88,12 +88,17 @@
       {{-- foreach ventas-guias --}}
 
       @php
+      
+        $isNC = $id == "07";
+
         if( $is_venta ){
+          logger([ time(), $loop->index, $id,  $ventas_group->sum('Vtabase'), $ventas_group->sum('IGVV'), $ventas_group->sum('VtaImpo') ]);
+
           $total_items += $items = $ventas_group->count(); 
-          $total_base += $base = $ventas_group->sum('Vtabase'); 
-          $total_igv += $igv = $ventas_group->sum('VtaIGVV');
-          $total_total += $total = $ventas_group->sum('VtaTota'); 
-          $total_perc += $perc = $ventas_group->sum('VtaPerc');   
+          $total_base += $base = convertNegativeIfTrue($ventas_group->sum('Vtabase'), $isNC  );
+          $total_igv += $igv =  convertNegativeIfTrue($ventas_group->sum('VtaIGVV'), $isNC  );
+          $total_total += $total =  convertNegativeIfTrue($ventas_group->sum('VtaImpo'), $isNC  ); 
+          $total_perc += $perc = convertNegativeIfTrue($ventas_group->sum('VtaPerc'), $isNC  );
         }
 
         else {

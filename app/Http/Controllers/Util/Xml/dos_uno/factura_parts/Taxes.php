@@ -142,6 +142,8 @@ trait Taxes
     $base = $isGratuito ? decimal($cifras->valor_noonorosa * $cifras->cantidad) :  $this->convertValuesIfNCWithDiscounts($cifras->valor_venta_por_item_igv);
     $valor =  $isGratuito ? (($base / 100) * $igvPorc) : $this->convertValuesIfNCWithDiscounts($cifras->igv_total);
 
+    // dd( $item->TipoIGV );
+    
     return $this->getTaxBase(
       $this->getPartVariable(true, 'taxcategory', $infoTax['TaxCategory_ID']),
       $this->getPartVariable(true, 'taxexception', $item->TipoIGV),

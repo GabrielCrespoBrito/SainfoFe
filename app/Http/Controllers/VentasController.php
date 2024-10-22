@@ -458,6 +458,7 @@ class VentasController extends Controller
       DB::connection('tenant')->commit();
       DB::connection()->commit();
     } catch (Throwable  $e) {
+      logger( '@ERROR-CREAR-VENTA ' . get_empresa()->EmpLin1 . ' ' . $e->getMessage() );
       $error = substr($e->getMessage(), 0, 150);
       DB::connection('tenant')->rollBack();
       DB::connection()->rollBack();
