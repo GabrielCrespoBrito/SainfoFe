@@ -16,8 +16,9 @@ $.ajaxSetup({
 });
 
 function funcWhenAjaxFinish() {
-  console.log("set time out exe funcWhenAjaxFinish procodi", procodi);
-  $("[name=numero_operacion]", form_accion).val(procodi);
+
+  console.log("set time out exe funcWhenAjaxFinish procodi window ", window.procodi);
+  $("[name=numero_operacion]", form_accion).val(window.procodi);
   exeWhenAjaxFinish = false;
 }
 
@@ -176,9 +177,6 @@ function validar_input_number(input) {
 
 function calculos() {
 
-
-
-
   quitar_errores(["costo", "utilidad", "precio_venta"]);
 
   let costo = $(form_accion).find('[name=costo]');
@@ -238,11 +236,8 @@ function calculos() {
 } // end calculo
 
 function modal_modificar() {
-
   tipo_accion_modal("edit");
 }
-
-
 
 function show_modal_eliminar_cliente(action = "show") {
   $("#modalEliminarCliente").modal(action);
@@ -344,7 +339,7 @@ function set_data_modal(data) {
   $("[name=precio_min_venta]", form_accion).val(precio_min_venta);
   $("[name=peso]", form_accion).val(data.ProPeso);
   $("[name=isc]", form_accion).val(data.ISC);
-  $("[name=porc_com_vend]", form_accion).val(data.porc_com_vend);
+  $("[name=porc_com_vend]", form_accion).val(data.porc_com_vend ? data.porc_com_vend : 0);
 
   $("[name=ubicacion]", form_accion).val(data.proubic);
   

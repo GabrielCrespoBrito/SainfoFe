@@ -36,7 +36,7 @@ class   TransportistaRequest extends FormRequest
       'TraRucc' => ['required', 'numeric'],
       'TraDire' => 'nullable|max:90',
       'TraTele' => 'nullable|max:90',
-      'TraLice' => ['required', 'alpha_num' , 'min:9', 'max:10'],
+      'TraLice' => ['required', 'alpha_num' , 'min:9', 'max:20'],
     ];
     return $rules;
   }
