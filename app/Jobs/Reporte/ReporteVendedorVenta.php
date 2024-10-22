@@ -219,8 +219,8 @@ class ReporteVendedorVenta
       'fecha_vencimiento' => $venta->VtaFVen,
       'fecha_pago' => $venta->vtaFpag,
       'forma_pago' => $venta->forma_pago->connomb,
-      'cliente' => $venta->cliente_with->PCNomb,
-      'cliente_ruc' => $venta->cliente_with->PCRucc,
+      'cliente' => optional($venta->cliente_with)->PCNomb,
+      'cliente_ruc' => optional($venta->cliente_with)->PCRucc,
     ];
   }
 
