@@ -52,9 +52,9 @@ class ReporteVendedorCobertura
 
     $query = Venta::with([
       'cliente_with' => function ($query) {
-        $query->
-        where('TipCodi', 'C')
-        withoutGlobalScopes();
+        $query
+        ->where('TipCodi', 'C')
+        ->withoutGlobalScopes();
       },
       'items.producto',
       'vendedor' => function ($query) {
