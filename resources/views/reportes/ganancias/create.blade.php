@@ -29,11 +29,14 @@
 
 <form action="{{ route('reportes.utilidades.show') }}" id="form-reporte">
 
-  @include('reportes.partials.productos_mas_vendidos.filtros', ['conVendedores' => true])
+  @include('reportes.partials.productos_mas_vendidos.filtros', ['conVendedores' => true, 'descontarPorcVendedor' => true])
 
-  <div class="col-md-12 pl-0" style="margin-bottom:20px">
+  <div class="col-md-8 pl-0" style="margin-bottom:20px">
     <a href="#" class="generate-report btn btn-primary btn-flat"> Buscar </a> 
   </div>
+
+
+  
 
 </form>
 

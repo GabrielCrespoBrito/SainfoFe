@@ -16,7 +16,6 @@ class UtilidadesController extends Controller
   public function __construct()
   {
     $this->middleware(p_midd('A_UTILIDADESVENTAS', 'R_REPORTE'))->only('create');
-
   }
   /**
    * Obtener La informaciòn del reporte
@@ -24,19 +23,17 @@ class UtilidadesController extends Controller
    * @return array
    */
 
-  public function getReporte( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor )
+  public function getReporte( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor = false )
   {
-    $reporte = new ReporteUtilidades($fecha_desde, $fecha_hasta, $local, $grupo, $vendedor);
+    $reporte = new ReporteUtilidades($fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor);
     $data = $reporte->getData();
     return $data;
   }
 
-  public function generatePDF( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $titulo, $view )
+  public function generatePDF( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $titulo, $view, $descontarPorcVendedor = false )
   {
-    // Explicame este codigo
-    $data = $this->getReporte($fecha_desde, $fecha_hasta, $local, $grupo, $vendedor);
-    // dd($data);
-    // exit();
+    $data = $this->getReporte($fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor);
+
     if( $grupo != 'todos' ){
       $grupo = Grupo::find($grupo)->GruNomb;
     }
@@ -82,17 +79,16 @@ class UtilidadesController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function pdfByFecha($fecha, $local, $grupo, $vendedor)
+  public function pdfByFecha($fecha, $local, $grupo, $vendedor, $descontarPorcVendedor = false)
   {
-    $this->generatePDF($fecha, $fecha, $local, $grupo, $vendedor, "REPORTES DE UTILIDADES DE FECHA {$fecha}", 'reportes.ganancias.pdf_fecha');   
+    $this->generatePDF($fecha, $fecha, $local, $grupo, $vendedor, "REPORTES DE UTILIDADES DE FECHA {$fecha}", 'reportes.ganancias.pdf_fecha', $descontarPorcVendedor);
   }
 
   public function show(GananciaRequest $request)
   {
     $this->authorize(p_name('A_UTILIDADESVENTAS', 'R_REPORTE'));
 
-    $data = $this->getReporte($request->fecha_desde, $request->fecha_hasta, $request->local, $request->grupos, $request->vendedor );
-    
+    $data = $this->getReporte($request->fecha_desde, $request->fecha_hasta, $request->local, $request->grupos, $request->vendedor, $request->input('descontar_porc_vendedor', false) );
 
     return view('reportes.ganancias.partials.info_html', [
       'tableInHtml' => true,

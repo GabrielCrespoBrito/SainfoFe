@@ -23,13 +23,14 @@ class ReporteVendedorVenta
   protected $fecha_hasta;
   protected $cliente;
   protected $saldo;
+  protected $descontarPorVendedor;
 
   /**
    * Create a new job instance.
    *
    * @return void
    */
-  public function __construct($vendedor, $local, $fecha_desde, $fecha_hasta, $cliente, $saldo)
+  public function __construct($vendedor, $local, $fecha_desde, $fecha_hasta, $cliente, $saldo, $descontarPorVendedor = false)
   {
     $this->vendedor = $vendedor;
     $this->local = $local;
@@ -37,6 +38,7 @@ class ReporteVendedorVenta
     $this->fecha_hasta = $fecha_hasta;
     $this->cliente = $cliente;
     $this->saldo = $saldo;
+    $this->descontarPorVendedor = $descontarPorVendedor;
     $this->handle();
   }
 

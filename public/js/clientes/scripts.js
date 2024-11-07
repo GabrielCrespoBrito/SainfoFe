@@ -415,6 +415,10 @@
     cambiar_tipo_documento_cliente();
     poner_data_form( "codigo" , data.PCCodi );
     poner_data_form( "tipo_cliente" , data.TipCodi );
+
+
+    // $("#form-cliente").find("[name=tipo_cliente]").prop('disabled', tipo_accion == "edit" );
+
     poner_data_form( "tipo_documento" , data.TDocCodi );
     poner_data_form( "ruc" , data.PCRucc );
     poner_data_form( "razon_social" , data.PCNomb );
@@ -450,7 +454,8 @@
 
     // initSelect2(".select2");
     initSelect2("#form-cliente #ubigeo");
-    $("#form-cliente [name=tipo_cliente] option:not(:selected) ").prop('disabled','disabled');
+    console.log("tipo_cliente" , tipo_accion, data);
+    $("#form-cliente [name=tipo_cliente] option:not(:selected) ").prop('disabled',true);
   }
 
 
@@ -494,8 +499,8 @@
 
 	function modal_cliente_create()
   {
-    set_or_restar_select("tipo_cliente")
     tipo_accion_modal("create");
+    $("#form-cliente [name=tipo_cliente] option").removeAttr('disabled');
     limpiar_modal()
     cambiar_ubicodi();   
     $("[name=ruc]").val(ruc_crear);

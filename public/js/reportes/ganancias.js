@@ -13,6 +13,7 @@ function searchInfoReport()
 
   let data = $form.serialize();
   let url = $form.attr('action');
+  console.log("searchInfoReport", data, url);
   let funcs = {    success : putDataInTable,
     complete : () => {
       $("#load_screen").hide();

@@ -19,12 +19,13 @@ use App\Http\Requests\Cliente\RegisterCliente;
 use App\Util\ConsultDocument\ConsultDniInterface;
 use App\Util\ConsultDocument\ConsultRucInterface;
 use App\Http\Requests\ClienteProveedorCrearRequest;
-use App\Http\Requests\ClienteProveedorEditarRequest;
 use App\Http\Requests\ClienteProveedorEliminarRequest;
 
 class ClienteProveedorController extends Controller
 {
   public $cliente_proveedor;
+  public $consulterDni;
+  public $consulterRuc;
 
   public function __construct(ConsultDniInterface $consulterDni, ConsultRucInterface $consulterRuc)
   {
@@ -226,7 +227,7 @@ class ClienteProveedorController extends Controller
     $cliente_proveedor = ClienteProveedor::with(['ubigeo.departamento', 'ubigeo.provincia'])
       ->where('PCCodi', $request->codigo)
       ->where('EmpCodi', empcodi())
-      ->where('TipCodi', 'C')
+      ->where('TipCodi', $request->input('tipo_documento', ClienteProveedor::TIPO_CLIENTE))
       ->first();
 
     $data = $cliente_proveedor->toArray();

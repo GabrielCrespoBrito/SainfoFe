@@ -18,19 +18,21 @@ class ReporteUtilidades
   protected $local;
   protected $grupo;
   protected $vendedor;
+  protected $descontarPorcVendedor;
 
   /**
    * Create a new job instance.
    *
    * @return void
    */
-  public function __construct( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor )
+  public function __construct( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor = false )
   {
     $this->fecha_desde = $fecha_desde;
     $this->fecha_hasta = $fecha_hasta;
     $this->local = strtolower($local) == "todos" ? null : $local;
     $this->grupo = strtolower($grupo) == "todos" ? null : $grupo;
     $this->vendedor = strtolower($vendedor) == "todos" ? null : $vendedor;
+    $this->descontarPorcVendedor = $descontarPorcVendedor;
     $this->handle();
   }
 
@@ -50,9 +52,8 @@ class ReporteUtilidades
       if( $grupo ){
         $query->where('grucodi', '=' ,  $grupo);
       }
-    } ])
+    }])
     ->whereBetween('VtaFvta',[ $this->fecha_desde , $this->fecha_hasta ]);
-
 
     if( $this->local ){
       $query->where('LocCodi', $this->local );
@@ -147,7 +148,9 @@ class ReporteUtilidades
    */
   public function processItem($item, &$arrAdd, &$data , &$total_reporte, &$total_dia, &$total_venta, &$total_item )
   {
-    $data_utilidad = (object) $item->getDataUtilidadProducto();
+    $data_utilidad = (object) $item->getDataUtilidadProducto(true, $this->descontarPorcVendedor);
+
+    // dd($data_utilidad, $item->PorcVend);
 
     // dd($item, $data_utilidad);
     // exit();
@@ -160,18 +163,12 @@ class ReporteUtilidades
 
   public function addToTotal( &$total, $data_utilidad, $total_reporte = false )
   {
-    $viene = $total_reporte;
-
     $total['costo_soles'] += $data_utilidad->costo_soles;
     $total['costo_dolar'] += $data_utilidad->costo_dolar;
     $total['venta_soles'] += $data_utilidad->venta_soles;
     $total['venta_dolar'] += $data_utilidad->venta_dolar;
     $total['utilidad_soles'] += $data_utilidad->utilidad_soles;
     $total['utilidad_dolar'] += $data_utilidad->utilidad_dolar;
-
-    if ($total_reporte) {
-    }
-
   }
 
   /**

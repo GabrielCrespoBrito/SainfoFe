@@ -33,7 +33,12 @@ class CreateVentasDetalleTable extends Migration
       $table->float('DetCDol')->default(0)->nullable();      
       $table->float('DetVSol')->default(0)->nullable();
 			$table->float('DetVDol')->default(0)->nullable();
-			$table->string('CCCCodi', 3)->nullable();
+
+      $table->float('DetPorcVend')->default(0)->nullable();
+      $table->float('DetPorcVenSol')->default(0)->nullable();
+      $table->float('DetPorcVenDol')->default(0)->nullable();
+      
+      $table->string('CCCCodi', 3)->nullable();
 			$table->string('CotNume', 12)->nullable();
 			$table->string('GuiOper', 10)->nullable();
 			$table->string('GuiLine', 10)->nullable();

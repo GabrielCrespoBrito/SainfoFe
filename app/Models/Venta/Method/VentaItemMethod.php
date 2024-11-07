@@ -58,7 +58,7 @@ trait VentaItemMethod
       $this->producto->agregateInventary($this->realQuantityProduct($diferent));
     }
   }
-  
+
   public function isGravada()
   {
     return $this->DetBase == Venta::GRAVADA;
@@ -71,7 +71,7 @@ trait VentaItemMethod
 
   public function isGratuitaGravada()
   {
-    return  in_array( $this->TipoIGV, TipoIgv::GRATUITAS_GRAVADAS );
+    return  in_array($this->TipoIGV, TipoIgv::GRATUITAS_GRAVADAS);
   }
 
   public function isExonerada()
@@ -236,7 +236,7 @@ trait VentaItemMethod
      * Precio Unitario:  Precio por unidad que no incluye el igv
      * Valor Unitario:  Valor por unidad que incluye el igv
      * ---------------------------------------------------------------
-    */
+     */
 
     $unitario = 10;
     $precio_unitario = 10;
@@ -251,7 +251,7 @@ trait VentaItemMethod
     $igv_mul = 0.18;
 
     // 16.94
-    $precio_unitario = $incluye_igv ?  ($unitario/$igv_factor) : $unitario;
+    $precio_unitario = $incluye_igv ?  ($unitario / $igv_factor) : $unitario;
     $valor_unitario = $incluye_igv ? $unitario : $unitario + ($unitario * $igv_mul);
 
     // --------------- Inafecto / Suministros ---------------
@@ -267,39 +267,84 @@ trait VentaItemMethod
     ];
   }
 
+  public function getCostosPorVendedor()
+  {
+    if (is_null($this->producto->porc_com_vend)) {
+      return (object) [
+        'soles' => 0,
+        'dolar' => 0,
+      ];
+    }
+
+
+    if ($this->DetPorcVend) {
+      return (object) [
+        'soles' => $this->DetPorcVenSol,
+        'dolar' => $this->DetPorcVenDol
+      ];
+    }
+
+    return (object) [
+      'soles' => math()->porc($this->producto->porc_com_vend, $this->DetVSol),
+      'dolar' => math()->porc($this->producto->porc_com_vend, $this->DetVDol),
+    ];
+  }
+
+
   /**
    * Obtener la utilidad del item
    * 
    * @return array
    */
-  public function getDataUtilidadProducto($convert = true)
+  public function getDataUtilidadProducto($convert = true, $descontarPorcVendedor = false)
   {
-    if( $this->parent->isAnulada() || $this->parent->isRechazado()){
+    if ($this->parent->isAnulada() || $this->parent->isRechazado()) {
       return [
         'venta_soles' => 0,
         'venta_dolar' => 0,
         'costo_soles' => 0,
         'costo_dolar' => 0,
+        'costo_soles_por_vendedor' => 0,
+        'costo_dolar_por_vendedor' => 0,
         'utilidad_soles' => 0,
         'utilidad_dolar' => 0,
-      ];      
+      ];
     }
-    
+
     $convertToNegative = $convert ? $this->parent->isNotaCredito() : false;
+
+
+    // Vendedor Costo Por defecto
+    $vendedorCosto = (object) [
+      'soles' => 0,
+      'dolar' => 0,
+    ];
+
+    if ($descontarPorcVendedor) {
+      $vendedorCosto = $this->getCostosPorVendedor();
+      logger( (array) $vendedorCosto);
+    }
+
+    // dd($vendedorCosto);
 
     $v = [
       'id' => $this->VtaOper,
-      'venta_soles' => convertNegativeIfTrue($this->DetVSol , $convertToNegative ),
-      'venta_dolar' => convertNegativeIfTrue($this->DetVDol , $convertToNegative ),
-      'costo_soles' => convertNegativeIfTrue($this->DetCSol , $convertToNegative ),
-      'costo_dolar' => convertNegativeIfTrue($this->DetCDol , $convertToNegative ),
-      'utilidad_soles' => convertNegativeIfTrue( $this->DetVSol - $this->DetCSol, $convertToNegative ),
-      'utilidad_dolar' => convertNegativeIfTrue( $this->DetVDol - $this->DetCDol, $convertToNegative ),
+      'venta_soles' => convertNegativeIfTrue($this->DetVSol, $convertToNegative),
+      'venta_dolar' => convertNegativeIfTrue($this->DetVDol, $convertToNegative),
+      'costo_soles' => convertNegativeIfTrue($this->DetCSol, $convertToNegative),
+      'costo_dolar' => convertNegativeIfTrue($this->DetCDol, $convertToNegative),
+      'costo_soles_por_vendedor' => $vendedorCosto->soles,
+      'costo_dolar_por_vendedor' => $vendedorCosto->dolar,
+      'utilidad_soles' => convertNegativeIfTrue($this->DetVSol - ($this->DetCSol + $vendedorCosto->soles), $convertToNegative),
+      'utilidad_dolar' => convertNegativeIfTrue($this->DetVDol - ($this->DetCDol + $vendedorCosto->dolar), $convertToNegative),
     ];
 
     return $v;
   }
-  
+
+
+
+
   /**
    * Actualizar costos
    * 
@@ -307,7 +352,7 @@ trait VentaItemMethod
    */
   public function updateCosto()
   {
-    new UpdateCosto( $this );
+    new UpdateCosto($this);
   }
 
   /**
@@ -328,7 +373,7 @@ trait VentaItemMethod
   {
     return $this->parent->tipo_cambio;
   }
-  
+
   /**
    * Recalcular totales
    * 
@@ -370,12 +415,12 @@ trait VentaItemMethod
   public function divideDay()
   {
     /**
-    *
-    */
-    
+     *
+     */
+
     return [
-      'block_1' => ['5:30' , '8:30'],
-      'block_2' => ['8:30' , '6:40'],
+      'block_1' => ['5:30', '8:30'],
+      'block_2' => ['8:30', '6:40'],
       'block_2' => ['6:30',  '10:00'],
     ];
   }
@@ -385,5 +430,4 @@ trait VentaItemMethod
   {
     return $this->parent->isNotaCredito();
   }
-  
 }
