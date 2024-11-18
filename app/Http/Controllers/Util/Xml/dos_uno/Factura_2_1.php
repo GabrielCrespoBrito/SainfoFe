@@ -280,7 +280,7 @@ class Factura_2_1 extends XmlHelperNew
     foreach ($this->items as $item) {      
       $cifras = (object) $item->calculos();
       $descuento = $item->hasDescuento() ? $this->getDescuentoItem($item, $cifras->descuento, $cifras->valor_venta_bruto) : '';
-      $producto = $item->producto;
+      $producto = optional($item->producto);
       $show_product_code = $producto->hasCodeSunat();
       $code = $producto->getCodeSunat();
       $precio = $item->isGratuita() ? $cifras->valor_noonorosa : $cifras->precio_unitario;
