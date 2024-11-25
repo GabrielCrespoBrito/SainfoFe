@@ -282,7 +282,9 @@ class VentasController extends Controller
       'venta_rapida' =>  (int) $empresa->hasVentaRapida(),
       "verificar_deudas" => get_option('ImpSald'),
       // "verificar_caja" => get_option('OpcConta'),
-      "verificar_caja" => 0,
+      "verificar_caja" => (int) (get_option('OpcConta') && $user->checkPermissionTo_(p_name('A_CREATE', 'R_PAGO', 'R_VENTA')) ),  
+      
+      
       "verificar_almacen" => get_option('DesAuto'),
       "descuento_defecto" => get_option('ImpDcto'),
       "inicial_focus" => $empresa->SoftEsta,
