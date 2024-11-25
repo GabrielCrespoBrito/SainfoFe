@@ -281,7 +281,8 @@ class VentasController extends Controller
       'decimales_soles' => $decimales->soles,
       'venta_rapida' =>  (int) $empresa->hasVentaRapida(),
       "verificar_deudas" => get_option('ImpSald'),
-      "verificar_caja" => get_option('OpcConta'),
+      // "verificar_caja" => get_option('OpcConta'),
+      "verificar_caja" => 0,
       "verificar_almacen" => get_option('DesAuto'),
       "descuento_defecto" => get_option('ImpDcto'),
       "inicial_focus" => $empresa->SoftEsta,
@@ -473,7 +474,31 @@ class VentasController extends Controller
 
     $url = asset($result);
     $needFactura =  $isFacturacion ? $documento->needFactura()  : false;
-    $needPago = $request->canje ? false : ($isTableVentas ?  $documento->needPago() : false);
+
+
+    if( $request->canje ){
+      $needPago = false;
+    }
+    else {
+      if( $isTableVentas  ){
+
+        if( $documento->needPago() ){
+
+          $needPago = auth()->user()->checkPermissionTo_(concat_space(PermissionSeeder::A_PAGOS, PermissionSeeder::R_VENTA));
+
+        }
+
+        else {
+          $needPago = false;
+        }
+      }
+
+      else {
+        $needPago = false;
+      }
+    }
+    
+
     $data = [
       'codigo_venta' => $vtaoper,
       'nro_documento' => '',
@@ -482,6 +507,7 @@ class VentasController extends Controller
       'guia' => [],
       'need_factura' => $needFactura,
       'need_pago' => $needPago,
+      // 'need_pago' => false,
       'imprecion_data' => [
         'impresion_directa' => $request->serie->impresion_directa,
         'venta_directa' => $request->serie->impresion_directa,

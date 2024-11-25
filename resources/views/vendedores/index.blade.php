@@ -9,7 +9,14 @@
 @slot('contenido')
 
   <div class="row">
-    <div class="col-md-12"> <a class="btn btn-primary btn-flat pull-right" href="{{ route('vendedor.create') }}"> Nueva </a>
+
+    <div class="col-md-4"> 
+    
+        <label> <input type="checkbox" {{ $delete ? 'checked=checked' : '' }}  data-url="{{$route}}" name="deleted_input" value="1"> Mostrar eliminados </label>
+      
+    </div>
+
+    <div class="col-md-8"> <a class="btn btn-primary btn-flat pull-right" href="{{ route('vendedor.create') }}"> Nueva </a>
     </div>
   </div>
 
@@ -27,9 +34,18 @@
         <td> {{ $vendedor->getUserLogin() }} </td>
         <td>
         @php
+
+          $routeDelete = route('vendedor.destroy', $vendedor->Vencodi);
+          $routeText = 'Eliminar';
+
+        if($vendedor->isDelete()){
+          $routeDelete = route('vendedor.restaurar', $vendedor->Vencodi);
+          $routeText = 'Restaurar';
+        }
+
           $links = [
             ['src' => route('vendedor.edit', $vendedor->Vencodi),'texto' => 'Modificar'],
-            ['src' => '#' , 'texto' => 'Eliminar' , 'class' => 'eliminate-element' , 'id' => $vendedor->Vencodi ]
+            ['src' => $routeDelete, 'texto' => $routeText ],
           ];
       @endphp
 

@@ -38,6 +38,11 @@ class Vendedor extends Model
     
   }  
 
+  public function isDelete()
+  {
+    return $this->UDelete == "*";
+  }
+
 	public function isDefault(){
 		return $this->defecto == 1;
 	}
@@ -87,5 +92,23 @@ class Vendedor extends Model
   {
     return auth()->user()->usucodi == $this->usucodi;
   }
+
+  public function isInUse()
+  {
+    if ($this->ventas->count()) {
+      return true;
+    }
+
+    if ($this->compras->count()) {
+      return true;
+    }
+
+    if ($this->guias->count()) {
+      return true;
+    }
+
+    return false;
+  }
+
 
 }

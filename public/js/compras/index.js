@@ -41,7 +41,13 @@ function initDatable()
 
 H.add_events(function(){
   initDatable();
+
+  $("[name=deleted_input]").on('change', function(){
+    location.href = $(this).attr('data-url');
+  });
+
 })
+
 
 H.init();
 Helper.init();

@@ -9,6 +9,7 @@ use App\Http\Requests\VendedorRequest;
 
 class VendedorController extends Controller
 {
+  public $model;
 	public function __construct()
 	{
 		$this->model = new Vendedor();
@@ -24,10 +25,13 @@ class VendedorController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(  Request $request )
 	{
-		$vendedores = $this->model->get();
-		return view('vendedores.index', compact('vendedores'));
+		$delete = $request->input( 'delete', 0 );
+    $route = $delete ? route('vendedor.index') : route('vendedor.index', ['delete' => 1]);
+		$vendedores = $delete ? $this->model->withoutGlobalScope('noEliminados')->where('UDelete', '=', '*')->get() : $this->model->get();
+    // dd($vendedores);
+		return view('vendedores.index', compact('vendedores', 'delete', 'route'));
 	}
 
 	/**
@@ -94,10 +98,39 @@ class VendedorController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy( VendedorDestroyRequest $request, $id)
+	public function destroy( $id)
 	{
-		$this->model->repository()->delete($id);
-		notificacion('Acción exitosa', 'El vendedor ha sido eliminado exitosamente');
-		return redirect()->route('vendedor.index');
+    $vendedor =  $this->model->withoutGlobalScope('noEliminados')->findOrfail($id);
+
+    $result = $vendedor->isInUse();
+
+    if($result){
+      $vendedor->UDelete = "*";
+      $vendedor->save();
+      $message = 'El vendedor ha sido ocultado exitosamente';
+
+    }
+    else {
+      $message = "El vendedor ha sido eliminado exitosamente";
+      $vendedor->delete();
+    }
+
+    notificacion('Acción exitosa', $message );
+    return $result ? redirect()->route('vendedor.index', ['delete' => 1]) : redirect()->route('vendedor.index');
 	}
+
+
+  //
+
+
+  public function restaurar($id)
+  {
+    // $this->authorize(p_name('A_DELETE', 'R_PRODUCTO'));
+    $vendedor =  $this->model->withoutGlobalScope('noEliminados')->find($id);
+    // dd($vendedor);
+    $vendedor->UDelete = 0;
+    $vendedor->save();
+    return redirect()->route('vendedor.index', ['delete' => 1]);
+  }
+
 }

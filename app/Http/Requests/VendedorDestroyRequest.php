@@ -34,22 +34,24 @@ class VendedorDestroyRequest extends FormRequest
 		// dd($this->route()->parameters());
 
 		$validator->after(function ($validator) {
-			$vendedor = Vendedor::findOrfail($this->route()->parameters()['vendedore']);
+			Vendedor::withoutGlobalScope('noEliminados')->findOrfail($this->route()->parameters()['vendedore']);
 
-			if ($vendedor->ventas->count()) {
-				$validator->errors()->add('CueNume', 'No puede eliminarse este vendedor, porque tiene ventas asociadas');
-				return;
-			}
+			// if ($vendedor->ventas->count()) {
+			// 	$validator->errors()->add('CueNume', 'No puede eliminarse este vendedor, porque tiene ventas asociadas');
+			// 	return;
+			// }
 
-			if ($vendedor->compras->count()) {
-				$validator->errors()->add('CueNume', 'No puede eliminarse este vendedor, porque tiene compras asociadas');
-				return;
-			}
+			// if ($vendedor->compras->count()) {
+			// 	$validator->errors()->add('CueNume', 'No puede eliminarse este vendedor, porque tiene compras asociadas');
+			// 	return;
+			// }
 
-			if ($vendedor->guias->count()) {
-				$validator->errors()->add('CueNume', 'No puede eliminarse este vendedor, porque tiene guias asociadas');
-				return;
-			}
+			// if ($vendedor->guias->count()) {
+			// 	$validator->errors()->add('CueNume', 'No puede eliminarse este vendedor, porque tiene guias asociadas');
+			// 	return;
+			// }
+
+
 		});
 	}
 }
