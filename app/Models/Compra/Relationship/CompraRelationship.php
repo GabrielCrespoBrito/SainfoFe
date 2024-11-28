@@ -41,12 +41,13 @@ trait CompraRelationship
   {
     return $this->belongsTo(ClienteProveedor::class, 'PCcodi', 'PCCodi')
       ->where('EmpCodi', $this->EmpCodi)
-      ->where('TipCodi', 'P');
+      ->where('TipCodi', 'P')
+      ->withoutGlobalScope('noEliminados');
   }
 
   public function cliente_with()
   {
-    return $this->belongsTo( ClienteProveedor::class, 'PCcodi', 'PCCodi' );
+    return $this->belongsTo( ClienteProveedor::class, 'PCcodi', 'PCCodi' )->withoutGlobalScope('noEliminados');
   }
 
   public function caja()
@@ -63,7 +64,8 @@ trait CompraRelationship
   {
     return $this->belongsTo(ClienteProveedor::class, 'PCcodi', 'PCCodi')
       ->where('EmpCodi', $this->EmpCodi)
-      ->where('TipCodi', 'P');
+      ->where('TipCodi', 'P')
+      ->withoutGlobalScope('noEliminados');
   }
 
   public function moneda()
