@@ -229,6 +229,19 @@ class FacturaSaveRequest extends FormRequest
         }
       }
 
+      if( (float) $item['DetPrec'] == 0){
+          $validator->errors()->add('UniCodi', "El precio del item {$item['DetNomb']} no puede ser 0");
+          return false;
+      }
+
+
+      if( (float) $item['DetCant'] == 0){
+        $validator->errors()->add('UniCodi', "La cantidad del item {$item['DetNomb']} no puede ser 0");
+        return;
+      }
+
+
+
       $incluyeIgv = (bool) $item['incluye_igv'];
 
       // if ($this->quitarIgv) {
@@ -258,7 +271,10 @@ class FacturaSaveRequest extends FormRequest
       $calculator->calculate();
       $data = $calculator->getCalculos();
 
-      if ($base_imponible = !Venta::GRATUITA && $item['DetImpo'] != $data['total']) {
+
+      // if( $item['precio'] )
+
+      if ($base_imponible == !Venta::GRATUITA && $item['DetImpo'] != $data['total']) {
         $validator->errors()->add('UniCodi', "El total ({$item['DetImpo']}) suministrado del item ({$index}) no coincide no el total correcto de ({$data['total']})");
         return false;
       }
@@ -284,6 +300,7 @@ class FacturaSaveRequest extends FormRequest
       $this->totales_items[] = $data;
       $index++;
     }
+
 
     return true;
   }
