@@ -14,7 +14,8 @@ class UnidadUpdateRequest extends FormRequest
       'UNIPUVS' => 'required|numeric|gte:UniPUCS',
       'UNIPUVD' => 'required|numeric|gte:UniPUCD',
       'UNIPMVS' => 'required|numeric|min:0',
-      'UNIPMVD' => 'required|numeric|min:0',      
+      'UNIPMVD' => 'required|numeric|min:0',   
+      'porc_com_vend' => 'required|numeric|min:0|max:100',   
   ];
 
 

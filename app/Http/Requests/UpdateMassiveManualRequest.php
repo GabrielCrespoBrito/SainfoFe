@@ -30,7 +30,8 @@ class UpdateMassiveManualRequest extends FormRequest
           'data.*.UNIPUVS' => 'required|numeric|gte:data.*.UniPUCS',
           'data.*.UNIPUVD' => 'required|numeric|gte:data.*.UniPUCD',
           'data.*.UNIPMVS' => 'required|numeric|min:0',
-          'data.*.UNIPMVD' => 'required|numeric|min:0',          
+          'data.*.UNIPMVD' => 'required|numeric|min:0',
+          'data.*.porc_com_vend' => 'required|numeric|min:0|max:100',
         ];
     }
 

@@ -10,7 +10,8 @@ const getTrData = ($tr) => {
     'UNIPUVS': $tr.find("[name=precioVentaSol]").val(),
     'UNIPUVD': $tr.find("[name=precioVentaDolar]").val(),    
     'UNIPMVS': $tr.find("[name=precioMinVentaSoles]").val(),
-    'UNIPMVD': $tr.find("[name=precioMinVentaDolar]").val(),    
+    'UNIPMVD': $tr.find("[name=precioMinVentaDolar]").val(),
+    'porc_com_vend': $tr.find("[name=porc_com_vend]").val(),  
   };
 }
 
@@ -487,6 +488,9 @@ function updateDefaultValues($tr , data)
     .val(data.UNIPMVD)
     .attr('data-default', data.UNIPMVD);
 
+  $tr.find('[name=porc_com_vend]')
+    .val(data.porc_com_vend)
+    .attr('data-default', data.porc_com_vend);
 }
 
 
@@ -517,6 +521,9 @@ function updateMassiveDefaultValues() {
     let $precioMinVentaDolar = $tr.find('[name=precioMinVentaDolar]')
     $precioMinVentaDolar.attr('data-default', $precioMinVentaDolar.val())
 
+    let $porcComVend = $tr.find('[name=porc_com_vend]')
+    $porcComVend.attr('data-default', $porcComVend.val())
+
   })
   
 }
@@ -532,8 +539,11 @@ function appendInput(value, type, row, meta) {
     9: { name : 'precioVentaSol' , decimales : decimal_soles } ,
     10: { name : 'precioVentaDolar' , decimales : decimal_dolares } ,
     11: { name :'precioMinVentaSoles' , decimales : decimal_soles } ,
-    12: { name :'precioMinVentaDolar' , decimales : decimal_dolares } ,
+    12: { name: 'precioMinVentaDolar', decimales: decimal_dolares },
+    13: { name: 'porc_com_vend', decimales: 2 }, 
   }
+
+  console.log("names", value, names[meta.col]);
 
   if (meta.row === 0) {
   }
@@ -604,6 +614,7 @@ function editTipoCambio(e) {
   e.preventDefault();
   actionTCEdit(false)
 }
+
 
 function cancelEditTipoCambio(e) {
   e.preventDefault();
@@ -762,7 +773,8 @@ function initDatable()
       { data: 'UNIPUVS', render: appendInput, orderable: false, searchable: false },
       { data: 'UNIPUVD', render: appendInput, orderable: false, searchable: false },
       { data: 'UNIPMVS', render: appendInput, orderable: false, searchable: false },
-      { data: 'UNIPMVD', render: appendInput, orderable: false, searchable: false },      
+      { data: 'UNIPMVD', render: appendInput, orderable: false, searchable: false },
+      { data: 'porc_com_vend', render: appendInput, orderable: false, searchable: false },
       { data: 'moneda', render: appendBtns,   orderable: false, searchable: false, },
       { data: 'ProCodi', render: addRouteToReporte, orderable: false, searchable: false },
     ]
@@ -971,7 +983,7 @@ function updateMasive()
 const setBtnsToMassiveModify = () => {
 
   const $table = $("#datatable");
-  let $tdMassive = $table.find('thead tr td:eq(13)');
+  let $tdMassive = $table.find('thead tr td:eq(14)');
 
   $tdMassive.empty();
 

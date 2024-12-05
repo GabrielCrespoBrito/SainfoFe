@@ -92,6 +92,7 @@ class UnidadController extends Controller
       'unidad.UNIPUVD',
       'unidad.UNIPMVS',
       'unidad.UNIPMVD',
+      'unidad.porc_com_vend',
       'lista_precio.LisNomb',   
       'productos.ID as id_producto',
       'productos.ProCodi',
@@ -218,9 +219,7 @@ class UnidadController extends Controller
   {
     $this->authorize(p_name('A_UPDATEPRECIOS', 'R_PRODUCTO'));
 
-    $data = $request->only('UniPUCD','UniPUCS','UniMarg','UNIPUVS','UNIPUVD', 'UNIPMVS', 'UNIPMVD');
-
-    $data = $request->only('UniPUCD', 'UniPUCS', 'UniMarg', 'UNIPUVS', 'UNIPUVD', 'UNIPMVS', 'UNIPMVD');
+    $data = $request->only('UniPUCD', 'UniPUCS', 'UniMarg', 'UNIPUVS', 'UNIPUVD', 'UNIPMVS', 'UNIPMVD', 'porc_com_vend');
 
     $decimales = getEmpresaDecimals();
 

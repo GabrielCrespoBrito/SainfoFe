@@ -36,6 +36,7 @@ class Unidad extends Model
     "UNIPUVD",
     "UNIPUVS",
     "UNIPMVS",
+    'porc_com_vend',
     "UNIPMVD",    
     "UniPAdi",
     "Unicodi",

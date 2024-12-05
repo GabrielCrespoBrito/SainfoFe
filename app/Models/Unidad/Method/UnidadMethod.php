@@ -109,6 +109,7 @@ trait UnidadMethod
         'ProPMVD' => $this->UNIPMVD,
         'ProPMVS' => $this->UNIPMVS,
         'ProPeso' => $this->UniPeso,
+        'porc_com_vend' => $this->porc_com_vend,
       ]);
     }
   }

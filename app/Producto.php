@@ -65,6 +65,7 @@ class Producto extends Model
     'prosto6',
     'prosto7',
     'prosto8',
+    'porc_com_vend',
     'prosto9',
     'prosto10',
     'icbper',

@@ -48,7 +48,8 @@ class UpdateMassiveManual
           'UNIPUVD',
           'UNIPUVS',
           'UniPMVS',
-          'UniPMVD'
+          'UniPMVD',
+          'porc_com_vend'
         ]);
 
       $unicodis = $this->data->pluck('Unicodi')->toArray();
@@ -104,6 +105,7 @@ class UpdateMassiveManual
         "ProPUVS" => $unidad['UNIPUVS'],
         "ProPMVS" => $unidad['UNIPMVS'],
         "ProPMVD" => $unidad['UNIPMVD'],
+        'porc_com_vend' => $unidad['porc_com_vend'],
         "User_Modi" => $auditValues->user,
         "User_FModi" => $auditValues->fecha,
         "User_EModi" => $auditValues->equipo,
@@ -135,6 +137,7 @@ class UpdateMassiveManual
           "UNIPUVS" => $unidad['UNIPUVS'],
           "UniPMVS" => $unidad['UNIPMVS'],
           "UniPMVD" => $unidad['UNIPMVD'],
+          'porc_com_vend' => $unidad['porc_com_vend'],
           "User_Modi" => $auditValues->user,
           "User_FModi" => $auditValues->fecha,
           "User_EModi" => $auditValues->equipo,
