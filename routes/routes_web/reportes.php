@@ -167,7 +167,7 @@ Route::prefix('reportes')->group(function () {
   # Reportes de Ganancias
   Route::get('utilidades', 'Reportes\UtilidadesController@create')->name('reportes.utilidades.create');
   Route::post('utilidades', 'Reportes\UtilidadesController@show')->name('reportes.utilidades.show');
-  Route::get('utilidades-pdf/{fecha_desde?}/{fecha_hasta?}/{local?}/{grupo}/{vendedor}', 'Reportes\UtilidadesController@pdfComplete')->name('reportes.utilidades.pdf_complete');
-  Route::get('utilidades-pdf-fecha/{fecha?}/{local?}/{grupo?}/{vendedor}', 'Reportes\UtilidadesController@pdfByFecha')->name('reportes.utilidades.pdf_fecha');
+  Route::get('utilidades-pdf/{fecha_desde?}/{fecha_hasta?}/{local?}/{grupo}/{vendedor}/{descontarPorcVendedor?}', 'Reportes\UtilidadesController@pdfComplete')->name('reportes.utilidades.pdf_complete');
+  Route::get('utilidades-pdf-fecha/{fecha?}/{local?}/{grupo?}/{vendedor}/{descontarPorcVendedor?}', 'Reportes\UtilidadesController@pdfByFecha')->name('reportes.utilidades.pdf_fecha');
 
 });

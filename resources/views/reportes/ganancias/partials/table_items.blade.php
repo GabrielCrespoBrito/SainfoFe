@@ -1,6 +1,12 @@
 @php 
-  $thead = [ 'Base' , 'Codigo' , 'Unidad' , 'Descripcion' , 'Precio' , 'Cantidad' , 'Importe' ];
-  $colspan = 8;
+  $thead = [ 'Base' , 'Codigo' , 'Unidad' , 'Descripcion' , 'Precio' , 'Cantidad' ];
+
+  if($descontarPorcVendedor){
+    $thead[] = 'Comisión';
+  }
+
+  $thead[] = 'Importe';
+
 @endphp
 
 @component('components.table', [ 'thead' => $thead, 'id' => '', 'class_name' => 'table-utilidades utilidad-item', 'container_class' => 'pl-0 pr-0' ])
@@ -14,6 +20,9 @@
       <td>{{ $data_item['info']['descripcion']  }} </td>
       <td>{{ $data_item['info']['precio']  }} </td>
       <td>{{ $data_item['info']['cantidad'] }} </td>
+      @if($descontarPorcVendedor)
+        <td>{{ $data_item['total']['costo_soles_por_vendedor'] }}</td>
+      @endif
       <td class="utilidad total">{{ $data_item['info']['importe']  }} </td>
     </tr>
   @endforeach

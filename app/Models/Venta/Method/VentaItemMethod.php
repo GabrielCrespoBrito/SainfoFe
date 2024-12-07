@@ -269,18 +269,18 @@ trait VentaItemMethod
 
   public function getCostosPorVendedor()
   {
-    if (is_null($this->producto->porc_com_vend)) {
-      return (object) [
-        'soles' => 0,
-        'dolar' => 0,
-      ];
-    }
-
-
     if ($this->DetPorcVend) {
       return (object) [
         'soles' => $this->DetPorcVenSol,
         'dolar' => $this->DetPorcVenDol
+      ];
+    }
+
+
+    if (is_null($this->producto->porc_com_vend)) {
+      return (object) [
+        'soles' => 0,
+        'dolar' => 0,
       ];
     }
 

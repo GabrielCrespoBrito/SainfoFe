@@ -151,10 +151,10 @@ class ReporteUtilidades
     $data_utilidad = (object) $item->getDataUtilidadProducto(true, $this->descontarPorcVendedor);
 
     // dd($data_utilidad, $item->PorcVend);
-
     // dd($item, $data_utilidad);
     // exit();
     // logger($total_reporte);
+    
     $this->addToTotal( $total_reporte, $data_utilidad, true );
     $this->addToTotal( $total_dia, $data_utilidad );
     $this->addToTotal( $total_venta, $data_utilidad );
@@ -169,8 +169,9 @@ class ReporteUtilidades
     $total['venta_dolar'] += $data_utilidad->venta_dolar;
     $total['utilidad_soles'] += $data_utilidad->utilidad_soles;
     $total['utilidad_dolar'] += $data_utilidad->utilidad_dolar;
+    $total['costo_soles_por_vendedor'] += $data_utilidad->costo_soles_por_vendedor;
+    $total['costo_dolar_por_vendedor'] += $data_utilidad->costo_dolar_por_vendedor;
   }
-
   /**
    * Establecer la data del reporte
    * 
@@ -192,6 +193,8 @@ class ReporteUtilidades
       'costo_dolar' => 0,
       'venta_soles' => 0,
       'venta_dolar' => 0,
+      'costo_soles_por_vendedor' => 0,
+      'costo_dolar_por_vendedor' => 0,
       'utilidad_soles' => 0,
       'utilidad_dolar' => 0,
     ];
@@ -253,6 +256,7 @@ class ReporteUtilidades
    */
   public function getData()
   {
+    // dd($this->data);
     return $this->data;
   }
 }

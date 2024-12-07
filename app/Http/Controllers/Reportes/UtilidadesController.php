@@ -26,6 +26,7 @@ class UtilidadesController extends Controller
   public function getReporte( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor = false )
   {
     $reporte = new ReporteUtilidades($fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor);
+    
     $data = $reporte->getData();
     return $data;
   }
@@ -42,7 +43,7 @@ class UtilidadesController extends Controller
       $vendedor = Vendedor::find($vendedor)->vennomb;
     }
 
-    $pdfGenerator = new PDFGenerator(view($view , compact('data', 'fecha_desde', 'fecha_hasta', 'local', 'grupo', 'vendedor', 'titulo')),  PDFGenerator::HTMLGENERATOR);
+    $pdfGenerator = new PDFGenerator(view($view , compact('data', 'fecha_desde', 'fecha_hasta', 'local', 'grupo', 'vendedor', 'titulo', 'descontarPorcVendedor')),  PDFGenerator::HTMLGENERATOR);
     $pdfGenerator->generator->setGlobalOptions([
       'no-outline',
       'page-size' => 'Letter',
@@ -68,9 +69,9 @@ class UtilidadesController extends Controller
    * 
    * @return HtmlPDFGenerator
    */
-  public function pdfComplete($fecha_desde , $fecha_hasta, $local, $grupo, $vendedor )
+  public function pdfComplete($fecha_desde , $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor = false )
   {
-    $this->generatePDF($fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, "REPORTES DE UTILIDADES POR FECHA" , 'reportes.ganancias.pdf_complete');
+    $this->generatePDF($fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, "REPORTES DE UTILIDADES POR FECHA" , 'reportes.ganancias.pdf_complete', $descontarPorcVendedor);
   }
 
   /**
@@ -88,7 +89,8 @@ class UtilidadesController extends Controller
   {
     $this->authorize(p_name('A_UTILIDADESVENTAS', 'R_REPORTE'));
 
-    $data = $this->getReporte($request->fecha_desde, $request->fecha_hasta, $request->local, $request->grupos, $request->vendedor, $request->input('descontar_porc_vendedor', false) );
+    $data = $this->getReporte($request->fecha_desde, $request->fecha_hasta, $request->local, $request->grupos, $request->vendedor, $descontarPorcVendedor = $request->input('descontar_porc_vendedor', false) );
+
 
     return view('reportes.ganancias.partials.info_html', [
       'tableInHtml' => true,
@@ -98,6 +100,7 @@ class UtilidadesController extends Controller
       'local' => $request->local,
       'vendedor' => $request->vendedor,
       'grupo' => $request->grupos,
+      'descontarPorcVendedor' => $descontarPorcVendedor
       ]);
   }  
 }

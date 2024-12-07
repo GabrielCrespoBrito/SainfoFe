@@ -14,6 +14,7 @@ $tableInHtml = $tableInHtml ?? false;
       'local' => $local,
       'grupo' => $grupo,
       'vendedor' => $vendedor,
+      'descontarPorcVendedor' => $descontarPorcVendedor,
        ]) }}"> 
         <span class="fa fa-file-pdf-o"> </span> Ver en PDF </a>
   </div>

@@ -1,10 +1,26 @@
 @php
-  $thead = [ 'Documento', 'Imp (S./)', 'Cost. (S./)', 'Utilidad (.S/)', [ 'attributes' => [ 'style' => 'text-align:left;padding-left:20px' ], 'class_name' => 'text-align-left', 'text' => 'Razòn Social'] ];
+
+
+  $thead = [ 
+    'Documento',
+    'Imp (S./)',
+    'Cost. (S./)',
+  ];
+
+  if($descontarPorcVendedor){
+    $thead[] = 'Comisión';
+  }
+
+  $thead[] = 'Utilidad (.S/)';
+
+
+  $thead[] = [ 'attributes' => [ 'style' => 'text-align:left!important;padding-left:20px' ], 'class_name' => 'text-align-left', 'text' => 'Razòn Social'];
 
 
   $tableInHtml  ? array_push( $thead , 'Mostrar' ) : null;
   !$tableInHtml ? array_unshift( $thead , 'Fecha' ) : null;
-  $colspan = 7;
+
+  $colspan = $descontarPorcVendedor ? 9 : 8;
   $class_name = $class_name ?? '';
   $class_name .= ' table_items table-utilidades utilidad-venta';
 @endphp
@@ -34,6 +50,9 @@
 
     <td>{{ decimal($data_venta['total']['venta_soles']) }}</td>
     <td>{{ decimal($data_venta['total']['costo_soles']) }}</td>
+    @if($descontarPorcVendedor)
+    <td class="utilidad">{{ decimal($data_venta['total']['costo_soles_por_vendedor']) }}</td>
+    @endif
     <td class="utilidad">{{ decimal($data_venta['total']['utilidad_soles']) }}</td>
     <td style="text-align:left; padding-left: 20px;">{{ $data_venta['info']['cliente']  }}</td>
     @if($tableInHtml)
@@ -61,6 +80,9 @@
       <td class="total">Total </td>
       <td class="total">{{ decimal($data['total']['venta_soles']) }}</td>
       <td class="total">{{ decimal($data['total']['costo_soles']) }}</td>
+      @if($descontarPorcVendedor)
+        <td class="total">{{ decimal($data['total']['costo_soles_por_vendedor']) }}</td>
+      @endif
       <td class="utilidad total">{{ decimal($data['total']['utilidad_soles']) }}</td>
       <td class="total"></td>
       @if($tableInHtml)
