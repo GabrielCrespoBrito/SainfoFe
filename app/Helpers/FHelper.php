@@ -258,7 +258,11 @@ class FHelper
 
   public function getPath($ambito, $sitio, $name)
   {
-    return $this->paths[$ambito][$sitio] . getSeparator() .  $name;
+    $path = $this->paths[$ambito][$sitio] . getSeparator() .  $name;
+
+    logger( sprintf("getPath: %s %s", $ambito, $path) );
+
+    return $path;
   }
 
   public function deleteAllInfo()
