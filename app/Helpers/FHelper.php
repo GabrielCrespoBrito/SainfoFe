@@ -141,8 +141,9 @@ class FHelper
 
   public function exists_local($path)
   {
-    logger( sprintf("exists_local: %s", $path) );
-    return file_exists($path);
+    $exists = file_exists($path);
+    logger( sprintf("exists_local: %s %s", $path, (int) $exists) );
+    return $exists;
   }
 
   public function delete_local($path)
