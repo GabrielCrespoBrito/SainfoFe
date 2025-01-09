@@ -58,6 +58,8 @@ class ClienteProveedor extends Model
     $tipDoc = $this->TipCodi;
     $isUse = false;
 
+    $name = "undefined";
+
     // Cliente
     if ($tipDoc == self::TIPO_CLIENTE) {
       if ($this->ventas->count()) {
