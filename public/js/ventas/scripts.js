@@ -4121,12 +4121,14 @@ $(document).ready(function (e) {
         .prop('disabled', true)
         .val('');
 
+
       $cargo_global
         .prop('disabled', false);
 
+      console.log({ tipo_cargo_global })
       if (tipo_cargo_global == "retencion") {
-        $cargo_global
-          .prop('disabled', true)
+          $cargo_global
+          .prop('disabled', false)
           .val('3')
       }
 
@@ -4138,7 +4140,7 @@ $(document).ready(function (e) {
     }
 
     else {
-
+      // 
       $("[name=descuento_global]")
         .prop('disabled', false)
         .val(0);
@@ -4151,8 +4153,6 @@ $(document).ready(function (e) {
       poner_totales_cant();
       descuento_global();
     }
-
-
   }
 
   function cargoGlobalInput() {
@@ -4175,14 +4175,9 @@ $(document).ready(function (e) {
         descuento_global(cargo_value);
       }
 
-      else if (tipo_cargo_value == "percepcion") {
+      else if (tipo_cargo_value == "percepcion" || tipo_cargo_value == "retencion") {
         poner_totales_cant();
       }
-
-      else if (tipo_cargo_value == "retencion") {
-
-      }
-
     }
   }
 
