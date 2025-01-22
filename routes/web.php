@@ -34,10 +34,6 @@ Route::get('/busquedaDocumentos', "ClienteAdministracion\ClienteDashboardControl
 Route::get('admin/runcommand/{comand}', "AdminController@runComandos")->name('admin.comandos');
 Route::post('admin/upload-img-banner-footer', "AdminController@saveImageBannerPDF")->name('admin.save_img_footer_banner');
 
-
-Route::get('/busquedaDocumentos', "ClienteAdministracion\ClienteDashboardController@busquedaDocumentos")
-->name('busquedaDocumentos');
-
 include('routes_web/cliente_dashboard.php');
 
 include('routes_web/documentos.php');

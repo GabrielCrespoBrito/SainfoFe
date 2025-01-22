@@ -131,6 +131,17 @@ return [
 
   'password_admin' =>  env('PASSWORD_ADMIN', 'Peru_001'),
 
+
+  /*
+    |--------------------------------------------------------------------------
+    | Contraseña de administración 
+    |--------------------------------------------------------------------------
+
+    */
+
+  'backups' =>  env('BACKUPS', '/var/www/data/BACKUPS/web'),
+
+
   /*
     |--------------------------------------------------------------------------
     | Dias para recordar vencimiento de suscripción

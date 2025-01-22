@@ -49,7 +49,8 @@ class RespaldoDatabase extends Command
 
   public function setSqlPaths()
   {
-    $this->fileNameSql = $this->currentDatabase . '.sql';
+   
+    $this->fileNameSql =  date('Ymd') . '_' . $this->currentDatabase . '.sql';
     $this->currentDatabase . '.sql';
     $this->fileNameCompress = $this->currentDatabase . '.rar';
     $this->pathSql = $this->pathTemp .  $this->fileNameSql;
@@ -67,11 +68,10 @@ class RespaldoDatabase extends Command
     parent::__construct();
 
     $this->date = now()->subDay(1)->format('Y-m-d');
-    $this->pathTemp =  public_path( 'temp' . getSeparator());
 
-    // dd( $this->pathTemp );
-    // exit();
-    // $this->pathTemp =   'C:\laragon\temp';
+    // $this->pathTemp =  public_path( 'temp' . getSeparator());
+
+    $this->pathTemp =  config('app.backups') . DIRECTORY_SEPARATOR;
 
     if (env('enviroment') === 'production') {
       ini_set('memory_limit', '400M');
@@ -110,15 +110,13 @@ class RespaldoDatabase extends Command
   {
     $mysqlCommand = get_setting('mysqldump_path');
 
-    // $mysqlCommand,
-
     $comando = sprintf(
       'mysqldump -u%s -p%s %s > %s',
       // '%s -h127.0.0.1 -u%s -p%s %s > %s',
       config('database.connections.mysql.username'),
       config('database.connections.mysql.password'),
       $this->currentDatabase,
-      $this->getTempPathTempStore($this->currentDatabase . '.sql')
+      $this->getTempPathTempStore( $this->fileNameSql )
     );
 
     Log::info("@COMANDO " . $comando );
@@ -128,7 +126,9 @@ class RespaldoDatabase extends Command
 
   public function makeCompress()
   {
-    $compress = new CompressRar($this->pathSql, $this->pathCompress);
+    $pathCompress = windows_os() ? $this->pathCompress : '';
+
+    $compress = new CompressRar($this->pathSql, $pathCompress);
     $this->messageOutput( sprintf('Compromiendo %s ...', $this->currentDatabase ));
     $compress->make();
     $this->messageOutput( sprintf('Compresión %s lista', $this->currentDatabase), self::MESSAGE_FINAL);
@@ -151,10 +151,6 @@ class RespaldoDatabase extends Command
     $fileHelper = FileHelper();
     $path = sprintf('/backup/%s/%s', $this->date, $this->fileNameCompress);
     
-    // dd( "path",  $path );
-    // exit();
-    // exit();
-
     $fileHelper->save_nube($path, file_get_contents($this->pathCompress));
     $this->messageOutput('Guardado en amazon listo en la dirección : ' . $path, self::MESSAGE_FINAL);
   }
@@ -172,7 +168,6 @@ class RespaldoDatabase extends Command
     } catch (ProcessFailedException $exception) {
       $success = false;
       $error = sprintf("@ERROR-RESPALDO-BD (%s) (%s)", $exception->getMessage(), $this->currentDatabase);
-      logger($error);
       $this->error($error);
     }
 

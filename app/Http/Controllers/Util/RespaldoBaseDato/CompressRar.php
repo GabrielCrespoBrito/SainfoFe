@@ -18,18 +18,9 @@ class CompressRar
 	// Modificadores para ejecutar el comando rar
 	private $modifiers;
 
-  private $pathFolder;
 
 	function __construct( $pathFileToCompress, $pathFileCompress )
 	{
-		// Archivo que comprimir
-		$separator = getSeparator();
-		$posLastSeparator = strrpos($pathFileCompress, $separator)   ;
-		$length = strlen($pathFileCompress) - (strlen($pathFileCompress) - $posLastSeparator);   
-		$this->pathFolder = substr($pathFileCompress, 0, $length )  ;
-
-		// pathFolder
-
 		// Archivo que comprimir
 		$this->pathFileToCompress = $pathFileToCompress;
 
@@ -45,7 +36,7 @@ class CompressRar
 		}		
 		
 		// Modifiers del archivo
-		$this->modifiers = isWindow() ? "a -ep1 -idq -ibck" : "a";
+		$this->modifiers = isWindow() ? "a -ep1 -idq -ibck" : "";
 	}
 
 	public function getCommand()
