@@ -84,7 +84,7 @@ class RespaldoDatabase extends Command
     // 
     foreach ($this->filesSqlSave as $file) {
       logger('@ELIMINANDO' . $file);
-      unlink($file);
+      // unlink($file);
     }
   }
 
