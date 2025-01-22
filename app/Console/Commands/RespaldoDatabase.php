@@ -81,7 +81,9 @@ class RespaldoDatabase extends Command
 
   public function deleteFiles()
   {
+    // 
     foreach ($this->filesSqlSave as $file) {
+      logger('@ELIMINANDO' . $file);
       unlink($file);
     }
   }
@@ -138,10 +140,10 @@ class RespaldoDatabase extends Command
   // Corriendo Comando para respaldo
   public function makeRespaldo()
   {
-    $this->messageOutput(sprintf('Respaldando %s', $this->currentDatabase));
+    $this->messageOutput(sprintf('Respaldando %s', $this->fileNameSql));
     $this->generateCommand();
     $this->process->mustRun();
-    $this->messageOutput( sprintf('Respaldo OK ', $this->currentDatabase ) , self::MESSAGE_FINAL);
+    $this->messageOutput( sprintf('Respaldo OK ', $this->fileNameSql ) , self::MESSAGE_FINAL);
   }
 
 
