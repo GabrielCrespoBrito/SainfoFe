@@ -126,6 +126,7 @@ class RespaldoDatabase extends Command
 
   public function makeCompress()
   {
+    return;
     $pathCompress = windows_os() ? $this->pathCompress : '';
 
     $compress = new CompressRar($this->pathSql, $pathCompress);
