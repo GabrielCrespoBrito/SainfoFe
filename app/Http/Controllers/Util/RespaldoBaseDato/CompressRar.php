@@ -52,6 +52,7 @@ class CompressRar
 
 	public function make()
 	{
-		exec($this->getCommand());
+    $command = $this->getCommand();
+    exec($command);
 	}
 }
