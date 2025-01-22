@@ -139,7 +139,7 @@ return [
 
     */
 
-  'backups' =>  env('BACKUPS', '/var/www/data/BACKUPS/web'),
+  'backups' =>  env('BACKUPS', '/var/www/data/BACKUP/web'),
 
 
   /*
