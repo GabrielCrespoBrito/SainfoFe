@@ -132,17 +132,12 @@ class FHelper
 
   public function exists_ftp($path)
   {
-    logger( $path );
-    // return Storage::disk('ftp')->exists($path);
     return Storage::disk('ftp')->directories();
-
-    
   }
 
   public function exists_local($path)
   {
     $exists = file_exists($path);
-    logger( sprintf("exists_local: %s %s", $path, (int) $exists) );
     return $exists;
   }
 
@@ -260,11 +255,7 @@ class FHelper
 
   public function getPath($ambito, $sitio, $name)
   {
-    $path = $this->paths[$ambito][$sitio] . getSeparator() .  $name;
-
-    logger( sprintf("getPath: %s %s", $ambito, $path) );
-
-    return $path;
+    return $this->paths[$ambito][$sitio] . getSeparator() .  $name;
   }
 
   public function deleteAllInfo()
