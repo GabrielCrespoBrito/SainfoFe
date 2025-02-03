@@ -83,9 +83,9 @@ class CreateEmpresaForUser
 		$data['fe_envndebi'] = 1;
     $data['tipo_plan'] = Empresa::PLAN_DEMO;
 		$data['FE_REPO'] = "11";
-    $img = \Image::make(  public_path( file_build_path('static','demo', 'logo.png') ) );
-    $img->encode('jpeg');
-    $data['logo_principal'] = $img;
+    	$img = \Image::make(  public_path( file_build_path('static','demo', 'logo.png') ) );
+    	$img->encode('jpeg');
+   		$data['logo_principal'] = $img;
     // ususerf
 		$data['fe_consulta'] = config('app.url_busqueda_documentos');
 		$data['active'] = 1;

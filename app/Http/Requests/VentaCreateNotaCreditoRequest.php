@@ -77,7 +77,10 @@ class VentaCreateNotaCreditoRequest extends FormRequest
     }
 
 
-    if ( $nc = $this->documento->hasNotaCreditoValid()) {
+    $nc = $this->documento->hasNotaCreditoValid();
+
+
+    if ( $nc && $this->documento->EmpCodi !== "058"  ) {
       $validator->errors()->add('documento', 'El Documento ya tiene una nota de credito asociada aceptado o pendiente de enviar (' . $nc->numero() . ')');
       return false;
     }
@@ -169,11 +172,7 @@ class VentaCreateNotaCreditoRequest extends FormRequest
 
 
     $documentoHelper = new DocumentHelper();
-    
-    if ($this->fecha < $this->documento->VtaFvta) {
-      $validator->errors()->add('documento', 'La Fecha de la Nota de Credito no puede ser superior a la fecha del Documento de Referencia');
-      return false;
-    }
+
     
     if ($documentoHelper->enPlazoDeEnvio(TipoDocumentoPago::NOTA_CREDITO, $this->fecha)) {
       $fecha_limite = (new DocumentHelper())->getFechaLimite(TipoDocumentoPago::NOTA_CREDITO);
