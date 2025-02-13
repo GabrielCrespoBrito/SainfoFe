@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers\TipoCambio;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\TipoCambioUpdatedTodayRequest;
 use App\SettingSystem;
 use App\TipoCambioMoneda;
-use App\Util\ConsultTipoCambio\ConsultTipoCambioInterface;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Requests\TipoCambioUpdatedTodayRequest;
 
 class TipoCambioController extends Controller
 {
-	public $tcConsulter;
-
-	public function __construct( ConsultTipoCambioInterface $tcConsulter )
-	{
-		$this->tcConsulter = $tcConsulter;
-	}
-
 
 	public function updatedToday(TipoCambioUpdatedTodayRequest $request )
 	{
@@ -26,6 +19,11 @@ class TipoCambioController extends Controller
 			'TipComp' => $request->TipComp,
 			'TipVent' => $request->TipVent,			
 		]);
+
+    if ($tc->isDirty()) {
+      $tc->save();
+      Cache::forget('ultimo_tc');
+    }
 
 
 		return response()->json(['message' => 'Actualización de tipo de cambio realizada'], 200 );

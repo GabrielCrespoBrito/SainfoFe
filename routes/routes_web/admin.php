@@ -295,6 +295,13 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::get('notificaciones/{id}/delete', 'Admin\NotificacionController@destroy')->name('notificaciones.delete');      
 
       Route::resource('notificaciones','Admin\NotificacionController');
+
+      # Tipo de Cambio
+      Route::resource('tipo_cambio','Admin\TipoCambioController');
+      Route::get('tipo_cambio-search', 'Admin\TipoCambioController@search')->name('tipo_cambio.search');
+      Route::post('tipo_cambio-store', 'Admin\TipoCambioController@store')->name('tipo_cambio.store');
+      
+
       
     });
   });

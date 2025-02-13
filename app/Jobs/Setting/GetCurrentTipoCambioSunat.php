@@ -2,9 +2,7 @@
 
 namespace App\Jobs\Setting;
 
-use App\Repositories\SettingSystemRepository;
 use App\SettingSystem;
-use App\Util\ConsultTipoCambio\ConsultTipoCambioInterface;
 use App\Util\ConsultTipoCambio\ConsultTipoCambioMigo;
 
 /**

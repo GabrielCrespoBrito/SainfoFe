@@ -63,6 +63,8 @@ abstract class ConsultTipoCambioMigo
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_CUSTOMREQUEST => "POST",
 			CURLOPT_POSTFIELDS => $this->getPostData(),
+      CURLOPT_SSL_VERIFYHOST => 0,
+      CURLOPT_SSL_VERIFYPEER => 0
       ];
 	}
   

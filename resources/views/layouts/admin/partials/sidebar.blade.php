@@ -60,6 +60,7 @@
     <li><a target="_blank" href="{{ route('admin.permissions.index') }}"><i class="fa fa-circle-o"></i> Permisos </a></li>
     <li><a target="_blank" href="{{ route('admin.roles.index') }}"><i class="fa fa-circle-o"></i> Roles </a></li>
     <li><a href="{{ route('admin.consultar_doc.index') }}"><i class="fa fa-circle-o"></i> Consultar Docs </a></li>
+    <li><a href="{{ route('admin.tipo_cambio.index') }}"><i class="fa fa-circle-o"></i> Tipo de Cambio </a></li>
   </ul>
 </li>
 

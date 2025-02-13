@@ -32,6 +32,7 @@ mix
   .js('public/js/admin.js', 'public/js/mix/admin.js')
   .js('public/js/unidad/index.js', 'public/js/unidad/mix/index.js')
   .js('public/js/admin/documentos.js', 'public/js/admin/mix/documentos.js')
+  .js('public/js/admin/tipo_cambio.js', 'public/js/admin/mix/tipo_cambio.js')
   .js('public/js/reportes/kardex_fisico.js', 'public/js/reportes/mix/kardex_fisico.js')
   .js('public/js/reportes/reporte.js', 'public/js/mix/')
   .js('public/js/admin/notificaciones.js', 'public/js/admin/mix/notificaciones.js')
