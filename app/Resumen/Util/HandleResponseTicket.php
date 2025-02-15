@@ -31,10 +31,6 @@ class HandleResponseTicket extends HandleResponse
 		$status = true;
     $linkResumen = route('boletas.agregar_boleta', $this->resumen->NumOper, $this->resumen->DocNume);
 		$statusCode = $code = (int) $communicate->status->statusCode;
-
-    logger( sprintf('@ERROR TICKER RESPONSE %s %s %s', $this->resumen->EmpCodi, $this->resumen->DocNume,$this->resumen->NumOper) );
-    logger((array) $communicate  );
-
     $message = "blank";
     $status = false;
 

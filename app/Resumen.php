@@ -476,7 +476,6 @@ class Resumen extends Model
     }
     
     if( ! isset( $data['code']) ){
-      Log::error( $data['code'] );
     }
 
     $this->DocCEsta  = $data['code'];
