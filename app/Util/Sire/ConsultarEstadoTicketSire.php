@@ -13,13 +13,13 @@ class ConsultarEstadoTicketSire extends SireApi
 
   public function getUrl()
   {
-    logger(sprintf(
-      self::URL,
-      optional($this->parameters)->perIni,
-      optional($this->parameters)->perFin,
-      optional($this->parameters)->page,
-      optional($this->parameters)->perPage,
-      optional($this->parameters)->numTicket
-    )); 
+    // logger(sprintf(
+    //   self::URL,
+    //   optional($this->parameters)->perIni,
+    //   optional($this->parameters)->perFin,
+    //   optional($this->parameters)->page,
+    //   optional($this->parameters)->perPage,
+    //   optional($this->parameters)->numTicket
+    // )); 
   }
 }

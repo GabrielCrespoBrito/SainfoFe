@@ -322,10 +322,7 @@ trait VentaItemMethod
 
     if ($descontarPorcVendedor) {
       $vendedorCosto = $this->getCostosPorVendedor();
-      logger( (array) $vendedorCosto);
     }
-
-    // dd($vendedorCosto);
 
     $v = [
       'id' => $this->VtaOper,
