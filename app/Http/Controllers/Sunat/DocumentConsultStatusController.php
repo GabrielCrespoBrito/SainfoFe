@@ -17,13 +17,19 @@ class DocumentConsultStatusController extends Controller
 
   public function consult(ConsultStatusRequest $request, $id, $cdr = 0)
   {
+    return self::consultStatic($id);
+  }
+
+
+  public static function consultStatic($id)
+  {
     $doc = Venta::find($id);
     $consult = $doc->searchSunatGetStatus(true);
     $hasError = !$consult['client_connection_response']['status'] || !$consult['communicate'];
     if ($hasError) {
       $error = $consult['client_connection_response']['error'] ?
-        $consult['client_connection_response']['error'] :
-        'Error a la hora de consultar a la sunat';
+      $consult['client_connection_response']['error'] :
+      'Error a la hora de consultar a la sunat';
       return response(['message' => $error], 400);
     }
     // 

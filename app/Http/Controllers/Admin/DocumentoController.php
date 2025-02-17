@@ -17,6 +17,7 @@ use App\Http\Controllers\SunatController;
 use App\ModuloMonitoreo\StatusCode\StatusCode;
 use App\Http\Requests\Admin\changeDateVentaRequest;
 use App\Http\Requests\Admin\DocumentoDeleteRequest;
+use App\Http\Controllers\Sunat\DocumentConsultStatusController;
 
 class DocumentoController extends Controller
 {
@@ -164,6 +165,15 @@ class DocumentoController extends Controller
       $request->input('tipo_documento') ?? $request->input('tipo'),
       $request->input('estado_almacen')
     );
+  }
+
+  public function consultStatus(Request $request)
+  {
+    $documento_id = $request->input('documento_id', null);
+
+    (new ActiveEmpresaTenant(Empresa::find($request->empresa_id)))->handle();
+
+    return DocumentConsultStatusController::consultStatic($documento_id);
   }
 
 

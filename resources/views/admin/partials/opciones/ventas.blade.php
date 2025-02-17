@@ -1,5 +1,5 @@
 <div class="">
-  <a href="#" class="btn btn-block btn-default btn-flat"> Consultar Estado </a> 
+  <a href="#" data-url="{{ route('admin.documentos.consult_status')}}" data-empresa_id="{{ $model->EmpCodi }}" data-documento_id="{{ $model->VtaOper }}" class="btn btn-block btn-default btn-flat consult-status"> Consultar Estado </a>
 </div>
 
   <div class="mt-x10">

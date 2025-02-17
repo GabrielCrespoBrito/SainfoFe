@@ -18,6 +18,9 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       Route::get('/documentos/search-pending', 'Admin\DocumentoController@searchPending')->name('documentos.search_pendientes');
       Route::post('/documentos/send-pending', 'Admin\DocumentoController@sendPending')->name('documentos.send_pendientes');
       Route::post('/documentos/change-date/{documento_id?}', 'Admin\DocumentoController@changeDate')->name('documentos.change_date');
+      Route::post('/documentos/consult-status/{documento_id?}', 'Admin\DocumentoController@consultStatus')->name('documentos.consult_status');
+
+      
 
       Route::get('empresa/index', "Admin\EmpresaController@index")->name('empresa.index');
       Route::get('empresa/create',"Admin\EmpresaController@create")->name('empresa.create');

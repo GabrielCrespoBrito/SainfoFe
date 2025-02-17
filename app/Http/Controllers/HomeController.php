@@ -6,6 +6,7 @@ use App\Empresa;
 use App\Models\Cierre;
 use Illuminate\Http\Request;
 use Hyn\Tenancy\Models\Hostname;
+use Hyn\Tenancy\Contracts\Tenant;
 use Automattic\WooCommerce\Client;
 use App\Helpers\NotificacionHelper;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +80,19 @@ class HomeController extends Controller
   {
     $user = auth()->user();
     $empresas = $user->empresas->load('empresa.periodos');
+    $empresaRucSelected = null;
+    // Tenant::first()
+    // Obtener el subdominio
+
+
+    $host = $request->getHost();
+    $subdomain = explode('.', $host);  // Asumiendo que el subdominio es el primer segmento del host
+    // $subdomain = explode('.', $host)[0];  // Asumiendo que el subdominio es el primer segmento del host
+
+    if(count($subdomain) > 1){
+      $empresaRucSelected = $subdomain = $subdomain[0];
+    }
+
 
     if ($user->isAdmin()) {
       $empresas = $empresas->filter(function ($empresa) {
@@ -87,7 +101,8 @@ class HomeController extends Controller
     }
 
     return view('elegir_empresa', [
-      'empresas' => $empresas
+      'empresas' => $empresas,
+      'empresaRucSelected' => $empresaRucSelected
     ]);
   }
 

@@ -36,6 +36,7 @@
         <select class="form-control" name="empresa" required autofocus>
           @foreach( $empresas as $empresa )
             @php
+
               $empresaR =  $empresa->empresa;
               if( $empresaR ){
                 if( ! $empresaR->periodos->count() ){
@@ -45,11 +46,31 @@
               else {
                 continue;
               }
+
+              # Empresa a seleccionar
+
+              $selected = false; 
+
+              if( $empresaRucSelected ){
+                $selected = $empresaR->EmpLin1 == $empresaRucSelected;
+              }
+
+              else {
+                $selected = $loop->first;
+              }
+              
+
             @endphp
+
+
+            
             <option 
             data-ruc="{{ $empresaR->EmpLin1 }}"
-            data-periodo="{{ $empresaR->periodos->pluck("Pan_cAnio")->implode(",") }}" {{ $loop->first ? 'selected=selected' : '' }} value="{{ $empresaR->empcodi }}">{{ $empresaR->empcodi }} - {{ $empresaR->EmpNomb }}
-
+            data-periodo="{{ $empresaR->periodos->pluck("Pan_cAnio")->implode(",") }}" 
+            value="{{ $empresaR->empcodi }}"
+            {{ $selected ? 'selected=selected' : '' }} 
+            >
+              {{ $empresaR->empcodi }} - {{ $empresaR->EmpNomb }}
             </option>
           @endforeach
         </select>       

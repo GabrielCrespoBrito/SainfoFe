@@ -553,6 +553,31 @@ function changeEmpresa()
   ajaxs(data, url, {});
 }
 
+function consultStatus(e) {
+  e.preventDefault();
+
+  let $this = $(this);
+
+  let funcs = {
+    success: function (data) {
+      table.draw();
+      notificaciones(data.message, 'success');
+    },
+    complete: function (data) {
+      $("#load_screen").hide();
+    }
+  }
+  
+  // console.log("consultStatus", $this);
+  
+  $("#load_screen").show();
+  ajaxs({
+    'empresa_id' : $this.attr('data-empresa_id'),
+    'documento_id' : $this.attr('data-documento_id'), 
+  }, $this.attr('data-url'), funcs);
+
+}
+
 function events()
 {
   $("[name=empresa_id]").on('change', function () {
@@ -563,6 +588,8 @@ function events()
   $("#modalData").on('click', '.eliminar-documento', eliminarDocumento )
 
   $("#modalData").on('click', '.eliminar-documento-pdf', eliminarPdfDocumento)
+
+  $("#modalData").on('click',  '.consult-status', consultStatus);
 
 
   function sendValidacionResumen(e)
@@ -620,7 +647,6 @@ function events()
   $("#datatable-documentos").on( 'click', ".btn-modify-date", activeInputToModify );
   $("#datatable-documentos").on( 'click', ".btn-cancel-modify-date", cancelModifyInput );
   $("#datatable-documentos").on('click', ".btn-save-modify-date", saveModifyInput);
-
   $(".datatable-pendiente").on('click', ".btn-show-options", showOptionsDocument );
 
 
