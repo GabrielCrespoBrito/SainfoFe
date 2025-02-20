@@ -92,7 +92,7 @@ $classFooter = '';
 ])
 
 
-@if(($cant_items >= 26 && $cant_items <= 45) || ($cant_items>= 88 && $cant_items <= 105) || ($cant_items>= 131))
+@if(($cant_items >= 26 && $cant_items <= 45) || ($cant_items>= 70 && $cant_items <= 105) || ($cant_items>= 131))
     @php
     $classFooter = 'position-initial';
     @endphp

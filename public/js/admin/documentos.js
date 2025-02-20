@@ -468,7 +468,7 @@ function eliminarPdfDocumento(e) {
   e.preventDefault();
 
 
-  if( !confirm("Esta seguro que desea eliminar el PDF de este documento?") ){
+  if( !confirm("Esta seguro que desea realizar esta acción?") ){
     return;
   }
 
@@ -586,11 +586,8 @@ function events()
   })
 
   $("#modalData").on('click', '.eliminar-documento', eliminarDocumento )
-
   $("#modalData").on('click', '.eliminar-documento-pdf', eliminarPdfDocumento)
-
   $("#modalData").on('click',  '.consult-status', consultStatus);
-
 
   function sendValidacionResumen(e)
   { 
