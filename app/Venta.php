@@ -2071,7 +2071,6 @@ class Venta extends Model
    */
   public function getTotalesDocumentoAttribute()
   {
-
     return $this->totales ?? $this->totalizeFromDatabase();
   }
 
