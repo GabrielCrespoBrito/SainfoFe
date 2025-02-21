@@ -56,6 +56,8 @@ class CreateAsocGuia
     } catch (Exception $th) {
       $this->setError($th->getMessage());
       $this->deleteInfoGuia();
+      logger('@ERROR GUIA: CreateAsocGuia ');
+      logger($th);
     }
 
     return $this;
