@@ -96,11 +96,16 @@
                       foreach($empresas as $empresa){
                         if($empresa->empresa->EmpLin1 == $empresaRucSelected){
                           $periodos = $empresa->empresa->periodos;
+                          break;
                         }
                       }
                     }
 
                     else {
+                      $periodos = $empresas->first()->empresa->periodos; 
+                    }
+
+                    if( !isset($periodos) ){
                       $periodos = $empresas->first()->empresa->periodos; 
                     }
 
