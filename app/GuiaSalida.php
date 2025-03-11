@@ -367,7 +367,6 @@ class GuiaSalida extends Model
 
   public static function lastGuiNumee($almacen)
   {
-    $guia_ultima = self::OrderByDesc('GuiOper')->first();
     $almacen = Almacen::find($almacen);
     return [
       'serie' => $almacen->SerGuiaSal,
@@ -378,26 +377,14 @@ class GuiaSalida extends Model
 
   public static function agregate_cero_nume($numero = false, $set = 0)
   {
-    // $numero = $numero ? $numero : self::INIT_NUME;
-    // $cero_agregar = [null, "00000", "0000", "000", "00", "0"];
-    // $codigoNum = ((int) $numero) + $set;
-    // $codigoLen = strlen((string) $codigoNum);
-    // return $codigoLen < 8 ? ($cero_agregar[$codigoLen] . $codigoNum) : ($numero + $set);
     $numero = $numero ? $numero : self::INIT_NUME;
     return math()->addCero($numero + $set, 6);
   }
 
   public static function agregate_cero($numero = false, $set = 0)
   {
-    // ShipMent
-    // $cero_agregar = [null, "00000", "0000", "000", "00", "0"];
-    // $codigoNum = ((int) $numero) + $set;
-    // $codigoLen = strlen((string) $codigoNum);
-    // return $codigoLen < 8 ? ($cero_agregar[$codigoLen] . $codigoNum) : ($numero + $set);
-    
-    
     $numero = $numero ? $numero : self::INIT;
-    return math()->addCero($numero + $set, 8);
+    return math()->addCero($numero + $set, 6);
   }
 
   public function updateVenta($id_guia)
