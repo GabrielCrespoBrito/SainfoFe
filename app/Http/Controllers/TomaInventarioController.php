@@ -113,6 +113,7 @@ class TomaInventarioController extends Controller
       DB::connection('tenant')->commit();
     } catch (\Throwable $th) {
       DB::connection('tenant')->rollback();
+      logger($th);
       return response()->json(['message' => $th->getMessage()], 400);
     }
 
