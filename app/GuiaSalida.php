@@ -346,7 +346,7 @@ class GuiaSalida extends Model
 
   public static function lastId()
   {
-    $last_guia = self::OrderByDesc('GuiOper')
+    $last_guia = self::orderByRaw('CONVERT(GuiOper, SIGNED) desc')
       ->where('EmpCodi', empcodi())
       ->first();
 
