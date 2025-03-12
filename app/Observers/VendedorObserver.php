@@ -8,7 +8,7 @@ class VendedorObserver
 {
   public function creating(Vendedor $vendedor)
   {
-    $vendedores = Vendedor::all()->filter(function($model,$key){
+    $vendedores = Vendedor::withoutGlobalScope('noEliminados')->all()->filter(function($model,$key){
       return is_numeric($model->Vencodi);
     });
 
@@ -18,9 +18,7 @@ class VendedorObserver
       $id = (int) $vendedores->max('Vencodi');
     }
 
-    $id = agregar_ceros($id,4,1);
-    $vendedor->Vencodi = $id;
+    $vendedor->Vencodi = agregar_ceros($id, 4, 1);
     $vendedor->empcodi = empcodi();
   }
-
 }

@@ -18,11 +18,9 @@ class Vendedor extends Model
 	const EMPRESA_CAMPO = "empcodi";
 	protected $fillable = ["empcodi" , 'Vencodi' , 'vennomb' , 'vendire' , 'ventel1' , 'venmail' , 'usucodi', 'defecto' ];
 
-	use 
-	UsesTenantConnection;
+	use UsesTenantConnection;
 
-
- protected static function boot()
+   protected static function boot()
   {
     parent::boot();
 
