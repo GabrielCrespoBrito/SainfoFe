@@ -8,7 +8,7 @@ class VendedorObserver
 {
   public function creating(Vendedor $vendedor)
   {
-    $vendedores = Vendedor::withoutGlobalScope('noEliminados')->all()->filter(function($model,$key){
+    $vendedores = Vendedor::withoutGlobalScope('noEliminados')->get()->filter(function($model,$key){
       return is_numeric($model->Vencodi);
     });
 
