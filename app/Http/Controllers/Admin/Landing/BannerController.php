@@ -62,7 +62,7 @@ class BannerController extends Controller
       }
       if ($file_mobile) {
         $banner->deleteImage($banner->imagen_mobile);
-        $banner->imagen_mobile = $banner->uploadImage($file_mobile, $banner->getImageName());
+        $banner->imagen_mobile = $banner->uploadImage($file_mobile, $banner->getImageName()  . "_mob");
       }
 
 
@@ -70,10 +70,10 @@ class BannerController extends Controller
       DB::commit();
     } catch (\Throwable $th) {
       DB::rollBack();
-      return response()->json(['message' => $th->getMessage()], 400);
+      // return response()->json(['message' => $th->getMessage()], 400);
+      noti()->error('Error ' . $th->getMessage());
+      return redirect()->back();
     }
-
-    noti()->success('Banner Actualizado Exitosamente');
     return redirect()->route('admin.pagina.banners.index');
   }
 
@@ -81,10 +81,15 @@ class BannerController extends Controller
   public function delete($id)
   {
     $banner = Banner::findOrfail($id);
-    $banner->deleteImage();
-    $banner->deleteImage($banner->imagen_mobile);
-    $banner->delete();  
-    noti()->success('Banner Eliminado exitosamente');
+
+    try {
+      $banner->deleteImage();
+      $banner->deleteImage($banner->imagen_mobile);
+      $banner->delete();
+      noti()->success('Banner Eliminado exitosamente');
+    } catch (\Throwable $th) {
+      noti()->error('Error ' . $th->getMessage());
+    }
     return redirect()->back();
   }
 }

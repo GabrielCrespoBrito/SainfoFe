@@ -2,14 +2,30 @@
 
 namespace App\Models\Traits;
 
+use Illuminate\Support\Facades\File;
+
 trait ImageUploadTrait
 {
+
+  public function getFolderPath( $imageName = null )
+  {
+    $folderPath = storage_path('app/public');
+
+    return $imageName ? $folderPath . DIRECTORY_SEPARATOR . $imageName : $folderPath;
+  }
+
   public function uploadImage($file, $name)
   {
-    $fh = FileHelper();
-    $fh->only_nube = true;
+    // $fh = FileHelper();
+    // $fh->only_nube = true;
     $logoName = $name . '.' . $file->extension();
-    $fh->save_img($logoName, file_get_contents($file->getPathname()));
+    // $fh->save_img($logoName, file_get_contents($file->getPathname()));
+    // file_put_contents($file->getPathname());
+    
+    File::put(
+      $this->getFolderPath($logoName), 
+      file_get_contents($file->getPathname()) 
+    );
     return $logoName;
   }
 
@@ -17,9 +33,11 @@ trait ImageUploadTrait
   {
     $imagen = $imagen ?? $this->getImage();
 
-    $fh = fileHelper();
-    $fh->only_nube = true;
-    $fh->delete_img($imagen);
+    $path = $this->getFolderPath($imagen);
+
+    if (file_exists($path)) {
+      unlink($path);
+    }
   }
 
   public function pathImage()
@@ -29,7 +47,7 @@ trait ImageUploadTrait
 
   public function getPathImage( $img_name )
   {
-    return file_build_path(config('app.aws_url_bucket'), 'images', $img_name );
+    return asset( sprintf('storage/%s', $img_name ) );
   }
 
 }
