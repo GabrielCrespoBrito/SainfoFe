@@ -499,11 +499,14 @@ function aceptar_guia() {
   }
 
   let funcs = {
-    success: redirectHome
+    success: redirectHome,
+    complete : () => { 
+      $("#load_screen").hide();
+    }
   }
 
   let url = $("#modalGuiaSalida").data('url');
-  console.log("data", data, url, funcs);;
+  $("#load_screen").show();
   ajaxs(data, url, funcs);
 }
 
