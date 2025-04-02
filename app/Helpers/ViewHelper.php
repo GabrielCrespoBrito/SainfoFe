@@ -169,7 +169,7 @@ class ViewHelper
 
     // Comprobar si tiene _mix, esto indicara que es una ruta mix
     if (strpos($script, "mix") !== false) {
-      // $script = str_replace("_mix", "", $script);
+      $script = str_replace("_mix", "", $script);
       $mix = true;
     }
 

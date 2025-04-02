@@ -36,10 +36,12 @@ class GuiaIngresoFromCompraRequest extends FormRequest
       if(!$validator->fails()){
         $validator->after(function($validator){
           $compra = Compra::find( $this->route()->parameters()['id'] );
-          if ($compra->despachoCompletado()) {
-            // $validator->errors()->add('field','La Compra ya tiene su guia de ingreso');
-            // return;
+          
+          if( $compra->GuiOper ){
+            $validator->errors()->add('field','La Compra ya tiene su guia de ingreso');
+            return;
           }
+
         });
       }
     }
