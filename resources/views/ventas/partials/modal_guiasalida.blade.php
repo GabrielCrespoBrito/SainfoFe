@@ -3,6 +3,8 @@ $titulo = $titulo ?? 'Generar Guia';
 $showForm = $showForm ?? false;
 $showFecha = $showFecha ?? false;
 $showCancelBtn = $showCancelBtn ?? true;
+$showCheckboxNoMov = $showCheckboxNoMov ?? false;
+
 
 $id = $id ?? 'modalGuiaSalida';
 $url = $url ?? '';
@@ -103,6 +105,16 @@ $locales = $locales ?? auth()->user()->locales;
               </div>
             </div>
           </div>
+
+          @if($showCheckboxNoMov)
+            <div class="form-group col-md-12 no_pl">
+              <div class="row">
+                <label class="col-md-12 control-label" style="margin-top:8px; padding-right: 0; font-weight: normal"> Sin Ingreso de Productos. 
+                  <input type="checkbox" name="no_mov" value="1">
+                </label>
+              </div>
+          @endif
+
           @endif
         </div>
       </div>

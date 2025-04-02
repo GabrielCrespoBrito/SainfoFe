@@ -15,7 +15,7 @@
       <a href="{{ route('guia.edit' , $compra->GuiOper ) }}" class="btn btn-default btn-flat guia-button"> <span class="fa fa-money"></span> Guia </a>
     @else
       <a href="#" data-toggle="modal" data-target="#modalGuiaSalida"  class="btn btn-primary btn-flat guia-button"> <span class="fa fa-money"></span> Generar Guia </a>
-      @include('ventas.partials.modal_guiasalida', ['url' => route('guia.store.ingreso', $compra->CpaOper ) , 'isCompra' => true, 'compra' => $compra  ])
+      @include('ventas.partials.modal_guiasalida', ['url' => route('guia.store.ingreso', $compra->CpaOper ) , 'isCompra' => true, 'compra' => $compra , 'showCheckboxNoMov' => true  ])
     @endif
     {{-- /Guia --}}
 

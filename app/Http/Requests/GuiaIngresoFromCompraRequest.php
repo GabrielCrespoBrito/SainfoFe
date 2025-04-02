@@ -27,6 +27,7 @@ class GuiaIngresoFromCompraRequest extends FormRequest
         return [
           'serie' => 'required|min:1|max:4',
           'numero' => 'required|digits_between:1,8',
+          'no_mov' => 'sometimes|in:0,1'
         ];
     }
 

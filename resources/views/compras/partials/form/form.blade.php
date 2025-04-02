@@ -17,6 +17,7 @@
 
 <form class="form_principal factura_div focus-green" id="form_principal" data-url="{{ $url }}">		
 	
+  {{-- Aqui esta el boton para mostrar la guia de ingreso --}}
 	@include('compras.partials.form.botones' , compact('create','edit','show','active_form') )
 
 	@include('compras.partials.form.nroventa', compact('create','edit','show','active_form') ) 

@@ -496,6 +496,7 @@ function aceptar_guia() {
     numero: $("[name=numero]", "#modalGuiaSalida").val(),
     fecha: $("[data-de]", "#modalGuiaSalida").val(),
     almacen: $("[name=almacen_id] option:selected", "#modalGuiaSalida").val(),
+    no_mov: $("[name=no_mov]", "#modalGuiaSalida").is(':checked') ? 1 : 0,
   }
 
   let funcs = {

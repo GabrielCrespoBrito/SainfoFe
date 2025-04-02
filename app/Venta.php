@@ -300,17 +300,17 @@ class Venta extends Model
 
   public function cliente()
   {
-    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi')->where('TipCodi', 'C');
+    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi')->where('TipCodi', 'C')->withoutGlobalScope('noEliminados');
   }
 
   public function cliente_with()
   {
-    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi');
+    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi')->withoutGlobalScope('noEliminados');
   }
 
   public function cliente_w()
   {
-    return $this->belongsToMany(ClienteProveedor::class, 'PCCodi', 'PCCodi');
+    return $this->belongsToMany(ClienteProveedor::class, 'PCCodi', 'PCCodi')->withoutGlobalScope('noEliminados');
   }
 
   public function items()

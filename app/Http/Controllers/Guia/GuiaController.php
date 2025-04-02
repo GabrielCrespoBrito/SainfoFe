@@ -286,13 +286,16 @@ class GuiaController extends Controller
 
   public function storeIngreso(GuiaIngresoFromCompraRequest $request, $id)
   {
+    logger($request->all());
     try {
       \DB::connection('tenant')->beginTransaction();
       $compra = Compra::find($id);
       $guia = GuiaSalida::storeFromCompra($compra, $request);
       $agregateInventary = $compra->isNotaCredito() ? false : true;
+      
+      $no_mov = $request->input('no_mov', 0);
       foreach ($compra->items as $item) {
-        GuiaSalidaItem::createItem($item, $guia->GuiOper, 'C', $agregateInventary);
+        GuiaSalidaItem::createItem($item, $guia->GuiOper, 'C', $agregateInventary, $no_mov);
       }
       \DB::connection('tenant')->commit();
       $guia->calculateTotal();
