@@ -96,12 +96,13 @@ class GuiaSalidaItem extends Model
     return $codigoLen < 8 ? ($cero_agregar[$codigoLen] . $codigoNum) : ($numero + $set);
   }
 
-  public static function createItem($vta = null, $id_guia = null, $tipo = "V", $agregateInventary = true)
+  public static function createItem($vta = null, $id_guia = null, $tipo = "V", $agregateInventary = true, $no_mov = false)
   {
     $guia = GuiaSalida::find($id_guia);
     $isIngreso = $guia->isIngreso();
     $cantidad_relativa = $vta->DetCant * ($vta->DetFact ?? $vta->Detfact ?? 1);
-    $cantidad_absoluta = convertNegativeIfTrue($cantidad_relativa,  $isIngreso == false);
+    $cantidad_absoluta = 
+    $no_mov ? 0 : convertNegativeIfTrue($cantidad_relativa,  $isIngreso == false);
     $guiaItem = new GuiaSalidaItem;
     $guiaItem->DetItem = $vta->DetItem;
     $guiaItem->GuiOper = $guia->GuiOper;
