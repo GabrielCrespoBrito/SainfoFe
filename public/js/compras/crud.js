@@ -490,6 +490,8 @@ function redirectHome(data) {
 }
 
 function aceptar_guia() {
+
+  // Commented out for testing
   let data =
   {
     serie: $("[name=serie]", "#modalGuiaSalida").val(),
@@ -498,6 +500,7 @@ function aceptar_guia() {
     almacen: $("[name=almacen_id] option:selected", "#modalGuiaSalida").val(),
     no_mov: $("[name=no_mov]", "#modalGuiaSalida").is(':checked') ? 1 : 0,
   }
+
 
   let funcs = {
     success: redirectHome,
