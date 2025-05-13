@@ -17,7 +17,6 @@
   </script>
   
   <script src="{{ asset(mix('js/mix/helpers.js')) }}"></script>  
-  {{-- <script src="{{ asset('js/reportes/kardex_fisico.js') }}"></script> --}}
   <script src="{{ asset(mix('js/reportes/mix/kardex_fisico.js')) }}"></script>
 @endsection
 

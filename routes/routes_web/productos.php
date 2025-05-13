@@ -52,7 +52,6 @@ Route::middleware('tenant.exists')->group(function () {
 
       Route::post('restaurar', 'ProductosController@restaurar')->name('restaurar');
 
-      // productos/update
       Route::post('vendidos', 'ProductosController@search_productos_vendidos')->name('vendidos');
 
       // -		

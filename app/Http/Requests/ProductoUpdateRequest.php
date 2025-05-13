@@ -89,7 +89,7 @@ class ProductoUpdateRequest extends FormRequest
         $producto_procodi = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $this->numero_operacion)->first();
 				
 				if( $producto_procodi ){
-					if( $producto->ID != $producto_procodi->ID ){
+					if( $producto->ID != $producto_procodi->ID && $producto_procodi->UDelete == '0' ){
             $validator->errors()->add('numero_operacion', "El codigo de producto {$this->numero_operacion} ya esta siendo usado por otro producto");
             return;
           }

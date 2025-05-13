@@ -284,8 +284,7 @@ class ReportesController extends Controller
   public function kardex_fisico()
   {
     $locales = get_empresa()->almacenes;
-    return view(
-      'reportes.kardex_fisico',
+    return view('reportes.kardex_fisico',
       ['locales' => $locales]
     );
   }
@@ -509,7 +508,6 @@ class ReportesController extends Controller
     } 
 
     else {
-
       ob_end_clean();
       $excellExport = new KardexFisicoExcell($info, 'KardexFisico');
       $info = $excellExport
