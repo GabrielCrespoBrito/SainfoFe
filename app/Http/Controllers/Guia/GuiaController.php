@@ -187,6 +187,7 @@ class GuiaController extends Controller
       $route_store = route('guia_ingreso.store');
       $route_index = route('guia_ingreso.index');
     } else {
+
       if ($tipoDocumento == null) {
         $titulo = 'Guia De Remision';
         $route_store = GuiaSalida::getRouteStore(GuiaSalida::TIPO_GUIA_REMISION);
@@ -259,8 +260,7 @@ class GuiaController extends Controller
       $data["motivo_traslado"] = $motivo_traslado;
       $data["transportistas"] = $transportistas;
       $data["empresas_transporte"] = $empresas_transporte;
-
-      $data["tipos_documentos"] = SerieDocumento::ultimaSerie()[0]['series'];
+      $data["tipos_documentos"] = SerieDocumento::ultimaSerie(true)[0]['series'];
       $vendedores = Cache::rememberForever('vendedores' . $empcodi, function () {
         return Vendedor::all();
       });
