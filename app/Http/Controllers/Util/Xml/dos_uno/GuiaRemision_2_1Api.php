@@ -111,9 +111,16 @@ class GuiaRemision_2_1Api extends XmlHelperNew
     if ($this->documento->isWithProveedor()) {
       $cliente = $this->documento->cliente;
       $xml = $this->change_datas([
-        ["tipo_documento_proveedor",  $cliente->getTipoDocumento()],
-        ["ruc_proveedor",  $cliente->getDocumento()],
-        ["nombre_proveedor", $cliente->getNombre()],
+        // old
+        // ["tipo_documento_proveedor",  $cliente->getTipoDocumento()],
+        // ["ruc_proveedor",  $cliente->getDocumento()],
+        // ["nombre_proveedor", $cliente->getNombre()],
+
+        // new
+        ["tipo_documento_proveedor",  $this->empresa->getTipoDocumento()],
+        ["ruc_proveedor",  $this->empresa->getDocumento() ],
+        ["nombre_proveedor" , $this->empresa->getNombre() ],
+
       ], $this->proveedorData_base, false);
     }
 
