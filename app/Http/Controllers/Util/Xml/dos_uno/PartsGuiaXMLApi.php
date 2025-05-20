@@ -29,8 +29,6 @@ trait PartsGuiaXMLApi
   <cbc:DespatchAdviceTypeCode>[guiaTypeCode]</cbc:DespatchAdviceTypeCode>
   [documentoRelacionado]';
 
-  // <cbc:Note><![CDATA[[nota]]]></cbc:Note>
-  
   public $documentoRelacionado =
   '<cac:AdditionalDocumentReference>
       <cbc:ID>[id]</cbc:ID>
@@ -42,16 +40,7 @@ trait PartsGuiaXMLApi
         </cac:PartyIdentification>
       </cac:IssuerParty>
     </cac:AdditionalDocumentReference>';
-
-// /DespatchAdvice/cac:AdditionalDocumentReference/cac:IssuerParty/cac:PartyIdentification/cbc:ID (Número de documento del emisor del documento)
-
-// /DespatchAdvice/cac:AdditionalDocumentReference/cac:IssuerParty/cac:PartyIdentification/cbc:ID (Número de documento del emisor del documento)
-// /DespatchAdvice/cac:AdditionalDocumentReference/cac:IssuerParty/cac:PartyIdentification/cbc:ID@schemeID (Tipo de documento de identidad del emisor del documento relacionado)
-// @schemeName
-// @schemeAgencyName
-// @schemeURI
-
-
+  
   ###################### FIRMA ######################
 
   public $firmaData_XMLPART =

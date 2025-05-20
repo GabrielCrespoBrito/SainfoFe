@@ -30,17 +30,15 @@ class GuiaRemision_2_1Api extends XmlHelperNew
     
     if($this->documento->vtaoper || $this->documento->isTipoExport()){
       $docRelacionado = $this->documento->getDocRefReal();
-      // return $this->change_datas([
-      //   [ 'id', $this->documento->venta->VtaNume   ],
-      //   [ 'tipo', $this->documento->venta->TidCodi ],
-      //   [ 'tipo_nombre', $this->documento->xmlInfo()->documentoRelacionadoNombre($this->documento->venta->TidCodi) ],
-      //   [ 'ruc', $this->ruc_empresa ],
-      // ], $this->documentoRelacionado, false);
+
+      // @TODO: el documento relacionado tiene que ser la factura que emite el cliente
+      $ruc = $this->documento->isWithProveedor() ? $this->documento->cliente->getDocumento() : $this->ruc_empresa;
+
       return $this->change_datas([
         ['id', $docRelacionado->id  ],
         ['tipo', $docRelacionado->tipo ],
         ['tipo_nombre', $this->documento->xmlInfo()->documentoRelacionadoNombre($docRelacionado->tipo)],
-        ['ruc', $this->ruc_empresa],
+        ['ruc', $ruc],
       ], $this->documentoRelacionado, false);
     }
     return '';
@@ -111,16 +109,9 @@ class GuiaRemision_2_1Api extends XmlHelperNew
     if ($this->documento->isWithProveedor()) {
       $cliente = $this->documento->cliente;
       $xml = $this->change_datas([
-        // old
-        // ["tipo_documento_proveedor",  $cliente->getTipoDocumento()],
-        // ["ruc_proveedor",  $cliente->getDocumento()],
-        // ["nombre_proveedor", $cliente->getNombre()],
-
-        // new
-        ["tipo_documento_proveedor",  $this->empresa->getTipoDocumento()],
-        ["ruc_proveedor",  $this->empresa->getDocumento() ],
-        ["nombre_proveedor" , $this->empresa->getNombre() ],
-
+        ["tipo_documento_proveedor",  $cliente->getTipoDocumento()],
+        ["ruc_proveedor",  $cliente->getDocumento()],
+        ["nombre_proveedor", $cliente->getNombre()],
       ], $this->proveedorData_base, false);
     }
 
