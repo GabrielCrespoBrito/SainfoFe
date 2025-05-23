@@ -595,7 +595,16 @@ $(document).ready(function (e) {
     if (isNaN(v)) {
       return v;
     }
-    return codigo ? v : (Math.round(v * 100) / 100).toFixed(decimals);
+    return codigo ? v :  convertDecimalCustom(v, decimals);
+  }
+
+  function convertDecimalRegular(value, decimals = 2) 
+  {
+    return (Math.round(value * 100) / 100).toFixed(decimals); 
+  }
+
+  function convertDecimalCustom(value, decimals = 2) {
+      return Number(value).toFixed(decimals);
   }
 
   function tdCreate(inputNameOrValue, getFromInput = true, campo = "") {
@@ -1435,6 +1444,7 @@ $(document).ready(function (e) {
     const precio_min = is_sol ? unidad_select.UniPMVS : unidad_select.UniPMVD;
     const decimales = is_sol ? window.decimales_soles : window.decimales_dolares;
 
+    console.log("set_precio", precio, decimales, fixedNumber(precio, false, decimales) );
     $("[name=producto_precio]").val(fixedNumber(precio, false, decimales));
     $("[name=producto_precio]")
       .attr('data-default', fixedNumber(precio_min, false, decimales));
