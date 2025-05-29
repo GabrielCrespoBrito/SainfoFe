@@ -679,9 +679,6 @@ function eliminar_producto(e) {
       {
         success: function (data) {
           notificaciones(data.message, "success");
-          tr.hide(500, function () {
-            $(this).remove();
-          })
           table.draw();
         },
         error: function (data) {
