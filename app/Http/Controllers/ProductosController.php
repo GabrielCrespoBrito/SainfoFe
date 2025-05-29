@@ -399,7 +399,7 @@ class ProductosController extends Controller
   {
     $this->authorize(p_name('A_DELETE', 'R_PRODUCTO'));
 
-    $producto = Producto::findByProCodi($request->id);
+    $producto = Producto::find($request->id);
     $result = $producto->useInDocument();
 
     if (! $result->success) {
@@ -427,7 +427,13 @@ class ProductosController extends Controller
   public function restaurar(Request $request)
   {
     $this->authorize(p_name('A_DELETE', 'R_PRODUCTO'));
-    $producto = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $request->id)->first();
+
+    $producto = Producto::withoutGlobalScope('noEliminados')->where('id', $request->id)->first();
+
+    if (Producto::findByProCodi($producto->ProCodi)) {
+      return response()->json(['message' => sprintf("Ya existe un Producto activo con condigo (%s), eliminelo si quiere primero si quieres restaurar", $producto->ProCodi)], 400);
+    }
+
     $producto->UDelete = 0;
     $producto->save();
   }

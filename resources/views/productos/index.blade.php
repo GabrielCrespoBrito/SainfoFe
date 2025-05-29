@@ -103,18 +103,6 @@
     <a href="#" class="btn btn-success btn-flat pull-left" data-toggle="modal" data-target="#modalActualizarProducto"> <span class="fa fa-save"></span> Actualizar Inventario </a>
   @endif
 
-  <!--
-  
-  
-  |_______|
-  |       |
-  | O o O |
-  |  ___  |
-  |_______|
-
-  -->
-
-
   <div class="form-group col-md-3">
     <div class="">
       <select name="grupo_filter" required="required" class="form-control">

@@ -28,7 +28,7 @@ class TenantExists
 		}
 
 		if( !$this->tenantValid($fqdn) ){
-      auth()->logout();
+      		auth()->logout();
 			abort(404, 'Cliente errorneo.');
 			return;
 		}

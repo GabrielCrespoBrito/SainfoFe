@@ -672,7 +672,7 @@ function eliminar_producto(e) {
   let tr = $(this).parents("tr");
   if (confirm("Esta seguro que desea eliminar?")) {
     let formData = new FormData();
-    formData.append('id', tr.find(':eq(0)').text());
+    formData.append('id', tr.data().ID );
     ajaxs(
       formData,
       url_eliminar,
@@ -698,7 +698,8 @@ function restaurar_producto(e) {
   let tr = $(this).parents("tr");
   if (confirm("Esta seguro que desea restaurar?")) {
     let formData = new FormData();
-    formData.append('id', tr.find(':eq(0)').text());
+    // formData.append('id', tr.data().ID  tr.find(':eq(0)').text());
+    formData.append('id', tr.data().ID  );
     ajaxs(
       formData,
       url_restaurar,
