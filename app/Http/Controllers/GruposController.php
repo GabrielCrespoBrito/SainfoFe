@@ -42,7 +42,7 @@ class GruposController extends Controller
 
   public function searchApi()
   {
-    return Grupo::with('fams')->get();
+    return Grupo::noDeleted()->with('fams')->get();
   }
 
   public function restaurar($id)
