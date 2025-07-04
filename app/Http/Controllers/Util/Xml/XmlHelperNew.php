@@ -308,6 +308,7 @@ class XmlHelperNew
     $objDSig = new XMLSecurityDSig_( $this->is_guia );
 
     $doc->loadXML( $this->xml );
+    logger($this->xml);
     $objDSig->setCanonicalMethod(XMLSecurityDSig::C14N);      
     $objDSig->addReference( 
       $doc, 

@@ -26,9 +26,6 @@ class ReporteCajaSimplificado
 
     $cajaMovimientos = $this->caja->getDataMovimientos();
 
-    // dd( $cajaMovimientos );
-    // exit();
-
     $data = [
       'reporte_titulo' => 'Reporte de Caja Simplificado',
       'caja_nombre'    => $this->caja->CajNume,

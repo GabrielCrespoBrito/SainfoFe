@@ -232,9 +232,6 @@ class MovimientosData
     $this->calculateSaldo();
     $this->processMetodoPagos();
 
-    // _dd( $this->total_venta );
-    // exit();
-
     return (object) [
       'saldo_apertura' => $this->saldo_apertura,
       'ingresos' => $this->ingresos,
