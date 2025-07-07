@@ -61,6 +61,7 @@ function select2Init() {
       data: function (par) {
         return {
           data: $.trim(par.term),
+          returnId: true,
           type: selectClient.data('type')
         };
       },
