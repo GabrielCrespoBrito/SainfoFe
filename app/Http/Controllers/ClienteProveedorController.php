@@ -289,6 +289,8 @@ class ClienteProveedorController extends Controller
 
     $data = [];
 
+    logger( $request->input('returnId') );
+
     foreach ($clientes as $cliente) {
       $text = $cliente->PCRucc . " - " . $cliente->PCNomb;
       $returnId = $request->input('returnId', false);

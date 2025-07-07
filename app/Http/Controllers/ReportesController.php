@@ -90,7 +90,7 @@ class ReportesController extends Controller
     $cliente_info = null;
 
     if ($cliente_select) {
-      $cliente_info = ClienteProveedor::findByRuc($cliente, null, ClienteProveedor::TIPO_CLIENTE);
+      $cliente_info = ClienteProveedor::findCliente($cliente);
     }
 
     $model = $is_venta ?  Venta::with('vendedor')->whereBetween('VtaFvta', [$fecha_desde, $fecha_hasta])->where('EmpCodi', empcodi()) : GuiaSalida::whereBetween('GuiFemi', [$fecha_desde, $fecha_hasta])->where('EmpCodi', empcodi());
