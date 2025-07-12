@@ -25,7 +25,8 @@
     var url_route_productos_consulta = "{{ route('productos.consulta') }}";
   </script>
   <script src="{{ asset(mix('js/mix/helpers.js')) }}"></script>  
-  <script src="{{ asset('js/mix/reporte.js') }}"></script>
+  <script src="{{ asset(mix('js/mix/reporte.js')) }}"></script>
+  <!-- <script src="{{ asset('js/mix/reporte.js') }}"></script> -->
   {{-- <script src="{{ asset('js/reportes/reporte.js') }}"></script> --}}
 @endsection
 
