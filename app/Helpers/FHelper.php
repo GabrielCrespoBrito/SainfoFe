@@ -151,10 +151,17 @@ class FHelper
     return \Storage::disk('s3')->delete($path);
   }
 
-  public function save_local($path, $content)
-  {
+public function save_local($path, $content)
+{
+    $directory = dirname($path);
+
+    if (!\File::exists($directory)) {
+        \File::makeDirectory($directory, 0777, true); // Crea el directorio con permisos y de forma recursiva
+    }
+
     \File::put($path, $content);
-  }
+}
+
 
   public function save_nube($path, $content)
   {

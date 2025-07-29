@@ -110,8 +110,8 @@ class Caja extends Model
 
 
   public function getIngresosEgresos(){   
-    $caja = $this;
 
+    // dd("getIngresosEgresos", $this->CajNume);
     $detalles = Caja::detallesByTipo($this->CajNume);
     $ingresos = $detalles->where( 'ANULADO' , "I" );
     $egresos = $detalles->where( 'ANULADO'  , "S" );
@@ -527,6 +527,7 @@ class Caja extends Model
   public static function detallesByTipo( $id_caja, $tipo_movimiento = null, $exclude_tipo_nota_credito = true )
   {
     $relacion = $tipo_movimiento == 'I' ? 'tipoIngreso' : 'tipoEgreso';
+
 
     $movimientos = CajaDetalle::with(['venta_pago', $relacion])
     ->where('CajNume', $id_caja);
