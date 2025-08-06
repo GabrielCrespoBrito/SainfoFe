@@ -808,7 +808,7 @@ text-transform: lowercase;
 text-transform: uppercase;
 }
 .bold-900 {
-  font-weight: 900;
+font-weight: 900;
 }
 .text-capitalize {
 text-transform: capitalize;
@@ -2567,11 +2567,11 @@ font-size: 1.1em;
 }
 
 .font-size-20px {
-  font-size: 20px;
+font-size: 20px;
 }
 
 .font-size-25px {
-  font-size: 25px;
+font-size: 25px;
 }
 
 .text-uppercase {
@@ -2664,7 +2664,7 @@ border-bottom-style: dotted;
 }
 
 .border-bottom-style-double {
-  border-bottom-style: double;
+border-bottom-style: double;
 }
 
 .border-bottom-0 {
@@ -2718,7 +2718,7 @@ border-bottom-color: gray;
 }
 
 .border-bottom-color-gray-light {
-  border-bottom-color: #d7d7d7;
+border-bottom-color: #d7d7d7;
 }
 
 border-color-blue-light.border-bottom-color-gray {
@@ -2809,11 +2809,11 @@ bottom: 0;
 }
 
 .box-sizing-content-box {
-  box-sizing:content-box;
+box-sizing:content-box;
 }
 
 .box-sizing-border-box {
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 
@@ -2910,10 +2910,10 @@ outline:1px solid black;
 
 
 @if ($logoMarcaAgua)
-    body.a4 .img-marca-agua {
-    position : fixed;
-    opacity : .5;
-    }
+body.a4 .img-marca-agua {
+position : fixed;
+opacity : .5;
+}
 @endif
 
 
@@ -3122,25 +3122,34 @@ min-height: 400px;
 }
 
 table.odd-background tr:nth-child(even) {
-  background-color: #f0f0f0;
+background-color: #f0f0f0;
 }
 
 {{-- Letter-spacing --}}
 
 .letter-spacing-1px * {
-  letter-spacing: 1px;
+letter-spacing: 1px;
 }
 
 
 .letter-spacing-x.1 {
-  letter-spacing: .1em;
+letter-spacing: .1em;
 }
 
 .letter-spacing-x.2 {
-  letter-spacing: .2em;
+letter-spacing: .2em;
 }
 
 .border-collapse-separate {
-  border-collapse: separate !important;
-  border-spacing:  3px;
+border-collapse: separate !important;
+border-spacing: 3px;
+}
+
+.line-truncate {
+display: inline-block;
+max-width: 100%; /* O define un ancho específico como 200px si prefieres */
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+vertical-align: top;
 }

@@ -129,6 +129,15 @@ class PDFHtmlPdf
     $this->globalOptions = array_merge( $this->globalOptions, $newOptions );
   }
 
+  public function updatePageHeight( int $cm, $sum = false )
+  {
+    $pageHeight = str_replace('cm', '', $this->globalOptions['page-height']);
+    $pageHeight = sprintf('%0.2fcm', $sum ? $pageHeight + $cm : $cm );
+
+    $this->globalOptions['page-height'] = $pageHeight;
+
+  }
+
   // Generar pdf 
 
   public function save( $path )

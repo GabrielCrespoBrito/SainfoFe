@@ -831,6 +831,9 @@ class GuiaSalida extends Model
       FileHelper($empresa->EmpLin1)->save_pdf($namePDF, $pdf->generator->toString());
     }
 
+    if( $plantilla->formato == PDFPlantilla::FORMATO_TICKET ){
+    }
+
     if ($saveTemp) {
       $tempPath = file_build_path('temp', $namePDF);
       $pdf->save($tempPath);

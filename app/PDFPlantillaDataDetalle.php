@@ -42,6 +42,12 @@ class PDFPlantillaDataDetalle extends Model
     return $this->precio;
   }
 
+  public function getPrecio()
+  {
+    return $this->precio;
+  }
+  
+
   public function valorUnitario()
   {
     return $this->precio;

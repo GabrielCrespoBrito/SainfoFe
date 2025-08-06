@@ -502,20 +502,6 @@ class Cotizacion extends Model
 
     //
     $items = $this->items;
-
-    // if (true) {
-    // // if ($items->count() > 99) {
-    //   $items = collect($items)->sortBy('Index');
-    //   // ->toArray();
-    //   // $items = [];
-    //   // foreach ($items2 as $item) {
-    //   //   array_push($items, $item);
-    //   // }
-    // }
-
-    //
-
-
     $empresa['EmpLogo']   = "";
     $empresa['EmpLogo1']  = "";
     $cotizacion['empresa'] = null;
@@ -714,6 +700,9 @@ class Cotizacion extends Model
     $namePDF = $this->nameFile('.pdf', true);
     $pdf->generator->setGlobalOptions($plantilla->getSetting($generator));
 
+    if( $formato == PDFPlantilla::FORMATO_TICKET ){
+      $pdf->generator->updatePageHeight($data['items'], true);
+    }
 
     // 
     if ($save) {

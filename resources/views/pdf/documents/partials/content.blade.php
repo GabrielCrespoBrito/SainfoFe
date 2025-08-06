@@ -1,6 +1,7 @@
 @php
   $preliminar = $preliminar ?? false;
   $logoMarcaAgua = $logoMarcaAgua ?? null;
+  $class_name = $class_name ?? '';
 @endphp
 <html>
 <head>
@@ -19,7 +20,7 @@
     <img class="img-marca-agua" style="top:{{$top}}px;left:{{$left}}px" src="data:image/png;base64,{{ $logoMarcaAgua }}">
   @endif
 
-  <div style="display:block" class="container">  
+  <div style="display:block" class="container {{ $class_name  }} {{ $class_name == 'ticket' ? 'ticket-content' : '' }} ">  
     @if($preliminar)
     @endif
   

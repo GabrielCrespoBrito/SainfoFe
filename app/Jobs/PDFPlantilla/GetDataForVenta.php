@@ -24,8 +24,14 @@ class GetDataForVenta extends GetDataPDFAbstract
     $venta = $venta_fake->toArray();
     $firma = $venta_fake->dataQR($e->EmpLin1, $cliente->TDocCodi, $cliente->PCRucc);
     $items = $plantilla_data->items;
+
+    $items = Collect($items)
+    ->merge(Collect($items))
+    ->merge(Collect($items))
+    ->merge(Collect($items))
+    ->merge(Collect($items));
+    
     $opciones = $e->opcion;
-    // $local = user_()->localPrincipal();
     $empresa =  $e->toArray();
     $empresa['igv_porc'] = $e->opcion->Logigv;
     $bancos = Venta::getFormatBancos($e->bancos->groupBy('BanCodi'));

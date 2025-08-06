@@ -1672,13 +1672,16 @@ class Empresa extends Model
     $plantilla = PDFPlantilla::find($plantilla_id);
 
     $pdf = new PDFGenerator(
-      view($plantilla->vista, $plantilla->getDataPlantilla()),
+      view($plantilla->vista, $data = $plantilla->getDataPlantilla()),
       PDFGenerator::HTMLGENERATOR
     );
 
 
     $pdf->generator->setGlobalOptions($plantilla->getSetting(PDFGenerator::HTMLGENERATOR));
-    
+    if( $plantilla->formato == PDFPlantilla::FORMATO_TICKET ){
+      $pdf->generator->updatePageHeight($data['items']->count(), true);
+    }
+
     $success = $pdf->save($routeTemp);
     return asset("temp/{$nameDocumento}");
   }

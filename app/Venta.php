@@ -1192,7 +1192,11 @@ class Venta extends Model
     $tempPath = '';
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
     $pdf->generator->setGlobalOptions($plantilla->getSetting());
-    
+
+    if( $formato == PDFPlantilla::FORMATO_TICKET ){
+      $pdf->generator->updatePageHeight( $data['items']->count(), true);
+    }
+
     $namePDF = $this->nameFile('.pdf');
 
     if ($save) {

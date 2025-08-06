@@ -467,7 +467,7 @@ class ProductosController extends Controller
     } catch (\QueryException | Throwable | \Exception | ErrorException | FatalThrowableError $e) {
       $errors[] = "Ha habido un inconveniente al guardar los documentos: ({$e->getMessage()}";
       $success = false;
-
+      dd($e);
       // \DB::rollback();
       return response()->json($e->getMessage(), 400);
       error_clear_last();

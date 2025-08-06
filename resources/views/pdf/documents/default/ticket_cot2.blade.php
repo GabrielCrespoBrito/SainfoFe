@@ -71,6 +71,7 @@
 
   @include('pdf.documents.partials.table_ticket', [
   'class_name' => 'col-12',
+  'line_cut' => true,
   'class_name_table' => 'col-md-12 font-size-9',
   ])
 
