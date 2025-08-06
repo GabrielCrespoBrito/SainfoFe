@@ -1026,7 +1026,7 @@ class Venta extends Model
     $venta['nombre_documento'] = $this->nombreDocumento();
 
     $size = [
-      Venta::FORMATO_TICKET => 200,
+      Venta::FORMATO_TICKET => 100,
       Venta::FORMATO_A4 => 150,
       Venta::FORMATO_A5 => 100,
     ][$formato];
