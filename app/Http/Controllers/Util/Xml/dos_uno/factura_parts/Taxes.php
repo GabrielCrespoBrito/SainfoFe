@@ -188,7 +188,7 @@ trait Taxes
     $infoTax = self::TAX_INFO['ICBPER'];
 
     $cantidadBolsasValorUnidad = 
-    $this->getPartVariable(true, 'cantidad_bolsa',  $cifras->cantidad ) . $this->getPartVariable(true, 'value_bolsa', $item->getBolsaUnit() );
+    $this->getPartVariable(true, 'cantidad_bolsa',  $cifras->cantidad ) . $this->getPartVariable(true, 'value_bolsa', $cifras->bolsa_unit );
 
     $xml_str = $this->getTaxBase(
       '',
@@ -199,7 +199,7 @@ trait Taxes
       $infoTax['TaxScheme_TaxTypeCode'],
       // $cantidadBolsasValorUnidad,
       '',
-      $cifras->icbper,
+      $cifras->bolsa,
       ''
     );
 

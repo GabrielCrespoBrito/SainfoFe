@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
    * @var array
    */
   protected $commands = [
+    // Commands\LogMessage::class,
     Commands\VerificarDataBase::class,
     Commands\DeleteTempFiles::class,
     Commands\MandarDocumentos::class,
@@ -26,7 +27,6 @@ class Kernel extends ConsoleKernel
     Commands\InformeDocumentosDiarios::class,
     Commands\GivePermissionToAllUsers::class,
     Commands\TicketVenta::class,
-    Commands\LogMessage::class,
     Commands\CrearContador::class,
     Commands\ExeCode::class,
     Commands\SendGuiaSunat::class,
