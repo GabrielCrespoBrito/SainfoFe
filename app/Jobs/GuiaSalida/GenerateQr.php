@@ -20,15 +20,6 @@ class GenerateQr
 
     public function handle()
     {
-      // $size = [
-      //   Venta::FORMATO_TICKET => 200,
-      //   Venta::FORMATO_A4 => 150,
-      //   Venta::FORMATO_A5 => 100,
-      // ][$formato];
-      
-        $qr = QrCode::format('png')->size(200)->generate($this->hash);
-      // $qr = QrCode::format('png')->size($size)->generate($firma);
-
-        //
+      $qr = QrCode::format('png')->size(150)->generate($this->hash);
     }
 }
