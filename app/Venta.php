@@ -1027,7 +1027,7 @@ class Venta extends Model
 
     $size = [
       Venta::FORMATO_TICKET => 100,
-      Venta::FORMATO_A4 => 150,
+      Venta::FORMATO_A4 => 100,
       Venta::FORMATO_A5 => 100,
     ][$formato];
 
