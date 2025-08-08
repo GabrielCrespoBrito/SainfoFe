@@ -6,6 +6,7 @@ $thead = $thead ?? '';
 $tbody = $tbody ?? '';
 $campoPrecioName = $orden_campos['precio_unitario'] ? 'P.Unit' : 'V.Unit';
 $line_cut = $line_cut ?? false;
+$classTdProducts =  $classTdProducts ?? '';
 
 
 @endphp
@@ -31,16 +32,16 @@ $line_cut = $line_cut ?? false;
       @endphp
 
       <tr>
-        <td class="font-size-9">{{ $item->DetUnid }}</td>
-        <td colspan="2" class="font-size-9">
+        <td class="{{ $classTdProducts }}">{{ $item->DetUnid }}</td>
+        <td colspan="2" class="{{ $classTdProducts }}">
         {{ substr(removeWhiteSpace($item->DetNomb), 0, $line_cut ? 35 : strlen($item->DetNomb)) }}
           @if( $item->DetDeta ) <br>{!! $item->DetDetaFormat() !!} @endif
         </td>
       </tr>
       <tr>
-        <td class="border-bottom-style-dotted border-width-1 font-size-9">{{ $item->DetCant }}</td>
-        <td class="border-bottom-style-dotted border-width-1 text-right font-size-9">{{ $valuePrecioName }}</td>
-        <td class="border-bottom-style-dotted border-width-1 text-right font-size-9">{{ decimal($item->DetImpo) }}</td>
+        <td class="border-bottom-style-dotted border-width-1 {{ $classTdProducts }}">{{ $item->DetCant }}</td>
+        <td class="border-bottom-style-dotted border-width-1 text-right {{ $classTdProducts }}">{{ $valuePrecioName }}</td>
+        <td class="border-bottom-style-dotted border-width-1 text-right {{ $classTdProducts }}">{{ decimal($item->DetImpo) }}</td>
       </tr>
       @endforeach
     </tbody>

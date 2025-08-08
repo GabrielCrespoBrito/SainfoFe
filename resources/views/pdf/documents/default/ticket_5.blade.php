@@ -74,7 +74,7 @@
 @include('pdf.documents.partials.table_ticket', [
 'class_name' => 'col-12 border-top-style-dotted border-width-1',
 'class_name_table' => 'col-md-12 font-size-9',
-
+'classTdProducts' = 'font-size-9',
 ])
 
 {{-- /FOOTER --}}
