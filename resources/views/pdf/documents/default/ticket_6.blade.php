@@ -20,7 +20,7 @@
 
   @include('pdf.documents.partials.info_empresa', [
   'class_name' => 'col-12 text-center border-bottom-style-dotted border-width-1 mb-x4 pb-x3',
-  'nombre' => $empresa['EmpLin5'],
+  'nombre' => $empresa['EmpLin5'] . ' WWWW',
   'nombre_text_class' => 'h5 bold',
   'direccion_div_class' => '',
   'correo_text_class' => '',
@@ -48,12 +48,13 @@
   'nombre_campo_nombre' => 'Nombre:',
   'nombre_campo_class' => 'bold',
   'nombre' => $cliente->PCNomb,
+  'documento' => $cliente->isRuc() ,
   'documento_campo_nombre' => $cliente->getNombreTipoDocumento() . ':',
-  'documento_campo_class' => 'bold',
-  'documento' => false,
+  'documento_campo_class' => 'bold font-size-9 ',
+  'direccion_div_class' => 'line-height-9',
   'direccion_campo_nombre' => "Dirección",
-  'direccion_campo_class' => 'bold',
-  'direccion' => false,
+  'direccion_campo_class' => 'bold bold font-size-9 line-height-9',
+  'direccion' => $cliente->PCDire,
   ])
 
 </div>

@@ -18,6 +18,9 @@ $direccion_text_class = $direccion_text_class ?? '';
 
 // Observación
 $observacion = $observacion ?? null;
+$observacion_div_class = $observacion_div_class ?? '';
+$observacion_campo_class = $observacion_campo_class ?? '';
+$observacion_text_class = $observacion_text_class ?? '';
 
 $documento_div_class = $documento_div_class ?? '';
 $documento_text_class = $documento_text_class ?? '';
@@ -99,9 +102,9 @@ $fecha_emision_text_class = $fecha_emision_text_class ?? '';
 
   {{-- Observacion  --}}
   @if($observacion)
-  <div class="direccion_div_class">
-    <span class="direccion_campo_class bold"> OBSERVACION:</span>
-    <span class="direccion_text"> {{ $observacion }} </span>
+  <div class="observacion_div_class {{ $observacion_div_class }}">
+    <span class="observacion_campo_class {{ $observacion_campo_class }}"> OBSERVACION:</span>
+    <span class="observacion_text {{ $observacion_text_class }}"> {{ $observacion }} </span>
   </div>
   @endif
   {{-- /Direcciòn --}}
