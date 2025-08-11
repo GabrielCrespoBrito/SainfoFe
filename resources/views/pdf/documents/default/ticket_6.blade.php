@@ -48,7 +48,7 @@
   'nombre_campo_nombre' => 'Nombre:',
   'nombre_campo_class' => 'bold',
   'nombre' => $cliente->PCNomb,
-  'documento' => $cliente->isRuc() ,
+  'documento' => $cliente->PCRucc ,
   'documento_campo_nombre' => $cliente->getNombreTipoDocumento() . ':',
   'documento_campo_class' => 'bold font-size-9 ',
   'direccion_div_class' => 'line-height-9',
