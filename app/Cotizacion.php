@@ -701,7 +701,7 @@ class Cotizacion extends Model
     $pdf->generator->setGlobalOptions($plantilla->getSetting($generator));
 
     if( $formato == PDFPlantilla::FORMATO_TICKET ){
-      $pdf->generator->updatePageHeight($data['items'], true);
+      $pdf->generator->updatePageHeight($data['items']->count(), true);
     }
 
     // 
