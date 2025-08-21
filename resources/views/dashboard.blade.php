@@ -17,10 +17,15 @@
 
 @section('contenido')
 <div class="row dashboard-botones">
-  <div class="col-md-6 col-md-offset-6 col-sm-12 col-xs-12 text-right"> 
+  <div class="col-md-6">
+    @include('partials.desarrollo-options')
+  </div>
+
+  <div class="col-md-6 col-sm-12 col-xs-12 text-right"> 
     @include('components.specific.select_mes',  ['class_adicional' => 'mes'])
   </div>
 </div>
+
 
 
 <div 
@@ -32,7 +37,6 @@
   data-ventaPorEnviar= "{{ route('ventas.index' , ['status' => '0011' , 'tipo' => 'tipo_', 'mes' => 'mes_' ]) }}"
   data-ventaNoAceptadas= "{{ route('ventas.index' , ['status' => '0002' , 'tipo' => 'tipo_' , 'mes' =>  'mes_' ]) }}"
   class="row dashboard">
-
 </div> 
 
 

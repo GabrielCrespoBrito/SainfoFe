@@ -518,7 +518,11 @@ class CotizacionAbstractController extends Controller
     $tipo = $tipo == "igv";
 
     if ($tipo == $impresionConIgv) {
-      if ($fileHelper->pdfExist($namePDF)) {
+
+      $regenerarPdfCotizaciones = session()->get('regenerarPdfCotizaciones', false);
+
+      
+      if ($fileHelper->pdfExist($namePDF) && $regenerarPdfCotizaciones == false) {
         if ($formato == PDFPlantilla::FORMATO_A4) {
           \File::put(public_path($pathTemp), $fileHelper->getPdf($namePDF));
         } else {

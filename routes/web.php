@@ -34,7 +34,6 @@ Route::get('/busquedaDocumentos', "ClienteAdministracion\ClienteDashboardControl
 Route::get('admin/runcommand/{comand}', "AdminController@runComandos")->name('admin.comandos');
 Route::post('admin/upload-img-banner-footer', "AdminController@saveImageBannerPDF")->name('admin.save_img_footer_banner');
 
-include('routes_web/cliente_dashboard.php');
 
 include('routes_web/documentos.php');
 
@@ -44,6 +43,8 @@ Route::post('logoutCliente', 'ClienteAdministracion\LoginControllerClientes@logo
 
 Route::group(['middleware' => ['auth', 'usuario.activo']], function () {
 
+  Route::get('/generarPdfs/{activar}', "HomeController@generarPdfs")->name('generarPdfs');
+  
   // Formulario para para enviar el telefono y validar
   Route::get('/verificar', "UsersController@verificarUser")->name('verificar')->middleware(['registration_user.active:0','usuario.verificar:0']);  
   Route::post('/storePhone', "UsersController@storePhone")->name('usuario.store_phone')->middleware(['registration_user.active', 'usuario.verificar:0']);

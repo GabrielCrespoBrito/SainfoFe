@@ -132,4 +132,11 @@ class HomeController extends Controller
       return redirect()->route('login');
     }
   }
+
+
+  public function generarPdfs($activar)
+  {
+    session()->put('regenerarPdfCotizaciones', $activar == 1);
+    return redirect()->back();
+  }
 }

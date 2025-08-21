@@ -538,14 +538,21 @@ class VentasController extends Controller
     $fileHelper = fileHelper($empresa->ruc());
 
     if ($plantilla_data->isFormatoA4()) {
+
+      $regenerarPdfCotizaciones = session()->get('regenerarPdfCotizaciones', false);
+
       // Verificar si ha sido creado su archivo, si es asi usarlo, si no crearlo
-      if ($fileHelper->pdfExist($namePDF)) {
+      if ($fileHelper->pdfExist($namePDF) && $regenerarPdfCotizaciones == false) {
         \File::put(public_path($pathTemp), $fileHelper->getPdf($namePDF));
-      } else {
+      } 
+      
+      else {
         $pathTemp = $venta->generatePDF($formato, true, true, false, PDFGenerator::HTMLGENERATOR);
         $pathTemp = $pathTemp['tempPath'];
       }
-    } else {
+    } 
+    
+    else {
       $generator = $formato == PDFPlantilla::FORMATO_A5 ? PDFGenerator::HTMLGENERATOR : PDFGenerator::HTMLGENERATOR;
       $pdfData = $venta->generatePDF($formato, false, true, false, $generator);
       $pathTemp = $pdfData['tempPath'];
@@ -560,58 +567,6 @@ class VentasController extends Controller
     $path = asset($pathTemp);
     $pathJs = str_replace('\\', '/', $path);
     return view('ventas.pdf_test', ['path' => $path, 'pathJS' => $pathJs, 'nameFile' => $namePDF]);
-  }
-
-
-  public function imprimirFactura_($id_factura, $formato = "a4")
-  {
-    $venta = Venta::find($id_factura);
-
-    if ($formato == "new") {
-      $data = $venta->dataPdf(Venta::FORMATO_TICKET);
-      $pdf = new PDFGenerator(view('pdf.documents.default.documento3', $data), PDFGenerator::HTMLGENERATOR);
-      $pdf->generator->setGlobalOptions([
-        'no-outline',
-        'page-width' => '8cm',
-        'page-height' => '29.7cm',
-        'margin-top' => '0in',
-        'margin-right' => '0in',
-        'margin-bottom' => '0in',
-        'margin-left' => '0in',
-        'orientation' => 'portrait',
-      ]);
-
-      $pdf->generator->generate();
-
-      return view('pdf.documents.default.documento3', $data);
-    } else {
-      $namePdf = $venta->nameFile('.pdf');
-      $pathTempAbsolute = "temp/{$namePdf}";
-      $pathTemp = asset($pathTempAbsolute);
-      $is_ticket = $formato == 'ticket';
-
-
-      if ($is_ticket) {
-        $data = $venta->dataPdf(Venta::FORMATO_TICKET);
-        $pdf = \PDF::loadView('ventas.pdf_ticket', $data);
-        $pdf->setPaper([0, 0, 205, 1000]);
-        $pdf->save($pathTempAbsolute);
-      } else {
-        if ($this->fileHelper->pdfExist($namePdf) && $formato == Venta::FORMATO_A4) {
-          $content = $this->fileHelper->getPdf($namePdf);
-          \File::put(public_path($pathTempAbsolute), $content);
-        } else {
-          $pathTemp = $venta->savePdf($formato);
-        }
-      }
-
-      if (isMobile()) {
-        $realPath = file_build_path(public_path(), 'temp', "{$namePdf}");
-        return response()->download($realPath, $namePdf);
-      }
-
-      return view('ventas.pdf_test', ['path' => $pathTemp]);
-    }
   }
 
   public function verXml($id_factura)
