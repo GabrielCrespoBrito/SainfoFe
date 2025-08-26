@@ -24,7 +24,7 @@
     var accion_default = "edit";		
     var ruc_crear = "{{ $ruc }}";    
 		var a;
-    
+    var is_orden = {{  (int) ($is_orden ?? 0) }};
     window.decimales_dolares = {{ $decimales_dolares ?? 2 }};
     window.decimales_soles = {{ $decimales_soles ?? 2 }};
     var canModifyPrecios = {{ $canModifyPrecios }}
@@ -50,6 +50,7 @@
 		var table_productos = null;	
 		var table_factura  = null;	
 		var create = 1;
+    var tipo = "{{ $tipo }}";
 		var edicion = {{ (int) !$create }};
     var cursor_producto = {{ $cursor_pointer_producto }};
     var igvPorc = {{ $igvEmpresa->igvPorc }};

@@ -397,9 +397,14 @@ $(document).ready(function (e) {
 
     const precioValue = Number($inputPrecio.val());
     const minPrecio = Number($inputPrecio.attr('data-default'));
-    if (precioValue < minPrecio) {
-      notiYFocus("producto_precio", `El Precio ingresado no puede ser menor que el precio por defecto (${minPrecio})`);
-      return false;
+    
+
+
+    if( tipo != "99" ){
+      if (precioValue < minPrecio) {
+        notiYFocus("producto_precio", `El Precio ingresado no puede ser menor que el precio por defecto (${minPrecio})`);
+        return false;
+      }
     }
 
 

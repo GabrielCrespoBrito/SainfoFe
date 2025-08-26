@@ -373,9 +373,6 @@ class CotizacionAbstractController extends Controller
       $data['orden_cliente'] =  $data['orden']->getClienteSainfoOrData();
     }
 
-    // dd($data['importInfo']);
-    // exit();
-
     return view('cotizaciones.crear_modificar', $data);
   }
 
