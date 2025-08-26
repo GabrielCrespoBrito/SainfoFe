@@ -1003,7 +1003,8 @@ function ubigeoNombre($ubicodi = null)
     return "";
   }
 
-  return Ubigeo::PLAIN_UBIGEOS[$ubicodi];
+
+  return Ubigeo::PLAIN_UBIGEOS[$ubicodi] ?? "";
 }
 
 function convertNegative($v)
