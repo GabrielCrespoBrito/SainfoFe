@@ -999,7 +999,7 @@ function calculate($tipo, $v)
 
 function ubigeoNombre($ubicodi = null)
 {
-  if($ubicodi == null || $ubicodi == "" || $ubicodi == "-" ){
+  if( $ubicodi == "0" || $ubicodi == null || $ubicodi == "" || $ubicodi == "-" ){
     return "";
   }
 
