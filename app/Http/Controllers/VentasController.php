@@ -68,17 +68,32 @@ class VentasController extends Controller
 
   public function searchCanje(Request $request)
   {
+    $term = $request->input('search')['value'];
     $local = auth()->user()->local();
-    $busqueda = Venta::query()->with(
-      ['cliente_with' => function ($q) {
-        $q->where('TipCodi', 'C');
-      }, 'items.unidad', 'moneda']
-    )
-      ->where('VtaFMail', StatusCode::CODE_EXITO_0001)
-      ->where('TipoOper', Venta::TIPO_NORMAL)
-      ->where('TidCodi', Venta::NOTA_VENTA)
-      ->where('LocCodi', $local)
-      ->whereNull('VtaOperC');
+
+    // Construir la consulta base
+    $busqueda = Venta::with([
+        'cliente_with' => function ($q) {
+            $q->where('TipCodi', 'C');
+        },
+        'items.unidad',
+        'moneda'
+    ])
+    ->where('VtaFMail', StatusCode::CODE_EXITO_0001)
+    ->where('TipoOper', Venta::TIPO_NORMAL)
+    ->where('TidCodi', Venta::NOTA_VENTA)
+    ->where('LocCodi', $local)
+    ->whereNull('VtaOperC');
+
+    // Filtrar por el nombre del cliente (relación)
+    if (!is_null($term)) {
+      $busqueda = $busqueda->whereHas('cliente_with', function($q) use ($term) {
+        $q->where('PCNomb', 'LIKE', '%' . $term . '%')
+          ->orWhere('PCRucc', 'LIKE', '%' . $term . '%');
+      })
+      ->orWhere('VtaNume', 'LIKE', '%' . $term . '%');
+    }
+
 
     $dataTable = DataTables::of($busqueda);
     return $dataTable->make(true);
