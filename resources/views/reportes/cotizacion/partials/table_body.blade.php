@@ -12,6 +12,7 @@
     <tr class="bold border-bottom-stripe">
       <td> {{ $cotizacion['id'] }} </td>
       <td> {{ $cotizacion['estado'] }} </td>
+      <td> {{ $cotizacion['vendedor'] }} </td>
       <td> {{ $cotizacion['fecha'] }} </td>
       <td> {{ $cotizacion['cliente_ruc'] }} </td>
       <td> {{ $cotizacion['cliente_cliente'] }} </td>
@@ -21,7 +22,7 @@
     @foreach( $cotizacion['items'] as $item )
     <tr class="border-bottom-stripe">
       <td style="background-color: #fafafa;border-left:2px solid gray; padding-left:2px"> {{ $item['id'] }} </td>
-      <td colspan="2" style="background-color: #fafafa;"> {{ $item['nombre'] }} </td>
+      <td colspan="3" style="background-color: #fafafa;"> {{ $item['nombre'] }} </td>
       <td style="background-color: #fafafa;" class="text-align-right"> {{ $item['cantidad'] }}  </td>
       <td style="background-color: #fafafa;"  class="text-align-right" colspan="2"> {{ $item['importe'] }}  </td>
     </tr>

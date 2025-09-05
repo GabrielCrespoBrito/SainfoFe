@@ -98,7 +98,7 @@ class Cotizacion extends Model
 
   public function vendedor()
   {
-    return $this->belongsTo(Vendedor::class, 'Vencodi', 'Vencodi');
+    return $this->belongsTo(Vendedor::class, 'vencodi', 'Vencodi')->withoutGlobalScopes();
   }
 
   public function venta()

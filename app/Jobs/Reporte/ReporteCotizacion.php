@@ -46,9 +46,9 @@ class ReporteCotizacion
    */
   public function getQuery()
   {
-    $query = Cotizacion::with(['items.producto', 'cliente_with' => function ($query) {
+    $query = Cotizacion::with(['items.producto',  'cliente_with' => function ($query) {
       $query->where('TipCodi', 'C');
-    }, 'vendedor'])
+    }])
       ->whereBetween('CotFVta', [$this->fecha_desde, $this->fecha_hasta]);
 
     if ($this->vendedor) {
@@ -62,12 +62,8 @@ class ReporteCotizacion
     if ($this->estado) {
       $query->where('cotesta', $this->estado);
     }
-
-
-    return
-      $query->get();
-
-    // ->groupBy('Vencodi');
+    
+    return $query->get();
   }
 
   /**
@@ -105,9 +101,10 @@ class ReporteCotizacion
       $info = [
         'id' => $cotizacion->CotNume,
         'fecha' => $cotizacion->CotFVta,
-        'estado' => $cotizacion->cotesta = 'L' ? 'Liberado' : 'Pendiente',
+        'estado' => $cotizacion->cotesta == 'L' ? 'Liberado' : 'Pendiente',
         'cliente_ruc' => $cotizacion->cliente_with->PCRucc,
         'cliente_cliente' => $cotizacion->cliente_with->PCNomb,
+        'vendedor' => $cotizacion->vendedor->vennomb,
         'total' => $cotizacion->cotimpo,
         'items' => [],
       ];
