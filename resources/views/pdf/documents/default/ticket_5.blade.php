@@ -95,7 +95,7 @@
   @include('pdf.documents.partials.totales', [
   'class_name' => 'table-totales col-12 mb-x3 border-width-1 border-bottom-style-dotted',
   'class_name_table' => '',
-  'decimalsTotal' => 1,
+  'decimalsTotal' => 2,
   'total_nombre_class' => 'bold',
   'total_value_class' => 'text-right',
   ])

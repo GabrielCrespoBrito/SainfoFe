@@ -189,16 +189,6 @@ class GuiaSalidaController extends GuiaController
 
   public function sentSunat(GuiaSentSunatRequest $request, $id_guia)
   {
-    // Old
-    // $guia = GuiaSalida::find($id_guia);
-    // $data = Sunat::sendGuia($request->id_guia);
-    // if ($data['status']) {
-    //   return $this->guiaSuccess($guia, $data);
-    // } else if ($data['status'] == 0 && $data['code'] == 4000) {
-    //   $guia->saveSuccess();
-    // }
-    // return response()->json(['message' =>  $data['message']], $data['code_http']);
-
     $guia = GuiaSalida::find($id_guia);
     $res = $guia->sendApi();
     return response()->json(['message' => $res->data], $res->success ? 200 : 400);
@@ -221,7 +211,6 @@ class GuiaSalidaController extends GuiaController
 
     $namePdf = $guia->nameEnvio('.pdf');
     $fileHelper = filehelper(get_empresa()->ruc());
-
 
     if ($formato == PDFPlantilla::FORMATO_A4) {
       if ($fileHelper->pdfExist($namePdf)) {

@@ -84,7 +84,7 @@
 
       @include('pdf.documents.partials.totales_ticket_cot', [
       'class_name' => 'col-10 border-bottom-style-solid border-width-1',
-      'decimalsTotal' => 1,
+      'decimalsTotal' => 2,
       ])
 
       @include('pdf.documents.partials.cuentas', [
