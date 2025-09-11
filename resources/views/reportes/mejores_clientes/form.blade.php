@@ -30,6 +30,34 @@
 	@include('reportes.partials.general.fechas')
 	@include('reportes.partials.general.locales')
 
+
+<div class="filtro">
+  <div class="cold-md-12">
+    <fieldset class="fsStyle">
+      <legend class="legendStyle">Tipo de Reporte </legend>
+      <div class="row" id="demo">
+
+        <div class="col-md-6">
+          <select name="tipo_reporte" class="form-control">
+            <option value="pdf"> PDF </option>
+            <option value="excell"> Excell </option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+
+  {{-- <div class="row">
+    <div class="col-md-12 mb-2">
+      <select name="tipo_reporte" class="form-control">
+        <option value="pdf"> PDF </option>
+        <option value="excell"> Excell </option>
+      </select>
+    </div>
+  </div> --}}
+  
   <div class="row">
   <div class="col-md-12">
    <button class="btn btn-flat btn-primary" type="submit"> Enviar </button>

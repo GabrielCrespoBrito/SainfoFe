@@ -28,6 +28,7 @@ class ReporteMejorClienteRequest extends FormRequest
       'fecha_desde' => 'required|date',
       'fecha_hasta' => 'required|date|after_or_equal:fecha_desde',
       'local' => 'required',
+      'tipo_reporte' => 'required|in:pdf,excell',
     ];
   }
 
