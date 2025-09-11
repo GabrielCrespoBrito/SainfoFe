@@ -144,13 +144,11 @@ window.AppPago =
     let info = { id_factura: this.get_id(), };
     let funcs = { success: this.showForm.bind(this) };
     let url = this.urls.show.replace('XXX', this.get_id());
-    console.log("info", url, this.urls.show, this.get_id());
     ajaxs(info, url, funcs);
   },
 
 
   setNotaCreditoSelect: function (nota_credito = null) {
-    console.log(this.eles.nota_credito)
 
     try {
       this.eles.nota_credito.select2('destroy');
@@ -159,8 +157,6 @@ window.AppPago =
     }
 
     this.eles.nota_credito.empty();
-
-    console.log("setNotaCreditoSelect", nota_credito);
 
     if (nota_credito) {
       this.eles.nota_credito.attr({
@@ -192,13 +188,16 @@ window.AppPago =
   },
 
   editForm: function (data) {
+    console.log("editForm", data);
     this.current_action = "edit";
     this.setTitle('Modificar Pago', data.PagOper);
     Helper__.set_data_form(this.parent, data);
+
     this.setNotaCreditoSelect(data.nota_credito);
     this.showHideDiv();
     this.showHideButton(true);
     this.showHideCalculadora(true);
+    this.eles.fecha_pago.val(data.PagFech);
     this.eles.tipopago.prop('disabled', true)
     // $( '[name=importe]' , this.parent).val(data.por_pagar);
     $(this.parent).modal();
@@ -394,7 +393,7 @@ window.AppPago =
     this.eles.tipopago = $("[name=tipopago]", this.parent);
     this.eles.importe = $("[name=importe]", this.parent);
     this.eles.baucher = $("[name=NumDoc]", this.parent);
-    this.eles.fecha_pago = $("[name=fechaPago]", this.parent);
+    this.eles.fecha_pago = $("[name=fecha_pago]", this.parent);
     this.eles.fecha_vencimiento = $("[name=fechaVen]", this.parent);
     this.eles.nota_credito = $("[name=nota_credito_id]", this.parent);
   },

@@ -193,7 +193,7 @@ class VentaPago extends Model
   	$ventaPago->PagOper = VentaPago::lastId();
   	$ventaPago->VtaOper = $request->VtaOper;
     $ventaPago->TpgCodi = $tpgCodi;
-  	$ventaPago->PagFech = date('Y-m-d');
+  	$ventaPago->PagFech = $request->input('fecha_pago', date('Y-m-d'));
   	$ventaPago->PagTCam = $request->tipocambio;  	
     $ventaPago->MonCodi = $request->moneda;
   	$ventaPago->PagImpo = $request->VtaImpo;

@@ -91,11 +91,8 @@ class CajasController extends Controller
 
   public function resumen($id_caja)
   {
-    // _dd("aja");
-    // exit();
     $tps = (new TipoPagoRepository(new TipoPago()))->all();
     
-    // ->where('TdoBanc', '0');
     $caja = Caja::find($id_caja);
     $caja->calculateSaldo();
     $data = $caja->data_reportes();
@@ -184,7 +181,6 @@ class CajasController extends Controller
     return $request->all();
   }
 
-  // public function dinero_apertura( $id_caja , CajaDineroAperturaRequest $request )
   public function dinero_apertura($id_caja, CajaDineroAperturaRequest $request)
   {
     $caja = Caja::find($request->id_caja);

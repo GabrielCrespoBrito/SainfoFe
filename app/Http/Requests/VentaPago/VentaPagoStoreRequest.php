@@ -27,13 +27,13 @@ class VentaPagoStoreRequest extends FormRequest
 			'VtaOper' => 'required',
 			'VtaImpo' => 'required|numeric|min:0',
 			'VtaNume' => 'nullable|sometimes',
-			'moneda' => 'exists:moneda,moncodi' 
+			'moneda' => 'exists:moneda,moncodi',
+      'fecha_pago' => 'required|date|before_or_equal:' . date('Y-m-d'),
     ];
 
     if( $this->isBancario ){
       $rules['cuenta_id'] = 'required';
       $rules['baucher'] = 'required';
-      $rules['fecha_pago'] = 'required';
       // $rules['fecha_emision'] = 'required';
     }
     else if( $this->tipopago == TipoPago::NOTACREDITO ){

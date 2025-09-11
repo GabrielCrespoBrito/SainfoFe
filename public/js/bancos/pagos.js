@@ -286,7 +286,7 @@ let AppPago =
     this.eles.tipopago = $("[name=tipopago]", this.parent);
     this.eles.importe = $("[name=importe]", this.parent);
     this.eles.baucher = $("[name=NumDoc]", this.parent);
-    this.eles.fecha_pago = $("[name=fechaPago]", this.parent);
+    this.eles.fecha_pago = $("[name=fecha_pago]", this.parent);
     this.eles.fecha_vencimiento = $("[name=fechaVen]", this.parent);
   },
 
@@ -337,8 +337,6 @@ let AppPagosIndex = {
 
   set_data_table : function(data)
   {
-
-    console.log( "data" , data );
     Helper__.set_data_form( this.parent , data );
 
     add_to_table( this.eles.table , data.payments , 
@@ -393,7 +391,6 @@ let AppPagosIndex = {
   },
 
   set_idPago : function(e){
-    console.log("set_idPago");
     e.preventDefault();    
     AppPago.set_id(this.id);
     AppPago.create();
@@ -408,17 +405,13 @@ let AppPagosIndex = {
     notificaciones("Pago eliminado exitosamente" , "success");
   },
 
-  removePago : function(e)
-  { 
-    
+  removePago : function(e){ 
+
     if( confirm("Esta seguro que desea eliminar este pago?") ){
-
       this.current_tr = $(e.target).parents('tr');
-
       let id_pago = this.current_tr.find('td:eq(0)').text();
       let data = { id_pago : id_pago }
       let funcs = { success: this.successRemove.bind(this) }
-      
       ajaxs( data, this.urls.remove, funcs );
     }
   },

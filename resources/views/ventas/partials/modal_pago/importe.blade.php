@@ -21,7 +21,8 @@
     <div class="form-group col-md-6">
       <div class="input-group">
         <span class="input-group-addon">Fecha pago</span>
-        <input class="form-control input-sm" disabled name="fecha_pago" value="{{ date('Y-m-d') }}">
+        <input class="form-control input-sm" data-name="PagFech" data-field="fecha" name="fecha_pago" type="date"">
+
       </div>
     </div>
   </div>

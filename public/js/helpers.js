@@ -1168,7 +1168,8 @@ window.Helper__ = (function(){
           break;        
           case 'text' : 
           case 'textarea':
-          case 'number':        
+          case 'number': 
+          case 'date':
             this.value = fieldValue
             break;
           case 'select-one':
