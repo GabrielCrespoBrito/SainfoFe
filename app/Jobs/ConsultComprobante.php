@@ -49,7 +49,6 @@ class ConsultComprobante
   {
     $parts = explode('-', $this->documento);
 
-    //
     if (count($parts) != 4) {
       return $this->setError("Error en el Número del documento");
     }
@@ -78,8 +77,7 @@ class ConsultComprobante
       return $this->setError("Numero de Documento Incorrecto");
     }
 
-    if(
-      $tidcodi == TipoDocumentoPago::FACTURA ||
+    if($tidcodi == TipoDocumentoPago::FACTURA ||
       $tidcodi == TipoDocumentoPago::BOLETA ||
       $tidcodi == TipoDocumentoPago::NOTA_CREDITO ||
       $tidcodi == TipoDocumentoPago::NOTA_DEBITO ){
@@ -113,14 +111,22 @@ class ConsultComprobante
   public function getDocumento()
   {
     $data = $this->data;
-    $fh = fileHelper($data->ruc);
+    
+    $empresa = Empresa::findByRuc($data->ruc);
+    $codigo = optional($empresa)->codigo;
+    $fh = fileHelper($data->ruc, $codigo);
     $documentName = sprintf('%s-%s-%s-%s.pdf', $data->ruc, $data->tidcodi, $data->serie, agregar_ceros($data->numero, 6, 0));
+    
+    // dd($documentName);
+
     try {
       $pdf = $fh->getPdf($documentName);
+      // logger()->info('pdf', $pdf);
       $path = getTempPath($documentName, $pdf);
       return $this->setSuccess($path);
     } catch (\Throwable $th) {
-      return $this->setError("No se Encuentro El Documento");
+      logger()->error('@ERROR No se encontro el documento ' . $documentName . ' ' . $th->getMessage());
+      return $this->setError("No se encontro el documento " . $documentName);
     }
   }
 
