@@ -20,7 +20,7 @@ Route::prefix('test')->group(function () {
 
     Route::get('testPrint', 'TestsController@testPrint')->name('test_print');
 
-    Route::get('xmlToVenta', 'TestsController@xmlToVenta');
+    Route::get('xmlToVenta/{empresaId}/{desdeSerie?}/{tipoDocImport?}', 'TestsController@xmlToVenta');
     Route::get('xmlResumenToVenta', 'TestsController@xmlResumenToVenta');
     Route::get('xmlResumenToResumen', 'TestsController@xmlResumenToResumen');
     Route::get('validateResumen', 'TestsController@validateResumen');

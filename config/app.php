@@ -314,8 +314,9 @@ return [
     'images'      => ['images'],
     'cert'        => ['{ruc_cliente}', 'documentos', 'XMLCert'],
   ],
-
-
+  
+  // Path para la importacion de xmls
+  'xml_importacion' => env('XML_IMPORTACION'),
 
   /*
     |--------------------------------------------------------------------------
