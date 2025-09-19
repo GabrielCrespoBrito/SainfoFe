@@ -4,7 +4,6 @@ namespace App\Jobs\ImportFromXmls;
 
 use App\Empresa;
 
-
 class ImportFromXml
 {
   public $pathXmls;
@@ -13,6 +12,7 @@ class ImportFromXml
   public $desdeRucSerieTipo = [];
   public $tipoDocImport;
   public $files = [];
+  public $cacheTemp;
 
   public function __construct( $pathXmls, Empresa $empresa, $desdeSerie = null, $tipoDocImport = null )
   {
@@ -20,6 +20,7 @@ class ImportFromXml
     $this->pathXmls = $pathXmls;
     $this->empresa = $empresa;
     $this->ruc = $empresa->ruc();
+    $this->cacheTemp = new CacheTemp();
 
     // Tipo de documento a importar
     if( $tipoDocImport ){
@@ -39,31 +40,20 @@ class ImportFromXml
         $itemArr = explode('-', $item);
 
         $key = $itemArr[1] == "RA" ? 
-          sprintf('%s-%s', $itemArr[0], $itemArr[1]) : 
-          sprintf('%s-%s-%s', $itemArr[0], $itemArr[1], $itemArr[2]);
+          sprintf('%s-%s', $this->ruc, $itemArr[0]) : 
+          sprintf('%s-%s-%s', $this->ruc, $itemArr[0], $itemArr[1]);
           
         $this->desdeRucSerieTipo[ $key ] = [
-          'ruc' => $itemArr[0],
-          'tipoSerie' => $itemArr[1],
-          'serie' => $itemArr[2],
-          'numero' => $itemArr[3],
-          'completo' => $itemArr[0] . '-' . $itemArr[1] . '-' . $itemArr[2] . '-' . $itemArr[3],
+          'ruc' => $this->ruc,
+          'tipo' => $itemArr[0],
+          'serie' => $itemArr[1],
+          'numero' => $itemArr[2],
+          'completo' => $this->ruc . '-' . $itemArr[0] . '-' . $itemArr[1] . '-' . $itemArr[2],
         ];
       }
     }
   }
-
-  // public function getCreator($tidCodi)
-  // {
-  //   switch( $tidCodi ){
-  //     case '01':
-  //       return new VentaCreatorFromXml( $fileContent, $this->empresa );
-  //     case '02':
-  //       return new GuiaRemisionCreatorFromXml( $fileContent, $this->empresa );
-  //   }
-  // }
   
-
   public function getFiles()
   {
     return $this->files;
@@ -99,11 +89,13 @@ class ImportFromXml
     $fileTipo = $fileNameDataArr[1];
     $fileSerie = $fileNameDataArr[2];
     $numero = str_replace('.xml', '', $fileNameDataArr[3]);
-    $fileRucTipoSerie = $ruc . '-' . $fileTipo . '-' . $fileSerie;
-    $fileRucTipoSerieRA = $ruc . '-' . $fileTipo;
+    $fileRucTipoSerie = $this->ruc . '-' . $fileTipo . '-' . $fileSerie;
+    $fileRucTipoSerieRA = $this->ruc . '-' . $fileTipo;
 
 
-    if( $fileTipo == "RA" || $fileTipo == "R" ){
+    // dd($fileTipo, $fileSerie, $numero);
+
+    if( $fileTipo == "RA" || $fileTipo == "RC" ){
       
       if( isset($this->desdeRucSerieTipo[ $fileRucTipoSerieRA ]) == false ){
         return true;
@@ -115,8 +107,6 @@ class ImportFromXml
 
       return $fileNumero > $desdeNumero;
     }
-
-
 
     if(  isset($this->desdeRucSerieTipo[ $fileRucTipoSerie ]) == false ){
       return true;
@@ -131,7 +121,6 @@ class ImportFromXml
 
   public function addFile($file)
   {
-    // $file = str_replace('.xml', '', $file);
     if ($file === '.' || $file === '..' || strpos($file, '.xml') === false || strpos($file, $this->ruc) === false) {
       return false;
     }
@@ -158,11 +147,10 @@ class ImportFromXml
     foreach ($dirs as $dir) {
       foreach ($dir as $file) {
         if($this->addFile($file)){
-          logger("File Valid: " . $file );
           $this->files[$file] = [
             'file' => $file,
             'success' => false,
-            'errors' => null
+            'error' => null
           ];
         }
       }
@@ -172,16 +160,25 @@ class ImportFromXml
   }
 
 
-  public function processFile($file)
+  // El motivo por el cual no se modifica el valor del array dentro de la clase es porque,
+  // aunque se pasa $file por referencia, en el método handle() se itera sobre $this->files
+  // usando foreach ($this->files as $file), lo que en PHP crea una copia del valor del array
+  // y no una referencia al elemento original del array. Por lo tanto, cualquier cambio en $file
+  // dentro de processFile() no afecta el array $this->files.
+
+  // Para que los cambios se reflejen en el array original, se debe iterar usando referencias:
+  // foreach ($this->files as &$file) { ... }
+
+  public function processFile(&$file)
   {
     $creator = $this->getRegisterCreator($file);
-    
     $creator->handle();
 
-    $res = $creator->getResult();
+    $file['success'] = $creator->isSuccess();
 
-    $file['success'] = $res->success;
-    $file['errors'] = $res->errors;
+    if( $creator->isError() ){
+      $file['error'] = $creator->getResult()->data;
+    }
 
     return $file;
   }
@@ -191,18 +188,24 @@ class ImportFromXml
     $fileTipo = explode('-', $file['file'])[1];
     $fileContent = file_get_contents($this->pathXmls . '/' . $file['file']);
 
+    $fileArr = explode('-', $file['file']);
+    $fileTipo = $fileArr[1];
+    $fileSerie = $fileArr[2];
+    $fileNumero = str_replace('.xml', '', $fileArr[3]);
+
+
     switch( $fileTipo ){
         case '01':
         case '03':
-          return new VentaCreatorFromXml($fileContent, $this->empresa);
+          return new VentaCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
         case '07':
         case '08':
-          return new NotaCreatorFromXml($fileContent, $this->empresa);
+          return new NotaCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
         case '09':
-          return new GuiaRemisionCreatorFromXml($fileContent, $this->empresa);
+          return new GuiaRemisionCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
         case 'RA':
         case 'RC':
-          return new ResumenCreatorFromXml($fileContent, $this->empresa);
+          return new ResumenCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
         default:
     }
   }
@@ -217,9 +220,11 @@ class ImportFromXml
 
     $this->generateFilesXmls();
 
-    foreach( $this->files as $file ){
+    foreach( $this->files as &$file ){
       $this->processFile($file);
     }
+
+    return $this->files;
     
   }
 }

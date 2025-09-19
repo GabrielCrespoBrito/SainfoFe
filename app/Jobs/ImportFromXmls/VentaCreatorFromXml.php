@@ -79,7 +79,7 @@ class VentaCreatorFromXml extends CreatorAbstract
 
   public function saveDataModel()
   {
-    return new VentaFromData($this->data, $this->empresa);
+    return (new VentaFromData($this->data, $this->empresa, $this->cacheTemp))->handle();
   }
 
 }

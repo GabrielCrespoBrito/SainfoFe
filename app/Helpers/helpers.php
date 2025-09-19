@@ -505,6 +505,13 @@ function getUrlValid()
 }
 
 
+function logger_return($message)
+{
+  logger($message);
+  return $message;
+}
+
+
 function file_build_path(...$segments)
 {
   return join(DIRECTORY_SEPARATOR, $segments);

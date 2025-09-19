@@ -92,6 +92,7 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
 
 
       Route::get('empresa/{id?}/change-aplicacion-igv', "Admin\EmpresaController@changeAplicacionIGV")->name('empresa.change-aplicacion-igv');
+      Route::get('empresa/{id?}/importar-xmls', "Admin\EmpresaController@importarXmls")->name('empresa.importar-xmls');
 
       Route::post('empresa/{id?}/update-credenciales-tienda', "Admin\EmpresaController@storeCredencialesTienda")->name('empresa.update_credenciales_tienda');
 

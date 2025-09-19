@@ -90,7 +90,7 @@ class VentaItem extends Model
       
       $nombre   = $item->DetNomb; 
       $venta    = $item->venta;
-      $producto = $item->producto;
+      $producto = optional($item->producto);
       
       if( (strpos($nombre, '[cantidad]' ) !== false) ){
         $nombre = str_replace("[cantidad]", $item->DetCant , $nombre);
@@ -118,7 +118,7 @@ class VentaItem extends Model
         $nombre = str_replace("[MONEDA]", $venta->moneda->monnomb , $nombre);
       }
 
-      $item->update(['DetNomb' => $nombre , 'MarNomb' => $producto->marca->MarNomb, 'Estado' => $producto->tiecodi  ]);
+      $item->update(['DetNomb' => $nombre , 'MarNomb' => optional($producto->marca)->MarNomb, 'Estado' => $producto->tiecodi  ]);
 
     }); 
 

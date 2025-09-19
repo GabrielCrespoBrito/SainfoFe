@@ -527,7 +527,7 @@ class ClienteProveedor extends Model
   }
 
 
-  public static function findOrCreateByRuc($documento_cliente, $nombre_cliente = '', $tipo_documento = '', $empcodi, User  $user)
+  public static function findOrCreateByRuc($documento_cliente, $nombre_cliente = '', $tipo_documento = '', $empcodi,  $user)
   {
     $cliente = self::where('TdoCodi',  $tipo_documento)
       ->where('TipCodi', self::TIPO_CLIENTE)
@@ -537,6 +537,8 @@ class ClienteProveedor extends Model
     if ($cliente) {
       return $cliente->PCCodi == "00000" ? ClienteProveedor::find("00001")  : $cliente;
     }
+
+    $userLogin = is_string($user) ? $user : $user->usulogi;
 
     $clienteProveedor = new self();
     $clienteProveedor->EmpCodi = $empcodi;
@@ -566,7 +568,7 @@ class ClienteProveedor extends Model
     $clienteProveedor->PCADir = '';
     $clienteProveedor->PCATel = '';
     $clienteProveedor->PCAEma = '';
-    $clienteProveedor->User_crea = $user->usulogi;
+    $clienteProveedor->User_crea = $userLogin;
     $clienteProveedor->User_ECrea = gethostname();
     $clienteProveedor->UDelete = "";
     $clienteProveedor->PCRucc  = $documento_cliente;

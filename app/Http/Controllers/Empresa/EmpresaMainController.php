@@ -20,6 +20,7 @@ use App\Jobs\Empresa\DeleteAllForFailCreation;
 use App\Http\Controllers\Empresa\CertificateTrait;
 use App\Http\Requests\Empresa\EmpresaUpdateRequest;
 use App\Http\Requests\Empresa\EmpresaUpdateParametroBasicRequest;
+use App\Jobs\ImportFromXmls\ImportFromXml;
 use Carbon\Carbon;
 
 abstract class EmpresaMainController extends Controller
@@ -247,11 +248,38 @@ abstract class EmpresaMainController extends Controller
     return redirect()->back();
   }
 
+
+  public function importarXmls(Request $request, $id_empresa)
+  {
+    empresa_bd_tenant($id_empresa);
+    $empresa = Empresa::find($id_empresa);
+
+    ini_set('max_execution_time', '300');
+    ini_set('memory_limit', '1024M');
+
+
+    $import = new ImportFromXml(
+      $request->input('path_xmls'), 
+      $empresa, 
+      $request->input('desde_numeros', ''),
+      $request->input('tipo_documentos', ''));
+
+
+    $files = $import
+    ->handle();
+
+    dd( "empresaMain", $files);
+
+    noti()->success('Resultados de la importación', 'Se ha importado correctamente los documentos');
+    return  redirect()->back();
+  }
+
   public function logoFooterDefault($id_empresa)
   {
     $empresa = Empresa::find($id_empresa);
     $empresa->setLogoFooterSainfo();
     noti()->success('Se ha eliminado exitosamente el logo');
+
     return redirect()->back();
   }
 }
