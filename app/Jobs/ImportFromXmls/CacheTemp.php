@@ -114,20 +114,7 @@ class CacheTemp
 
     return $this->productoList[$descripcion] = $productoData;
   }
-
-  /*
-      $productoData = $this->cacheTemp->getProducto($item['item_descripcion']);
-
-      $dataItem['Linea'] = $this->cacheTemp->getLinea();
-      $dataItem['DetItem'] = $item['item_orden'] + 1;
-      $dataItem['VtaOper'] = $this->venta->VtaOper;
-      $dataItem['EmpCodi'] = $this->empresaId;
-      $dataItem['DetUnid'] = $productoData['UniAbre'];
-      $dataItem['DetCodi'] = $productoData['ProCodi'];
-      $dataItem['DetNomb'] = $productoData['ProNomb'];
-  */
-
-
+  
   public function getVendedorDefault()
   {
     if ($this->vendedorDefault) {
