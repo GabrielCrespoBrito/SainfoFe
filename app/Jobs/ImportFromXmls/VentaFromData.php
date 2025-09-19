@@ -22,20 +22,43 @@ class VentaFromData extends CreateFromDataAbstract
   {
     $documentoNombre = $this->data['documento_correlativo'];
     $documentoArray = explode( "-", $documentoNombre );
+    $tipoDocumento = $this->data['tipo_documento'] ?? null;
     $documentoSerie = $documentoArray[0];
     $documentoCorrelativo = $documentoArray[1];
+    
     list($year, $month, $day) = explode( "-", $this->data['fecha_emision'] );
+
+    // Referencia
+    $tipoDocumentoReferencia = null;
+    $VtaSeriR = null;
+    $VtaNumeroR = null;
+    $VtaFVtaR = null;
+
+    if( isset( $this->data['documento_correlativo_referencia'] ) ){
+      $documentoRefArr = explode( "-", $this->data['documento_correlativo_referencia'] );
+      $tipoDocumentoReferencia = $this->data['tipo_documento_referencia'];
+      $tipoDocumento = "07";
+      $VtaSeriR = $documentoRefArr[0];
+      $VtaNumeroR = $documentoRefArr[1];
+      $VtaFVtaR = $this->data['fecha_emision_referencia'] ?? null;
+    }
 
     return logger_return([
       'VtaOper' =>  $this->cacheTemp->getVentaOper(),
       'EmpCodi' => $this->empresaId,
       'PanAno' => $year,
       'PanPeri' => $month,
-      'TidCodi' => $this->data['tipo_documento'],
+      'TidCodi' => $tipoDocumento,
+
+      'VtaTDR' => $tipoDocumentoReferencia,
+      'VtaSeriR' => $VtaSeriR,
+      'VtaNumeR' => $VtaNumeroR,
+      'VtaFVtaR' => $VtaFVtaR,
+
       'VtaSeri' => $documentoSerie,
       'VtaNumee' => $documentoCorrelativo,
       'VtaNume' => $documentoNombre,
-      'VtaUni' => $this->data['tipo_documento'] . '-' . $documentoNombre,
+      'VtaUni' => $tipoDocumento . '-' . $documentoNombre,
       'VtaFvta' => $this->data['fecha_emision'],
       'VtaFpag' => $this->data['fecha_emision'],
       'VtaFVen' => $this->data['fecha_emision'],
@@ -46,13 +69,13 @@ class VentaFromData extends CreateFromDataAbstract
         $this->data['tipo_documento_cliente'],
         $this->empresaId
       ),
-      'ConCodi' => $this->getFormaPago($this->data['forma_pago']),
+      'ConCodi' => $this->getFormaPago($this->data['forma_pago'] ?? null),
       'ZonCodi' => "0100",
       'MonCodi' => $this->data['moneda'] == "PEN" ? "01" : "02",
       'Vencodi' => $this->cacheTemp->getVendedorDefault()->Vencodi,
       'VtaObse' =>  '',
       'VtaTcam' =>$this->cacheTemp->getTipoCambio($this->data['fecha_emision']),
-      'Vtacant' => $this->data['cantidad_items'],
+      'Vtacant' => $this->data['cantidad_items'] ?? 1,
       'Vtabase' => $this->data['total_sinigv'],
       'VtaIGVV' => $this->data['total_conigv'] - $this->data['total_sinigv'],
       'VtaDcto' => 0,
@@ -60,18 +83,18 @@ class VentaFromData extends CreateFromDataAbstract
       'VtaExon' => 0,
       'VtaGrat' => 0,
       'VtaISC' => 0,
-      'VtaImpo' => $this->data['total'],
+      'VtaImpo' => $this->data['total'] ?? $this->data['total_conigv'],
       'VtaEsta' => "V",
       'UsuCodi' => $this->cacheTemp->getUserPrincipal(),
       'MesCodi' => $year . $month,
       'LocCodi' => $this->cacheTemp->getLocalDefault(),
       'VtaPago' => 0,
-      'VtaSald' => $this->data['total'],
+      'VtaSald' => $this->data['total'] ?? $this->data['total_conigv'],
       'VtaEsPe' => "NP",
       'VtaPPer' => 0,
       'VtaAPer' => 0,
       'VtaPerc' => 0,
-      'VtaTota' => $this->data['total'],
+      'VtaTota' => $this->data['total'] ?? $this->data['total_conigv'],
       'VtaSPer' => 0,
       'TipCodi' => '111201',
       'AlmEsta' => 'SA',
@@ -105,15 +128,29 @@ class VentaFromData extends CreateFromDataAbstract
   public function createItems()
   {
     $items = $this->data['items'];
+
+
     foreach ($items as $item) {
 
       $productoData = $this->cacheTemp->getProducto($item['item_descripcion']);
-      
+
+      $unidad = $productoData['unidad'];
+      $costos = $unidad->getCostos(
+        $productoData['ProCodi'],
+        $this->data['fecha_emision'],
+        $this->cacheTemp->getLocalDefault(),
+        $item['item_cantidad'],
+        1,
+        1,
+        true
+      );
+
       $dataItem = [];
       $dataItem['Linea'] = $this->cacheTemp->getLinea();
-      $dataItem['DetItem'] = agregar_ceros( $item['item_orden'], 2);
+      $dataItem['DetItem'] = agregar_ceros( $item['item_orden'] ?? 1, 2);
       $dataItem['VtaOper'] = $this->venta->VtaOper;
       $dataItem['EmpCodi'] = $this->empresaId;
+      $dataItem['UniCodi'] = $productoData['UniCodi'];
       $dataItem['DetUnid'] = $productoData['UniAbre'];
       $dataItem['DetCodi'] = $productoData['ProCodi'];
       $dataItem['DetNomb'] = $productoData['ProNomb'];
@@ -124,20 +161,24 @@ class VentaFromData extends CreateFromDataAbstract
       $dataItem['DetEsPe'] = '0';
       $dataItem['DetBase'] = 'GRAVADA'; 
       $dataItem['DetISC'] = 0;
+      $dataItem['DetCSol'] = $costos->sol;
+      $dataItem['DetCDol'] = $costos->dolar;
+      $dataItem['DetVSol'] = $item['item_valor_bruto'];
+      $dataItem['DetVDol'] = $item['item_valor_bruto'] / $this->cacheTemp->getTipoCambio($this->data['fecha_emision']);
+
       $dataItem['DetISCP'] = 0;
       $dataItem['Detfact'] = 1;
-      $dataItem['DetIGVV'] = $item['item_igv_porc'];
+      $dataItem['DetIGVV'] = $item['item_igv_porc'] ?? 18;
       $dataItem['DetIGVP'] = $item['item_igv'];
       $dataItem['DetPercP'] = 0;
       $dataItem['TipoIGV'] = 10;
-      $dataItem['incluye_igv'] = 1;
+      $dataItem['incluye_igv'] = 0;
 
       logger('dataItem', $dataItem);
 
       $vtaItem = new VentaItem();
       $vtaItem->fill($dataItem);
       $vtaItem->save();
-      // $vtaItem->fill($dataItem)->save();
     }
   }
 

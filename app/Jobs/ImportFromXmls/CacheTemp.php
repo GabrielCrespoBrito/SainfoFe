@@ -78,11 +78,18 @@ class CacheTemp
 
   public function getLinea()
   {
-    if ($this->linea) {
-      return $this->linea = math()->addCero($this->linea + 1, 8);
+    // Si no hay línea inicial, obtener la última línea de la base de datos
+    if (!$this->linea) {
+      $this->linea = VentaItem::orderByDesc('Linea')->value('Linea');
+      // Si no hay registros, empezar desde 0
+      if (!$this->linea) {
+        $this->linea = 0;
+      }
     }
-
-    return $this->linea = VentaItem::nextLinea();
+    
+    // Incrementar y formatear con ceros a la izquierda
+    $this->linea = $this->linea + 1;
+    return math()->addCero($this->linea, 8);
   }
 
 
@@ -94,12 +101,15 @@ class CacheTemp
 
     $producto = Producto::where('ProNomb', $descripcion)->first();
     $producto = $producto ?? Producto::first();
+    $unidad = $producto->unidadPrincipal();
 
     $productoData = [
       'ProCodi' => $producto->ProCodi,
       'ProNomb' => $descripcion,
+      'unidad' => $unidad,
       'UniAbre' => $producto->unpcodi,
-      'UniCodi' => $producto->unidadPrincipal()->UniCodi,
+      'UniCodi' => $unidad->Unicodi,
+      'incluye_igv' => false,
     ];
 
     return $this->productoList[$descripcion] = $productoData;

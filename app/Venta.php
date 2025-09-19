@@ -133,6 +133,13 @@ class Venta extends Model
     "VtaInaf",
     'MesCodi',
     'VtaSald',
+
+    "VtaTDR",
+    "VtaNumeR",
+    "VtaSeriR",
+    "VtaFVtaR",
+
+    "TipoIGV",
     'User_Crea',
     'User_ECrea',
     'LocCodi',

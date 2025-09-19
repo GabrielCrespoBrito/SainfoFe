@@ -3,6 +3,7 @@
 namespace App\Jobs\ImportFromXmls;
 
 use App\Venta;
+use App\Jobs\ImportFromXmls\VentaFromData;
 
 class NotaCreatorFromXml extends CreatorAbstract
 {
@@ -40,7 +41,7 @@ class NotaCreatorFromXml extends CreatorAbstract
       $this->data['ruc_emisor'] = (string)$emisorId;
     }
     
-    $this->data['razon_social_emisor'] = (string)$xml->xpath('//cac:AccountingSupplierParty//cac:PartyLegalEntity//cbc:RegistrationName')[0] ?? '';
+    $this->data['nombre_emisor'] = (string)$xml->xpath('//cac:AccountingSupplierParty//cac:PartyLegalEntity//cbc:RegistrationName')[0] ?? '';
     $this->data['tipo_direccion_emisor'] = (string)$xml->xpath('//cac:AccountingSupplierParty//cac:PartyLegalEntity//cac:RegistrationAddress//cbc:AddressTypeCode')[0] ?? '';
     
     // Extraer datos del cliente
@@ -50,11 +51,11 @@ class NotaCreatorFromXml extends CreatorAbstract
       $this->data['ruc_cliente'] = (string)$clienteId;
     }
     
-    $this->data['razon_social_cliente'] = (string)$xml->xpath('//cac:AccountingCustomerParty//cac:PartyLegalEntity//cbc:RegistrationName')[0] ?? '';
+    $this->data['nombre_cliente'] = (string)$xml->xpath('//cac:AccountingCustomerParty//cac:PartyLegalEntity//cbc:RegistrationName')[0] ?? '';
     
     // Extraer totales
     $this->data['total_igv'] = (string)$xml->xpath('//cac:TaxTotal//cbc:TaxAmount')[0] ?? '';
-    $this->data['total_base'] = (string)$xml->xpath('//cac:TaxTotal//cac:TaxSubtotal//cbc:TaxableAmount')[0] ?? '';
+    $this->data['total_sinigv'] = (string)$xml->xpath('//cac:TaxTotal//cac:TaxSubtotal//cbc:TaxableAmount')[0] ?? '';
     $this->data['total_conigv'] = (string)$xml->xpath('//cac:LegalMonetaryTotal//cbc:PayableAmount')[0] ?? '';
     
     // Extraer datos de los items (CreditNoteLine)
@@ -78,6 +79,6 @@ class NotaCreatorFromXml extends CreatorAbstract
   }
   public function saveDataModel()
   {
-    
+    return (new VentaFromData($this->data, $this->empresa, $this->cacheTemp))->handle();
   }
 }

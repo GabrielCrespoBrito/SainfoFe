@@ -42,7 +42,7 @@ abstract class CreatorAbstract
       return Venta::where('VtaUni', $this->fileId)->exists();
     }
 
-    if( $ft == "RA" || $ft == "RC" ){
+    if ($ft == "RA" || $ft == "RC") {
       return Resumen::where('DocNume', $this->fileId)->exists();
     }
 
@@ -51,11 +51,10 @@ abstract class CreatorAbstract
 
   public function handle()
   {
-    if( $this->existRegister() ){
+    if ($this->existRegister()) {
       $this->setError('El registro ya existe');
       return $this;
     }
-
 
     try {
       DB::connection('tenant')->beginTransaction();
@@ -65,7 +64,6 @@ abstract class CreatorAbstract
       $this->setSuccess($this->data);
     } catch (\Throwable $th) {
       DB::connection('tenant')->rollBack();
-      dd($th);
       $this->setError($th->getMessage());
     }
     return $this;

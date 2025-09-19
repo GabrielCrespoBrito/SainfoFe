@@ -14,7 +14,7 @@ class ImportFromXml
   public $files = [];
   public $cacheTemp;
 
-  public function __construct( $pathXmls, Empresa $empresa, $desdeSerie = null, $tipoDocImport = null )
+  public function __construct($pathXmls, Empresa $empresa, $desdeSerie = null, $tipoDocImport = null)
   {
 
     $this->pathXmls = $pathXmls;
@@ -23,27 +23,27 @@ class ImportFromXml
     $this->cacheTemp = new CacheTemp();
 
     // Tipo de documento a importar
-    if( $tipoDocImport ){
+    if ($tipoDocImport) {
       $tipoDocImportArr = explode(',', $tipoDocImport);
-      $this->tipoDocImport = array_map(function($item){
+      $this->tipoDocImport = array_map(function ($item) {
         $arr = explode('-', $item);
-        return $arr[0] == "RA"  ? 
-          sprintf('%s-%s', $this->ruc, $arr[0]) : 
+        return $arr[0] == "RA"  ?
+          sprintf('%s-%s', $this->ruc, $arr[0]) :
           sprintf('%s-%s-%s', $this->ruc, $arr[0], $arr[1]);
       }, $tipoDocImportArr);
     }
 
     // Desde y hasta
-    if( $desdeSerie ){
+    if ($desdeSerie) {
       $desdeSerie = explode(',', $desdeSerie);
-      foreach( $desdeSerie as $item ){
+      foreach ($desdeSerie as $item) {
         $itemArr = explode('-', $item);
 
-        $key = $itemArr[1] == "RA" ? 
-          sprintf('%s-%s', $this->ruc, $itemArr[0]) : 
+        $key = $itemArr[1] == "RA" ?
+          sprintf('%s-%s', $this->ruc, $itemArr[0]) :
           sprintf('%s-%s-%s', $this->ruc, $itemArr[0], $itemArr[1]);
-          
-        $this->desdeRucSerieTipo[ $key ] = [
+
+        $this->desdeRucSerieTipo[$key] = [
           'ruc' => $this->ruc,
           'tipo' => $itemArr[0],
           'serie' => $itemArr[1],
@@ -53,7 +53,7 @@ class ImportFromXml
       }
     }
   }
-  
+
   public function getFiles()
   {
     return $this->files;
@@ -63,14 +63,14 @@ class ImportFromXml
 
   public function validateTipoDocImport($file)
   {
-    if( !$this->tipoDocImport ){
+    if (!$this->tipoDocImport) {
       return true;
     }
 
     $found = false;
 
-    foreach( $this->tipoDocImport as $tipoDoc ){
-      if( strpos($file, $tipoDoc) !== false ){
+    foreach ($this->tipoDocImport as $tipoDoc) {
+      if (strpos($file, $tipoDoc) !== false) {
         $found = true;
         break;
       }
@@ -80,7 +80,7 @@ class ImportFromXml
 
   public function validateDesdeHasta($file)
   {
-    if( count($this->desdeRucSerieTipo) == 0 ){
+    if (count($this->desdeRucSerieTipo) == 0) {
       return true;
     }
 
@@ -95,25 +95,25 @@ class ImportFromXml
 
     // dd($fileTipo, $fileSerie, $numero);
 
-    if( $fileTipo == "RA" || $fileTipo == "RC" ){
-      
-      if( isset($this->desdeRucSerieTipo[ $fileRucTipoSerieRA ]) == false ){
+    if ($fileTipo == "RA" || $fileTipo == "RC") {
+
+      if (isset($this->desdeRucSerieTipo[$fileRucTipoSerieRA]) == false) {
         return true;
       }
-      
+
       $fileNumero = ($fileSerie + $numero);
-      $dataDesde = $this->desdeRucSerieTipo[ $fileRucTipoSerieRA ];
+      $dataDesde = $this->desdeRucSerieTipo[$fileRucTipoSerieRA];
       $desdeNumero = ($dataDesde['serie'] + $dataDesde['numero']);
 
       return $fileNumero > $desdeNumero;
     }
 
-    if(  isset($this->desdeRucSerieTipo[ $fileRucTipoSerie ]) == false ){
+    if (isset($this->desdeRucSerieTipo[$fileRucTipoSerie]) == false) {
       return true;
     }
 
 
-    $desdeData = $this->desdeRucSerieTipo[ $fileRucTipoSerie ];
+    $desdeData = $this->desdeRucSerieTipo[$fileRucTipoSerie];
 
 
     return ((int) $numero) > ((int) $desdeData['numero']);
@@ -126,12 +126,12 @@ class ImportFromXml
     }
 
     // Validar el tipo de documento
-    if( $this->validateTipoDocImport($file) == false ){
+    if ($this->validateTipoDocImport($file) == false) {
       return false;
     }
 
     // Validar el desde y hasta
-    if( $this->validateDesdeHasta($file) == false ){
+    if ($this->validateDesdeHasta($file) == false) {
       return false;
     }
 
@@ -146,7 +146,7 @@ class ImportFromXml
 
     foreach ($dirs as $dir) {
       foreach ($dir as $file) {
-        if($this->addFile($file)){
+        if ($this->addFile($file)) {
           $this->files[$file] = [
             'file' => $file,
             'success' => false,
@@ -176,7 +176,7 @@ class ImportFromXml
 
     $file['success'] = $creator->isSuccess();
 
-    if( $creator->isError() ){
+    if ($creator->isError()) {
       $file['error'] = $creator->getResult()->data;
     }
 
@@ -194,19 +194,19 @@ class ImportFromXml
     $fileNumero = str_replace('.xml', '', $fileArr[3]);
 
 
-    switch( $fileTipo ){
-        case '01':
-        case '03':
-          return new VentaCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
-        case '07':
-        case '08':
-          return new NotaCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
-        case '09':
-          return new GuiaRemisionCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
-        case 'RA':
-        case 'RC':
-          return new ResumenCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
-        default:
+    switch ($fileTipo) {
+      case '01':
+      case '03':
+        return new VentaCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
+      case '07':
+      case '08':
+        return new NotaCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
+      case '09':
+        return new GuiaRemisionCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
+      case 'RA':
+      case 'RC':
+        return new ResumenCreatorFromXml($fileContent, $this->empresa, $this->cacheTemp, $fileTipo, $fileSerie, $fileNumero);
+      default:
     }
   }
 
@@ -214,18 +214,16 @@ class ImportFromXml
 
   public function handle()
   {
-    if( !is_dir($this->pathXmls) ){
+    if (!is_dir($this->pathXmls)) {
       throw new \Exception("The path {$this->pathXmls} is not a directory", 1);
     }
 
     $this->generateFilesXmls();
 
-    foreach( $this->files as &$file ){
+    foreach ($this->files as &$file) {
       $this->processFile($file);
     }
 
     return $this->files;
-    
   }
 }
-

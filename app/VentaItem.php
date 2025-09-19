@@ -34,13 +34,34 @@ class VentaItem extends Model
   protected $totals = null;
   public $timestamps = false;   
   public $incrementing = false;
+  
   const ID_INIT = "00000000";
   const EMPRESA_CAMPO = "EmpCodi";
-
   const IGV = 0.18;
+
   public $fillable = [
+    "Linea",
+    "EmpCodi",
+    "DetItem",
+    "VtaOper",
+    "DetUnid",
+    "DetCodi",
     "DetNomb",
     "MarNomb", 
+    "DetCant",
+    "DetPrec",
+    "DetImpo",
+    "DetEsta",
+    "DetEsPe",
+    "Detfact",
+    "DetIGVV",
+    "DetIGVP",
+    "DetDctoV",
+    "DetCSol",
+    "DetCDol",
+    "DetISC",
+    "DetISCP",
+    "DetPercP",
     "Estado",
     'tipoIGV',
     'DetSdCa',
