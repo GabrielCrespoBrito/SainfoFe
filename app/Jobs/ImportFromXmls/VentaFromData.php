@@ -192,6 +192,6 @@ class VentaFromData extends CreateFromDataAbstract
     logger("handleVentaFromData: " . $this->data['documento_correlativo']);
     $this->createVenta();
     $this->createItems();
-    // $this->consultarSunat();
+    $this->consultarSunat();
   }
 }
