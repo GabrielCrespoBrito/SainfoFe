@@ -23,7 +23,7 @@ function poner_data_cliente(data) {
   $("[name=zona] option[value=" + data.ZonCodi + "] ").prop('selected', true)
   
   // && data.VenCodi != null
-  if (data.PCCodi != "00001" && data.VenCodi != null ){
+  if (data.PCCodi != "00001" && data.VenCodi != null && data.VenCodi != '' ){
     $("[name=vendedor] option[value=" + data.VenCodi + "] ").prop('selected', true)
   }
 
