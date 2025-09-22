@@ -51,6 +51,7 @@ class VentaItem extends Model
     "DetCant",
     "DetPrec",
     "DetImpo",
+    "UniCodi",
     "DetEsta",
     "DetEsPe",
     "Detfact",
