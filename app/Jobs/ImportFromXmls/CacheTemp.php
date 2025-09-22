@@ -33,7 +33,7 @@ class CacheTemp
       return $this->userPrincipal;
     }
 
-    return $this->userPrincipal = get_empresa()->userOwner()->id();
+    return $this->userPrincipal = optional(get_empresa()->userOwner())->id();
   }
 
   public function getUserPrincipalUserName()
@@ -44,7 +44,7 @@ class CacheTemp
 
     $userOwner = get_empresa()->userOwner();
 
-    $this->userPrincipal = $userOwner->id();
+    $this->userPrincipal = optional($userOwner)->id();
     return  $this->userPrincipalUserName = $userOwner->usulogi;
   }
 
