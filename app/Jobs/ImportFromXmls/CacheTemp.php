@@ -29,23 +29,12 @@ class CacheTemp
 
   public function getUserPrincipal()
   {
-    if ($this->userPrincipal) {
-      return $this->userPrincipal;
-    }
-
-    return $this->userPrincipal = get_empresa()->userOwner()->id();
+    return  '01';
   }
 
   public function getUserPrincipalUserName()
   {
-    if ($this->userPrincipalUserName) {
-      return $this->userPrincipalUserName;
-    }
-
-    $userOwner = get_empresa()->userOwner();
-
-    $this->userPrincipal = optional($userOwner)->id();
-    return  $this->userPrincipalUserName = optional($userOwner)->usulogi;
+    return 'FONSECA';
   }
 
 
