@@ -63,6 +63,7 @@ class VentaItem extends Model
     "DetISCP",
     "DetPercP",
     "Estado",
+    'DetBase',
     'tipoIGV',
     'DetSdCa',
     'DetIGVV',

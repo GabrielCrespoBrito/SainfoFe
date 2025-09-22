@@ -142,8 +142,7 @@ class VentaFromData extends CreateFromDataAbstract
         $item['item_cantidad'],
         1,
         1,
-        true
-      );
+        true);
 
       $dataItem = [];
       $dataItem['Linea'] = $this->cacheTemp->getLinea();
@@ -173,8 +172,6 @@ class VentaFromData extends CreateFromDataAbstract
       $dataItem['DetPercP'] = 0;
       $dataItem['TipoIGV'] = 10;
       $dataItem['incluye_igv'] = 0;
-
-      logger('dataItem', $dataItem);
 
       $vtaItem = new VentaItem();
       $vtaItem->fill($dataItem);
