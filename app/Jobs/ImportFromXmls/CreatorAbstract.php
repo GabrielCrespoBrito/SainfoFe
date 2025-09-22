@@ -64,6 +64,7 @@ abstract class CreatorAbstract
       $this->setSuccess($this->data);
     } catch (\Throwable $th) {
       DB::connection('tenant')->rollBack();
+      dd($th);
       logger('error import from xmls', [$th]);
       $this->setError($th->getMessage());
     }
