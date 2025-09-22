@@ -33,7 +33,7 @@ class CacheTemp
       return $this->userPrincipal;
     }
 
-    return $this->userPrincipal = optional(get_empresa()->userOwner())->id();
+    return $this->userPrincipal = get_empresa()->userOwner()->id();
   }
 
   public function getUserPrincipalUserName()
@@ -41,11 +41,11 @@ class CacheTemp
     if ($this->userPrincipalUserName) {
       return $this->userPrincipalUserName;
     }
-    
-    $userOwner = optional(get_empresa()->userOwner());
 
-    $this->userPrincipal = $userOwner;
-    return  $this->userPrincipalUserName = $userOwner->usulogi;
+    $userOwner = get_empresa()->userOwner();
+
+    $this->userPrincipal = optional($userOwner)->id();
+    return  $this->userPrincipalUserName = optional($userOwner)->usulogi;
   }
 
 
@@ -63,6 +63,8 @@ class CacheTemp
 
     return $this->cajasList[$key] = optional($caja)->CajNume;
   }
+
+
 
   public function getVentaOper()
   {
