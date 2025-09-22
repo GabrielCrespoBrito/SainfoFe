@@ -538,7 +538,7 @@ class ClienteProveedor extends Model
       return $cliente->PCCodi == "00000" ? ClienteProveedor::find("00001")  : $cliente;
     }
 
-    $userLogin = is_string($user) ? $user : $user->usulogi;
+    $userLogin = is_string($user) ? $user :optional($user)->usulogi;
 
     $clienteProveedor = new self();
     $clienteProveedor->EmpCodi = $empcodi;
