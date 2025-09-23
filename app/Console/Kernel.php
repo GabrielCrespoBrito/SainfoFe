@@ -22,8 +22,9 @@ class Kernel extends ConsoleKernel
     Commands\MandarGuias::class,
     Commands\ConsultTipoCambioDia::class,
     Commands\InstalacionSistema::class,
-    Commands\RespaldoDatabase::class,
+    // Commands\RespaldoDatabase::class,
     Commands\CreateMesTrabajo::class,
+    Commands\DbsBackup::class,
     Commands\InformeDocumentosDiarios::class,
     Commands\GivePermissionToAllUsers::class,
     Commands\TicketVenta::class,
@@ -78,7 +79,7 @@ class Kernel extends ConsoleKernel
 
     # Respaldo de las bases de datos
     // $schedule->command('db:respaldo')->dailyAt("00:05");
-    $schedule->command('db:respaldo')->dailyAt("00:05");
+    $schedule->command('dbs:backup --force')->dailyAt("00:05");
 
     # Mandar emails de notificaciones de vencimiento de la suscripón de las empresas
     $schedule->command('suscripciones:notificaciones')->dailyAt("00:15");

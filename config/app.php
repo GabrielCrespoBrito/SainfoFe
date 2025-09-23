@@ -141,6 +141,10 @@ return [
 
   'backups' =>  env('BACKUPS', '/var/www/data/BACKUP/web'),
 
+  /*
+   * Script de respaldo de base de datos
+   */
+  'backup_script' => env('BACKUP_SCRIPT', null),
 
   /*
     |--------------------------------------------------------------------------
