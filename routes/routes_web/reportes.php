@@ -158,9 +158,7 @@ Route::prefix('reportes')->group(function () {
 
 
   # Reportes de vendedor-zona
-
   Route::get('cliente-vendedor-zona', 'Reportes\VendedorZonaReportController@create')->name('reportes.vendedor_cliente.create');
-  
   Route::post('cliente-vendedor-zona/report',    'Reportes\VendedorZonaReportController@report')->name('reportes.vendedor_cliente.report');
 
 

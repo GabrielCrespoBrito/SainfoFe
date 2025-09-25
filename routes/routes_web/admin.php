@@ -68,6 +68,10 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       // --------------------------------Utilitarios--------------------------------
       Route::get('empresa/update-productos-precios', "Admin\EmpresaController@updatePreciosProductos")->name('empresa.update_productos_precios');
       Route::get('empresa/update-valor-venta', "Admin\EmpresaController@updateValorVenta")->name('empresa.update_valor_venta');
+
+      Route::get('empresa/update-valor-venta-by-date/{id?}/{fechaDesde}/{fechaHasta}', "Admin\EmpresaController@updateValorVentaByDate")->name('empresa.update_valor_venta_by_date');
+
+
       Route::get('empresa/update-costos-reales', "Admin\EmpresaController@updateCostosReales")->name('empresa.update_costos_reales');
 
       Route::get('empresa/{id?}/enviar-email-venc', "Admin\EmpresaController@sendEmailVenc")->name('empresa.enviar_email_venc_suscripcion');
