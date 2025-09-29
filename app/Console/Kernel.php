@@ -79,7 +79,7 @@ class Kernel extends ConsoleKernel
 
     # Respaldo de las bases de datos
     // $schedule->command('db:respaldo')->dailyAt("00:05");
-    $schedule->command('dbs:backup --force')->dailyAt("00:05");
+    $schedule->command('db:backup --force')->dailyAt("00:05");
 
     # Mandar emails de notificaciones de vencimiento de la suscripón de las empresas
     $schedule->command('suscripciones:notificaciones')->dailyAt("00:15");

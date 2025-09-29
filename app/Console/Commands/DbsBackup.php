@@ -108,7 +108,7 @@ class DbsBackup extends Command
             $this->error("❌ Error inesperado: {$e->getMessage()}");
             
             // Log del error inesperado
-            Log::error('Error inesperado durante el respaldo', [
+            Log::error('@Error DbsBackup inesperado durante el respaldo', [
                 'script' => $backupScript,
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
