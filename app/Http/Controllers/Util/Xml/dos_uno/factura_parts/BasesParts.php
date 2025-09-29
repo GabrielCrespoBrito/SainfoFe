@@ -126,8 +126,6 @@ trait BasesParts
       '         
     ];
 
-    logger( 'Base Parts type:'.  $type, $value);
-
     return vsprintf($parts[$type],$value);
   }
 
