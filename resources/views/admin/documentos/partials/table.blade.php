@@ -6,6 +6,7 @@
     data-type="documentos"
     data-url-sunat="{{ route('admin.documentos.send_pendientes') }}"
     data-url-date="{{ route('admin.documentos.change_date', '@@@@') }}"
+    data-url-consult-status="{{ route('admin.documentos.consult_status') }}"
     class="table sainfo-table sainfo-noicon datatable-pendiente oneline pt-0 {{ $isPendiente ? 'is-pendiente' : '' }}">
     <thead>
       <tr>

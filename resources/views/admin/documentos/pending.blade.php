@@ -31,7 +31,7 @@
                 {{--  --}}
             @else
                 @include('admin.partials.filtros', ['isPendiente' => true])
-                @include('admin.documentos.partials.botones_pendientes', ['isPendiente' => false])
+                @include('admin.documentos.partials.botones_pendientes', ['isPendiente' => false, 'consultStatus' => true])
             @endif
 
 

@@ -425,6 +425,27 @@ function enviar_sunat(e) {
   }
 }
 
+
+function consultar_sunat(e) {
+
+  e.preventDefault();
+
+
+  let trs = $(".datatable-pendiente tbody tr.seleccionado");
+
+  if (trs.length) {
+    en_proceso = true;
+
+    trs.each(function() {
+      let id = $(this).find("td:eq(0)").text();
+      consultStatusDocumento($('[name=empresa_id]').val(),  id);
+    });
+
+  }
+
+}
+
+
 function eliminarDocumento(e)
 {
   e.preventDefault();
@@ -556,8 +577,17 @@ function changeEmpresa()
 function consultStatus(e) {
   e.preventDefault();
 
-  let $this = $(this);
+  let empresa_id = $('[name=empresa_id]').val();
+  let documento_id = $this.attr('data-documento_id');
+  let url = $this.attr('data-url');
 
+  
+  consultStatusDocumento(empresa_id, documento_id);
+
+}
+
+function consultStatusDocumento(empresa_id, documento_id) {
+  $("#load_screen").show();
   let funcs = {
     success: function (data) {
       table.draw();
@@ -567,16 +597,23 @@ function consultStatus(e) {
       $("#load_screen").hide();
     }
   }
-  
-  // console.log("consultStatus", $this);
-  
+
+  console.log(
+    "url", 
+    $("#datatable-documentos").attr('data-url-consult-status'), 
+    empresa_id, 
+    documento_id
+  );
+
   $("#load_screen").show();
   ajaxs({
-    'empresa_id' : $this.attr('data-empresa_id'),
-    'documento_id' : $this.attr('data-documento_id'), 
-  }, $this.attr('data-url'), funcs);
+    'empresa_id': empresa_id,
+    'documento_id': documento_id,
+  }, $("#datatable-documentos").attr('data-url-consult-status'), funcs);
 
 }
+
+
 
 function events()
 {
@@ -639,6 +676,8 @@ function events()
   $("#select_all").on('click', toggleSelect);
   
   $(".enviar-sunat").on('click', enviar_sunat);
+
+  $(".consultar-sunat").on('click', consultar_sunat);
 
   // Modificar valor del input de fecha
   $("#datatable-documentos").on( 'click', ".btn-modify-date", activeInputToModify );
