@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Mes;
-use App\NotificacionDocumentosPendientes;
-use App\Rules\ValidRecaptcha;
 use App\Venta;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\BusquedaDocumentoRequest;
-use Chumper\Zipper\Zipper;
+use App\Empresa;
 use App\Helpers\FHelper;
 use App\Helpers\FtpHelper;
+use Chumper\Zipper\Zipper;
+use Illuminate\Http\Request;
+use App\Rules\ValidRecaptcha;
+use Illuminate\Support\Facades\Storage;
+use App\NotificacionDocumentosPendientes;
+use App\Http\Requests\BusquedaDocumentoRequest;
 
 class DocumentosController extends Controller
 {
@@ -117,29 +118,33 @@ class DocumentosController extends Controller
       strtoupper($request->serie) . '-' .
       agregar_ceros($request->numero, 6, 0);
 
+
     $nameCdr = 'R-' . $name . '.zip';
     $namePDF = $name . '.pdf';
     $nameEnvio = $name . '.zip';
 
-    $fileHelper = new FHelper($ruc);
+
+    $empresa = Empresa::findByRuc($ruc);
+
+    $fileHelper = new FHelper($ruc, optional($empresa)->codigo ?? '000');
     $filesToDownload = [];
 
-    if ($fileHelper->existsInNube(FHelper::CDR,  $nameCdr)) {
-      $file = $fileHelper->getFilesInNube(FHelper::CDR, $nameCdr);
+    if ($fileHelper->existsInLocal(FHelper::CDR,  $nameCdr)) {
+      $file = $fileHelper->getFilesInLocal(FHelper::CDR, $nameCdr);
       array_push($filesToDownload, ['name' => $nameCdr, 'content' => $file]);
 
-      if ($fileHelper->existsInNube(FHelper::PDF,  $namePDF)) {
-        $file = $fileHelper->getFilesInNube(FHelper::PDF, $namePDF);
+      if ($fileHelper->existsInLocal(FHelper::PDF,  $namePDF)) {
+        $file = $fileHelper->getFilesInLocal(FHelper::PDF, $namePDF);
         array_push($filesToDownload, ['name' => $namePDF, 'content' => $file]);
       }
-      if ($fileHelper->existsInNube(FHelper::ENVIO,  $nameEnvio)) {
-        $file = $fileHelper->getFilesInNube(FHelper::ENVIO, $nameEnvio);
+      if ($fileHelper->existsInLocal(FHelper::ENVIO,  $nameEnvio)) {
+        $file = $fileHelper->getFilesInLocal(FHelper::ENVIO, $nameEnvio);
         array_push($filesToDownload, ['name' => $nameEnvio, 'content' => $file]);
       }
     }
 
-    if ($request->tipo_documento == "03" && $fileHelper->existsInNube('pdf', $namePDF)) {
-      $file = $fileHelper->getFilesInNube(FHelper::PDF, $namePDF);
+    if ($request->tipo_documento == "03" && $fileHelper->existsInLocal('pdf', $namePDF)) {
+      $file = $fileHelper->getFilesInLocal(FHelper::PDF, $namePDF);
       array_push($filesToDownload, ['name' => $namePDF, 'content' => $file]);
     }
 
@@ -169,7 +174,9 @@ class DocumentosController extends Controller
       $response = \Response::download($pathCompress, NULL, $headers);
       ob_end_clean();
       return $response;
-    } else {
+    } 
+    
+    else {
       notificacion("", "No se ha encontrado ningun documento con los datos suministrados", "error");
       return redirect()->back();
     }
