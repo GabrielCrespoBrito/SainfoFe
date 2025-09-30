@@ -12,7 +12,9 @@ class CreateNC
    * 
    */
   public $creator;
-
+  public $documento;
+  public $serie;
+  public $data;
 
   public function __construct(Venta $documento, array $data)
   {
@@ -34,6 +36,7 @@ class CreateNC
       DB::connection('tenant')->commit();
     } catch (\Throwable $th) {      
       DB::connection('tenant')->rollBack();
+      logger( '@ERROR createNC', [$th]);
       return ['success' => false,  'errors' => $th->getMessage(),'error' => $th->getMessage()];
     }
      $this->creator->sendSunat();
