@@ -12,6 +12,7 @@
 
 @slot('contenido')
   @include('admin.partials.filtros', ['isPendiente' => false ])
+  @include('admin.documentos.partials.botones_pendientes', ['isPendiente' => false, 'consultStatus' => true, 'enviarSunat' => false])
   @include('admin.documentos.partials.table', ['isPendiente' => false ])
 @endslot
 

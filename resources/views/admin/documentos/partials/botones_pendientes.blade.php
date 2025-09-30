@@ -1,11 +1,15 @@
 @php
   $consultStatus = $consultStatus ?? true;
+  $enviarSunat = $enviarSunat ?? true;
+
 @endphp
 <div class="row">
   <div class="col-md-12">
 
+    @if( $enviarSunat )
     <a href="#" data-toggle="tooltip" title="Enviar seleccionados" class="btn btn-primary btn-flat pull-right enviar-sunat ml-x3"> 
       Enviar Sunat </a>
+    @endif
 
     @if( $consultStatus )
     <a href="#" data-toggle="tooltip" title="Consultar Estatus seleccionados" class="btn btn-primary btn-flat pull-right consultar-sunat ml-x3">
