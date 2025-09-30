@@ -1,5 +1,5 @@
 @php
-  $consultStatus = $consultStatus ?? false;
+  $consultStatus = $consultStatus ?? true;
 @endphp
 <div class="row">
   <div class="col-md-12">

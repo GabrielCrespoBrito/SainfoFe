@@ -332,8 +332,11 @@ function initDataTable()
 
 function data_actual() {
   let tr_actual = trs_enviar.first();
+  const documento_id = $(tr_actual).find("td:eq(0)").text();
+
   return {
-    'id_factura': $(tr_actual).find("td:eq(0)").text(),
+    'id_factura': documento_id,
+    'documento_id': documento_id,
     'empresa_id': $("[name=empresa_id]").val(),
     'docnume': $(tr_actual).find("td:eq(1)").text(),
 
@@ -341,6 +344,17 @@ function data_actual() {
 }
 
 function completado_envio(data)
+{
+  trs_accion(data);
+}
+
+function completado_envio_consulta(data)
+{
+  trs_accion(data,false);  
+}
+
+
+function trs_accion(data, accion_envio = true)
 {
   let mensaje;
 
@@ -378,10 +392,11 @@ function completado_envio(data)
   trs_enviar.shift();
 
   if (trs_enviar.length) {
-    enviar_facturas();
+    accion_envio ? enviar_facturas() : consultar_facturas();
   }
   else {
-    activar_button(".enviar-sunat", "#select_all");
+    accion_envio ?  activar_button(".enviar-sunat", "#select_all") : activar_button(".consultar-sunat", "#select_all");
+    
     $("#load_screen").hide();
     en_proceso = false;
     table.draw();
@@ -406,6 +421,27 @@ function enviar_facturas()
 
   ajaxs(data, url_enviar_sunat, funcs);
 }
+
+
+function consultar_facturas() 
+{
+  desactivar_button(".consultar-sunat", "#select_all");
+  $("#load_screen").show();
+
+  let data = data_actual();
+  let funcs = {
+    complete: completado_envio_consulta,
+    error: function (d) {
+      console.log("error", d);
+    }
+  };
+
+  const url_consult_status = $(".datatable-pendiente").attr('data-url-consult-status');
+
+  ajaxs(data, url_consult_status, funcs);
+}
+
+
 
 function enviar_sunat(e) {
   e.preventDefault();
@@ -435,12 +471,8 @@ function consultar_sunat(e) {
 
   if (trs.length) {
     en_proceso = true;
-
-    trs.each(function() {
-      let id = $(this).find("td:eq(0)").text();
-      consultStatusDocumento($('[name=empresa_id]').val(),  id);
-    });
-
+    trs_enviar = trs.toArray();
+    consultar_facturas();
   }
 
 }
