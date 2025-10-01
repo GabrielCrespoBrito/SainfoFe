@@ -126,6 +126,13 @@ window.AppPago =
       'importe': true,
     });
 
+    const fechaActual = new Date();
+    const yyyy = fechaActual.getFullYear();
+    const mm = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+    const dd = String(fechaActual.getDate()).padStart(2, '0');
+    const fechaFormateada = `${yyyy}-${mm}-${dd}`;
+
+    $("[name=fecha_pago]", this.parent).val(fechaFormateada);
     $("[name=importe]", this.parent).val(data.saldo);
 
     if (this.is_static_modal) {

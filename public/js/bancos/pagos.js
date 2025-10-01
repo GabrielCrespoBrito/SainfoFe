@@ -109,7 +109,15 @@ let AppPago =
   },
 
   success : function(data){
-    Helper__.set_data_form( this.parent , data );    
+    Helper__.set_data_form( this.parent , data );
+
+    const fechaActual = new Date();
+    const yyyy = fechaActual.getFullYear();
+    const mm = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+    const dd = String(fechaActual.getDate()).padStart(2, '0');
+    const fechaFormateada = `${yyyy}-${mm}-${dd}`;
+    $("[name=fecha_pago]", this.parent).val(fechaFormateada);
+    
     $(this.parent).modal();
   },
 
