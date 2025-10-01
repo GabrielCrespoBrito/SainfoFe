@@ -43,7 +43,7 @@
     'class_name' => 'col-12 border-width-1 mt-x5 mb-x5  border-bottom-style-dotted',
     'nombre_campo_nombre' => 'Razón Social:',
     'nombre_campo_class' => 'bold',
-    'fecha_emision_campo_nombre' : 'Fecha emisión:',
+    'fecha_emision_campo_nombre' => 'Fecha emisión:',
     'fecha_emision' => $fecha_emision_ ?? false,
     'nombre' => $cliente->PCNomb,
     'documento_campo_nombre' => $cliente->getNombreTipoDocumento() . ':',
