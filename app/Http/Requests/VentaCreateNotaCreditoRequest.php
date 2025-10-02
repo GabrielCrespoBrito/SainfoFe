@@ -196,7 +196,7 @@ class VentaCreateNotaCreditoRequest extends FormRequest
 
     $loccodi = $user->localCurrent()->loccodi;
     
-    $caja_id = $user->caja_aperturada(true, $loccodi);
+    $caja_id = $user->caja_aperturada_new(true, $loccodi);
     
     if( ! $caja_id  ){
       $validator->errors()->add('user', 'El Usuario tiene que tener una caja Aperturada');
