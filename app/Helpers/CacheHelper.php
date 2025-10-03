@@ -210,7 +210,7 @@ class CacheHelper
   public function detraccion_activeCacheable($nameCache)
   {
     return Cache::rememberForever($nameCache, function () {
-      return Detraccion::where('active', 1)->get();
+      return Detraccion::where('active', 1)->orderBy('cod_sunat')->get();
     });
   }
 
