@@ -6,6 +6,7 @@ use App\Cotizacion;
 use Illuminate\Database\Eloquent\Model;
 use App\Util\ModelUtil\ModelEmpresaScope;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
+use App\Util\ConsultAgenteRetencion\ConsultAgenteRetencionMigo;
 
 class ClienteProveedor extends Model
 {
@@ -31,6 +32,9 @@ class ClienteProveedor extends Model
     'PCNomb',
     'PCDire',
     'PCDist',
+    'Ent_CCI',
+    'Ent_CUSP',
+    'Ent_cEstadoEntidad',
     'UDelete',
     'PCDocu',
     'PCTel1',
@@ -613,4 +617,32 @@ class ClienteProveedor extends Model
     $clienteProveedor->save();
     return $clienteProveedor;
   }
+
+
+
+  public function updateAgenteRetencion()
+  {
+    $agenteRetencion = false;
+    $agenteRetencionResolucion = '';
+    $agenteRetencionAPartirDel = '';
+
+    // Consultar agente de retencion
+    $consultAgenteRetencion = new ConsultAgenteRetencionMigo();
+    $responseAgenteRetencion = $consultAgenteRetencion->consult($this->getDocumento());
+
+    if ($responseAgenteRetencion['success']) {
+      $agenteRetencion = true;
+      $agenteRetencionResolucion = $responseAgenteRetencion['data']['resolucion'];
+      $agenteRetencionAPartirDel = $responseAgenteRetencion['data']['a_partir_del'];
+    } else {
+      $agenteRetencion = false;
+    }
+
+    $this->update([
+      'Ent_CCI' => $agenteRetencionResolucion,
+      'Ent_CUSP' => $agenteRetencionAPartirDel,
+      'Ent_cEstadoEntidad' => $agenteRetencion ? 1 : 0,
+    ]);
+  }
+
 }

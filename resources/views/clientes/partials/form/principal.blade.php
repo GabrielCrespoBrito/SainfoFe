@@ -5,6 +5,10 @@
   $email = $email ?? "";
   $tipoDocumentoDefault = $tipoDocumentoDefault ?? '';
   $disabledBtnSearch = $disabledBtnSearch ?? true;
+
+  $agente_retencion = $agente_retencion ?? false;
+  $resolucion_agente_retencion = $resolucion_agente_retencion ?? "";
+  $apartir_del_agente_retencion = $apartir_del_agente_retencion ?? "";
 @endphp
     
 
@@ -100,3 +104,21 @@
   </div>
   
 </div>  
+
+
+<div class="row">
+
+  <div class="form-group col-md-6">
+    <span id="agente_retencion_checkbox" class="bold text-bold pull-right {{ $agente_retencion ? 'text-green' : 'text-gray' }}">{{ $agente_retencion ? 'Si' : 'No' }}</span>
+    <label for="resolucion_agente_retencion" style="display: block;"> Agente Retención </label>
+    <input id="resolucion_agente_retencion" name="resolucion_agente_retencion" readonly class="form-control" value="{{ $resolucion_agente_retencion }}" type="text">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label> &nbsp; </label>
+    <input name="apartir_del_agente_retencion" readonly class="form-control" type="text" value="{{ $apartir_del_agente_retencion }}">
+  </div>
+
+</div>
+
+

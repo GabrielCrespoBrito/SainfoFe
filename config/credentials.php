@@ -28,6 +28,7 @@ return [
       'url_ruc' => env('MIGO_URL_RUC', 'https://api.migo.pe/api/v1/ruc'),
       'url_tc_latest'  => env('MIGO_URL_TC_LATEST', 'https://api.migo.pe/api/v1/exchange/latest'),
       'url_tc_date'  => env('MIGO_URL_TC_DATE', 'https://api.migo.pe/api/v1/exchange/date'),
+      'url_agente_retencion' => env('MIGO_URL_AGENTE_RETENCION', 'https://api.migo.pe/api/v1/ruc/agentes-retencion'),
     ],
 
 ];

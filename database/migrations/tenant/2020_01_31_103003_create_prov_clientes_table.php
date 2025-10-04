@@ -44,6 +44,9 @@ class CreateProvClientesTable extends Migration
 			$table->string('TDocCodi')->nullable();
 			$table->string('PConCodi')->nullable();
 			$table->binary('PCFoto')->nullable();
+      $table->integer('Ent_cEstadoEntidad')->default(0)->nullable();
+			$table->string('Ent_CCI')->nullable();
+			$table->string('Ent_CUSP')->nullable();
 			$table->string('User_Crea')->nullable();
 			$table->dateTime('User_FCrea')->nullable();
 			$table->string('User_ECrea')->nullable();

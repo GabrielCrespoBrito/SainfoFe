@@ -98,6 +98,9 @@ class ClienteProveedorController extends Controller
     $clienteProveedor->User_ECrea = gethostname();
     $clienteProveedor->UDelete = "";
     $clienteProveedor->save();
+    if($clienteProveedor->isRuc()){
+      $clienteProveedor->updateAgenteRetencion();
+    }
     return $clienteProveedor;
   }
 
@@ -355,7 +358,6 @@ class ClienteProveedorController extends Controller
     }
 
     $clienteProveedor = new ClienteProveedor;
-
     $clienteProveedor->PCCodi = $clienteProveedor->buscar_ultimo_codigo('C');
     $clienteProveedor->EmpCodi = session()->get('empresa');
     $clienteProveedor->TipCodi = 'C';
@@ -372,8 +374,16 @@ class ClienteProveedorController extends Controller
     $clienteProveedor->User_ECrea = gethostname();
     $clienteProveedor->UDelete = "";
     $clienteProveedor->save();
+
+    if($clienteProveedor->isRuc()){
+      $clienteProveedor->updateAgenteRetencion();
+    }
+
     $clienteProveedor = $clienteProveedor->toArray();
     $clienteProveedor['tipo_documento'] = $tipo_documento;
+
+
+
     return $clienteProveedor;
   }
 }

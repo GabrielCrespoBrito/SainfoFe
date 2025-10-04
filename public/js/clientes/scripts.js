@@ -50,7 +50,16 @@
       $("#form-cliente [name=razon_social]").val(razon_social);
       $("#form-cliente [name=ubigeo]" ).val(data_cliente.ubigeo);
       $("#form-cliente [name=telefono_1]").val('');
-      $("#form-cliente [name=email]").val(data_cliente.email);           
+      $("#form-cliente [name=email]").val(data_cliente.email);
+
+
+      $("#form-cliente #agente_retencion_checkbox").text(data_cliente.agente_retencion ? 'Si' : 'No');
+      $("#form-cliente #agente_retencion_checkbox").toggleClass('text-green', data_cliente.agente_retencion);
+      $("#form-cliente #agente_retencion_checkbox").toggleClass('text-gray', !data_cliente.agente_retencion);
+
+      $("#form-cliente [name=resolucion_agente_retencion]").val(data_cliente.agente_retencion_resolucion);
+      $("#form-cliente [name=apartir_del_agente_retencion]").val(data_cliente.agente_retencion_apartir_del);
+      
     }
 
     else {
@@ -60,6 +69,12 @@
       $("#form-cliente [name=ubigeo]").val('');
       $("#form-cliente [name=telefono_1]").val('');
       $("#form-cliente [name=email]").val('');
+      $("#form-cliente #agente_retencion_checkbox").text('No');
+      $("#form-cliente #agente_retencion_checkbox").removeClass('text-green');
+      $("#form-cliente #agente_retencion_checkbox").addClass('text-gray');
+      $("#form-cliente [name=resolucion_agente_retencion]").val('');
+      $("#form-cliente [name=apartir_del_agente_retencion]").val('');
+
       notificaciones( data.error , 'warning' );
     }
 
@@ -440,7 +455,13 @@
     poner_data_form( "ruc_avalista" , data.PCARuc );    
     poner_data_form( "direccion_avalista" , data.PCADir );    
     poner_data_form( "telefono_avalista" , data.PCATel );    
-    poner_data_form( "email_avalista" , data.PCAEma );   
+    poner_data_form( "email_avalista" , data.PCAEma );
+
+    $("#form-cliente #agente_retencion_checkbox").text(data.Ent_cEstadoEntidad ? 'Si' : 'No');
+    $("#form-cliente #agente_retencion_checkbox").toggleClass('text-green', data.Ent_cEstadoEntidad);
+    $("#form-cliente #agente_retencion_checkbox").toggleClass('text-gray', !data.Ent_cEstadoEntidad);
+    $("#form-cliente [name=resolucion_agente_retencion]").val(data.Ent_CCI);
+    $("#form-cliente [name=apartir_del_agente_retencion]").val(data.Ent_CUSP);
     
     if( data.ubigeo ){
       let text = `(${data.ubigeo.ubicodi}) - ${data.ubigeo.departamento.depnomb} - ${data.ubigeo.provincia.provnomb} - ${data.ubigeo.ubinomb}`;
