@@ -4739,6 +4739,19 @@ $(document).ready(function (e) {
       $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
       $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
 
+      if(data.params.args.data.data.Ent_cEstadoEntidad){
+        console.log("retencion");
+        show_hide_adicional_info();
+        notificaciones("El cliente es agente de retención, si el documento documento es mayor 700 soles, tiene que aplicar la retención a este documento", "info");
+
+        $(".control-label-tributos").css("border-color", "blue");
+        $(".control-label-tributos").css("border-width", "3px");
+
+
+        $("[name=tipo_cargo_global] option[value=retencion]").prop('selected', true);
+        changeCargoGlobal();
+      }
+
       $("[name=tipo_documento_c]").val(tDocCodi);
     });
 

@@ -202,7 +202,7 @@ else {
 			<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label class="col-sm-6 control-label"> 
+					<label class="col-sm-6 control-label control-label-tributos"> 
 					<select name="tipo_cargo_global" {{ $create ? '' : 'disabled=disabled' }} class="input_tipo_cargo" id="">
 						<option {{ $tipo_cargo_global == 0 ? 'selected=selected' : '' }} value=""> </option>
 						<option {{ $tipo_cargo_global == 2 ? 'selected=selected' : '' }} value="percepcion"> Percepción </option>

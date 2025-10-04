@@ -645,4 +645,9 @@ class ClienteProveedor extends Model
     ]);
   }
 
+  public function hasRetencion()
+  {
+    return $this->Ent_cEstadoEntidad == 1;
+  }
+
 }

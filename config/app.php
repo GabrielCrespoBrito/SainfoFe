@@ -492,6 +492,7 @@ return [
     'igv_bace_cero' => 0.18,
     'igv_bace_uno' => 1.18,
     'bolsa' => 0.30,
+    'retencion_limite' =>  env('RETENCION_LIMITE', 700),
   ],
 
   'dias_anulacion' => env('DIAS_ANULACION', 30),
