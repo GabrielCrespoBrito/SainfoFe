@@ -2820,10 +2820,20 @@ $(document).ready(function (e) {
     return false;
   }
 
-  function show_hide_adicional_info() {
+  function show_hide_adicional_info( force = false, show = false ) {
     let $div_info = $(".info_adicional")
     var iconClass;
     let isVisible = $div_info.is(':visible');
+
+    if(  force instanceof Object == false ){
+      
+      if( (force && show && isVisible) || (force && show == false && isVisible == false) ){
+        console.log("show_hide_adicional_info", force, show, isVisible);
+        return;
+      }
+      
+    }
+
 
     if (isVisible) {
       $div_info
@@ -4739,15 +4749,12 @@ $(document).ready(function (e) {
       $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
       $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
 
-      if(data.params.args.data.data.Ent_cEstadoEntidad){
+      if(data.params.args.data.data.Ent_cEstadoEntidad == "1"){
         console.log("retencion");
-        show_hide_adicional_info();
+        show_hide_adicional_info(true, true);
         notificaciones("El cliente es agente de retención, si el documento documento es mayor 700 soles, tiene que aplicar la retención a este documento", "info");
 
-        $(".control-label-tributos").css("border-color", "blue");
-        $(".control-label-tributos").css("border-width", "3px");
-
-
+        $(".control-label-tributos").css("border", "2px solid blue");
         $("[name=tipo_cargo_global] option[value=retencion]").prop('selected', true);
         changeCargoGlobal();
       }
