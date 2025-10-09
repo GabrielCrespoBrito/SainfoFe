@@ -68,8 +68,6 @@ class ClienteUpdateInfo
     
     $clientes = $this->getClientes();
 
-    dd($clientes);
-
     foreach($clientes as $chunk) {
       foreach($chunk as $cliente) {
 
