@@ -5,6 +5,8 @@ namespace App;
 use App\Cotizacion;
 use Illuminate\Database\Eloquent\Model;
 use App\Util\ModelUtil\ModelEmpresaScope;
+use App\Util\ConsultDocument\ConsultDniMigo;
+use App\Util\ConsultDocument\ConsultRucMigo;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
 use App\Util\ConsultAgenteRetencion\ConsultAgenteRetencionMigo;
 
@@ -643,6 +645,40 @@ class ClienteProveedor extends Model
       'Ent_CUSP' => $agenteRetencionAPartirDel,
       'Ent_cEstadoEntidad' => $agenteRetencion ? 1 : 0,
     ]);
+  }
+
+  public function updateInformacion( $searchRetencion = false)
+  {
+    // Consultar Documento
+    $consulter = $this->isRuc() ? new ConsultRucMigo() : new ConsultDniMigo();
+    $dataUpdate = [];
+    $response = $consulter->consult($this->getDocumento());
+
+    if($response['success']) {
+      $dataUpdate = [
+        'PCDire' => $response['data']['direccion'],
+        'PCDist' => $response['data']['ubigeo'],
+        'PCNomb' => $response['data']['razon_social'],
+      ];
+    }
+
+    // Consultar Agente de Retencion
+    if($searchRetencion && $this->isRuc()) {
+      $responseAgenteRetencion = (new ConsultAgenteRetencionMigo())->consult($this->getDocumento());
+      if ($responseAgenteRetencion['success']) {
+        $dataUpdate['Ent_cEstadoEntidad'] = 1;
+        $dataUpdate['Ent_CCI'] = $responseAgenteRetencion['data']['resolucion'];
+        $dataUpdate['Ent_CUSP'] = $responseAgenteRetencion['data']['a_partir_del'];
+      }
+      else {
+        $dataUpdate['Ent_cEstadoEntidad'] = 0;
+      }
+    }
+
+    // Actualizar Informacion
+    if(count($dataUpdate)) {
+      $this->update($dataUpdate);
+    }
   }
 
   public function hasRetencion()

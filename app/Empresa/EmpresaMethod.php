@@ -9,14 +9,15 @@ use Carbon\Carbon;
 use App\Jobs\Empresa\SaveWeb;
 use App\Jobs\Empresa\TokenHandler;
 use Illuminate\Support\Facades\Log;
+use App\Util\Sire\GenerateTokenSire;
+use App\Jobs\Empresa\ClienteUpdateInfo;
 use App\Notifications\SuscripcionVencida;
 use App\Notifications\SuscripcionPorVencer;
 use App\Notifications\SuscripcionVencidaHoy;
 use App\Jobs\Empresa\GetOrGenerateGuiaTokenApi;
 use App\Jobs\Empresa\CambiarAplicacionIgvProductos;
-use App\Notifications\NotifyAdminUserSuscripcionPorVencer;
 use App\Notifications\NotifyAdminUserSuscripcionVencida;
-use App\Util\Sire\GenerateTokenSire;
+use App\Notifications\NotifyAdminUserSuscripcionPorVencer;
 
 trait EmpresaMethod
 {
@@ -163,6 +164,11 @@ trait EmpresaMethod
     // $user_soporte->notify(new NotifyAdminUserSuscripcionVencida($this, $userOwner));
   }
   
+
+  public function updateClientesInfo($tipo_documento, $tipo_informacion)
+  {
+    return (new ClienteUpdateInfo($this, $tipo_documento, $tipo_informacion))->handle();
+  }
   public function sendEmailPorVencSuscripcion()
   {
     $userOwner =  $this->userOwner();

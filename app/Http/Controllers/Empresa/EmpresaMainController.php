@@ -22,6 +22,7 @@ use App\Http\Requests\Empresa\EmpresaUpdateRequest;
 use App\Http\Requests\Empresa\EmpresaUpdateParametroBasicRequest;
 use App\Jobs\ImportFromXmls\ImportFromXml;
 use Carbon\Carbon;
+use App\Http\Controllers\Empresa\ClientesTrait;
 
 abstract class EmpresaMainController extends Controller
 {
@@ -31,6 +32,7 @@ abstract class EmpresaMainController extends Controller
     ParametrosTrait,
     CertificateTrait,
     TiendaTrait,
+    ClientesTrait,
     VisualTrait;
 
   public $empresa;

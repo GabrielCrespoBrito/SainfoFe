@@ -107,6 +107,7 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
 
       //
       Route::post('empresa-update/{id?}/reset-data', "Admin\EmpresaController@resetData")->name('empresa.reset_data');
+      Route::post('empresa-update/{id?}/update-clientes-info', "Admin\EmpresaController@updateClientesInfo")->name('empresa.update_clientes_info');
       Route::post('empresa-update/{id?}/delete-data', "Admin\EmpresaController@deleteData")->name('empresa.delete_data');
       Route::delete('empresa/{id?}/delete-logo/{logo_id?}', "Admin\EmpresaController@deleteLogo")->name('empresa.delete_logo');
       Route::get('empresa/{id?}/logo-footer-sainfo', "Admin\EmpresaController@logoFooterDefault")->name('empresa.logo_footer_sainfo');
