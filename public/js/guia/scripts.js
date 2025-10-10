@@ -1433,9 +1433,11 @@ function aceptar_guardado(despachar = false) {
 
   $("#table-items tbody tr").each(function (i, d) {
     let info = JSON.parse($(this).attr('data-info'));
-    info['DetCant'] = info.DetCant || info.Detcant;
+    info['DetCant'] = info.DetCant || info.Detcant;    
+    delete info.Unidades;
     items.push(info);
   });
+
 
   let data = {
     despachar: despachar,
@@ -1477,11 +1479,6 @@ function aceptar_guardado(despachar = false) {
     tipo_guardado: $("[name=tipo_guardado]:checked").val(),
     items: items,
   }
-
-  $("tr.seleccionando").each(function (index, dom) {
-    let item_data = JSON.parse($(this).attr('data-info'));
-    data.items.push(item_data);
-  });
 
   let funcs = {
     success: redirectToRoute,
