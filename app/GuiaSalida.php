@@ -525,7 +525,7 @@ class GuiaSalida extends Model
     $guia->guidisp = null;
     $guia->guidill = null;
     $guia->guidisll = null;
-    $guia->motcodi = null;
+    $guia->motcodi = MotivoTraslado::getDefaultByTipo($id_tipo_movimiento); ;
     $guia->VehCodi = null;
     $guia->concodi = "01";
     $guia->mescodi = $mescodi;
@@ -615,20 +615,8 @@ class GuiaSalida extends Model
     $this->motcodi = $motivoTraslado;
 
     if ($motivoTraslado == MotivoTraslado::IMPORTACION || $motivoTraslado == MotivoTraslado::EXPORTACION) {
-      //        "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-      // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-      // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-
       $this->docrefe = sprintf('%s-%s', $data['tipo_export'], $data['export_doc_num']);
     }
-
-
-
-    // "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-    // "serie_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-    // "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-
-
 
     $this->e_traslado = $motivoTraslado == MotivoTraslado::TRASLADO_MISMA_EMPRESA ?
       GuiaSalida::ESTADO_TRASLADO_PENDIENTE : null;

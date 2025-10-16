@@ -31,6 +31,12 @@ class MotivoTraslado extends Model
     return $tipo == self::COMPRA || $tipo == self::IMPORTACION;
   }
 
+  public static function getDefaultByTipo($tipo)
+  {
+     return optional(TipoMovimiento::find($tipo))
+    ->compra == "S" ? self::COMPRA : self::VENTA;
+  }
+
   /**
    * Undocumented function
    *
