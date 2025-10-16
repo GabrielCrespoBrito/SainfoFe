@@ -59,9 +59,6 @@
                   name="notification-read[]">
               </td>
               <td> <a style="color:black" href="{{ route('admin.notificaciones.show', $item['id']) }}" target="_blank"> {{ $item['titulo'] }} </a></td>
-              @php
-                logger($item);
-              @endphp
               <td> 
                 @if( is_array($item['descripcion']) )
                 -

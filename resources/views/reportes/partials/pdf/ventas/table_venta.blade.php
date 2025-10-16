@@ -92,8 +92,6 @@
         $isNC = $id == "07";
 
         if( $is_venta ){
-          logger([ time(), $loop->index, $id,  $ventas_group->sum('Vtabase'), $ventas_group->sum('IGVV'), $ventas_group->sum('VtaImpo') ]);
-
           $total_items += $items = $ventas_group->count(); 
           $total_base += $base = convertNegativeIfTrue($ventas_group->sum('Vtabase'), $isNC  );
           $total_igv += $igv =  convertNegativeIfTrue($ventas_group->sum('VtaIGVV'), $isNC  );
