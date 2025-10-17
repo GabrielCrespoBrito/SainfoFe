@@ -395,9 +395,7 @@ class GuiaSalida extends Model
     $venta->save();
   }
 
-  public function updateDocEnviado()
-  {
-  }
+  public function updateDocEnviado() {}
 
   public static function createGuia(
     $id_venta = null,
@@ -525,7 +523,7 @@ class GuiaSalida extends Model
     $guia->guidisp = null;
     $guia->guidill = null;
     $guia->guidisll = null;
-    $guia->motcodi = MotivoTraslado::getDefaultByTipo($id_tipo_movimiento); ;
+    $guia->motcodi = MotivoTraslado::getDefaultByTipo($id_tipo_movimiento);
     $guia->VehCodi = null;
     $guia->concodi = "01";
     $guia->mescodi = $mescodi;
@@ -559,6 +557,66 @@ class GuiaSalida extends Model
   {
     return true;
   }
+
+  public function getDireccionPartida()
+  {
+    if ($this->guidirp) {
+      return $this->guidirp;
+    }
+
+    return $this->motcodi == MotivoTraslado::VENTA ? optional($this->almacen)->LocDire : $this->cliente->PCDire;
+  }
+
+/**
+ * Get the ubigeo of the partida del guia.
+ *
+ * If the guia has an ubigeo from the Almacen, it returns that.
+ * If the guia has an ubigeo from the Client, it returns that.
+ * If the guia has an ubigeo from neither the Almacen nor the Client, it returns null.
+ *
+ * @return string|null
+ */
+  public function getUbigeoPartida()
+  {
+    if ($this->guidirp) {
+      return $this->ubigeo_partida ?? optional($this->almacen)->ubigeo;
+    }
+
+    return $this->motcodi == MotivoTraslado::VENTA ? 
+      ($this->ubigeo_partida ?? optional($this->almacen)->ubigeo) : 
+      ($this->ubigeo_llegada ?? optional($this->cliente)->ubigeo);
+  }
+
+
+/**
+ * Get the direction of the delivery.
+ *
+ * If the delivery has a direction from the Almacen, it returns that.
+ * If the delivery has a direction from the Client, it returns that.
+ * If the delivery has a direction from neither the Almacen nor the Client, it returns null.
+ *
+ * @return string|null
+ */
+  public function getDireccionLlegada()
+  {
+    if ($this->guidill) {
+      return $this->guidill;
+    }
+
+    return $this->motcodi == MotivoTraslado::VENTA ? $this->cliente->PCDire : optional($this->almacen)->LocDire;
+  }
+
+  public function getUbigeoLlegada()
+  {
+    if ($this->guidill ){
+      return $this->ubigeo_llegada ?? optional($this->cliente)->ubigeo;
+    }
+
+    return $this->motcodi == MotivoTraslado::VENTA ? 
+      $this->ubigeo_llegada ?? optional($this->cliente)->ubigeo :
+      ($this->ubigeo_partida ?? optional($this->almacen)->ubigeo);
+  }
+
 
   public function calculateTotal()
   {
@@ -819,7 +877,7 @@ class GuiaSalida extends Model
       FileHelper($empresa->EmpLin1)->save_pdf($namePDF, $pdf->generator->toString());
     }
 
-    if( $plantilla->formato == PDFPlantilla::FORMATO_TICKET ){
+    if ($plantilla->formato == PDFPlantilla::FORMATO_TICKET) {
     }
 
     if ($saveTemp) {
@@ -1248,9 +1306,7 @@ class GuiaSalida extends Model
     return $this->hasFormato() ? self::ESTADO_EDIT_OPEN_PRICE : self::ESTADO_EDIT_OPEN;
   }
 
-  public static function createSimply($data, $venta_id)
-  {
-  }
+  public static function createSimply($data, $venta_id) {}
 
   public function traslado(array $data)
   {
