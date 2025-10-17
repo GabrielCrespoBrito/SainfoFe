@@ -449,8 +449,8 @@ class GuiaSalidaController extends GuiaController
 
     $guia = $this->model->find($id_guia);
     // $guia->saveDespacho($request->all());
-    $guia->fresh()->saveDespacho($request->all());
-    $guia->createXmlZip();
+    $guia->saveDespacho($request->all());
+    $guia->fresh()->createXmlZip();
 
     return response()->json([
       'message' => 'Información de despacho guardado exitosamente',
