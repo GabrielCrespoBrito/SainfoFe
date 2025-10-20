@@ -297,7 +297,7 @@ class GuiaSalida extends Model
 
   public function cli()
   {
-    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi');
+    return $this->belongsTo(ClienteProveedor::class, 'PCCodi', 'PCCodi')->withoutGlobalScope('noEliminados');
   }
 
   public function cliente()
