@@ -105,7 +105,7 @@ class EmpresaController extends EmpresaMainController
 
   public function delete(DeleteRequest $request,  $empresa_id)
   {
-    ini_set('max_execute_time', 240);
+    ini_set('max_execution_time', 240);
     $empresa = Empresa::find($empresa_id);
     DB::beginTransaction();
     try {

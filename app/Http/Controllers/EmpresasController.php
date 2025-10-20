@@ -327,7 +327,7 @@ class EmpresasController extends Controller
   {
     abort_if(!auth()->user()->isAdmin(), 300);
 
-    ini_set('max_execute_time', 240);
+    ini_set('max_execution_time', 240);
 
     get_empresa()->updatePreciosProductos();
 
@@ -339,7 +339,7 @@ class EmpresasController extends Controller
   {
     abort_if(!auth()->user()->isAdmin(), 300);
 
-    ini_set('max_execute_time', 240);
+    ini_set('max_execution_time', 240);
 
     get_empresa()->updateValorVenta();
 
@@ -354,7 +354,7 @@ class EmpresasController extends Controller
   {
     abort_if(!auth()->user()->isAdmin(), 300);
 
-    ini_set('max_execute_time', 600);
+    ini_set('max_execution_time', 600);
 
     get_empresa()->cambiarCampoCostos();
 
@@ -371,7 +371,7 @@ class EmpresasController extends Controller
 
   public function delete(DeleteRequest $request,  $empresa_id)
   {
-    ini_set('max_execute_time', 240);
+    ini_set('max_execution_time', 240);
     $empresa = Empresa::find($empresa_id);
     \DB::beginTransaction();
     try {

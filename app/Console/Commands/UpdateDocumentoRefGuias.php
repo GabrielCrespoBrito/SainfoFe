@@ -30,7 +30,7 @@ class UpdateDocumentoRefGuias extends Command
   {
     parent::__construct();
 
-    ini_set('max_execute_time', 300);
+    ini_set('max_execution_time', 300);
   }
 
   /**

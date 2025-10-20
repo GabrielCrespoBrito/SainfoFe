@@ -18,7 +18,7 @@ trait UsosTrait
   public function updatePreciosProductos()
   {
     abort_if(!auth()->user()->isAdmin(), 300);
-    ini_set('max_execute_time', 240);
+    ini_set('max_execution_time', 240);
     get_empresa()->updatePreciosProductos();
     notificacion('Actualización exitosa', 'La Actualización de precios ha sido ejecutada satisfactoriamente');
     return redirect()->route('home');
@@ -27,7 +27,7 @@ trait UsosTrait
   public function updateValorVenta()
   {
     abort_if(!auth()->user()->isAdmin(), 300);
-    ini_set('max_execute_time', 240);
+    ini_set('max_execution_time', 240);
     get_empresa()->updateValorVenta();
     notificacion('Actualización exitosa', 'La Actualización de precios ha sido ejecutada satisfactoriamente');
     return redirect()->route('home');
@@ -36,7 +36,7 @@ trait UsosTrait
   public function updateCostosReales($id = null)
   {
     abort_if(!auth()->user()->isAdmin(), 300);
-    ini_set('max_execute_time', 600);
+    ini_set('max_execution_time', 600);
     get_empresa()->updateCostosReales();
     notificacion('Actualización exitosa', 'La Actualización de precios ha sido ejecutada satisfactoriamente');
     return redirect()->route('home');

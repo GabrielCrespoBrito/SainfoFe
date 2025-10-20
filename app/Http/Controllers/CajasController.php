@@ -289,7 +289,7 @@ class CajasController extends Controller
 
   public function reporteDetallado($id_caja, $tipo = "pdf")
   {
-    ini_set('max_execute_time', 180);
+    ini_set('max_execution_time', 180);
     ob_end_clean();
 
     $caja = Caja::with(['detalles.pago'])->find($id_caja);
