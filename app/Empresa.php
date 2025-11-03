@@ -2017,9 +2017,10 @@ class Empresa extends Model
     return $this->belongsTo(Ubigeo::class, 'FE_UBIGEO', 'ubicodi');
   }
 
-  public function getLocalDireccion($id)
+  public function getLocalDireccion($id, $local = null)
   {
-    $local = Local::find($id);
+
+    $local = $local ?? Local::find($id);
 
     if ($local->isDireccionInd()) {
       return $local->LocDire;

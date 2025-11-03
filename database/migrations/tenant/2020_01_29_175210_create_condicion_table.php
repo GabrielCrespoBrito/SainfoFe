@@ -19,6 +19,7 @@ class CreateCondicionTable extends Migration
             $table->string('condias')->nullable();
             $table->string('contipo')->nullable();
             $table->string('empcodi')->default("001");
+            $table->integer('system')->default(0);
             $table->primary(['conCodi', 'empcodi']);
 
         });

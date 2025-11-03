@@ -1025,12 +1025,15 @@ class Venta extends Model
 
     $logo_ticket_url = $get_url_logo_ticket ? $e->getUrlLogoTicket() : null;
 
+
     $empresa =  $e->toArray();
+    $local = Local::find($this->LocCodi);
     $empresa['igv_porc'] = $e->opcion->Logigv;
     $logoMarcaAgua = null;
     $logoSubtitulo = null;
     $bancos = Venta::getFormatBancos($e->bancos->load('banco')->groupBy('BanCodi'));
     $telefonos = $e->telefonos();
+    $telefonos_local = $local->LocTele;
     $condiciones = explode("-", CondicionVenta::getDefault($this->EmpCodi));
     $logoDocumento  =  $e->getLogo($formato);
     $logoMarcaAguaSizes = null;
@@ -1087,6 +1090,7 @@ class Venta extends Model
       'cliente_correo' => getNombreCorreo($e->EmpLin3),
       'correo' => $e->EmpLin3,
       'telefonos'     => $telefonos,
+      'telefonos_local'     => $telefonos_local,
       'fecha_emision_' => $this->VtaFvta,
       'contacto' => $contacto,
       'vendedor_nombre'     => $this->vendedor->vennomb,
