@@ -1004,8 +1004,7 @@ class Venta extends Model
   }
 
   public function dataPdf($formato = Venta::FORMATO_A4, $get_url_logo_ticket = false, $items = null)
-  {
-
+  {    
     $venta = $this->toArray();
     $isNotaVenta = $this->isNotaVenta();
     $firma = $isNotaVenta ? null : $this->dataQR();
@@ -1024,8 +1023,6 @@ class Venta extends Model
     }
 
     $logo_ticket_url = $get_url_logo_ticket ? $e->getUrlLogoTicket() : null;
-
-
     $empresa =  $e->toArray();
     $local = Local::find($this->LocCodi);
     $empresa['igv_porc'] = $e->opcion->Logigv;
@@ -1053,6 +1050,8 @@ class Venta extends Model
 
     $contacto = "";
     $mostrar_igv = true;
+
+    // dd( $telefonos, $telefonos_local );
 
     if ($this->isAnulada()) {
       $documento_id = optional($this->anulacion)->docNume;
@@ -1201,11 +1200,14 @@ class Venta extends Model
     $forceSaveA4 = false
   ) {
 
+
     $empresa = $this->empresa;
 
     $plantilla  = $this->getPlantilla($formato);
+    
     // dd($plantilla);
     // exit();
+    
     $data = $this->dataPdf($formato, $impresion_directa, $items);
     $tempPath = '';
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);

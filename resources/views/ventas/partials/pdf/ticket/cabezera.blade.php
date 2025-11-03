@@ -8,7 +8,7 @@
       src="data:image/png;base64,{{ $logoDocumento }}"/>
   </p>
   @endif
-  
+
   <p class="center titulo"> {{ $empresa['EmpNomb'] }} </p>
   <p class="center size-regular"> {{ $direccion }} </p>
   <div class="ruc center size-regular">R.U.C.: {{ $empresa['EmpLin1'] }} </div> 
