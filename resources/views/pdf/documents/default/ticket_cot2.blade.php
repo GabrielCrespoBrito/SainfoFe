@@ -23,7 +23,7 @@
   'direccion_div_class' => '',
   'correo_text_class' => '',
   'telefonos_text_class' => '',
-  'telefonos' => $telefonos,
+  'telefonos' => $telefonos_local ?? $telefonos,    
   'direccion' => $direccion,
   'correo' => false,
   'ruc' => $empresa['EmpLin1'],
