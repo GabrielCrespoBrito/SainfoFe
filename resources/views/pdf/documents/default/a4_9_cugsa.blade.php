@@ -165,8 +165,7 @@
             <table width="100%">
                 <tr style="vertical-align: top">
 
-                    <td style="vertical-align: top"
-                        class="letter-spacing-1px border-color-black border-right-style-solid border-width-2" width="50%">
+                    <td  width="40%" style="vertical-align: top" class="letter-spacing-1px border-color-black border-right-style-solid border-width-2">
 
                         <div class="bg-blue-light-100 text-center font-size-15px bold"> Información adicional </div>
 
@@ -182,7 +181,7 @@
                     </td>
 
                     {{-- Pagos  --}}
-                    <td width="50%" style="overflow:hidden">
+                    <td width="60%" style="overflow:hidden">
 
                         <div class="bg-blue-light-100 text-center font-size-15px bold"> Información de pagos </div>
 
@@ -208,8 +207,8 @@
                                 'titulo' => false,
                                 'class_name_table' => '',
                                 'titulo_div_class' => 'bold pl-x3 mb-x3 border-bottom-style-solid border-width-1',
-                                'cuenta_text_class' => 'pl-x3',
-                                'cuenta_cuenta_text_class' => 'bold',
+                                'cuenta_text_class' => 'pl-x3 font-size-9',
+                                'cuenta_cuenta_text_class' => 'bold font-size-9',
                             ])
 
 
