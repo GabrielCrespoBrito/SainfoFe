@@ -165,7 +165,7 @@
             <table width="100%">
                 <tr style="vertical-align: top">
 
-                    <td  width="40%" style="vertical-align: top" class="letter-spacing-1px border-color-black border-right-style-solid border-width-2">
+                    <td  width="45%" style="vertical-align: top" class="letter-spacing-1px border-color-black border-right-style-solid border-width-2">
 
                         <div class="bg-blue-light-100 text-center font-size-15px bold"> Información adicional </div>
 
@@ -181,7 +181,7 @@
                     </td>
 
                     {{-- Pagos  --}}
-                    <td width="60%" style="overflow:hidden">
+                    <td width="55%" style="overflow:hidden">
 
                         <div class="bg-blue-light-100 text-center font-size-15px bold"> Información de pagos </div>
 
@@ -193,6 +193,7 @@
                                 'class_name_table' => 'border-width-1 table-with-border border-radius-5',
                                 'titulo_div_class' =>
                                     'pl-x3 font-size-9 text-uppercase pl-x3 mb-x3 border-bottom-style-solid border-width-1',
+
                                 'tr_titulo_class' => 'bold text-center',
                                 'tr_valor_class' => 'text-center',
                             ])
