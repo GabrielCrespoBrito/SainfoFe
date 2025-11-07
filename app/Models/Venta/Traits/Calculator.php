@@ -151,7 +151,7 @@ class Calculator
     $valor_venta_por_item = $valor_venta_bruto - $descuento;
 
     #Calcular el ISC
-    $isc_total = $this->isc_porc ? ($valor_venta_por_item *  math()->porcFactor($this->isc_porc) ) : 0;
+    $isc_total = $this->isc_porc ? ($valor_venta_por_item *  math()->porcFactor( (float) $this->isc_porc) ) : 0;
 
     $valor_venta_por_item_igv = $valor_venta_por_item + $isc_total;
 
