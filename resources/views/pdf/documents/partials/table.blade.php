@@ -15,6 +15,12 @@ if ($complete_tds_spaces) {
   }
 }
 
+$precioValorCampo = $precioValorCampo ?? 'precio_unitario';
+$precioValorText = $precioValorText ?? 'P.Unit';
+$totalCampo = $totalCampo ?? 'total';
+
+logger('precioValorCampo', [$precioValorCampo, $precioValorText, $totalCampo]);
+
 $class_name = $class_name ?? '';
 $class_name_table = $class_name_table ?? '';
 $class_tds_body = $class_tds_body ?? '';
@@ -58,7 +64,7 @@ $theads = [
   [
     'class_name' => 'bg-black c-white pr-x3 text-right',
     'width' => "10%" ,
-    'text' => 'P.Unit',
+    'text' => $precioValorText,
   ],
   [
     'class_name' => 'bg-black c-white pr-x3 text-right ' . $thead_importe_class,
@@ -93,14 +99,15 @@ $theads = [
       $item = $venta2->getAnticipoItemData();
       @endphp
 
+
       <tr>
         <td class="{{ $class_orden }} {{ $tbody_class }}"> 01 </td>
         <td class="{{ $class_codigo }} {{ $tbody_class }} ">{{ $item->procodi }}</td>
         <td class="{{ $class_unidad }} {{ $tbody_class }} ">{{ $item->unidad_abreviatura }}</td>
         <td class="{{ $class_descripcion }} {{ $tbody_class }} ">{{ $item->nombre_producto }}</td>
         <td class="{{ $class_cant }} {{ $tbody_class }} ">{{ $item->cantidad }}</td>
-        <td class="{{ $class_precio_unit }} {{ $tbody_class }} ">{{ convertNegativeStr(decimal( $item->totales['precio_unitario'])) }} </td>
-        <td class="{{ $class_importe }} {{ $tbody_class }} ">{{ convertNegativeStr(decimal($item->importe)) }}</td>
+        <td class="{{ $class_precio_unit }} {{ $tbody_class }} ">{{ convertNegativeStr(decimal( $item->totales[$precioValorCampo])) }} </td>
+        <td class="{{ $class_importe }} {{ $tbody_class }} ">{{ convertNegativeStr(decimal($item->getTotal($totalCampo))) }}</td>
       </tr>
 
       @endif
@@ -114,8 +121,8 @@ $theads = [
         @if( $item->DetDeta ) <br>{!! $item->DetDetaFormat() !!} @endif
         </td>
         <td class="{{ $class_cant }} {{ $tbody_class }} ">{{ $item->DetCant }}</td>
-        <td class="{{ $class_precio_unit }} {{ $tbody_class }} ">{{ decimal($item->getTotal('precio_unitario'), $decimals) }} </td>
-        <td class="{{ $class_importe }} {{ $tbody_class }} ">{{ decimal($item->DetImpo) }}</td>
+        <td class="{{ $class_precio_unit }} {{ $tbody_class }} ">{{ decimal($item->getTotal($precioValorCampo), $decimals) }} </td>
+        <td class="{{ $class_importe }} {{ $tbody_class }} ">{{ decimal($item->getTotal($totalCampo)) }}</td>
       </tr>
       @endforeach
 

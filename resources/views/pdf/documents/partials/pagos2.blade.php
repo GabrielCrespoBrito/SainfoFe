@@ -13,8 +13,6 @@ $textAlign = $textAlign ?? 'left';
 $creditos = $is_credito ? $venta2->getCreditos() : false ;
 $total = $is_credito ? $creditos->sum('monto') : ($venta2->VtaImpo - ($venta2->retencionMonto() + $venta2->detraccionMonto()));
 
-logger('pagos2.blade.php', [ $is_credito, $creditos, $total ]);
-
 @endphp
 
 @if( $is_credito || $venta2->hasDetraccion() || $venta2->hasMontoRetencion() )

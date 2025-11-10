@@ -124,6 +124,9 @@
                 'class_codigo' => 'text-center',
                 'class_unidad' => 'text-center',
                 'class_descripcion' => '',
+                'precioValorCampo' => 'valor_unitario',
+                'totalCampo' => 'valor_venta_por_item_igv',
+                'precioValorText' => 'V.Unit',
             ])
 
             <div
