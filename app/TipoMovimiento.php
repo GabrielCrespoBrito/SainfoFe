@@ -62,6 +62,11 @@ class TipoMovimiento extends Model
 		return substr($code,0,1);
 	}
 
+  public static function isSalidaOrdenCompra($id)
+  {
+    return optional(self::where('TmoNomb', "ORDEN DE COMPRA")->first())->Tmocodi == $id;
+  }
+
 	public function default()
 	{
 		return $this->TmoNomb === self::DEFAULT_TIPO;

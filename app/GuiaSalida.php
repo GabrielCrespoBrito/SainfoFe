@@ -645,7 +645,6 @@ class GuiaSalida extends Model
     $actualizarSerie = !$this->GuiSeri;
     if ($actualizarSerie) {
       $serie = auth()->user()->getSerieGuiaRemision($this->getTipoDocumento(), $this->Loccodi)->sercodi;
-
       $numero = SerieDocumento::lastNume($serie, $this->Loccodi, $this->EmpCodi, $this->getTipoDocumento());
       $this->GuiSeri = $serie;
       $this->GuiNumee = $numero;

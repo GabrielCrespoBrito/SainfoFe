@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests\Guia;
 
-use App\EmpresaTransporte;
-use App\GuiaSalida;
-use App\MotivoTraslado;
-use App\Helpers\DocumentHelper;
-use App\Transportista;
 use App\Vehiculo;
+use App\GuiaSalida;
+use App\Transportista;
+use App\MotivoTraslado;
+use App\TipoMovimiento;
+use App\EmpresaTransporte;
+use App\Helpers\DocumentHelper;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GuiaDespachoIngresoRequest extends FormRequest
@@ -15,16 +16,16 @@ class GuiaDespachoIngresoRequest extends FormRequest
   public function authorize()
   {
     return true;
-  }  
+  }
 
   public function rules()
   {
     $modTrasladoPublico = GuiaSalida::TRASLADO_PUBLICO;
     $modTrasladoPrivado = GuiaSalida::TRASLADO_PRIVADO;
 
-  // "tipo_export" => "50"
-  // "serie_doc_num" => "5353"
-  // "export_doc_num" => "453"
+    // "tipo_export" => "50"
+    // "serie_doc_num" => "5353"
+    // "export_doc_num" => "453"
 
     return [
       'direccion_llegada'    => 'required|max:255',
@@ -36,8 +37,8 @@ class GuiaDespachoIngresoRequest extends FormRequest
       'motivo_traslado' => 'required|exists:motivo_traslado,MotCodi',
 
       'modalidad_traslado' => "required|in:{$modTrasladoPrivado},{$modTrasladoPublico}",
-      "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
-      "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s",MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      "tipo_export" => sprintf("required_if:motivo_traslado,%s,%s|in:50,52", MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
+      "export_doc_num" => sprintf("required_if:motivo_traslado,%s,%s", MotivoTraslado::IMPORTACION, MotivoTraslado::EXPORTACION),
       'transportista' => "required_if:modalidad_traslado,{$modTrasladoPrivado}",
       'placa' => "required_if:modalidad_traslado,{$modTrasladoPrivado}",
       'empresa' => "required_if:modalidad_traslado,{$modTrasladoPublico}",
@@ -59,25 +60,38 @@ class GuiaDespachoIngresoRequest extends FormRequest
       return false;
     }
 
-    if ($guia->motcodi) {
-      if ($this->motivo_traslado != $guia->motcodi) {
-        $validator->errors()->add('motivo_traslado',  "El motivo de traslado tiene que ser 'Traslado Entre Establecimientos de la misma Empresa'");
+    // Validar Motivo de Traslado
+
+    logger(
+      
+        sprintf("%s %s",
+        (int) TipoMovimiento::isSalidaOrdenCompra($guia->TmoCodi),
+        $guia->TmoCodi,
+      )
+
+    );
+
+    if (TipoMovimiento::isSalidaOrdenCompra($guia->TmoCodi)) {
+
+      if ($this->motivo_traslado != MotivoTraslado::COMPRA) {
+        $validator->errors()->add('motivo_traslado',  "El motivo de traslado tiene que ser 'Compra' para la Orden de Compra");
         return false;
       }
-    } else {
-      if ($this->motivo_traslado === MotivoTraslado::TRASLADO_MISMA_EMPRESA) {
-        if ($documento_entidad != $ruc_empresa) {
-          $validator->errors()->add('motivo_traslado',  "Cliente Equivocado: el cliente tiene que ser su misma empresa cuando el Motivo de Traslado es  \"$nombre_traslado_misma_empresa\" ");
-          return false;
-        }
-        return true;
-      } else {
-        if ($documento_entidad == $ruc_empresa) {
-          $validator->errors()->add('motivo_traslado', "Cliente Equivocado: El cliente solo puede ser su misma empresa cuando el campo Motivo de Traslado es  \"$nombre_traslado_misma_empresa\" ");
-          return false;
-        }
-        return true;
+    }
+
+
+    if ($this->motivo_traslado === MotivoTraslado::TRASLADO_MISMA_EMPRESA) {
+      if ($documento_entidad != $ruc_empresa) {
+        $validator->errors()->add('motivo_traslado',  "Cliente Equivocado: el cliente tiene que ser su misma empresa cuando el Motivo de Traslado es  \"$nombre_traslado_misma_empresa\" ");
+        return false;
       }
+      return true;
+    } else {
+      if ($documento_entidad == $ruc_empresa) {
+        $validator->errors()->add('motivo_traslado', "Cliente Equivocado: El cliente solo puede ser su misma empresa cuando el campo Motivo de Traslado es  \"$nombre_traslado_misma_empresa\" ");
+        return false;
+      }
+      return true;
     }
   }
 
@@ -138,8 +152,8 @@ class GuiaDespachoIngresoRequest extends FormRequest
         //   $validator->errors()->add('guia', 'Esta guia ya esta impresa');
         //   return;
         // }
-        
-        if ( !$guia->canChangeDespacho()) {
+
+        if (!$guia->canChangeDespacho()) {
           $validator->errors()->add('guia', 'Ya no puede cambiar la información de despacho');
           return;
         }
