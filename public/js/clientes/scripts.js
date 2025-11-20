@@ -431,7 +431,8 @@
     poner_data_form( "codigo" , data.PCCodi );
     poner_data_form( "tipo_cliente" , data.TipCodi );
 
-
+    console.log("activar_button", ".verificar_ruc");
+    activar_button(".verificar_ruc");
     // $("#form-cliente").find("[name=tipo_cliente]").prop('disabled', tipo_accion == "edit" );
 
     poner_data_form( "tipo_documento" , data.TDocCodi );

@@ -78,7 +78,9 @@ window.activar_button = function ()
 {
   for( let i = 0; i < arguments.length; i++ ){
     $(arguments[i]).removeClass('disabled');
+    $(arguments[i]).prop('disabled', false);
   }
+
 }
 
 Array.prototype.first = function()
@@ -95,6 +97,7 @@ window.desactivar_button = function()
 {
   for( let i = 0; i < arguments.length; i++ ){
     $(arguments[i]).addClass('disabled');
+    $(arguments[i]).prop('disabled', true);
   }
 }
 
