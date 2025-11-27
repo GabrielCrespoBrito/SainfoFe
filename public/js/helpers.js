@@ -729,6 +729,24 @@ var Helper = (function(){
       }
 
       $("*").on('click' , '.eliminate-element' , eliminateModal )
+
+
+      $("*").on('click' , '.show-hide-password' , function(e){
+        console.log("click show-hide-password" );
+        e.preventDefault();
+        let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
+        if( ! $input.length ){
+          return false;
+        }
+
+        let newType = $input.attr('type') == 'password' ? 'text' : 'password';
+        $input.attr('type' , newType);
+        let newIcon = newType == 'password' ? 'fa fa-eye' : 'fa fa-eye-slash';
+        $(this).find('i').attr('class' , newIcon );
+
+      return false;
+    });
+
     },
 
     add_events : function(func) {
