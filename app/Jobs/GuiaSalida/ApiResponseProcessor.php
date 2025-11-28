@@ -71,7 +71,7 @@ class ApiResponseProcessor
     $this->data['fe_rpta'] = $rpta;
     
     $this->data['fe_rpta_api'] = array_merge($fe_rpta_api,  $content);
-    if ($rpta == 0 || $fe_rpta_api['responseCode'] ?? null === 0) {
+    if ($rpta == 0 || ($fe_rpta_api['responseCode'] ?? null) === 0) {
       $this->setSuccess("Cod: $rpta | "  . ($this->data['fe_rpta_api']['descripcion'] ?? '--'));
     }
     else if ($rpta == 98) {
