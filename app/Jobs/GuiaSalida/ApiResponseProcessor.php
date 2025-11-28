@@ -72,6 +72,7 @@ class ApiResponseProcessor
     
     $this->data['fe_rpta_api'] = array_merge($fe_rpta_api,  $content);
 
+    logger()->info("@rpta: ", $this->data);
 
     
     if ($rpta == 0 ) {
