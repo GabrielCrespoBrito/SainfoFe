@@ -140,15 +140,6 @@ class GuiaController extends Controller
 
     $guia = GuiaSalida::find($request->id_factura);
     $res = $guia->sendApi();
-    // $data = Sunat::sendGuia($guia->GuiOper);
-    // if ($data['status']) {
-    //   return GuiaSalidaController::guiaSuccessMake($guia, $data);
-    // } else if ($data['status'] == 0 && $data['code'] == 4000) {
-    //   $guia->saveSuccess();
-    // }
-    // return response()->json(['message' =>  $data['message']], $data['code_http']);
-
-
     return response()->json(['message' => $res->data], $res->success ? 200 : 400);
 
   }

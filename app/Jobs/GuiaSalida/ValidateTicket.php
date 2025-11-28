@@ -60,14 +60,17 @@ class ValidateTicket
       $content = json_decode($res->getBody()->getContents());
       $processor = $this->guiaSalida->apiResponseProcess($content);
       $result = $processor->getResult();
+
       $this->result['success'] = $result->success;
       $this->result['data'] = $result->data;
 
       // Reenviar
       if($content->codRespuesta == "98" && $this->reenviado == false ){
+        sleep(5);
         $this->handle();
         $this->reenviado = true;
       }
+
     } catch (ClientException $th) {
       $infoError = json_decode($th->getResponse()->getBody()->getContents());
       if (property_exists($infoError, 'status')) {
@@ -78,7 +81,9 @@ class ValidateTicket
         $msg = $infoError->msg;
       }
       $this->setError(sprintf('Cod: %s | %s', $cod, $msg));
+      logger()->error(sprintf('@ERROR VALIDATE TICKET %s %s %s' , $this->guiaSalida->GuiOper, $this->guiaSalida->EmpCodi, $th->getMessage()));
     } catch (Exception $th) {
+      logger()->error(sprintf('@ERROR Exception VALIDATE TICKET %s %s %s' , $this->guiaSalida->GuiOper, $this->guiaSalida->EmpCodi, $th->getMessage()));
       $this->setError($th->getMessage());
     }
 

@@ -3,54 +3,32 @@
 namespace App\Jobs\GuiaSalida;
 
 use DOMDocument;
-use App\GuiaSalida;
 use Chumper\Zipper\Zipper;
 use Illuminate\Support\Facades\Log;
 
-class SaveZipCDR
+class ExtractCDRInfo
 {
-  public $guiaSalida;
   public $data = [];
-  public $ruc;
-  public $base64ZipCdr;
-  public $contentZip;
-  protected $nameFile;
+  public $contentZipCdr;
   protected $nameCdr;
-  protected $nameZipCdr;
 
-  public function __construct(GuiaSalida $guiaSalida, $base64ZipCdr,  &$data = [])
-  {
-    $this->ruc = get_empresa('EmpLin1');
-    $this->guiaSalida = $guiaSalida;
-    $this->base64ZipCdr = $base64ZipCdr;
-    $this->nameFile = sprintf(
-      'R-%s-%s-%s-%s',
-      $this->ruc,
-      $this->guiaSalida->getTipoDocumento(),
-      $this->guiaSalida->GuiSeri,
-      $this->guiaSalida->GuiNumee
-    );
-    $this->nameCdr = $this->nameFile . '.xml';
-    $this->nameZipCdr = $this->nameFile . '.zip';
-    $this->data = $data;
+  public function __construct($contentZipCdr, $nameCdr)
+  { 
+    $this->contentZipCdr = $contentZipCdr;
+    $this->nameCdr = $nameCdr;
   }
 
   public function handle()
   {
-    $this->contentZip = base64_decode($this->base64ZipCdr);
-    FileHelper($this->ruc)->save_cdr( $this->nameZipCdr, $this->contentZip );
-
     return $this->extractInfo();
   }
 
   public function extractInfo()
   {
-    return (new ExtractCDRInfo($this->contentZip, $this->nameCdr))->handle();
-
     $data = [];
 
     try {
-      $path = getTempPath(time().'zip' , $this->contentZip);
+      $path = getTempPath(time().'zip' , $this->contentZipCdr);
       $zipper = new Zipper();
       $zipper->make($path);
       $content = $zipper->getFileContent($this->nameCdr);
@@ -68,6 +46,12 @@ class SaveZipCDR
       $qrLink = $dom->getElementsByTagName('DocumentDescription');
       if ($qrLink->count()) {
         $data['qrLink'] = $qrLink[0]->nodeValue;
+      }
+
+      // ResponseCode
+      $responseCode = $dom->getElementsByTagName('ResponseCode');
+      if ($responseCode->count()) {
+        $data['responseCode'] = $responseCode[0]->nodeValue;
       }
   
       // Observaciones

@@ -67,6 +67,7 @@ class SendApi
       $this->ticket = $content->numTicket;
       return true;
     } catch (ClientException $th) {
+      logger()->error(sprintf('@ERROR SEND API %s %s %s' , $this->guiaSalida->GuiOper, $this->guiaSalida->EmpCodi, $th->getMessage()));
       $infoError = json_decode($th->getResponse()->getBody()->getContents());
       if (property_exists($infoError, 'status')) {
         $cod = $infoError->status;
@@ -103,7 +104,7 @@ class SendApi
       }
     }
 
-    $res = $this->guiaSalida->validateTicket($this->token);
+    $res = $this->guiaSalida->validateTicket();
     $this->result['success'] = $res->success;
     $this->result['data'] = $res->data;
   }
