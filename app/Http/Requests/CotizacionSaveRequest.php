@@ -127,10 +127,15 @@ class CotizacionSaveRequest extends FormRequest
 
     foreach ($items as $item) {
 
-      $producto = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $item['DetCodi'])->first();
+      $produtoId = substr($item['UniCodi'], 0, -2);
+
+      $producto = Producto::withoutGlobalScope('noEliminados')
+      ->where('ID', $produtoId)
+      ->first();
+
 
       if (is_null($producto)) {
-        $validator->errors()->add('DetCodi', 'El codigo de producto es incorrecto');
+        $validator->errors()->add('DetCodi', sprintf('El codigo de producto %s (%s) no existe', $item['DetCodi'], $item['DetNomb']));
         return false;
       } else {
         $unidad = $producto->unidades->where('Unicodi', $item['UniCodi'])->first();
