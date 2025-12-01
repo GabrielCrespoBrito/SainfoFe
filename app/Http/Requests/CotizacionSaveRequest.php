@@ -127,7 +127,7 @@ class CotizacionSaveRequest extends FormRequest
 
     foreach ($items as $item) {
 
-      $producto = Producto::where('ProCodi', $item['DetCodi'])->first();
+      $producto = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $item['DetCodi'])->first();
 
       if (is_null($producto)) {
         $validator->errors()->add('DetCodi', 'El codigo de producto es incorrecto');
