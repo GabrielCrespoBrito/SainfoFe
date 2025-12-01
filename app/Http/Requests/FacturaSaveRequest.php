@@ -210,7 +210,7 @@ class FacturaSaveRequest extends FormRequest
     $index = 0;
     foreach ($items as $item) {
       $indexReal = $index+1;
-      $producto = Producto::where('ProCodi', $item['DetCodi'])->first();
+      $producto = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $item['DetCodi'])->first();
       $cant_caracteres = strlen($item['DetNomb']) + strlen($item['DetCome']);
 
       if ($cant_caracteres > 250) {
