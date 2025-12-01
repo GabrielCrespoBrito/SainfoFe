@@ -166,7 +166,7 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/select2.js') }}"></script>
     <script src="{{ asset('js/helpers.js') }}"></script>
-    <script src="{{ asset('js/elegir_empresa/elegir_empresa.js') }}"></script>
+    <script src="{{ asset( mix('js/elegir_empresa/mix/elegir_empresa.js')) }}"></script>
 </body>
 
 </html>
