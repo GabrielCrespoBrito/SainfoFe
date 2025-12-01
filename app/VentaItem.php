@@ -94,8 +94,6 @@ class VentaItem extends Model
       $this->totals = $this->calculos();
     }
 
-    logger('getTotal', [$campo, $this->totals]);
-
     return $campo ? $this->totals[$campo] : $this->totals;
   }
 
