@@ -210,7 +210,7 @@ class FacturaSaveRequest extends FormRequest
     $index = 0;
     foreach ($items as $item) {
       $indexReal = $index+1;
-      $producto = Producto::withoutGlobalScope('noEliminados')->where('ProCodi', $item['DetCodi'])->first();
+      $producto = Producto::where('ProCodi', $item['DetCodi'])->first();
       $cant_caracteres = strlen($item['DetNomb']) + strlen($item['DetCome']);
 
       if ($cant_caracteres > 250) {
@@ -219,7 +219,7 @@ class FacturaSaveRequest extends FormRequest
       }
 
       if (is_null($producto)) {
-        $validator->errors()->add('DetCodi', 'El codigo de producto es incorrecto');
+        $validator->errors()->add('DetCodi', sprintf('El codigo de producto %s (%s) no existe', $item['DetCodi'], $item['DetNomb']));
         return false;
       } else {
         $unidad = $producto->unidades->where('Unicodi', $item['UniCodi'])->first();
