@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/AdminLTE.css') }}">
     <link rel="stylesheet" href="{{ asset('css/all-skins.css') }}">
+    <link rel="stylesheet" href="{{ asset(mix('css/all.css')) }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2/select2.css') }}">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -35,8 +38,8 @@
                 elija la empresa y el periodo con el que trabajar</p>
             <form action="{{ route('empresa.seleccionada') }}" id="elegirEmpresaPeriodo" method="POST">
                 @csrf
-                <div class="form-group has-feedback {{ $errors->has('empresa') ? 'has-error' : '' }}">
-                    <select class="form-control" name="empresa" required autofocus>
+                <div class="form-group has-feedback {{ $errors->has('empresa') ? 'has-error' : '' }}" style="overflow: hidden;">
+                    <select data-minimuminputlength="0" class="form-control" name="empresa" required autofocus>
                         @php
                         $empresaSelected;
                         @endphp
@@ -161,6 +164,8 @@
 
     <!-- jQuery 3 -->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('plugins/select2/select2.js') }}"></script>
+    <script src="{{ asset('js/helpers.js') }}"></script>
     <script src="{{ asset('js/elegir_empresa/elegir_empresa.js') }}"></script>
 </body>
 

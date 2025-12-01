@@ -1,6 +1,11 @@
 $(function () {
   let $formEle = $("form#elegirEmpresaPeriodo");
 
+
+
+  initSelect2("[name=empresa]");
+
+  
   $formEle.on('submit', function (e) {
     $("[type=submit]").prop('disabled', true);
   });
