@@ -89,8 +89,6 @@ class CotizacionSaveRequest extends FormRequest
 
   public function validateTotal(&$validator)
   {
-    // _dd($this->totales_items);
-    // exit();
 
     $calculator = new CalculatorTotal($this->totales_items);
 
@@ -127,12 +125,12 @@ class CotizacionSaveRequest extends FormRequest
 
     foreach ($items as $item) {
 
-      $produtoId = substr($item['UniCodi'], 0, -2);
-
       $producto = Producto::withoutGlobalScope('noEliminados')
-      ->where('ID', $produtoId)
+      ->where('ProCodi', $item['DetCodi'])
+      ->whereHas('unidades', function ($query) use ($item) {
+        $query->where('Unicodi', $item['UniCodi']);
+      })
       ->first();
-
 
       if (is_null($producto)) {
         $validator->errors()->add('DetCodi', sprintf('El codigo de producto %s (%s) no existe', $item['DetCodi'], $item['DetNomb']));
