@@ -31,7 +31,6 @@ class GuiaTransportistaDespachoRequest extends FormRequest
       'peso_total' => 'required|numeric|min:1',
       'transportista' => "required",
       'placa' => "required",
-      'empresa' => "required",
     ];
   }
 

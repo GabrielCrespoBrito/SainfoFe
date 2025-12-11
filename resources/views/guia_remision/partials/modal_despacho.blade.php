@@ -85,6 +85,7 @@
 
             @if (!$isGuiaTransportista)
 
+              {{--  Motivo de Traslado --}}
               <div class="form-group col-md-12">
                 <div class="input-group">
                   <span class="input-group-addon">Motivo Traslado</span>
@@ -98,7 +99,7 @@
                 </div>
               </div>
 
-              {{--  Motivo Traslado --}}
+              {{--  Modalidad de Traslado --}}
               @php
                 $mod_traslado = $guia->getModalidadTraslado();
               @endphp
@@ -114,12 +115,10 @@
                 </div>
               </div>
 
-              {{--  --}}
-              {{--  --}}
+
               @php
                 $exportData = $guia->getExportData();
               @endphp
-              {{-- @dd( $exportData ) --}}
 
               <div class="col-md-12 campos-export">
 
@@ -146,15 +145,6 @@
                 </div>
 
               </div>
-              {{-- 
-  50	Declaración Aduanera de Mercancías	remitente, transportista 
-  52	Declaración Simplificada (DS)	remitente, transportista
---}}
-
-
-              {{--  --}}
-
-
 
             @endif
 

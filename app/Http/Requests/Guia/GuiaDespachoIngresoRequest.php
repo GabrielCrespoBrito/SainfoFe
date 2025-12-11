@@ -23,10 +23,6 @@ class GuiaDespachoIngresoRequest extends FormRequest
     $modTrasladoPublico = GuiaSalida::TRASLADO_PUBLICO;
     $modTrasladoPrivado = GuiaSalida::TRASLADO_PRIVADO;
 
-    // "tipo_export" => "50"
-    // "serie_doc_num" => "5353"
-    // "export_doc_num" => "453"
-
     return [
       'direccion_llegada'    => 'required|max:255',
       'ubigeo_partida' => 'required|numeric',

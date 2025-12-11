@@ -261,9 +261,10 @@ class GuiaController extends Controller
       $data["transportistas"] = $transportistas;
       $data["empresas_transporte"] = $empresas_transporte;
       $data["tipos_documentos"] = SerieDocumento::ultimaSerie(true)[0]['series'];
-      $vendedores = Cache::rememberForever('vendedores' . $empcodi, function () {
-        return Vendedor::all();
-      });
+      
+      $empresa = get_empresa();
+      $vendedores =  $empresa->vendedores;
+
 
       $data["create"] = true;
       $data["monedas"] = Moneda::all();
