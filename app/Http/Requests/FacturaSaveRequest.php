@@ -356,10 +356,11 @@ class FacturaSaveRequest extends FormRequest
 
     // dd($total_calculado, config('app.parametros.retencion_limite'), $this->cliente_model->hasRetencion(), $this->tipo_cargo_global);
     
-    if ($total_calculado > config('app.parametros.retencion_limite') && $this->cliente_model->hasRetencion() && $this->tipo_cargo_global != 'retencion') {
-      $validator->errors()->add('codRetencion', "El cliente tiene retención, por lo tanto el documento tiene que tener un código de retención");
-      return false;
-    }
+    
+    // if ($total_calculado > config('app.parametros.retencion_limite') && $this->cliente_model->hasRetencion() && $this->tipo_cargo_global != 'retencion') {
+    //   $validator->errors()->add('codRetencion', "El cliente tiene retención, por lo tanto el documento tiene que tener un código de retención");
+    //   return false;
+    // }
 
 
     $this->total_documento = $totales;
