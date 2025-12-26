@@ -760,24 +760,18 @@ var Helper = (function(){
 $(document).off('click.togglePass', '.show-hide-password').on('click.togglePass', '.show-hide-password', function(e){
     
     e.preventDefault();
-    
-    // $(this) hace referencia al elemento .show-hide-password clickeado
     let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
-    
     if( ! $input.length ){
-        return;
+      return;
     }
     
-    let $icon = $(this).find('.fa'); // Ojo: asegúrate que tu icono tenga clase .fa
-    let isPassword = $input.attr("type") === "password"; // Manera más segura de verificar
-    
+    let $icon = $(this).find('.fa');
+    let isPassword = $input.is("[type=password]");
     let newClassName = isPassword ? 'fa fa-eye-slash' : 'fa fa-eye';
     let newType = isPassword ? 'text' : 'password';
-    
-    $input.attr('type', newType);
-    
-    // Limpiamos las clases visuales y ponemos la nueva
-    $icon.removeClass('fa-eye fa-eye-slash').addClass(newClassName);
+    $input.attr( 'type' , newType );
+    $icon.removeClass( 'fa-eye fa-eye-slash' );
+    $icon.addClass( newClassName );
 });
 
   //
