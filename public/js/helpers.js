@@ -731,21 +731,56 @@ var Helper = (function(){
       $("*").on('click' , '.eliminate-element' , eliminateModal )
 
 
-      $("*").on('click' , '.show-hide-password' , function(e){
-        console.log("click show-hide-password" );
-        e.preventDefault();
-        let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
-        if( ! $input.length ){
-          return false;
-        }
+    //   $("*").on('click' , '.show-hide-password' , function(e){
 
-        let newType = $input.attr('type') == 'password' ? 'text' : 'password';
-        $input.attr('type' , newType);
-        let newIcon = newType == 'password' ? 'fa fa-eye' : 'fa fa-eye-slash';
-        $(this).find('i').attr('class' , newIcon );
 
-      return false;
-    });
+
+    //     e.preventDefault();
+    //     let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
+    //     if( ! $input.length ){
+    //       return;
+    //     }
+        
+    //     let $icon = $(this).find('.fa');
+    //     let isPassword = $input.is("[type=password]");
+    //     let newClassName = isPassword ? 'fa fa-eye-slash' : 'fa fa-eye';
+    //     let newType = isPassword ? 'text' : 'password';
+    //     $input.attr( 'type' , newType );
+    //     $icon.removeClass( 'fa-eye fa-eye-slash' );
+    //     $icon.addClass( newClassName );
+    //     return false;
+    // });
+
+  // 
+
+// 1. Usamos $(document) en lugar de $("*") por rendimiento.
+// 2. Usamos .off() primero para limpiar cualquier evento previo idéntico.
+// 3. Usamos un "namespace" (click.togglePass) para ser específicos.
+
+$(document).off('click.togglePass', '.show-hide-password').on('click.togglePass', '.show-hide-password', function(e){
+    
+    e.preventDefault();
+    
+    // $(this) hace referencia al elemento .show-hide-password clickeado
+    let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
+    
+    if( ! $input.length ){
+        return;
+    }
+    
+    let $icon = $(this).find('.fa'); // Ojo: asegúrate que tu icono tenga clase .fa
+    let isPassword = $input.attr("type") === "password"; // Manera más segura de verificar
+    
+    let newClassName = isPassword ? 'fa fa-eye-slash' : 'fa fa-eye';
+    let newType = isPassword ? 'text' : 'password';
+    
+    $input.attr('type', newType);
+    
+    // Limpiamos las clases visuales y ponemos la nueva
+    $icon.removeClass('fa-eye fa-eye-slash').addClass(newClassName);
+});
+
+  //
 
     },
 
