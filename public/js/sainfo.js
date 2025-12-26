@@ -18,6 +18,8 @@ $(function(){
   // Cambiar campo input[type=password] para mostrar
   $(".show-hide-password").on( 'click', function (e) {
 
+    console.log("sainfo.js");
+
     e.preventDefault();
     let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
     if( ! $input.length ){

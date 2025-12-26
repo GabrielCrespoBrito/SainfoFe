@@ -759,6 +759,7 @@ var Helper = (function(){
 
 $(document).off('click.togglePass', '.show-hide-password').on('click.togglePass', '.show-hide-password', function(e){
     
+    console.log("helpers.js");
     e.preventDefault();
     let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
     if( ! $input.length ){
