@@ -16,10 +16,9 @@ $(function(){
   })
 
   // Cambiar campo input[type=password] para mostrar
-  $(".show-hide-password").on( 'click', function (e) {
-
-    console.log("sainfo.js");
-
+$(document).off('click.togglePass', '.show-hide-password').on('click.togglePass', '.show-hide-password', function(e){
+    
+    console.log("helpers.js");
     e.preventDefault();
     let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
     if( ! $input.length ){
@@ -33,11 +32,7 @@ $(function(){
     $input.attr( 'type' , newType );
     $icon.removeClass( 'fa-eye fa-eye-slash' );
     $icon.addClass( newClassName );
-
-
-
-
-  });
+});
 
 
   // Mostrar modal de tc

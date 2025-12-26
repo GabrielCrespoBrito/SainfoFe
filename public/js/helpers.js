@@ -757,23 +757,7 @@ var Helper = (function(){
 // 2. Usamos .off() primero para limpiar cualquier evento previo idéntico.
 // 3. Usamos un "namespace" (click.togglePass) para ser específicos.
 
-$(document).off('click.togglePass', '.show-hide-password').on('click.togglePass', '.show-hide-password', function(e){
-    
-    console.log("helpers.js");
-    e.preventDefault();
-    let $input = $(this).parents('.input-group').find('input[type=password],input[type=text]');
-    if( ! $input.length ){
-      return;
-    }
-    
-    let $icon = $(this).find('.fa');
-    let isPassword = $input.is("[type=password]");
-    let newClassName = isPassword ? 'fa fa-eye-slash' : 'fa fa-eye';
-    let newType = isPassword ? 'text' : 'password';
-    $input.attr( 'type' , newType );
-    $icon.removeClass( 'fa-eye fa-eye-slash' );
-    $icon.addClass( newClassName );
-});
+
 
   //
 
