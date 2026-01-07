@@ -45,7 +45,7 @@ class VendedorRequest extends FormRequest
         }
         
         if ( !get_empresa()->users->where('usucodi', $this->usucodi)->first()  ) {
-          $validator->errors()->add('usulogi', 'El Usuario no existe o no esta asociado a esta empresa');
+          $validator->errors()->add('usulogi', 'El Usuario no existe');
           return;
         }
 
@@ -54,7 +54,7 @@ class VendedorRequest extends FormRequest
         
         if( $isStore ){
           if(Vendedor::where('usucodi', $this->usucodi)->first()){
-            $validator->errors()->add('usulogi', 'El Usuario no existe o no esta asociado a esta empresa');
+            $validator->errors()->add('usulogi', 'El Usuario ya esta asociado a otro vendedor');
             return; 
           }
         }
