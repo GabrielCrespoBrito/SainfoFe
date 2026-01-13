@@ -10,7 +10,7 @@ function poner_data_cliente(data) {
   $("[name=cliente_documento]").select2('destroy')
   $("[name=cliente_documento]").empty()
 
-  
+
   let text = data.PCRucc + " - " + data.PCNomb;
   let id = data.PCCodi
 
@@ -19,11 +19,11 @@ function poner_data_cliente(data) {
     'data-text': text,
     'data-url': url_buscar_cliente_select2,
   });
-  
+
   $("[name=zona] option[value=" + data.ZonCodi + "] ").prop('selected', true)
-  
+
   // && data.VenCodi != null
-  if (data.PCCodi != "00001" && data.VenCodi != null && data.VenCodi != '' ){
+  if (data.PCCodi != "00001" && data.VenCodi != null && data.VenCodi != '') {
     $("[name=vendedor] option[value=" + data.VenCodi + "] ").prop('selected', true)
   }
 
@@ -595,16 +595,15 @@ $(document).ready(function (e) {
     if (isNaN(v)) {
       return v;
     }
-    return codigo ? v :  convertDecimalCustom(v, decimals);
+    return codigo ? v : convertDecimalCustom(v, decimals);
   }
 
-  function convertDecimalRegular(value, decimals = 2) 
-  {
-    return (Math.round(value * 100) / 100).toFixed(decimals); 
+  function convertDecimalRegular(value, decimals = 2) {
+    return (Math.round(value * 100) / 100).toFixed(decimals);
   }
 
   function convertDecimalCustom(value, decimals = 2) {
-      return Number(value).toFixed(decimals);
+    return Number(value).toFixed(decimals);
   }
 
   function tdCreate(inputNameOrValue, getFromInput = true, campo = "") {
@@ -1444,7 +1443,7 @@ $(document).ready(function (e) {
     const precio_min = is_sol ? unidad_select.UniPMVS : unidad_select.UniPMVD;
     const decimales = is_sol ? window.decimales_soles : window.decimales_dolares;
 
-    console.log("set_precio", precio, decimales, fixedNumber(precio, false, decimales) );
+    console.log("set_precio", precio, decimales, fixedNumber(precio, false, decimales));
     $("[name=producto_precio]").val(fixedNumber(precio, false, decimales));
     $("[name=producto_precio]")
       .attr('data-default', fixedNumber(precio_min, false, decimales));
@@ -1936,9 +1935,8 @@ $(document).ready(function (e) {
     set_precio();
     setMoneda();
   }
-  
-  function setMoneda()
-  {
+
+  function setMoneda() {
     window.isSoles = Number($("[name=moneda] option:selected").attr('data-esSol'));
   }
 
@@ -2325,7 +2323,7 @@ $(document).ready(function (e) {
     $("#load_screen").show();
     ajaxs(data, url_previsulizacion, {
       success: (response) => {
-        showPDF(response.path_ , true);
+        showPDF(response.path_, true);
       },
       complete: response => $("#load_screen").hide()
     });
@@ -2344,54 +2342,56 @@ $(document).ready(function (e) {
       return;
     }
 
-      if( window.data_guardado ){
-        if (window.data_guardado.imprecion_data.impresion_directa ){
-          // Ajaxs
-          ajaxs({ id_venta: window.data_guardado.codigo_venta },
-            url_venta_data_impresion, 
-            { success : function(dataImpresion){
+    if (window.data_guardado) {
+      if (window.data_guardado.imprecion_data.impresion_directa) {
+        // Ajaxs
+        ajaxs({ id_venta: window.data_guardado.codigo_venta },
+          url_venta_data_impresion,
+          {
+            success: function (dataImpresion) {
               try {
                 let ticketPrint = new printTicket(
                   dataImpresion,
                   window.data_guardado.imprecion_data.nombre_impresora,
                   window.data_guardado.imprecion_data.cantidad_copias,
-                  (successPrint) => { 
+                  (successPrint) => {
                     // --
-                    console.log("success Print", successPrint); 
+                    console.log("success Print", successPrint);
                     actionShowModalSunat();
-                  
+
                   },
-                  (errorPrint) => { 
-                    console.log("Error Print Aqui Estamos y Aqui SEguimos", errorPrint) 
+                  (errorPrint) => {
+                    console.log("Error Print Aqui Estamos y Aqui SEguimos", errorPrint)
                     showModalPDF(path);
                   }
                 );
-                ticketPrint.print();              
+                ticketPrint.print();
               } catch (error) {
                 console.log("error Imprecion", error);
               }
-            }});
-          // /Ajaxs
-        }
-        else {
-          showModalPDF(path, prev)
-        }
+            }
+          });
+        // /Ajaxs
       }
       else {
-        if(prev){
-          // Preparar PDF
-          $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
-          let nombre = "";
-          if (prev) {
-            nombre = "Previsualización de documento";
-          }
-          $("#modalData").find('.modal-title').text(nombre);
-          $("#modalData").find('.modal-body').empty();
-          $("#modalData").find('.modal-body').append(`<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`);
-          $("#modalData").modal();
-          // --------- abc
-        }
+        showModalPDF(path, prev)
       }
+    }
+    else {
+      if (prev) {
+        // Preparar PDF
+        $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
+        let nombre = "";
+        if (prev) {
+          nombre = "Previsualización de documento";
+        }
+        $("#modalData").find('.modal-title').text(nombre);
+        $("#modalData").find('.modal-body').empty();
+        $("#modalData").find('.modal-body').append(`<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`);
+        $("#modalData").modal();
+        // --------- abc
+      }
+    }
 
 
 
@@ -2399,15 +2399,14 @@ $(document).ready(function (e) {
   }
 
 
-  function showModalPDF(path, prev = false)
-  {
+  function showModalPDF(path, prev = false) {
     console.log("showModalPDF X", arguments);
 
     // Preparar PDF
     $("#modalData").find('.modal-dialog').attr('class', 'modal-dialog modal-xxl')
-    
+
     let nombre = "";
-    
+
     if (prev) {
       nombre = "Previsualización de documento";
     }
@@ -2419,11 +2418,11 @@ $(document).ready(function (e) {
     $("#modalData").find('.modal-title').text(nombre);
 
     const $embedPDF = `<iframe src="${path}" width="100%" height="500px" type="application/pdf"></iframe>`;
-    
+
     $("#modalData").find('.modal-body').empty();
     $("#modalData").find('.modal-body').append($embedPDF);
     $("#modalData").modal();
-    
+
     printJS(path.replace('\\', '/'))
   }
 
@@ -2579,15 +2578,14 @@ $(document).ready(function (e) {
   a = preguntar_sunat;
 
   function guardar_factura(data) {
-    
+
     window.documento_guardado = true;
     window.data_guardado = data;
     successStore(data, true);
   }
 
 
-  function actionShowModalSunat()
-  {
+  function actionShowModalSunat() {
     console.log("actionShowModalSunat", data_guardado)
 
     if (window.data_guardado.need_factura) {
@@ -2613,7 +2611,7 @@ $(document).ready(function (e) {
 
   function setModalEvent() {
 
-    $("#modalData").on('hide.bs.modal', actionShowModalSunat  )
+    $("#modalData").on('hide.bs.modal', actionShowModalSunat)
   }
 
   function successStore(show_window_print = true) {
@@ -2820,18 +2818,18 @@ $(document).ready(function (e) {
     return false;
   }
 
-  function show_hide_adicional_info( force = false, show = false ) {
+  function show_hide_adicional_info(force = false, show = false) {
     let $div_info = $(".info_adicional")
     var iconClass;
     let isVisible = $div_info.is(':visible');
 
-    if(  force instanceof Object == false ){
-      
-      if( (force && show && isVisible) || (force && show == false && isVisible == false) ){
+    if (force instanceof Object == false) {
+
+      if ((force && show && isVisible) || (force && show == false && isVisible == false)) {
         console.log("show_hide_adicional_info", force, show, isVisible);
         return;
       }
-      
+
     }
 
 
@@ -3221,11 +3219,16 @@ $(document).ready(function (e) {
     window.poner_data_inputs(data.cliente);
     poner_data_cliente(data.cliente);
 
+    $("[name=observacion]").val(data.observacion);
+
+
     show_modal("hide", "#modalImportacion");
 
     notificaciones("Importación exitosa", "success");
     $("[name=serie_doc]").val("");
     $("[name=num_doc]").val("");
+
+
 
     poner_totales_cant();
     descuento_global();
@@ -4147,7 +4150,7 @@ $(document).ready(function (e) {
 
       console.log({ tipo_cargo_global })
       if (tipo_cargo_global == "retencion") {
-          $cargo_global
+        $cargo_global
           .prop('disabled', false)
           .val('3')
       }
@@ -4749,7 +4752,7 @@ $(document).ready(function (e) {
       $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
       $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
 
-      if(data.params.args.data.data.Ent_cEstadoEntidad == "1"){
+      if (data.params.args.data.data.Ent_cEstadoEntidad == "1") {
         console.log("retencion");
         show_hide_adicional_info(true, true);
         notificaciones("El cliente es agente de retención, si el documento documento es mayor 700 soles, tiene que aplicar la retención a este documento", "info");
@@ -4986,7 +4989,7 @@ $(document).ready(function (e) {
           5: { name: 'UniPUCD', decimales: window.decimales_dolares },
           6: { name: 'UniPUCS', decimales: window.decimales_soles },
           7: { name: 'UniMarg', decimales: 2 },
-          8: { name: window.isSoles ? 'UNIPUVS' : 'UNIPUVD', decimales: window.isSoles ? window.decimales_soles : decimales_dolares  },
+          8: { name: window.isSoles ? 'UNIPUVS' : 'UNIPUVD', decimales: window.isSoles ? window.decimales_soles : decimales_dolares },
         }
       }
       else {

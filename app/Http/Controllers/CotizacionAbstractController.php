@@ -206,9 +206,6 @@ class CotizacionAbstractController extends Controller
       }
     }
 
-    // dd( $items, $items2 );
-    // exit();
-
     $data = [
       'nume' => $nume,
       'vendedor' => $documento->vencodi,
@@ -216,6 +213,7 @@ class CotizacionAbstractController extends Controller
       'items' => $items,
       'moneda' => $documento->getMoneda(),
       'table' => $documento->table,
+      'observacion' => $documento->cotobse,
       'cliente' => $cliente_info,
     ];
 
