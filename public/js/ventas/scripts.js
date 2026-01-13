@@ -3219,6 +3219,7 @@ $(document).ready(function (e) {
     window.poner_data_inputs(data.cliente);
     poner_data_cliente(data.cliente);
 
+    console.log("data importacion", data)
     $("[name=observacion]").val(data.observacion);
 
 
