@@ -1,61 +1,57 @@
 
 
-function active_or_disable_button( active = true , id = null )
-{
-  let modificar_button = $(".modificar-accion");    
+function active_or_disable_button(active = true, id = null) {
+  let modificar_button = $(".modificar-accion");
   let eliminar_button = $(".eliminar-accion");
-  let anular_button = $(".anular-accion");  
+  let anular_button = $(".anular-accion");
   // let enviar_button = $(".enviar-correo");      
-  let array_buttons = [ modificar_button , eliminar_button , anular_button , enviar_button ];    
+  let array_buttons = [modificar_button, eliminar_button, anular_button, enviar_button];
 
-  for( let i = 0; i < array_buttons.length; i++ ){
-    if( active ){
+  for (let i = 0; i < array_buttons.length; i++) {
+    if (active) {
       array_buttons[i].removeClass('disabled');
     }
     else {
       array_buttons[i].addClass('disabled');
     }
-  }    
+  }
 }
 
-function active_ordisable_trfactura( active = true , tr_factura )
-{
-  if( active ){
-    $(".seleccionado").removeClass('seleccionado');            
+function active_ordisable_trfactura(active = true, tr_factura) {
+  if (active) {
+    $(".seleccionado").removeClass('seleccionado');
     $(tr_factura).addClass('seleccionado');
-  }    
+  }
   else {
-    $(".seleccionado").removeClass('seleccionado');      
+    $(".seleccionado").removeClass('seleccionado');
   }
 }
 
 
-function seleccionar_factura()
-{    
+function seleccionar_factura() {
   let tr = $(this);
 
-  if( tr.find('.dataTables_empty').length  ) {         
+  if (tr.find('.dataTables_empty').length) {
     return;
   }
 
-  if( tr.is('.seleccionado')) {         
-    active_ordisable_trfactura(false);      
+  if (tr.is('.seleccionado')) {
+    active_ordisable_trfactura(false);
     active_or_disable_button(false)
   }
 
   else {
     $('.seleccionado').removeClass('seleccionado');
-    let id_cotizacion = $(this).find("td:eq(0)").text();      
-    let url_ed = url_editar.replace( "XXX" , id_cotizacion );
-    $(".modificar-accion").attr('href',url_ed);
+    let id_cotizacion = $(this).find("td:eq(0)").text();
+    let url_ed = url_editar.replace("XXX", id_cotizacion);
+    $(".modificar-accion").attr('href', url_ed);
     active_or_disable_button(true)
-    active_ordisable_trfactura(true, tr );          
+    active_ordisable_trfactura(true, tr);
   }
 }
 
 
-function showModalRedactarCorreo()
-{
+function showModalRedactarCorreo() {
   $("#modalData").modal('hide');
   // console.log( $ )
   // $("#modalMail").modal();
@@ -66,121 +62,119 @@ function showModalRedactarCorreo()
   // console.log( "data", data , mail_cliente);
 
   $('#tags', "#modalMail").removeTag();
-  $('#tags', "#modalMail").val(mail_cliente);  
+  $('#tags', "#modalMail").val(mail_cliente);
   $("#modalMail").modal();
 }
 
-  // notificaciones
-function notificaciones ( mensaje , type = 'info' , heading = '' ){
+// notificaciones
+function notificaciones(mensaje, type = 'info', heading = '') {
   var info = {
-    'heading'   : heading,
-    'position'  : 'top-center',
-    'hideAfter' : 3000, 
-    'showHideTransition' : 'slide' 
+    'heading': heading,
+    'position': 'top-center',
+    'hideAfter': 3000,
+    'showHideTransition': 'slide'
   };
 
   $.toast({
-    heading   : info.heading,
-    text      : mensaje,
-    position  : info.position,
-    showHideTransition : info.showHideTransition, 
-    hideAfter : info.hideAfter,
-    icon      : type,
+    heading: info.heading,
+    text: mensaje,
+    position: info.position,
+    showHideTransition: info.showHideTransition,
+    hideAfter: info.hideAfter,
+    icon: type,
     stack: false
   });
 };
 
-function defaultErrorAjaxFunc(data){
+function defaultErrorAjaxFunc(data) {
   let errors = data.responseJSON.errors;
   let mensaje = data.responseJSON.message;
   let erros_arr = [];
-  for( prop in errors ){
-    for( let i = 0; i < errors[prop].length; i++  ){
-      erros_arr.push( errors[prop][i] );
+  for (prop in errors) {
+    for (let i = 0; i < errors[prop].length; i++) {
+      erros_arr.push(errors[prop][i]);
     }
   }
-  console.log("error" , erros_arr , mensaje );
-  notificaciones( erros_arr , 'error' , mensaje ); 
+  console.log("error", erros_arr, mensaje);
+  notificaciones(erros_arr, 'error', mensaje);
 }
 
 
-function headerAjax(){
+function headerAjax() {
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
-  });   
+  });
 }
 
 
-function ajaxs( data , url , funcs = {} )
-{  
+function ajaxs(data, url, funcs = {}) {
   funcs.mientras ? funcs.mientras() : null;
   $.ajax({
-    type : 'post',
-    url  : url,  
-    data : data,
-    success : function(data){   
+    type: 'post',
+    url: url,
+    data: data,
+    success: function (data) {
       funcs.success ? funcs.success(data) : defaultSuccessAjaxFunc(data);
     },
-    error : function(data){
-      funcs.error ? funcs.error(data) : defaultErrorAjaxFunc(data);       
+    error: function (data) {
+      funcs.error ? funcs.error(data) : defaultErrorAjaxFunc(data);
     },
-    complete : function(data){
-      executing_ajax = false;        
+    complete: function (data) {
+      executing_ajax = false;
       funcs.complete ? funcs.complete(data) : null;
     }
-  });  
-};  
+  });
+};
 
-function fixedNumber(data,type,row,meta){
+function fixedNumber(data, type, row, meta) {
   return Number(data).toFixed(2);
 }
 
 
 
-function initDatable()
-{
+function initDatable() {
   table = $('#datatable').DataTable({
-    "responsive" : true,
-    "processing" : true,
-    "serverSide" : true,
-    "order": [[ 0, "desc" ]],
-    "ajax": { 
-      "url" : url_consulta,
+    "responsive": true,
+    "processing": true,
+    "serverSide": true,
+    "order": [[0, "desc"]],
+    "ajax": {
+      "url": url_consulta,
       //
-      "data": function (d) { 
-       return $.extend( {}, d, {
-         "mes": $("[name=mes] option:selected").val(),        
-         "tipo" : $("[name=tipo]").val(),
-         "local": $("[name=local] option:selected").val(),
-         "estado": $("[name=estado] option:selected").val(),
-         "vendedor": $("[name=vendedor] option:selected").val(),
-         "usucodi": $("[name=usucodi] option:selected").val(),
-       });
+      "data": function (d) {
+        return $.extend({}, d, {
+          "mes": $("[name=mes] option:selected").val(),
+          "tipo": $("[name=tipo]").val(),
+          "local": $("[name=local] option:selected").val(),
+          "estado": $("[name=estado] option:selected").val(),
+          "vendedor": $("[name=vendedor] option:selected").val(),
+          "usucodi": $("[name=usucodi] option:selected").val(),
+        });
       }
       //      
     },
     "createdRow": function (row, data, index) {
-      
-      $(row).data('info',data);
+
+      $(row).data('info', data);
       // if (data[5].replace(/[\$,]/g, '') * 1 > 150000) {
-        // $('td', row).eq(5).addClass('highlight');
+      // $('td', row).eq(5).addClass('highlight');
       // }
       // console.log("createdRow" , arguments );
     },
-    "columns" : [      
-      { data : 'CotNume'  },
-      { data: 'CotFVta', orderable: false, searchable: false  },
-      { data: 'cliente_with.PCNomb', orderable: false, searchable: false},                               
-      { data: 'usuario.usulogi', orderable: false, searchable: false},
+    "columns": [
+      { data: 'numero', orderable: false, searchable: false },
+      { data: 'CotFVta', orderable: false, searchable: false },
+      { data: 'cliente_with.PCNomb', orderable: false, searchable: false },
+      { data: 'usuario.usulogi', orderable: false, searchable: false },
       { data: 'moneda.monabre', orderable: false, searchable: false },
-      { data: 'cotbase', 'class': 'text-right', render: fixedNumber, orderable: false, searchable: false},
+      { data: 'cotbase', 'class': 'text-right', render: fixedNumber, orderable: false, searchable: false },
       { data: 'cotigvv', 'class': 'text-right', render: fixedNumber, orderable: false, searchable: false },
       { data: 'cotimpo', 'class': 'text-right', render: fixedNumber, orderable: false, searchable: false },
-      { data: 'estado', orderable: false, searchable: false},
-      { data: 'venta', orderable: false, searchable: false }, 
-      { data: 'accion', 'class' : 'overflow-visible', orderable: false, searchable: false },
+      { data: 'estado', orderable: false, searchable: false },
+      { data: 'venta', orderable: false, searchable: false },
+      { data: 'accion', 'class': 'overflow-visible', orderable: false, searchable: false },
 
     ]
   });
@@ -188,143 +182,135 @@ function initDatable()
 
 
 
-function eliminar_ele(e)
-{
+function eliminar_ele(e) {
   e.preventDefault();
 
-  if( confirm("Desea quitar el Documento?") ){
+  if (confirm("Desea quitar el Documento?")) {
 
-    let data = {       
-      id : $(".seleccionado td:eq(0)").text()
+    let data = {
+      id: $(".seleccionado td:eq(0)").text()
     };
     let funcs = {
-      success : borradoExitoso
+      success: borradoExitoso
     }
-    ajaxs( data , url_eliminar  , funcs );
+    ajaxs(data, url_eliminar, funcs);
   }
 }
 
 
 
-function borradoExitoso(data){
+function borradoExitoso(data) {
 
   let tr = $(".seleccionado");
-  notificaciones("Elemento eliminado exitosamente", "success")  
-  tr.css('outline' , '2px solid red');
-  tr.hide(1000 , function(){
+  notificaciones("Elemento eliminado exitosamente", "success")
+  tr.css('outline', '2px solid red');
+  tr.hide(1000, function () {
     tr.remove();
-    table.draw(); 
-  });  
+    table.draw();
+  });
 }
 
-function initTags()
-{
+function initTags() {
   var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   tag_input = $("#tags").tagsInput({
     'unique': true,
     'minChars': 10,
     'maxChars': 60,
     'validationPattern': new RegExp(re)
-  });    
+  });
 }
 
 
-function show_hide_modal( id_modal , action = "show" , _static = true )
-{
+function show_hide_modal(id_modal, action = "show", _static = true) {
   $("#" + id_modal).modal(action);
 }
 
 
-function set_emails_data(data)
-{
+function set_emails_data(data) {
   $('#tags').val(data.mail);
   $('#tags').removeTag();
   show_hide_modal("modalMail")
 }
 
-function redactar_correo()
-{   
+function redactar_correo() {
   let id_cotizacion = $(".seleccionado").find('td:eq(0)').text();
   $.ajax({
-    type : 'post',
-    url : url_mail,        
-    data : {      
-      'id_cotizacion' : id_cotizacion,
+    type: 'post',
+    url: url_mail,
+    data: {
+      'id_cotizacion': id_cotizacion,
     },
-    success : set_emails_data,  
-  });      
+    success: set_emails_data,
+  });
 
   return;
 }
 
-function successEmailSend(data)
-{ 
+function successEmailSend(data) {
   $("#modalMail").modal("hide");
   $(".corre_asunto").val("");
   $(".corre_mensaje").val("");
-  notificaciones("Correo enviado exitosamente", "success");    
+  notificaciones("Correo enviado exitosamente", "success");
 }
 
 
-  function enviar_correo(e = null)
-  {
-    console.log(arguments);
-    if(e){
-      e.preventDefault();
-      // return;
-    }
+function enviar_correo(e = null) {
+  console.log(arguments);
+  if (e) {
+    e.preventDefault();
+    // return;
+  }
 
-    $(".send_correo")
+  $(".send_correo")
     .addClass('disabled')
     .text('Enviando');
 
-    let hasta   = $(".corre_hasta").val();
-    let asunto  = $(".corre_asunto").val();
-    let mensaje = $(".corre_mensaje").val();
-    let id_cotizacion = tr_selected.data('info').CotNume;
+  let hasta = $(".corre_hasta").val();
+  let asunto = $(".corre_asunto").val();
+  let mensaje = $(".corre_mensaje").val();
+  let id_cotizacion = tr_selected.data('info').CotNume;
 
-    let data = {
-      'hasta' : hasta,
-      'asunto' : asunto,
-      'mensaje' : mensaje,
-      'id_cotizacion' : id_cotizacion
-    }
-
-    if(hasta.length > 145){
-      notificaciones("La cantidad de correos excede lo permitido" , "error");      
-      $("[name=corre_hasta]").focus();            
-    }
-
-    if(!hasta.length) {
-      notificaciones("Es necesaria llenar colocar el destinatario" , "error");
-      $("[name=corre_hasta]").focus();      
-      return;
-    }
-
-    console.log("success") , data;
-
-    let funcs = {
-      success : successEmailSend,
-      error : function(data){
-        $(".corre_asunto").val("");
-        $(".corre_mensaje").val("");
-        notificaciones("No se pudo enviar el correo, por favor revise los datos" , "error");
-        show_modal("hide", "#modalMail");
-      }, complete : () => {
-        $(".send_correo")
-        .removeClass('disabled')
-        .text('Enviar')
-      }
-    }
-
-    ajaxs( data , url_send_email,  funcs )
-    return false;
+  let data = {
+    'hasta': hasta,
+    'asunto': asunto,
+    'mensaje': mensaje,
+    'id_cotizacion': id_cotizacion
   }
 
+  if (hasta.length > 145) {
+    notificaciones("La cantidad de correos excede lo permitido", "error");
+    $("[name=corre_hasta]").focus();
+  }
+
+  if (!hasta.length) {
+    notificaciones("Es necesaria llenar colocar el destinatario", "error");
+    $("[name=corre_hasta]").focus();
+    return;
+  }
+
+  console.log("success"), data;
+
+  let funcs = {
+    success: successEmailSend,
+    error: function (data) {
+      $(".corre_asunto").val("");
+      $(".corre_mensaje").val("");
+      notificaciones("No se pudo enviar el correo, por favor revise los datos", "error");
+      show_modal("hide", "#modalMail");
+    }, complete: () => {
+      $(".send_correo")
+        .removeClass('disabled')
+        .text('Enviar')
+    }
+  }
+
+  ajaxs(data, url_send_email, funcs)
+  return false;
+}
 
 
-function imprimirTipoImpresion(e)
-{
+
+function imprimirTipoImpresion(e) {
   let $this = $(this);
 
   let $link = $this.attr('data-url');
@@ -358,9 +344,8 @@ window.eliminar = function (e) {
   modal.modal();
 }
 
-function events()
-{
-  $("*").on( 'click' , '.enviar-correo',   showModalRedactarCorreo );
+function events() {
+  $("*").on('click', '.enviar-correo', showModalRedactarCorreo);
 
   // $("*").on('change', '.cambiar-pdf', (e) => {
   //   console.log("cambiar_pdf", e)
@@ -444,46 +429,46 @@ function events()
   // -------------------------------------------------
 
   $("*").on('click', '.eliminate-element', window.eliminar);
-  
-  $("*").on('click', '.anular-btn', function(event){
+
+  $("*").on('click', '.anular-btn', function (event) {
     event.stopImmediatePropagation();
     event.preventDefault();
-    
-    if ( confirm("Esta Seguro que Desea anular este documento?") == false ){
+
+    if (confirm("Esta Seguro que Desea anular este documento?") == false) {
       return false;
     }
-    
+
     $("#load_screen").show();
-    
+
     ajaxs(
       {},
-      $(this).attr('href'), 
+      $(this).attr('href'),
       {
-      success : (data) => {
-        notificaciones('Anulacion Exitosa', 'success')
-        table.draw();
-      },
-      complete : () => {
-        ($("#load_screen").hide());
-        $("#modalData").modal('hide');
-      } 
+        success: (data) => {
+          notificaciones('Anulacion Exitosa', 'success')
+          table.draw();
+        },
+        complete: () => {
+          ($("#load_screen").hide());
+          $("#modalData").modal('hide');
+        }
       }
     );
 
     return false;
   });
 
-  
 
-  $("table").on('click',".dropdown", function(){
+
+  $("table").on('click', ".dropdown", function () {
     id_factura = $(this).parents('tr').find("td:eq(0)").text();
   });
 
-  $("[name=tipo],[name=mes],[name=local],[name=vendedor],[name=usucodi],[name=estado]").on( 'change', function(){
+  $("[name=tipo],[name=mes],[name=local],[name=vendedor],[name=usucodi],[name=estado]").on('change', function () {
     table.draw();
   });
 
-  $("*").on( 'click' , '.imprimir' , imprimirTipoImpresion );
+  $("*").on('click', '.imprimir', imprimirTipoImpresion);
 
   $("*").on('click', '.data-info', (e) => {
 
@@ -498,7 +483,7 @@ function events()
 
     let $ele = $(e.target);
 
-    if( $ele.is('span') ){
+    if ($ele.is('span')) {
       $ele = $ele.parents('button');
     }
 
@@ -581,17 +566,16 @@ function events()
 
     e.preventDefault();
     return false;
-    
+
   });
 
 
-  
+
 
 }
 
-function init()
-{
-  initDatable();  
+function init() {
+  initDatable();
   events();
   headerAjax();
   initTags();

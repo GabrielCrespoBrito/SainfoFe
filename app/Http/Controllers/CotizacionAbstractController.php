@@ -267,10 +267,11 @@ class CotizacionAbstractController extends Controller
     $busqueda->orderBy('CotNume', 'desc');
 
     return DataTables::of($busqueda)
+      ->addColumn('numero', 'cotizaciones.partials.column_numero')
       ->addColumn('accion', 'cotizaciones.partials.column_accion')
       ->addColumn('estado', 'cotizaciones.partials.column_estado')
       ->addColumn('venta', 'cotizaciones.partials.column_venta')
-      ->rawColumns(['accion', 'estado', 'venta'])
+      ->rawColumns(['accion', 'estado', 'venta', 'numero'])
       ->make(true);
   }
 
