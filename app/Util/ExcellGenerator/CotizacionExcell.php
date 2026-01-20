@@ -14,6 +14,8 @@ class CotizacionExcell extends ExcellGenerator
     "FECHA ",
     "DOC ",
     "NOMBRE ",
+    "USUARIO ",
+    "OBSERVACION ",
     "TOTAL ",
   ];
 
@@ -69,6 +71,8 @@ class CotizacionExcell extends ExcellGenerator
         $cotizacion['fecha'], 
         $cotizacion['cliente_ruc'], 
         $cotizacion['cliente_cliente'], 
+        $cotizacion['usuario'],
+        $cotizacion['observacion'],
         $cotizacion['total']
         ]);
 
@@ -93,7 +97,7 @@ class CotizacionExcell extends ExcellGenerator
     $excel->sheet($this->getSheetTitle(), function ($sheet) {
 
       $this->sheet = $sheet;
-      $this->sheet->setAutoSize(true);
+      // $this->sheet->setAutoSize(true);
       $this->sheet->setFontFamily('Arial');
       $this->sheet->setFontSize(10);
 

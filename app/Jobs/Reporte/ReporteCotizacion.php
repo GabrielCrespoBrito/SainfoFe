@@ -104,6 +104,8 @@ class ReporteCotizacion
         'estado' => $cotizacion->cotesta == 'L' ? 'Liberado' : 'Pendiente',
         'cliente_ruc' => $cotizacion->cliente_with->PCRucc,
         'cliente_cliente' => $cotizacion->cliente_with->PCNomb,
+        'usuario' => $cotizacion->usuario->usulogi,
+        'observacion' => $cotizacion->cotobse,
         'vendedor' => $cotizacion->vendedor->vennomb,
         'total' => $cotizacion->cotimpo,
         'items' => [],
