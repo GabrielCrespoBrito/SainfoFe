@@ -16,6 +16,7 @@ class CotizacionExcell extends ExcellGenerator
     "NOMBRE ",
     "USUARIO ",
     "OBSERVACION ",
+    "ZONA ",
     "TOTAL ",
   ];
 
@@ -73,6 +74,7 @@ class CotizacionExcell extends ExcellGenerator
         $cotizacion['cliente_cliente'], 
         $cotizacion['usuario'],
         $cotizacion['observacion'],
+        $cotizacion['zona'],
         $cotizacion['total']
         ]);
 

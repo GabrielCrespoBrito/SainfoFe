@@ -789,4 +789,9 @@ class Cotizacion extends Model
     return optional(Zona::find($this->zoncodi));
   }
 
+  public function zona()
+  {
+    return $this->hasOne(Zona::class, 'Zoncodi', 'zoncodi' );
+  }  
+
 }

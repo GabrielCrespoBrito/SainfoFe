@@ -46,7 +46,7 @@ class ReporteCotizacion
    */
   public function getQuery()
   {
-    $query = Cotizacion::with(['items.producto',  'cliente_with' => function ($query) {
+    $query = Cotizacion::with(['items.producto', 'zona', 'cliente_with' => function ($query) {
       $query->where('TipCodi', 'C');
     }])
       ->whereBetween('CotFVta', [$this->fecha_desde, $this->fecha_hasta]);
@@ -98,6 +98,7 @@ class ReporteCotizacion
   {
     foreach ($cotizaciones as $cotId => $cotizacion) {
 
+
       $info = [
         'id' => $cotizacion->CotNume,
         'fecha' => $cotizacion->CotFVta,
@@ -106,6 +107,7 @@ class ReporteCotizacion
         'cliente_cliente' => $cotizacion->cliente_with->PCNomb,
         'usuario' => $cotizacion->usuario->usulogi,
         'observacion' => $cotizacion->cotobse,
+        'zona' => optional($cotizacion->getZona())->ZonNomb,
         'vendedor' => $cotizacion->vendedor->vennomb,
         'total' => $cotizacion->cotimpo,
         'items' => [],
