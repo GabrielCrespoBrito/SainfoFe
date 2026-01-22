@@ -791,7 +791,7 @@ class Cotizacion extends Model
 
   public function zona()
   {
-    return $this->hasOne(Zona::class, 'Zoncodi', 'zoncodi' );
+    return $this->belongsTo(Zona::class, 'zoncodi', 'ZonCodi' );
   }  
 
 }

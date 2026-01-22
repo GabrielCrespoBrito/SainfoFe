@@ -429,7 +429,6 @@ class CajasController extends Controller
       $busqueda->where('PCcodi', $cliente);
     }
 
-    // return $busqueda->distinct('CpaOper');
     return $busqueda;
   }
 

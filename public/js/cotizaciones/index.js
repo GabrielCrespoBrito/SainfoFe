@@ -150,6 +150,7 @@ function initDatable() {
           "local": $("[name=local] option:selected").val(),
           "estado": $("[name=estado] option:selected").val(),
           "vendedor": $("[name=vendedor] option:selected").val(),
+          "zona": $("[name=zona] option:selected").val(),
           "usucodi": $("[name=usucodi] option:selected").val(),
         });
       }
@@ -172,6 +173,7 @@ function initDatable() {
       { data: 'cotbase', 'class': 'text-right', render: fixedNumber, orderable: false, searchable: false },
       { data: 'cotigvv', 'class': 'text-right', render: fixedNumber, orderable: false, searchable: false },
       { data: 'cotimpo', 'class': 'text-right', render: fixedNumber, orderable: false, searchable: false },
+      { data: 'zona.ZonNomb', orderable: false, searchable: false },
       { data: 'estado', orderable: false, searchable: false },
       { data: 'venta', orderable: false, searchable: false },
       { data: 'accion', 'class': 'overflow-visible', orderable: false, searchable: false },
@@ -464,7 +466,7 @@ function events() {
     id_factura = $(this).parents('tr').find("td:eq(0)").text();
   });
 
-  $("[name=tipo],[name=mes],[name=local],[name=vendedor],[name=usucodi],[name=estado]").on('change', function () {
+  $("[name=tipo],[name=mes],[name=local],[name=vendedor],[name=usucodi],[name=estado],[name=zona]").on('change', function () {
     table.draw();
   });
 

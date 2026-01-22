@@ -114,10 +114,12 @@ class CotizacionAbstractController extends Controller
     $titulo_pagina = Cotizacion::getNombre($tipo);
     $locales = user_()->locales->load('local');
     $vendedores = get_empresa()->vendedores;
+    $zonas = get_empresa()->zonas();
     $usuarios = get_empresa()->users;
     return view('cotizaciones.index', [
       'tipo' => $tipo,
       'locales' => $locales,
+      'zonas' => $zonas,
       'usuarios' => $usuarios,
       'vendedores' => $vendedores,
       'titulo_pagina' => $titulo_pagina,
@@ -224,7 +226,7 @@ class CotizacionAbstractController extends Controller
   {
     $tipoCliente = $request->tipo == Cotizacion::ORDEN_COMPRA ? ClienteProveedor::TIPO_PROVEEDOR : ClienteProveedor::TIPO_CLIENTE;
 
-    $withData = ['moneda', 'venta', 'forma_pago', 'usuario', 'cliente_with' => function ($q) use ($tipoCliente) {
+    $withData = ['moneda', 'venta', 'zona', 'forma_pago', 'usuario', 'cliente_with' => function ($q) use ($tipoCliente) {
       $q->where('TipCodi', $tipoCliente);
     }];
 
@@ -242,6 +244,10 @@ class CotizacionAbstractController extends Controller
 
     if ($request->tipo) {
       $busqueda->where('TidCodi1', $request->tipo);
+    }
+
+     if ($request->zona) {
+      $busqueda->where('zoncodi', $request->zona);
     }
 
     if ($request->local) {
