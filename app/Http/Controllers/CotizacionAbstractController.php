@@ -539,7 +539,9 @@ class CotizacionAbstractController extends Controller
         } else {
           $pathTemp = $cotizacion->generatePDF($formato, PDFGenerator::HTMLGENERATOR, $tipo,  true, false);
         }
-      } else {
+      } 
+      
+      else {
         $pathTemp = $cotizacion->generatePDF($formato, PDFGenerator::HTMLGENERATOR, $tipo,  true, true);
       }
     } else {
