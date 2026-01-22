@@ -397,10 +397,10 @@ $(document).ready(function (e) {
 
     const precioValue = Number($inputPrecio.val());
     const minPrecio = Number($inputPrecio.attr('data-default'));
-    
 
 
-    if( tipo != "99" ){
+
+    if (tipo != "99") {
       if (precioValue < minPrecio) {
         notiYFocus("producto_precio", `El Precio ingresado no puede ser menor que el precio por defecto (${minPrecio})`);
         return false;
@@ -2005,17 +2005,16 @@ $(document).ready(function (e) {
 
   function ver_data_cliente(e) {
     e.preventDefault();
-    let target = $(this).data('target');
-    let ele = $("[data-element=" + target + "]");
 
-    // console.log("target y ele" , target , ele );
-    // if( ele.is('.hide') ){
-    //   ele.removeClass('hide')
-    // }
-    // else {
-    //   ele.addClass('hide')
-    // }
-    ele.toggle();
+    console.log("ver data cliente");
+    let target = $(this).data('element');
+    let ele = $("[data-target=" + target + "]");
+    if (ele.is('.hide')) {
+      ele.removeClass('hide')
+    }
+    else {
+      ele.addClass('hide')
+    }
   }
 
   function mostrar_productos(data) {
@@ -2352,7 +2351,8 @@ $(document).ready(function (e) {
       console.log(data.params.args.data.data.tipo_documento_c.TdocNomb)
       $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
       $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
-
+      $(".row-cliente-adicional [name=direccion]").val(data.params.args.data.data.PCDire);
+      $(".row-cliente-adicional [name=email]").val(data.params.args.data.data.PCMail);
       $("[name=tipo_documento_c]").val(data.params.args.data.data.tipo_documento_c.TdocNomb);
       $("[name=contacto]").val(contacto);
     });
@@ -2650,7 +2650,7 @@ $(document).ready(function (e) {
 
   function clearInputsInit() {
     if (create) {
-      cleanInputsGroup('cliente');
+      // cleanInputsGroup('cliente');
       cleanInputsGroup('producto');
     }
     else {

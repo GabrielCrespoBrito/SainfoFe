@@ -267,7 +267,16 @@ class CotizacionAbstractController extends Controller
     }
 
     if ($term) {
-      $busqueda->where('CotNume', 'LIKE', '%' . $term)->get();
+      $busqueda->where(function ($query) use ($term, $tipoCliente) {
+        $query->where('CotNume', 'LIKE', '%' . $term)
+          ->orWhereHas('cliente_with', function ($query) use ($term, $tipoCliente) {
+            $query->where('TipCodi', $tipoCliente)
+              ->where(function ($q) use ($term) {
+                $q->where('PCRucc', 'LIKE', '%' . $term . '%')
+                ->orWhere('PCNomb', 'LIKE', '%' . $term . '%');
+              });
+          });
+      });
     }
 
     $busqueda->orderBy('CotNume', 'desc');

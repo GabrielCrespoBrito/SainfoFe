@@ -85,7 +85,7 @@
             </select>
         </div>
 
-        <div class="col-md-2 col-sm-4  col-xs-6">
+        <div class="col-md-1 col-sm-4  col-xs-6 p-0">
             <select name="estado" class="form-control input-sm">
                 <option value=""> - ESTADO - </option>
                 <option value="P">Pendiente</option>
@@ -97,7 +97,7 @@
 
         <input type="hidden" name="tipo" value="{{ $tipo }}">
 
-        <div class=" col-md-2 acciones-div ww">
+        <div class=" col-md-1 acciones-div ww">
             <a href="{{ $routes->create }}" data-toggle="tooltip" title="Nueva"
                 class="btn btn-primary btn-flat pull-right crear-nuevo"> <span class="fa fa-plus"></span> Nueva </a>
         </div>
