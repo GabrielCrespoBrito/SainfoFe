@@ -9,6 +9,7 @@ use App\Util\PDFGenerator\PDFHtmlPdf;
 use App\Jobs\Reporte\ReporteCotizacion;
 use App\Util\PDFGenerator\PDFGenerator;
 use App\Util\ExcellGenerator\CotizacionExcell;
+use App\Zona;
 
 class CotizacionReportController extends Controller
 {
@@ -21,6 +22,7 @@ class CotizacionReportController extends Controller
   {
     return view('reportes.cotizacion.create', [
       'vendedores' => Vendedor::all(),
+      'zonas' => Zona::all(),
       'usuarios' => get_empresa()->users
     ]);
   }
@@ -34,7 +36,9 @@ class CotizacionReportController extends Controller
       $request->usucodi,
       $request->estado,
       $request->fecha_desde,
-      $request->fecha_hasta);
+      $request->fecha_hasta,
+      $request->zona
+    );
 
 
     $data_reporte = $reporter->getData();

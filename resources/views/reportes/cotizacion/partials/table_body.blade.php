@@ -8,16 +8,16 @@
 <tbody class="vertical-align-top">
     @foreach ($cotizaciones as $cotizacion)
         <tr class="bold border-bottom-stripe">
-            <td> {{ $cotizacion['id'] }} </td>
-            <td style="text-transform: uppercase;"> {{ $cotizacion['estado'] }} </td>
-            <td> {{ $cotizacion['vendedor'] }} </td>
-            <td> {{ $cotizacion['fecha'] }} </td>
-            <td> {{ $cotizacion['cliente_ruc'] }} </td>
-            <td> {{ $cotizacion['cliente_cliente'] }} </td>
-            <td> {{ $cotizacion['usuario'] }} </td>
-            <td> {{ $cotizacion['observacion'] }} </td>
-            <td> {{ $cotizacion['zona'] }} </td>
-            <td class="text-align-right"> {{ $cotizacion['total'] }} </td>
+            <td class="px-2"> {{ $cotizacion['id'] }} </td>
+            <td class="px-2" style="text-transform: uppercase;"> {{ $cotizacion['estado'] }} </td>
+            <td class="px-2"> {{ $cotizacion['vendedor'] }} </td>
+            <td class="px-2"> {{ $cotizacion['fecha'] }} </td>
+            <td class="px-2"> {{ $cotizacion['cliente_ruc'] }} </td>
+            <td class="px-2"> {{ $cotizacion['cliente_cliente'] }} </td>
+            <td class="px-2"> {{ $cotizacion['usuario'] }} </td>
+            <td class="px-2"> {{ $cotizacion['observacion'] }} </td>
+            <td class="px-2"> {{ $cotizacion['zona'] }} </td>
+            <td class="text-align-right px-2"> {{ $cotizacion['total'] }} </td>
         </tr>
 
         @foreach ($cotizacion['items'] as $item)
