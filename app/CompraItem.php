@@ -98,7 +98,7 @@ class CompraItem extends Model
 
 	public function producto()
 	{
-		return $this->belongsTo( Producto::class, 'Detcodi' , 'ProCodi' )->withoutGlobalScope('noEliminados');;
+		return $this->belongsTo( Producto::class, 'Detcodi' , 'ProCodi' )->withoutGlobalScope('noEliminados');
   }
 
 	public function unidad()
