@@ -40,6 +40,7 @@ trait InteractWithStock
    */
   public static function updateStock2( $procodi )
   {
+    // Excluir los movimientos de orden de compra
     $stocksTotalByLocal = DB::connection('tenant')->table('guia_detalle')
     ->join('guias_cab', 'guias_cab.GuiOper', '=', 'guia_detalle.GuiOper')
     ->select('guias_cab.Loccodi', DB::raw('SUM(guia_detalle.CpaVtaCant) as cant'))
