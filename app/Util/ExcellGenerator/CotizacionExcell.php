@@ -50,7 +50,7 @@ class CotizacionExcell extends ExcellGenerator
 
     $this->sheet->row($this->getLineaAndSum(),  [ 'Vendedor' , $this->data['info']['vendedor']]);
     $this->sheet->row($this->getLineaAndSum(),  [ 'Usuario: ' ,  $this->data['info']['usuario']]);
-    $this->sheet->row($this->getLineaAndSum(),  [ 'Zona: ' ,  $this->data['zona']]);
+    $this->sheet->row($this->getLineaAndSum(),  [ 'Zona: ' ,  $this->data['info']['zona']]);
     $this->sheet->row($this->getLineaAndSum(),  [ 'Estado: ' ,  $this->data['info']['estado']]);
 
 
