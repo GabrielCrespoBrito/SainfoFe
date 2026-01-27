@@ -21,6 +21,7 @@ class TipoMovimiento extends Model
   const NC_COMPRA = "S002";
   const INGRESO_INVENTARIO = "I001";
   const INVENTARIO_SALIDA = "S005";
+  const INVENTARIO_ORDENCOMPRA = "S006";
 
   const INGRESO_PRODUCCION = "I007";
   const SALIDA_PRODUCCION = "S007";

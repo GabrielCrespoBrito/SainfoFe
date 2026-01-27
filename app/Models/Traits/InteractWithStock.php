@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits;
 
+use App\TipoMovimiento;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -43,6 +44,7 @@ trait InteractWithStock
     ->join('guias_cab', 'guias_cab.GuiOper', '=', 'guia_detalle.GuiOper')
     ->select('guias_cab.Loccodi', DB::raw('SUM(guia_detalle.CpaVtaCant) as cant'))
     ->where('guia_detalle.DetCodi', '=', $procodi)
+    ->where('guias_cab.TmoCodi', '!=', TipoMovimiento::INVENTARIO_ORDENCOMPRA)
     ->groupBy('guias_cab.Loccodi')
     ->get();
 
