@@ -227,8 +227,7 @@ class CotizacionAbstractController extends Controller
     $tipoCliente = $request->tipo == Cotizacion::ORDEN_COMPRA ? ClienteProveedor::TIPO_PROVEEDOR : ClienteProveedor::TIPO_CLIENTE;
 
     $withData = ['moneda', 'venta', 'zona', 'forma_pago', 'usuario' => function($q){
-      $q->select('usulogi');
-            
+      $q->select('usucodi', 'usulogi');
     }, 'cliente_with' => function ($q) use ($tipoCliente) {
       $q->where('TipCodi', $tipoCliente);
     }];
