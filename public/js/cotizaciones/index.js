@@ -166,7 +166,11 @@ function initDatable() {
     },
     "columns": [
       { data: 'numero', orderable: false, searchable: false },
-      { data: 'CotFVta', orderable: false, searchable: false },
+      {
+        data: 'CotFVta', render: function (data, type, row) {
+          return data + " " + (row.hora || "");
+        }, orderable: false, searchable: false
+      },
       { data: 'cliente_with.PCNomb', orderable: false, searchable: false },
       { data: 'usuario.usulogi', orderable: false, searchable: false },
       { data: 'moneda.monabre', orderable: false, searchable: false },

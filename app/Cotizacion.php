@@ -257,6 +257,7 @@ class Cotizacion extends Model
     $c->moncodi = $data["moneda"];
     $c->vencodi = $data["vendedor"];
     $c->DocRefe = $data["doc_ref"];
+    $c->hora = date('H:m:i');
     $c->cotobse = $data["observacion"];
     $c->CotTCam = $data["tipo_cambio"];
     $c->cotcant = $totales->total_cantidad;
@@ -296,6 +297,11 @@ class Cotizacion extends Model
   public function numero()
   {
     return $this->CotNume;
+  }
+
+  public function getHora()
+  {
+    return $this->hora ?? '00:00:00';
   }
 
   public function getNombreTipoDocumento()
