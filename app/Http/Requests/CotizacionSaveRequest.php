@@ -197,6 +197,11 @@ class CotizacionSaveRequest extends FormRequest
             $local
           );
 
+          if( $hora = auth()->user()->hora_limite_cot ){
+            $validator->errors()->add('hora', "No puede cotizar despues de la hora: {$hora}");
+            return;
+          }
+
           if (!$this->series->first()) {
             $nombreDocumento = TipoDocumentoPago::getNombreDocumento($this->tipo);
             $validator->errors()->add('serie_documento', "No existe serie de {$nombreDocumento} para este usuario en el local actual");

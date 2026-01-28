@@ -51,7 +51,7 @@ class CreateCotizacionesTable extends Migration
             $table->string('TipCodi')->nullable();
             $table->string('TidCodi')->nullable();
             $table->string('TidCodi1');
-
+            $table->time('hora')->nullable();
             $table->primary(['LocCodi', 'EmpCodi', 'CotNume'], 'primary_full' );
 
 
