@@ -138,6 +138,8 @@ class UsersController extends Controller
   {
     $isContador = $request->input('tipo_usuario') == User::TIPO_CONTADOR;
 
+    logger( 'hola', $request->all());
+
     $user = new User;
     $user->usucodi = User::ultimoCodigo();
     $user->usulogi = $request->usuario;
@@ -147,6 +149,7 @@ class UsersController extends Controller
     $user->usutele = $request->telefono;
     $user->usudire = $request->direccion;
     $user->email   = $request->email;
+    $user->hora_limite_cot   = $request->hora_limite_cot;
     $user->active  = "1";
     $user->verificate  = "1";
     $user->UDelete = "";
@@ -287,10 +290,8 @@ class UsersController extends Controller
     $user->usutele = $request->telefono;
     $user->usudire = $request->direccion;
     $user->email   = $request->email;
+    $user->hora_limite_cot   = $request->hora_limite_cot;
     $user->save();
- 
-    // _dd( $request->alocal );
-    // exit();
 
     $user->registerLocales($request->local, true);
     

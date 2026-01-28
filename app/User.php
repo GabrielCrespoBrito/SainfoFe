@@ -37,7 +37,7 @@ class User extends Authenticatable
   const CARGO_ADMNISTRATIVO = "00";
   const PLAN_REGISTER_CAMPO = "ususerf";
 
-  protected $fillable = [ 'usucodi', 'usulogi', 'usucla2','User_FCrea', 'carcodi' , 'usutele', 'usudire', 'ususerf' , 'usunomb', 'usucla1', 'email', 'verificate', 'usercta' ];
+  protected $fillable = [ 'usucodi', 'usulogi', 'usucla2','User_FCrea', 'carcodi' , 'usutele', 'usudire', 'ususerf' , 'usunomb', 'usucla1', 'email', 'verificate', 'usercta', 'hora_limite_cot' ];
   protected $hidden = [ 'password', 'remember_token' ];
 
   public function checkPermissionTo_($permission, $guard = null)

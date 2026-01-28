@@ -15,7 +15,7 @@
         </div>
 
         @include('users.partials.table')
-        @include('usuarios.partials.modal_usuario', ['isAdmin' => false])
+        {{-- @include('usuarios.partials.modal_usuario', ['isAdmin' => false]) --}}
         @include('partials.modal_eliminate', ['url' => route('usuarios.destroy', 'XX')])
     @endslot
 

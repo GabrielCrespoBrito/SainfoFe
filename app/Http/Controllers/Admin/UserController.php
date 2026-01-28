@@ -176,6 +176,8 @@ class UserController extends Controller
   {
     $user = User::findOrfail($request->id);
 
+    dd($request->all());
+
     $user->usunomb = $request->nombre;
     if (!is_null($request->password)) {
       $user->usucla2 = $request->password;
