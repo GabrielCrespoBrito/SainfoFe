@@ -141,7 +141,7 @@ class ReporteVendedorCobertura
       $data['items'][$vendedor_id] = [];
       $add = &$data['items'][$vendedor_id];
       // $vendedor = $coberturas_vendedor->first()->vendedor; 
-      $vendedor = Vendedor::find($vendedor_id);
+      $vendedor = Vendedor::withoutGlobalScopes('noEliminados')->where('Vencodi', $vendedor_id)->first();
       $vendedor_info = [
         'id' => $vendedor_id,
         'nombre' => $vendedor->vennomb,
