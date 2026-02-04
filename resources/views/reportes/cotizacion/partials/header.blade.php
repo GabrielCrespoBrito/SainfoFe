@@ -9,7 +9,7 @@
             <span class="bold"> Usuario: </span> <span> {{ $info['usuario'] }} </span>
         </td>
 
-        <td with="50%">
+        <td with="50%" colspan="2">
             <span class="bold"> Estado: </span> <span> {{ $info['estado'] }} </span>
         </td>
     </tr>
@@ -25,6 +25,10 @@
 
         <td>
             <span class="bold"> Zona: </span> <span> {{ $info['zona'] }} </span>
+        </td>
+
+        <td>
+            <span class="bold"> Total: </span> <span> {{ $info['cotiTotales'] }} </span>
         </td>
     </tr>
 </table>

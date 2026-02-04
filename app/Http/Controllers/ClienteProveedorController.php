@@ -259,10 +259,10 @@ class ClienteProveedorController extends Controller
       ]);
 
     $term = strtoupper(trim($term));
-
+    
     if (str_contains($term, 'c:') || str_contains($term, 'C:')) {
-      $term = trim(last(explode('C:', $term)));
-      $busqueda->where('PCCodi', 'LIKE', '%' . $term . '%');
+      $termReal = trim(last(explode('C:', $term)));
+      $busqueda->where('PCCodi', 'LIKE', '%' . $termReal . '%');
     } else {
       $busqueda = $ruc ?
         $busqueda->where('PCRucc', 'like', $term . '%') :

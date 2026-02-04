@@ -25,6 +25,7 @@ class ReporteCotizacion
     protected $fecha_desde;
     protected $fecha_hasta;
     protected $zona;
+    protected $cotiTotales;
 
     /**
      * Create a new job instance.
@@ -88,7 +89,9 @@ class ReporteCotizacion
         $query = $this->getQuery();
 
         // Si no existen registros, deter el resto del script
-        if ($query->count() === 0) {
+        $this->cotiTotales = $query->count(); 
+
+        if ($this->cotiTotales === 0) {
             return;
         }
 
@@ -111,8 +114,7 @@ class ReporteCotizacion
             $info = [
                 "id" => $cotizacion->CotNume,
                 "fecha" => $cotizacion->CotFVta,
-                "estado" =>
-                    $cotizacion->cotesta == "L" ? "Liberado" : "Pendiente",
+                "estado" => $cotizacion->cotesta == "L" ? "Liberado" : "Pendiente",
                 "cliente_ruc" => $cotizacion->cliente_with->PCRucc,
                 "cliente_cliente" => $cotizacion->cliente_with->PCNomb,
                 "usuario" => $cotizacion->usuario->usulogi,
@@ -186,6 +188,7 @@ class ReporteCotizacion
             "usuario" => $usuario,
             "zona" => $cotizacionzona,
             "estado" => $estado,
+            "cotiTotales" => $this->cotiTotales,
             "fecha_desde" => $this->fecha_desde,
             "fecha_hasta" => $this->fecha_hasta,
         ];
