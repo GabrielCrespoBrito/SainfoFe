@@ -62,7 +62,6 @@ trait InteractWithStock
     ];
 
     foreach ($stocksTotalByLocal as $stockTotal ) {
-     
       $nombre = 'prosto' . (int) $stockTotal->Loccodi;
       $stocksTotales[$nombre] = $stockTotal->cant;
     }
@@ -70,6 +69,8 @@ trait InteractWithStock
     DB::connection('tenant')->table('productos')
     ->where('ProCodi', '=', $procodi)
     ->update($stocksTotales);
+
+    return $stocksTotales;
   }
 
   public function updateAllStock($procodi, $fecha = null)

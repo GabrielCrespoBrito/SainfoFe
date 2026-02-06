@@ -24,10 +24,10 @@ class UpdateStocks
     $data = [];
     $request = $this->request;
     $loccodi = $request->loccodi;
+    $stockName = 'prosto' . Producto::getNumStockFromLocCodi($loccodi);
     foreach ($request->items as $procodi) {
-      $producto = Producto::findByProCodi($procodi);
-      $producto->reProcessInventario($loccodi);
-      $data[$procodi] = $producto->getStockFromLocCodi($loccodi); 
+      $productoStocks = Producto::updateStock2($procodi);
+      $data[$procodi] = $productoStocks[$stockName];
     }
     return $data;
   }

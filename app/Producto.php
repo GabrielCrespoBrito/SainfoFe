@@ -434,8 +434,16 @@ class Producto extends Model
 
   public function getStockFromLocCodi($loccodi)
   {
-    return $this->getStock(substr($loccodi, -1));
+    return $this->getStock(self::getNumStockFromLocCodi($loccodi));
   }
+
+  public static function getNumStockFromLocCodi($loccodi)
+  {
+    return substr($loccodi, -1);
+  }
+
+  
+
 
   /**
    * Buscar producto por codigo de barra
