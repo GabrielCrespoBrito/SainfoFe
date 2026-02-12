@@ -35,6 +35,10 @@ class TipoPago extends Model
     return self::where( 'TdoBanc' , self::IS_BANCARIO )->pluck('TpgCodi')->toArray();
   }
 
+  public static function isTipoBanco( $tipo )
+  {
+    return in_array($tipo, self::getTipoBanco());
+  }
 
   public function getNombre()
   {
@@ -59,12 +63,12 @@ class TipoPago extends Model
 
   public static function isCash()
   {
-    return $this->TpgCodi = self::TYPE_EFECTIVE;
+    return $this->TpgCodi == self::TYPE_EFECTIVE;
   }
 
   public static function isNota()
   {
-    return $this->TpgCodi = self::TYPE_NOTACREDITO;
+    return $this->TpgCodi == self::TYPE_NOTACREDITO;
   }
 
 }

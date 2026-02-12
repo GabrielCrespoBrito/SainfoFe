@@ -22,7 +22,7 @@ class CompraPagoStoreRequest extends FormRequest
 	public function rules()
 	{
 		$this->id_efectivo = TipoPago::idEfectivo();
-		$this->isBancario = in_array($this->tipopago, TipoPago::TYPE_BANCO);
+		$this->isBancario = TipoPago::isTipoBanco($this->tipopago);
 
 		$rules = [
 			'VtaOper' => 'required',

@@ -19,7 +19,7 @@ trait CompraPagoRepository
     $otrodoc = '';
     $nota_credito_id = '';
 
-    if ( in_array($data['tipopago'] , TipoPago::TYPE_BANCO )) {
+    if (  TipoPago::isTipoBanco($data['tipopago'] )) {
       $banco_cuenta = BancoEmpresa::find($data['cuenta_id']);
       $bancodi = $banco_cuenta->BanCodi;
       $bannomb = $banco_cuenta->banco->bannomb;
