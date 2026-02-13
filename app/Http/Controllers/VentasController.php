@@ -288,6 +288,8 @@ class VentasController extends Controller
       'incluyeIgv' => (int) $empresa->incluyeIgv(),
       'igvEmpresa' => $empresa->getIgvPorc(),
       'canModifyPrecios' => (int) $user->canModifyPrecios(),
+      'disabledPrecioMin' => (int) $user->disabledPrecioMin(),
+      
       'tipo_movimientos' => $tipo_movimiento_repository->where('TmoInSa', 'S'),
       'tipos_igvs' => $tipoigvrepository->where('gratuito_disponible', TipoIgv::GRATUITO_DISPONIBLE),
       "condicion" => $condicion_repository->find(CondicionVenta::ID_VENTA)->CcvDesc,

@@ -792,13 +792,10 @@ $(document).ready(function (e) {
     // if(isLimit){
     const precioValue = Number($inputPrecio.val());
     const minPrecio = Number($inputPrecio.attr('data-default'));
-    if (precioValue < minPrecio) {
+    if (precioValue < minPrecio && canModifyPrecios == false) {
       notiYFocus("producto_precio", `El Precio ingresado no puede ser menor que el precio por defecto (${minPrecio})`);
       return false;
     }
-    // }
-
-    // 
 
     if (validateIsNotNumber("", "producto_dct")) {
       notiYFocus("producto_dct", "El descuento del producto tiene que ser un numero");

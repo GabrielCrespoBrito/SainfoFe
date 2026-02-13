@@ -35,6 +35,11 @@ trait UserMethod
     return $this->hasPermissionTo($permiso);
   }
 
+  public function disabledPrecioMin()
+  {
+    return $this->isAdmin() || $this->isOwner();
+  }
+
   public function boletasSeriesByEmpresa()
   {
     return $this->boletasSeries()

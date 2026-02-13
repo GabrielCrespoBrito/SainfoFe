@@ -44,6 +44,7 @@
   @endif
 
   var canModifyPrecios = "{{ $canModifyPrecios }}";
+  var disabledPrecioMin = "{{ $disabledPrecioMin ?? false}}";
   var accion_default = "edit";
   var ruc_crear = "{{ $ruc }}";
   var incluyeIGV = {{ $incluyeIgv }};  
