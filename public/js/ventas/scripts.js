@@ -792,7 +792,7 @@ $(document).ready(function (e) {
     // if(isLimit){
     const precioValue = Number($inputPrecio.val());
     const minPrecio = Number($inputPrecio.attr('data-default'));
-    if (precioValue < minPrecio && canModifyPrecios == false) {
+    if (precioValue < minPrecio && disabledPrecioMin == false) {
       notiYFocus("producto_precio", `El Precio ingresado no puede ser menor que el precio por defecto (${minPrecio})`);
       return false;
     }
