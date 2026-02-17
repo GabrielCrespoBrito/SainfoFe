@@ -37,7 +37,7 @@ trait UserMethod
 
   public function disabledPrecioMin()
   {
-    return $this->isAdmin() || $this->isOwner() || $this->usulogi = "ESPERANZA";
+    return $this->isAdmin() || $this->isOwner() || $this->usulogi == "ESPERANZA";
   }
 
   public function boletasSeriesByEmpresa()
