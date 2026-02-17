@@ -33,7 +33,7 @@
     <script type="text/javascript">
         window.decimales_dolares = {{ $decimales_dolares ?? 2 }};
         window.decimales_soles = {{ $decimales_soles ?? 2 }};
-        var userId = {{ auth()->user()->usulogi }}
+        var userId = "{{ auth()->user()->usulogi }}";
         var numStock = "{{ user_()->numAlmacenUsed() }}";
         var icbper_unit = 0.20;
 
