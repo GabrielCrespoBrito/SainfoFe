@@ -4109,9 +4109,7 @@ body.bar-noti .main-sidebar {
   color: white;
 }
 
-.#ca642abd {
-  
-}
+.#ca642abd {}
 
 .bg-warning {
   background-color: #f39c12;
@@ -4469,6 +4467,7 @@ li .empresa-inactive {
 #items-table.compras tbody td:nth-child(10) {
   text-align: right;
 }
+
 .estado-order-pendiente .form-control {
   background-color: rgb(208, 208, 208);
 }
@@ -4490,10 +4489,19 @@ li .empresa-inactive {
   padding: 10px;
   border: 1px solid gray;
   box-shadow: 0 0 1px 1px #ccc;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 
 #order-show-container thead td {
   font-weight: bold;
+}
+
+.labelPrecioMinimo {
+  color: #565fc4;
+  font-weight: 600;
+  font-size: .8em;
+  position: absolute;
+  right: 2em;
+  top: 2px;
 }

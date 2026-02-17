@@ -849,15 +849,7 @@ $(document).ready(function (e) {
     let stock = Number($("[name=producto_stock]").val());
     let cantidad = Number($("[name=producto_cantidad]").val());
     let precio = Number($("[name=producto_precio]").val());
-    // modulo_restriccion_venta_por_stock
-    // if(modulo_manejo_stock){
-    //   if (cantidad > stock) {
-    //     if (!confirm("Stock disponible es menor que la cantidad requerida, desea continuar?")) {
-    //       $("[name=producto_cantidad]").focus().select();
-    //       return;
-    //     }
-    //   }
-    // }
+
 
 
 
@@ -876,6 +868,8 @@ $(document).ready(function (e) {
           }
         }
       }
+
+      $(".labelPrecioMinimo").text("");
     }
 
     let info;
@@ -1392,6 +1386,10 @@ $(document).ready(function (e) {
 
             $("[name=producto_precio]")
               .attr('data-default', unitPrecio)
+
+            if (unitPrecio)
+              $(".labelPrecioMinimo").text(fixedNumber(unitPrecio, false, 2));
+
           }
         }
         $productoUnidad.append(option)
@@ -1445,9 +1443,13 @@ $(document).ready(function (e) {
     $("[name=producto_precio]")
       .attr('data-default', fixedNumber(precio_min, false, decimales));
 
+
+    if (precio_min) {
+      $('.labelPrecioMinimo').text(fixedNumber(precio_min, false, 2))
+    }
+
     if (precio == 0) {
       $("[name=producto_precio]").removeAttr('readonly');
-
     }
     else {
       if (canModifyPrecios == 0) {
@@ -5291,7 +5293,6 @@ $(document).ready(function (e) {
         first = false;
       }
 
-      // DavidGoggins-DavidGoggins
       const info = itemsToAdd[id];
 
       if (info.incluye_igv) {
