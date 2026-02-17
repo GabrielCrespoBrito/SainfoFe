@@ -29,7 +29,6 @@
         window.decimales_dolares = {{ $decimales_dolares ?? 2 }};
         window.decimales_soles = {{ $decimales_soles ?? 2 }};
         var canModifyPrecios = {{ $canModifyPrecios }}
-        var userId = {{ auth()->user()->usulogi }}
         var url_consulta_sunat = "{{ route('clientes.consulta_ruc') }}";
         var url_crear_cliente = "{{ route('clientes.create') }}";
         var url_buscar_cliente_select2 = "{{ route('clientes.buscar_cliente_select2') }}";
