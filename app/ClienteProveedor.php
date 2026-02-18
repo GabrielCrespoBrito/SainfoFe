@@ -241,7 +241,7 @@ class ClienteProveedor extends Model
   public static function ultimoCodigo($tipo = "C")
   {
     return agregar_ceros(
-      self::where('TipCodi', $tipo)->where('EmpCodi', get_empresa('id'))->max('PCCodi'),
+      self::withoutGlobalScope('noEliminados')->where('TipCodi', $tipo)->where('EmpCodi', get_empresa('id'))->max('PCCodi'),
       5
     );
   }

@@ -65,8 +65,6 @@ class ClienteProveedorController extends Controller
     $this->authorize(p_name('A_CREATE', 'R_CLIENTE'));
 
     $data = $request->all();
-    // _dd( $data );
-    // exit();
     $clienteProveedor = new ClienteProveedor;
     $clienteProveedor->EmpCodi = session()->get('empresa');
     $clienteProveedor->TipCodi = $data['tipo_cliente'];
