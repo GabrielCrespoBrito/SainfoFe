@@ -78,23 +78,7 @@ class ReporteVendedorCobertura
         $query->where('Vencodi', $this->vendedor);
       });
 
-
-    // if ($this->local) {
-    //   $query->where('LocCodi', $this->local);
-    // }
-
-    // if ($this->cliente) {
-    //   $query->where('PCCodi', $this->cliente);
-    // }
-
-    // if ($this->vendedor) {
-    //   $query->where('Vencodi', $this->vendedor);
-    // }
-
-    // dd($query->get());
-
-    return
-      $query
+    return $query
       ->get()
       ->groupBy(['Vencodi', 'PCCodi']);
   }
@@ -108,10 +92,6 @@ class ReporteVendedorCobertura
   {
     $query =  $this->getQuery();
 
-    // dd( $query );
-    // _dd($query->first()->first() );
-    // exit();
-
     // Si no existen registros, deter el resto del script
     if ($query->count() === 0) {
       return;
@@ -119,7 +99,6 @@ class ReporteVendedorCobertura
 
     $data = [];
     $this->addToData($data, $this->getInfoReporte());
-    // dd($data);;
 
     $total_reporte = &$data['total'];
     $this->processAll($query, $data, $total_reporte);
@@ -140,7 +119,6 @@ class ReporteVendedorCobertura
       $this->current_fecha = $vendedor_id;
       $data['items'][$vendedor_id] = [];
       $add = &$data['items'][$vendedor_id];
-      // $vendedor = $coberturas_vendedor->first()->vendedor; 
       $vendedor = Vendedor::withoutGlobalScopes()->where('Vencodi', $vendedor_id)->first();
       $vendedor_info = [
         'id' => $vendedor_id,
@@ -154,7 +132,6 @@ class ReporteVendedorCobertura
       $total_vendedor['total_coberturas'] = count($coberturas_vendedor);
       $total_reporte['total_coberturas'] += count($coberturas_vendedor); 
 
-
       $this->processCoberturas($coberturas_vendedor, $add, $data, $total_reporte, $total_vendedor);
     }
   }
@@ -166,11 +143,8 @@ class ReporteVendedorCobertura
    */
   public function processCoberturas($coberturas_vendedor, &$addToAdd, &$data, &$total_reporte, &$total_vendedor)
   {
-    // dd( func_get_args());
-
-    // 
     foreach ($coberturas_vendedor as $cobertura_id => $ventas) {
-
+      
       $add = &$addToAdd['items'][$cobertura_id];
       $this->addToData($add,  $this->getInfoCobertura($ventas->first()->cliente_with), false);
       $total_cobertura = &$add['total'];
@@ -179,7 +153,7 @@ class ReporteVendedorCobertura
 
         if( $this->marcaId ){
 
-          foreach( $venta->items as $item ){
+          foreach( $venta->items->filter(fn($item) => $item->producto->marcodi == $this->marcaId) as $item ){
             $data_utilidad = (object) $item->dataUtilidad();
             $this->addToTotal($total_reporte, $data_utilidad);
             $this->addToTotal($total_vendedor, $data_utilidad);
