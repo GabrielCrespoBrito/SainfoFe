@@ -101,27 +101,6 @@ class VentaTipoPagoReportController extends Controller
         ->join( 'prov_clientes', $clienteCallBack )
         ->where( 'ventas_pago.TpgCodi', $tipo_pago )
         ->where( 'ventas_pago.CajNume', $caja->CajNume );
-
-        //--
-        // $query = DB::connection('tenant')->table('compras_detalle')
-        // ->join('compras_cab', function ($join) use ($fecha, $local) {
-        //   $join->on('compras_cab.CpaOper', '=', 'compras_detalle.CpaOper');
-
-        //   if ($fecha) {
-        //     $join->where('compras_cab.CpaFCon', '<=',  $fecha);
-        //   }
-
-        //   if ($local) {
-        //     $join->where('compras_cab.LocCodi', '=',  $local);
-        //   }
-        // });
-        //--
-
-
-      // $pagos = VentaPago::with(['venta', 'cliente' => function($q){
-      //   $q->where('TipCodi', ClienteProveedor::TIPO_CLIENTE);}])->where('CajNume', $caja_id)
-      //   ->where('TpgCodi', $tipo_pago);
-      
       }
 
       else {
@@ -131,21 +110,11 @@ class VentaTipoPagoReportController extends Controller
             ->join('ventas_cab', $ventasCallBack)
             ->where('ventas_pago.PagFech', $caja->CajFech)
             ->where('ventas_pago.TpgCodi', $tipo_pago);
-
-        // $pagos = VentaPago::with(['venta' => function($q) use($caja){
-        //   $q->where('LocCodi', $caja->LocCodi )
-        //   ->where('User_Crea', $caja->User_Crea);
-        // },
-        // 'cliente' => function ($q) {
-        //   $q->where('TipCodi', ClienteProveedor::TIPO_CLIENTE);
-        // }])
-        //   ->where('PagFech', $caja->CajFech)
-        //   ->where('TpgCodi', $tipo_pago);        
       }      
     }
 
     else {
-
+      //
       $pagos = DB::connection('tenant')->table('ventas_pago')
         ->join('prov_clientes', $clienteCallBack)
         ->join('ventas_cab', $ventasCallBack)
@@ -159,6 +128,7 @@ class VentaTipoPagoReportController extends Controller
         'ventas_pago.VtaOper',
         'ventas_pago.TpgCodi',      
         'ventas_pago.PagFech',
+        'ventas_pago.VtaFVta',
         'ventas_pago.PagBoch',
         'prov_clientes.PCNomb',
         'ventas_pago.CtoOper',
@@ -169,16 +139,6 @@ class VentaTipoPagoReportController extends Controller
       ])
       ->get()
       ->groupBy('TpgCodi');
-
-      // _dd($pagos);
-      // exit();
-
-    // $pagos = $pagos
-    //   ->orderBy('TpgCodi', 'asc')
-    //   ->orderBy('PagFech', 'asc')
-    //   ->get()
-    //   ->groupBy('TpgCodi');
-
 
     if ($pagos->count()) {
 

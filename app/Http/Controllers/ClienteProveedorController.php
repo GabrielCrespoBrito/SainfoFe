@@ -137,6 +137,9 @@ class ClienteProveedorController extends Controller
     $cliente_proveedor->PCATel = $data['telefono_avalista'];
     $cliente_proveedor->PCAEma = $data['email_avalista'];
     $cliente_proveedor->User_EModi = gethostname();
+    if ($cliente_proveedor->isRuc()) {
+      $cliente_proveedor->updateAgenteRetencion();
+    }
     $cliente_proveedor->User_Modi = auth()->user()->usulogi;
     $cliente_proveedor->save();
     return $cliente_proveedor;
