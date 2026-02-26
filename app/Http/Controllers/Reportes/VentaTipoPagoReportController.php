@@ -114,7 +114,7 @@ class VentaTipoPagoReportController extends Controller
     }
 
     else {
-      //
+
       $pagos = DB::connection('tenant')->table('ventas_pago')
         ->join('prov_clientes', $clienteCallBack)
         ->join('ventas_cab', $ventasCallBack)
@@ -128,7 +128,6 @@ class VentaTipoPagoReportController extends Controller
         'ventas_pago.VtaOper',
         'ventas_pago.TpgCodi',      
         'ventas_pago.PagFech',
-        'ventas_pago.VtaFVta',
         'ventas_pago.PagBoch',
         'prov_clientes.PCNomb',
         'ventas_pago.CtoOper',
@@ -142,7 +141,6 @@ class VentaTipoPagoReportController extends Controller
 
     if ($pagos->count()) {
 
-      // $caja = Caja::findOrfail($caja_id);
       $caja_data = (object) [
         'numero' =>  $caja->CajNume,
         'usuario' => $caja->User_Crea,

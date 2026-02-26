@@ -696,11 +696,12 @@ class Cotizacion extends Model
     $save = false
   ) {
     
-    $this->refresh();    
+    $this->refresh();   
+    
+    
+    $formato = $formato == "_FORMATO_" ? 'a4' : $formato;
     $empresa = get_empresa();
     $plantilla  = $this->getPlantilla($formato);
-    // _dd( $plantilla , $formato);
-    // exit();
     $data = $this->dataPdf($formato, $mostrar_igv);
     $pdf = new PDFGenerator(view($plantilla->vista, $data), $generator);
     $namePDF = $this->nameFile('.pdf', true);
