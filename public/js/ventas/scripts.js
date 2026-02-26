@@ -4875,6 +4875,8 @@ $(document).ready(function (e) {
       show_modal("show", "#modalSelectProducto");
       let value_input = $("[name=producto_nombre]").val().trim();
       $(".select-field-producto").find("option[value=nombre]").prop('selected', true);
+
+      console.log(value_input);
       table_productos.search(value_input).draw();
     });
 

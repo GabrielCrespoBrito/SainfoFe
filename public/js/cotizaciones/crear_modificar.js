@@ -1305,6 +1305,7 @@ $(document).ready(function (e) {
 
   // serch pro wraning
   function accionar_buscar_producto(e) {
+
     if (e.keyCode === 13 || e.keyCode === undefined) {
 
       $isInputCode = $(this).is('[name=producto_codigo]')
@@ -2456,7 +2457,23 @@ $(document).ready(function (e) {
 
     $("[name=producto_codigo] , [name=producto_nombre]").on("keydown", accionar_buscar_producto);
 
-    $("#boton_buscar").on("click", accionar_buscar_producto);
+    // $("#boton_buscar").on("click", accionar_buscar_producto);
+
+    $("#boton_buscar").on("click", function (e) {
+      e.preventDefault()
+      show_modal("show", "#modalSelectProducto");
+
+      let value_input = $("[name=producto_nombre]").val().trim();
+
+      $(".select-field-producto").find("option[value=nombre]").prop('selected', true);
+
+      console.log("modal", value_input);
+
+      show_modal("#modalSelectProducto", "show");
+
+
+      table_productos.search(value_input).draw();
+    });
 
     $("[name=producto_nombre]").on("dblclick", accionar_buscar_producto);
 
