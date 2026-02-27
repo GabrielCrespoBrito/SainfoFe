@@ -132,6 +132,7 @@ class VentaTipoPagoReportController extends Controller
         'prov_clientes.PCNomb',
         'ventas_pago.CtoOper',
         'ventas_pago.Bannomb',
+        'ventas_pago.VtaFVta',
         'ventas_pago.MonCodi',
         'ventas_pago.PagTCam',
         'ventas_pago.PagImpo',
