@@ -453,9 +453,6 @@ $(document).ready(function (e) {
       return;
     }
 
-    // console.log( "current_product_data", current_product_data );
-    // return;
-    // stock
     let stock = Number($("[name=producto_stock]").val());
     let cantidad = Number($("[name=producto_cantidad]").val());
     let precio = Number($("[name=producto_precio]").val());
@@ -472,8 +469,6 @@ $(document).ready(function (e) {
 
     let info;
 
-    // console.log( "accion ejecutando " , action_i() );
-
     if (action_i() == "create") {
 
       info = {
@@ -489,11 +484,9 @@ $(document).ready(function (e) {
 
     else {
       let trInfo = $("tr.seleccionando").data();
-      // console.log(trInfo);
-      // return;
 
       info = {
-        DetCodi: trInfo.info.DetCodi,
+        DetCodi: current_product_data.producto.ProCodi,
         Unidades: trInfo.unidades,
         Marca: trInfo.info.Marca,
         MarCodi: trInfo.info.MarCodi,
@@ -523,18 +516,10 @@ $(document).ready(function (e) {
     info.DetImpo = $("[name=producto_importe]").val();
     info.incluye_igv = Number($("[name=incluye_igv]").prop('checked'));
     info.icbper = $("[name=icbper]").val();
-    console.log("info", info);
-    let success_func = action_i() == "create" ? add_item(info) : edit_item(info);
+
+    action_i() == "create" ? add_item(info) : edit_item(info);
+
     return;
-
-    show_comment_div();
-    let funcs = {
-      success: success_func,
-    }
-
-    // console.log("info a validar", info);
-
-    ajaxs(info, url_verificar_item_info, funcs);
   }
 
   function error_item() {
@@ -543,10 +528,14 @@ $(document).ready(function (e) {
 
   function modificar_tr(info, tr) {
     let noDecimals = "TieCodi,DetNomb,DetBase,itemNum,UniCodi,DetCodi,Marca,MarcaNomb,DetPrec".split(",");
+
     for (prop in info) {
       let value = noDecimals.includes(prop) ? info[prop] : info[prop];
       tr.find("[data-campo=" + prop + "]").text(value);
     }
+
+    tr.find("[data-campo=UniCodi]").text(info.DetCodi);
+
   }
 
 
@@ -574,8 +563,6 @@ $(document).ready(function (e) {
 
   function add_item(info, fromForm = false) {
     show_comment_div();
-
-    console.log("info a poner en el tr", info);
 
     let unidades = fromForm ? current_product_data.unidades : info.Unidades;
 
@@ -947,12 +934,6 @@ $(document).ready(function (e) {
       const unit = unidades[i];
       let nombreUnidad = unit.UniAbre;
 
-      // if (!includeListNombre) {
-      //   nombreUnidad = unit.UniAbre + ' - ' + unit.lista.LisNomb;
-      // }
-
-      console.log(includeListNombre, nombreUnidad)
-
       let option =
         $("<option></option>")
           .attr('value', unit.Unicodi)
@@ -996,8 +977,6 @@ $(document).ready(function (e) {
     let producto_unidad = $("[name=producto_unidad] option:selected");
     let unidad_select = null;
 
-    // console.log("unidades", current_product_data, unidades);
-
     for (let i = 0; i < unidades.length; i++) {
       if (unidades[i].Unicodi == producto_unidad.val()) {
         unidad_select = unidades[i];
@@ -1034,6 +1013,8 @@ $(document).ready(function (e) {
       "ProDcto1": dcto_defecto,
     };
     current_product_data = data;
+
+    console.log("poner_data_producto", data);
 
     window.poner_data_inputs(data.producto, funcs_agregar);
     let incluyeIGV = data.producto.incluye_igv == "1";
@@ -1102,7 +1083,6 @@ $(document).ready(function (e) {
       else if (modal.is("#modalSelectProducto")) {
 
         buscar_producto(trSelect.find("td:eq(0)").text());
-
       }
 
       else if (modal.is("#modalSelectTipoDocumentoPago")) {
@@ -1929,13 +1909,6 @@ $(document).ready(function (e) {
     if ($t.is('.crear')) {
       agregar_item();
     }
-
-    else if ($t.is('.modificar')) {
-    }
-    else {
-      console.log("eli")
-    }
-
   }
 
 
