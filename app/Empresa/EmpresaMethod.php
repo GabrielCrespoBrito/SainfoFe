@@ -83,6 +83,11 @@ trait EmpresaMethod
     return $carbon->isSameDay($today) || $carbon->isBefore($today);
   }
 
+  public function hasShowFilterStockNegativo()
+  {
+    return $this->empcodi == "091";
+  }
+
   public function fechaCertPorVencer()
   {
     $carbon = new Carbon($this->venc_certificado);

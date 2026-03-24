@@ -289,7 +289,7 @@ class VentasController extends Controller
       'igvEmpresa' => $empresa->getIgvPorc(),
       'canModifyPrecios' => (int) $user->canModifyPrecios(),
       'disabledPrecioMin' => (int) $user->disabledPrecioMin(),
-      
+      'show_filter_stock_negativo' => (int) $empresa->hasShowFilterStockNegativo(),
       'tipo_movimientos' => $tipo_movimiento_repository->where('TmoInSa', 'S'),
       'tipos_igvs' => $tipoigvrepository->where('gratuito_disponible', TipoIgv::GRATUITO_DISPONIBLE),
       "condicion" => $condicion_repository->find(CondicionVenta::ID_VENTA)->CcvDesc,

@@ -4580,9 +4580,11 @@ $(document).ready(function (e) {
 
     });
 
-    $("body").on('change', '.select-field-producto', function (E) {
+
+    $("body").on('change', '.select-field-producto, [name=show_stock_negativo]', function (E) {
       table_productos.draw();
     });
+
 
 
 
@@ -5075,9 +5077,23 @@ $(document).ready(function (e) {
       ]
     });
 
+
+    // New
+    const show_filter_stock_negativo = $("#modalSelectProducto").attr('data-show-filter-stock-negativo');
+    const local_principal = $("#datatable-productos td.local-principal").attr('data-id');
+
+    const checkbox_show_stock_negativo = show_filter_stock_negativo == 1 ? `
+    <div class="checkbox" style="margin-right:10px">
+          <label>
+            <input type="checkbox" name="show_stock_negativo" value="1"> Stock Negativo
+          </label>
+        </div>` : '';
+
     $("#datatable-productos").one("preInit.dt", function () {
       let $button =
-        $(`<select class='select-field-producto input-sm form-control'>
+        $(`
+        ${checkbox_show_stock_negativo}
+        <select class='select-field-producto input-sm form-control'>
         <option value='codigo'>Codigo</option>
         <option value='nombre'>Nombre</option>
         <option value='codigo_barra'>Codigo Barra</option>
@@ -5121,7 +5137,6 @@ $(document).ready(function (e) {
     product_columns.push({ data: 'ISC', className: 'text-right', searchable: false });
     product_columns.push({ data: 'tiecodi', searchable: false });
 
-
     table_productos = $('#datatable-productos').DataTable({
       "processing": true,
       "serverSide": true,
@@ -5132,6 +5147,9 @@ $(document).ready(function (e) {
         "url": url_route_productos_consulta,
         "data": function (d) {
           return $.extend({}, d, {
+            "local_principal": local_principal,
+            'filter_stock_negativo': show_filter_stock_negativo,
+            'show_stock_negativo': Number($("[name=show_stock_negativo]").is(':checked')),
             "campo_busqueda": $(".select-field-producto").val(),
             "grupo": $("[name=grupo_filter] option:selected").val(),
             "familia": $("[name=familia_filter] option:selected").val()
@@ -5144,7 +5162,18 @@ $(document).ready(function (e) {
           producto: data,
           unidades: data.unidades,
         };
+
         $(row).data('info', info);
+
+        if (Number(show_filter_stock_negativo) == 0 || Number(local_principal) == 0) {
+          return;
+        }
+
+        let stock_local_principal = data['prosto' + local_principal];
+        if (Number(stock_local_principal) <= 0) {
+          $(row).addClass('danger');
+        }
+
       },
       "oLanguage": { "sSearch": "", "sLengthMenu": "_MENU_" },
       "initComplete": function initComplete(settings, json) {

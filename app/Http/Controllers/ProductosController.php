@@ -75,6 +75,9 @@ class ProductosController extends Controller
     $familia = $request->input('familia');
     $marca = $request->input('marca');
     $deleted = $request->input('deleted', 0);
+    $local_principal = $request->input('local_principal', null);
+    $filter_stock_negativo = $request->input('filter_stock_negativo', true);
+    $show_stock_negativo = $request->input('show_stock_negativo', false);
 
     $busqueda =  Producto::query()
       ->with([
@@ -90,6 +93,16 @@ class ProductosController extends Controller
       ->when($deleted, function ($query) {
         $query->withoutGlobalScope('noEliminados');
         $query->where('UDelete', '*');
+      })
+      ->when($filter_stock_negativo, function ($query) use ($local_principal, $show_stock_negativo) {
+
+
+        if ($local_principal != null && ($show_stock_negativo == false || $show_stock_negativo == "0")) {
+          $query->where('prosto' . $local_principal, '>', 0);
+        }
+
+
+
       });
 
 

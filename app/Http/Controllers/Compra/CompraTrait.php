@@ -83,6 +83,7 @@ trait CompraTrait
       'vendedores' => $empresa->vendedores,
       'forma_pagos' => $empresa->formas_pagos,
       'zonas' => Zona::all(),
+      'show_filter_stock_negativo' => (int) $empresa->hasShowFilterStockNegativo(),
       'medios_pagos'        => $mprepository->all()->where('uso', MedioPago::ESTADO_USO),
       'cursor_pointer_producto' => get_option(EmpresaOpcion::CAMPO_CURSOR_PRODUCTO),
       'tipo_cambio' =>  TipoCambioPrincipal::ultimo_cambio(false),

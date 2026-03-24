@@ -34,27 +34,27 @@ function agregarASelect(data, select, name_codi, name_text, adicional_info = [])
   }
 }
 
-let AppModalProducto = 
+let AppModalProducto =
 {
-	parent : "#modalProducto",
-	eles : {},
+  parent: "#modalProducto",
+  eles: {},
   elementsSelected: {},
   productsDef: {},
-  data : {
-    settings : {
+  data: {
+    settings: {
       focusSearch: true,
-      backdrop : false,
+      backdrop: false,
       checkBoxSelect: false,
     }
   },
 
-	get_url : function(){    
-		let url = this.eles.button_submit.data('url');
-		return url.replace('XX' , this.id );
+  get_url: function () {
+    let url = this.eles.button_submit.data('url');
+    return url.replace('XX', this.id);
   },
-  
-  add_event_btn : function(func){
-    this.eles.btn_accion.on('click' , func);
+
+  add_event_btn: function (func) {
+    this.eles.btn_accion.on('click', func);
   },
 
   add_event_btn_close: function (func) {
@@ -64,23 +64,23 @@ let AppModalProducto =
 
 
 
-  get_selected_row : function(){
+  get_selected_row: function () {
     let selected = this.eles.table.find('.select');
     return selected.length ? selected : false;
   },
 
-	show : function(){
+  show: function () {
 
     let settings = {};
 
-    if( this.data.settings.backdrop ){
+    if (this.data.settings.backdrop) {
       settings.backdrop = 'static';
     }
 
-		$(this.parent).modal(settings);
+    $(this.parent).modal(settings);
   },
-  
-  search(value){
+
+  search(value) {
     this.eles.datatable.search(value)
     this.draw();
   },
@@ -90,54 +90,49 @@ let AppModalProducto =
   },
 
 
-  showSearch : function(value){
+  showSearch: function (value) {
     this.search(value)
     this.show();
-	},
+  },
 
-	hide : function(){
-		$(this.parent).modal("hide");		
-	},
+  hide: function () {
+    $(this.parent).modal("hide");
+  },
 
 
-  selectRemoveAllCheckBox : function()
-  {
+  selectRemoveAllCheckBox: function () {
     let checked = this.checked;
 
-    AppModalProducto.eles.table.find( 'tbody .input-item').each(function(index,dom){   
+    AppModalProducto.eles.table.find('tbody .input-item').each(function (index, dom) {
 
       let $this = $(dom);
 
-      if (checked == dom.checked ){
+      if (checked == dom.checked) {
         return;
       }
 
       // Cambiar estado
-      $this.prop('checked' , checked );
+      $this.prop('checked', checked);
 
       AppModalProducto.addRemoveItemSelected(dom)
     });
 
   },
 
-  selectRemoveCheckBox: function () 
-  {
-    // console.log("seleccionados", this );
-    // console.log("seleccioandos def", AppModalProducto.elementsSelectedDef)
+  selectRemoveCheckBox: function () {
 
     AppModalProducto.addRemoveItemSelected(this)
   },
 
-  addRemoveItemSelected : function( checkbox )
-  {
+  addRemoveItemSelected: function (checkbox) {
     // Linguista
     let agregar = checkbox.checked;
     // console.log("checkbox", checkbox)
     let $tr = $(checkbox).parents('tr')
     let data = $tr.data('info');
-    
+
     // Agregar
-    if (agregar){
+    if (agregar) {
       $tr.addClass('selected');
       AppModalProducto.elementsSelected[data.ProCodi] = data;
     }
@@ -149,42 +144,42 @@ let AppModalProducto =
     }
   },
 
-	events : function(){
+  events: function () {
 
-    if( this.data.settings.focusSearch ){
+    if (this.data.settings.focusSearch) {
 
-		  this.eles.table .on('shown.bs.modal' , function(){
+      this.eles.table.on('shown.bs.modal', function () {
         $(this).find(".dataTables_filter input").focus();
       });
     }
 
     // Cuando es checkbox
     if (this.data.settings.checkBoxSelect) {
-      
+
       // Seleccionar todos los elementos
-      this.eles.table.find('.input-select-all').on('change' , this.selectRemoveAllCheckBox )
+      this.eles.table.find('.input-select-all').on('change', this.selectRemoveAllCheckBox)
 
       // Seleccionar elemento
       this.eles.table.on('change', '.input-item', this.selectRemoveCheckBox)
 
       // Al hacer la busqueda quitar la selección
-      this.eles.table.on('draw.dt', function(){        
+      this.eles.table.on('draw.dt', function () {
         // AppModalProducto.eles.table.find('.input-select-all').prop('checked', false )
       })
 
     }
-    
-    //
-    $("body").on("change", ".select-field-producto", () => this.eles.datatable.draw());
-    $("body").on("change", "[name=familia_filter],[name=marca_filter]", () => this.eles.datatable.draw());
 
+    console.log("@@@@APPMODAL")
+    //
+    $("body").on("change", ".select-field-producto, [name=show_stock_negativo]", () => this.eles.datatable.draw());
+    $("body").on("change", "[name=familia_filter],[name=marca_filter]", () => this.eles.datatable.draw());
     $("body").on("change", "[name=grupo_filter]", () => {
 
       // 
       const $grupoSelected = this.eles.modal.find("[name=grupo_filter] option:selected");
       const id_grupo = $grupoSelected.val();
 
-      if(id_grupo == '' || id_grupo == null){
+      if (id_grupo == '' || id_grupo == null) {
         $("[name=familia_filter]").empty();
         this.eles.datatable.draw()
         return;
@@ -195,9 +190,9 @@ let AppModalProducto =
       if (familias.length) {
         agregarASelect(familias, "familia_filter", "famCodi", "famNomb");
         this.eles.datatable.draw()
-      }      
+      }
       else {
-          let data = {
+        let data = {
           'id_grupo': id_grupo
         }
 
@@ -229,18 +224,17 @@ let AppModalProducto =
     });
 
 
-  }, 
-
-  changeSearchSelect : function(type)
-  {
-    $( ".select-field-producto", this.parent.modalProducto).find('option[value=' + type + ']').prop('selected', true);
   },
 
-	set_eles : function(){
-    this.eles.table = $( "table" , this.parent);
+  changeSearchSelect: function (type) {
+    $(".select-field-producto", this.parent.modalProducto).find('option[value=' + type + ']').prop('selected', true);
+  },
+
+  set_eles: function () {
+    this.eles.table = $("table", this.parent);
     this.eles.datatable = null;
-		this.eles.modal = $(this.parent);
-    this.eles.title = $( ".modal-title" , this.parent);
+    this.eles.modal = $(this.parent);
+    this.eles.title = $(".modal-title", this.parent);
     this.eles.btn_accion = $(".btn-accion", this.parent);
     this.eles.btn_close = $("[data-dismiss=modal]", this.parent);
   },
@@ -249,28 +243,27 @@ let AppModalProducto =
     if (this.eles.table.find('thead input').length) {
       this.data.settings.checkBoxSelect = true;
     }
-  }, 
+  },
 
-  sumStock: function(value,data,info){
+  sumStock: function (value, data, info) {
     let total =
-      Number(info.prosto1) + 
-      Number(info.prosto2) + 
-      Number(info.prosto3) + 
-      Number(info.prosto4) + 
-      Number(info.prosto5) + 
-      Number(info.prosto6) + 
-      Number(info.prosto7) + 
-      Number(info.prosto8) + 
+      Number(info.prosto1) +
+      Number(info.prosto2) +
+      Number(info.prosto3) +
+      Number(info.prosto4) +
+      Number(info.prosto5) +
+      Number(info.prosto6) +
+      Number(info.prosto7) +
+      Number(info.prosto8) +
       Number(info.prosto9)
     return total;
   },
 
-  inputColumn : function(value,data,info)
-  {
+  inputColumn: function (value, data, info) {
     return `<input type="checkbox" ${AppModalProducto.elementsSelected[info.ProCodi] ? 'checked' : ''} class="input-item" value="1" name="product">`
   },
 
-  init_datatable : function(){
+  init_datatable: function () {
 
     let url = this.eles.table.attr('data-url');
 
@@ -283,21 +276,20 @@ let AppModalProducto =
       { data: 'ProPUCS', searchable: false, className: 'text-right' },
       { data: 'ProMarg', searchable: false, className: 'text-right' },
       { data: 'ProPUVS', searchable: false, className: 'text-right' },
-      { data: 'unpcodi', 'class' : 'text-right', searchable: false, render: this.sumStock },
+      { data: 'unpcodi', 'class': 'text-right', searchable: false, render: this.sumStock },
     ];
-    
-    if(this.data.settings.checkBoxSelect){
-      let columnInput =  {
+
+    if (this.data.settings.checkBoxSelect) {
+      let columnInput = {
         'data': 'input',
         'searchable': 'false',
-        'render' : this.inputColumn
-      } 
-      columns.unshift( columnInput )
+        'render': this.inputColumn
+      }
+      columns.unshift(columnInput)
     }
 
 
-    function fixedNumber(v, codigo = false) 
-    {
+    function fixedNumber(v, codigo = false) {
       let n = v;
       if (isNaN(v)) {
         n = v;
@@ -306,24 +298,28 @@ let AppModalProducto =
       return n;
     }
 
-    let cantidad_almacenes = $(this.eles.table).find('thead td.almacenes'); 
+    let cantidad_almacenes = $(this.eles.table).find('thead td.almacenes');
     for (let index = 0; index < cantidad_almacenes.length; index++) {
       let stock_number = $(cantidad_almacenes[index]).attr('data-id');
       let campo_id = 'prosto' + stock_number;
       // console.log( "campo_id", campo_id );
       columns.push({ data: campo_id, className: 'text-right', searchable: false });
     }
-    
+
     columns.push({ data: 'ProPerc', className: 'text-right', searchable: false });
     columns.push({ data: 'ProPeso', className: 'text-right', searchable: false });
     columns.push({ data: 'BaseIGV', className: 'text-right', searchable: false });
     columns.push({ data: 'ISC', className: 'text-right', searchable: false });
     columns.push({ data: 'tiecodi', searchable: false });
 
-    $( this.eles.table ).one("preInit.dt", function () {
+
+    const show_filter_stock_negativo = this.eles.modal.attr('data-show-filter-stock-negativo');
+    const local_principal = this.eles.modal.find("td.local-principal").attr('data-id');
+
+    $(this.eles.table).one("preInit.dt", function () {
       // loremp-ipsum-loremp-ipsum
-      let $button = 
-      $(`
+      let $button =
+        $(`
         <select class='select-field-producto input-sm form-control'>
         <option value='codigo'>Codigo</option>
         <option value='nombre'>Nombre</option>
@@ -334,8 +330,8 @@ let AppModalProducto =
     });
 
     this.eles.datatable = this.eles.table.DataTable({
-      "processing" : true,
-      "serverSide" : true,
+      "processing": true,
+      "serverSide": true,
       "lengthChange": false,
       "ordering": false,
       "paging": true,
@@ -350,27 +346,27 @@ let AppModalProducto =
           });
         }
       },
-      "oLanguage": {"sSearch": "", "sLengthMenu": "_MENU_" },
-      "initComplete" : function initComplete(settings, json){         
+      "oLanguage": { "sSearch": "", "sLengthMenu": "_MENU_" },
+      "initComplete": function initComplete(settings, json) {
         $('div.dataTables_filter input').attr('placeholder', 'Buscar');
       },
-      createdRow : function( row , data , index ) {
+      createdRow: function (row, data, index) {
         let $row = $(row);
-        $row.data('info', data );
-        if (AppModalProducto.elementsSelected[data.ProCodi]){
+        $row.data('info', data);
+        if (AppModalProducto.elementsSelected[data.ProCodi]) {
           $row.addClass('selected');
         }
       },
-      "columns" : columns
+      "columns": columns
     });
   },
 
-	init : function( ){
+  init: function () {
     this.set_eles();
     this.init_settings();
     this.init_datatable()
-		this.events();
-	},
+    this.events();
+  },
 };
 
 export { AppModalProducto };

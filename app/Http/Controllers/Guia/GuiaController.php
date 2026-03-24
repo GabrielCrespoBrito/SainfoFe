@@ -222,6 +222,7 @@ class GuiaController extends Controller
       "ultimo_codigo" => ClienteProveedor::ultimoCodigo(),
       'ruc' => "",
       'almacenes' => $empresa->almacenes,
+      'show_filter_stock_negativo' => (int) $empresa->hasShowFilterStockNegativo(),
       'locales' =>  auth()->user()->locales->load('local'),
       'tipos_movimientos' => $tipos_movimientos,
       'series' => []

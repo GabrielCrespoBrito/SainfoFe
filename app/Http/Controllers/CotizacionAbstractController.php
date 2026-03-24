@@ -312,6 +312,7 @@ class CotizacionAbstractController extends Controller
       'tipo_pagos' => TipoPago::all(),
       'bancos' => $empresa->bancos->groupBy('BanCodi'),
       'almacenes' => $empresa->almacenes,
+      'show_filter_stock_negativo' => (int) $empresa->hasShowFilterStockNegativo(),
       'igvEmpresa' => $empresa->getIgvPorc(),
       'grupos' => cacheHelper('grupo.all'),
       EmpresaOpcion::MODULO_MANEJO_STOCK => $empresa->getDataAditional(EmpresaOpcion::MODULO_MANEJO_STOCK),

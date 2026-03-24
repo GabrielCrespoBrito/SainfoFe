@@ -2,19 +2,21 @@
 
 namespace App\Console\Commands;
 
-use App\User;
-use App\Empresa;
 use App\Cotizacion;
-use GuzzleHttp\Client;
-use App\SerieDocumento;
-use Illuminate\Console\Command;
-use App\Models\UserLocal\UserLocal;
-use Illuminate\Support\Facades\Log;
-use App\Notifications\EmpresaRegister;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\EmpresaDocPendientePorEnviar;
+use App\Empresa;
+use App\GuiaSalida;
 use App\Http\Controllers\Util\SummaryContigence\SummaryContigence;
+use App\Jobs\Admin\ActiveEmpresaTenant;
+use App\Models\UserLocal\UserLocal;
+use App\Notifications\EmpresaDocPendientePorEnviar;
+use App\Notifications\EmpresaRegister;
+use App\SerieDocumento;
+use App\User;
 use Exception;
+use GuzzleHttp\Client;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class ExeCode extends Command
 {
@@ -54,12 +56,37 @@ class ExeCode extends Command
     switch ($code) {
       case 'api-guia':
         $this->apiGuia();
+        break;
       case 'user-local':
         $this->addUserLocal();
+        break;
+      case 'regenerate-pdf-guia':
+        $this->regeneratePdfGuia();
         break;
       default:
         break;
     }
+  }
+
+  public function regeneratePdfGuia()
+  {
+    $params = explode("|", $this->argument('param'));
+    
+    $empcodi = $params[0];
+    $serie = $params[1];
+    $numcodi = $params[2];
+    $direccionLlegada = $params[3];
+
+    $empresa = Empresa::find($empcodi);
+    (new ActiveEmpresaTenant($empresa))->handle();
+
+    $guia = GuiaSalida::where('GuiSeri', $serie)->where('GuiNumee', $numcodi)->first();
+
+    $guia->update([
+      'guidill' => $direccionLlegada ?? $guia->guidill
+    ]);
+
+    $guia->deletePdf(true, $empresa->ruc());
   }
 
   public function apiGuia()
@@ -68,25 +95,6 @@ class ExeCode extends Command
     $res = $empresa->getOrGenerateGuiaTokenApi();
     dd($res);
     exit();
-
-
-    // $client_id = "70342b18-1a58-4acc-8f34-cb0b4648dee4";
-    // $clave = "YJGpzCO8qyjY4gsC7mCfyg==";
-    // https: //api-seguridad.sunat.gob.pe/v1/clientessol/%3cclient_id%3e/oauth2/token/
-    // https://api-seguridad.sunat.gob.pe/v1/clientessol/70342b18-1a58-4acc-8f34-cb0b4648dee4/oauth2/token/
-
-    // Validate ReCaptcha
-    // $client = new Client([
-    //   'base_uri' => 'https://google.com/recaptcha/api/'
-    // ]);
-    // $response = $client->post('siteverify', [
-    //   'query' => [
-    //     'secret' => env('CAPTCHA_SECRET'),
-    //     'response' => $value
-    //   ]
-    // ]);
-    // return json_decode($response->getBody())->success;
-
   }
 
   public function addUserLocal()
