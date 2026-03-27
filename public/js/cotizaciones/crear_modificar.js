@@ -455,8 +455,6 @@ $(document).ready(function (e) {
 
     let stock = Number($("[name=producto_stock]").val());
     let cantidad = Number($("[name=producto_cantidad]").val());
-    let precio = Number($("[name=producto_precio]").val());
-    let is_sol = Number($("[name=moneda] option:selected").attr('data-esSol'));
 
     if (modulo_manejo_stock) {
       if (cantidad > stock) {
@@ -467,7 +465,12 @@ $(document).ready(function (e) {
       }
     }
 
+    $(".labelPrecioMinimo").text("");
+
+
     let info;
+
+    console.log("action_i()", action_i());
 
     if (action_i() == "create") {
 
@@ -486,7 +489,8 @@ $(document).ready(function (e) {
       let trInfo = $("tr.seleccionando").data();
 
       info = {
-        DetCodi: current_product_data.producto.ProCodi,
+        // DetCodi: current_product_data.producto.ProCodi,
+        DetCodi: trInfo.info.DetCodi,
         Unidades: trInfo.unidades,
         Marca: trInfo.info.Marca,
         MarCodi: trInfo.info.MarCodi,
@@ -527,6 +531,8 @@ $(document).ready(function (e) {
   }
 
   function modificar_tr(info, tr) {
+
+    // Old
     let noDecimals = "TieCodi,DetNomb,DetBase,itemNum,UniCodi,DetCodi,Marca,MarcaNomb,DetPrec".split(",");
 
     for (prop in info) {
@@ -535,6 +541,8 @@ $(document).ready(function (e) {
     }
 
     tr.find("[data-campo=UniCodi]").text(info.DetCodi);
+    tr.find("[data-campo=DetNom]").text(info['DetNomb']);
+
 
   }
 
@@ -550,9 +558,11 @@ $(document).ready(function (e) {
         .removeClass("seleccionando");
     });
 
+    console.log("edit_item", info);
+
     tr.attr('data-info', JSON.stringify(info));
     cleanInputsGroup("producto", quitar_unidad);
-    action_item = "create";
+    // action_item = "create";
     poner_totales_cant();
 
     producto_input_focus
@@ -944,6 +954,11 @@ $(document).ready(function (e) {
           option.attr('selected', 'selected')
           const unitPrecio = $("[name=moneda] option:selected").val() == '01' ? unit.UniPMVS : unit.UniPMVD;
           $("[name=producto_precio]").attr('data-default', unitPrecio)
+
+          if (unitPrecio) {
+            $(".labelPrecioMinimo").text(fixedNumber(unitPrecio, false, 2));
+          }
+
         }
       }
 
@@ -991,6 +1006,10 @@ $(document).ready(function (e) {
     $("[name=producto_precio]").val(fixedNumber(precio, false, decimales));
     $("[name=producto_precio]")
       .attr('data-default', fixedNumber(precio_min, false, decimales));
+
+    if (precio_min) {
+      $('.labelPrecioMinimo').text(fixedNumber(precio_min, false, 2));
+    }
 
     inputPrecioActiveInactive()
 
@@ -1494,6 +1513,56 @@ $(document).ready(function (e) {
     return action_item;
   }
 
+  function select_item(e) {
+    e.preventDefault();
+
+    // current para modificar o desactivar
+    let $this = $(this).parents('tr');
+
+    // tr seleccionado
+
+    let tr_selec = $this.parents("tbody").find(".seleccionando");
+    let data = false;
+
+    cleanInputsGroup("producto", quitar_unidad);
+
+    // si existe el tr para seleccionar
+    if (tr_selec.length) {
+
+      if ($this.is(tr_selec)) {
+        $this.removeClass('seleccionando');
+        habilitarDesactivarSelect("eliminar_item", false);
+        action_i("create");
+      }
+
+      else {
+        tr_selec.removeClass('seleccionando');
+        data = JSON.parse($this.attr('data-info'));
+        $this.addClass("seleccionando");
+      }
+    }
+
+    // si no existe
+    else {
+      $this.addClass('seleccionando');
+      data = JSON.parse($this.attr('data-info'));
+    }
+    // 
+
+    if (data) {
+      action_i("edit");
+      current_product_data = data;
+      // console.log("data item", data);
+      let unidades = { unidades: JSON.parse($this.attr('data-unidades')) };
+      poner_unidades(unidades, data);
+      let funcs_agregar = { "prosto1": setStockQuantity };
+      window.poner_data_inputs(data, funcs_agregar, null, 'data-name_item');
+      habilitarDesactivarSelect("eliminar_item", true);
+      show_select_gratuito();
+    }
+
+  }
+
   function eliminar_item(e) {
     e.preventDefault();
     if (confirm("Esta seguro que desea eliminar este item?")) {
@@ -1507,6 +1576,65 @@ $(document).ready(function (e) {
       });
     }
   }
+
+
+  function select_item(e) {
+
+    console.log("select_item", e);
+
+    e.preventDefault();
+
+    // current para modificar o desactivar
+    let $this = $(this).parents('tr');
+
+    // tr seleccionado
+
+    let tr_selec = $this.parents("tbody").find(".seleccionando");
+    let data = false;
+
+    cleanInputsGroup("producto", quitar_unidad);
+
+    // si existe el tr para seleccionar
+    if (tr_selec.length) {
+
+      if ($this.is(tr_selec)) {
+        $this.removeClass('seleccionando');
+        habilitarDesactivarSelect("eliminar_item", false);
+        action_i("create");
+      }
+
+      else {
+        tr_selec.removeClass('seleccionando');
+        data = JSON.parse($this.attr('data-info'));
+        $this.addClass("seleccionando");
+      }
+    }
+
+    // si no existe
+    else {
+      $this.addClass('seleccionando');
+      data = JSON.parse($this.attr('data-info'));
+    }
+    // 
+
+    if (data) {
+      action_i("edit");
+      current_product_data = data;
+      // console.log("data item", data);
+      let unidades = { unidades: JSON.parse($this.attr('data-unidades')) };
+      poner_unidades(unidades, data);
+      let funcs_agregar = { "prosto1": setStockQuantity };
+      window.poner_data_inputs(data, true, null, 'data-name_item');
+      habilitarDesactivarSelect("eliminar_item", true);
+      show_select_gratuito();
+    }
+
+    // current_product_data = data;
+    // let unidades = { unidades: JSON.parse($this.attr('data-unidades')) };
+    // poner_unidades(unidades, data);
+    // window.poner_data_inputs(data, true, null, 'data-name_item');
+  }
+
 
 
   function modificar_item(e) {
@@ -1529,7 +1657,7 @@ $(document).ready(function (e) {
         habilitarDesactivarSelect("eliminar_item", false);
         tr_selec.removeClass('seleccionando');
         $this.addClass("seleccionando");
-        data = $this.data('info');
+        data = JSON.parse($this.attr('data-info'));
         action_i("edit");
       }
     }
@@ -1537,12 +1665,13 @@ $(document).ready(function (e) {
     else {
       $this.addClass('seleccionando');
       habilitarDesactivarSelect("eliminar_item", false);
-      data = $this.data('info');
+      data = JSON.parse($this.attr('data-info'));
       action_i("edit");
     }
 
     if (data) {
       current_product_data = data;
+      console.log("data item", data);
       let unidades = { unidades: JSON.parse($this.attr('data-unidades')) };
       poner_unidades(unidades, data);
       window.poner_data_inputs(data, true, null, 'data-name_item');
@@ -1903,12 +2032,11 @@ $(document).ready(function (e) {
 
   function accion_item(e) {
     e.preventDefault();
+    // let $t = $(this);
+    agregar_item();
 
-    let $t = $(this);
-
-    if ($t.is('.crear')) {
-      agregar_item();
-    }
+    // if ($t.is('.crear')) {
+    // }
   }
 
 

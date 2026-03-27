@@ -848,10 +848,6 @@ $(document).ready(function (e) {
     // stock
     let stock = Number($("[name=producto_stock]").val());
     let cantidad = Number($("[name=producto_cantidad]").val());
-    let precio = Number($("[name=producto_precio]").val());
-
-
-
 
     if (cantidad > stock) {
       if (modulo_restriccion_venta_por_stock) {

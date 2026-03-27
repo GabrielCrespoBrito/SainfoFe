@@ -35,18 +35,16 @@ class CreateNCParcial extends CreatorNCAbstract
       $it->DetEsta = "V";
       $it->DetEspe = 0;
       $it->lote = $total;
-      // $totalItem['costo_soles'];
-      // $totalItem['costo_dolares'];
-      $producto = $model->producto;
-      $unidad = $producto->unidadPrincipal();
+      $producto = optional($model->producto);
+      $unidad = optional($producto->unidadPrincipal());
+      
       $factor = $unidad->getFactor();
       $costos = $unidad->getCostos($producto->ProCodi, $this->nc->VtaFvta, $this->nc->LocCodi, $item['cantidad'], $factor, $producto->incluyeIgv());
 
-      $it->DetCSol = $costos->sol;
-      $it->DetCDol = $costos->dolar;
+      $it->DetCSol = optional($costos)->sol;
+      $it->DetCDol = optional($costos)->dolar;
       $it->DetVSol = $total['costo_soles'];
       $it->DetVDol = $total['costo_dolares'];
-
 
       $it->DetSdCa = 0;
       $it->DetDcto = 0;

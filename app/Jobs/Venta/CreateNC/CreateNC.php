@@ -39,7 +39,8 @@ class CreateNC
       logger( '@ERROR createNC', [$th]);
       return ['success' => false,  'errors' => $th->getMessage(),'error' => $th->getMessage()];
     }
-     $this->creator->sendSunat();
+    
+    $this->creator->sendSunat();
     return ['success' => true, 'error' => null];
   }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Jobs\Venta\CreateNC;
 
-use App\TipoIgv;
-use App\Producto;
 use App\FormaPago;
 use App\VentaItem;
 use App\VentaCredito;

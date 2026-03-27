@@ -169,8 +169,6 @@ let AppModalProducto =
 
     }
 
-    console.log("@@@@APPMODAL")
-    //
     $("body").on("change", ".select-field-producto, [name=show_stock_negativo]", () => this.eles.datatable.draw());
     $("body").on("change", "[name=familia_filter],[name=marca_filter]", () => this.eles.datatable.draw());
     $("body").on("change", "[name=grupo_filter]", () => {
@@ -315,11 +313,21 @@ let AppModalProducto =
 
     const show_filter_stock_negativo = this.eles.modal.attr('data-show-filter-stock-negativo');
     const local_principal = this.eles.modal.find("td.local-principal").attr('data-id');
+    console.log("local_principal", local_principal)
+    console.log("show_filter_stock_negativo", show_filter_stock_negativo)
+
+    const checkbox_show_stock_negativo = show_filter_stock_negativo == 1 ? `
+    <div class="checkbox" style="margin-right:10px">
+          <label>
+            <input type="checkbox" name="show_stock_negativo" value="1"> Stock Negativo
+          </label>
+        </div>` : '';
 
     $(this.eles.table).one("preInit.dt", function () {
       // loremp-ipsum-loremp-ipsum
       let $button =
         $(`
+        ${checkbox_show_stock_negativo}
         <select class='select-field-producto input-sm form-control'>
         <option value='codigo'>Codigo</option>
         <option value='nombre'>Nombre</option>
@@ -339,6 +347,8 @@ let AppModalProducto =
         "url": url,
         "data": function (d) {
           return $.extend({}, d, {
+            "local_principal": local_principal,
+            "show_filter_stock_negativo": show_filter_stock_negativo,
             "campo_busqueda": $(".select-field-producto").val(),
             "grupo": $("[name=grupo_filter] option:selected").val(),
             "marca": $("[name=marca_filter] option:selected").val(),
