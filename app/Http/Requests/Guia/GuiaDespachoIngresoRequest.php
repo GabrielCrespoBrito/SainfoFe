@@ -144,11 +144,6 @@ class GuiaDespachoIngresoRequest extends FormRequest
           return;
         }
 
-        // if ($guia->isCerrada()) {
-        //   $validator->errors()->add('guia', 'Esta guia ya esta impresa');
-        //   return;
-        // }
-
         if (!$guia->canChangeDespacho()) {
           $validator->errors()->add('guia', 'Ya no puede cambiar la información de despacho');
           return;

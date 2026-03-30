@@ -1461,7 +1461,7 @@ class GuiaSalida extends Model
 
   public function canChangeDespacho()
   {
-    return $this->fe_rpta == "99" || $this->fe_rpta == "9";
+    return $this->fe_rpta >= 9;
   }
 
   public function getRouteDespacho()
