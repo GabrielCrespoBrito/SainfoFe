@@ -27,7 +27,7 @@ class RegisterController extends Controller
    *
    * @var string
    */
-  protected $redirectTo = '/verificar';
+  protected $redirectTo = '/verificarSol';
 
   /**
    * Create a new controller instance.
@@ -81,5 +81,6 @@ class RegisterController extends Controller
 
   protected function registered(Request $request, $user)
   {
+    $user->setVerificate();
   }
 }
