@@ -21,7 +21,7 @@ class UpdateEmpresasGuiasPendientes extends UpdatePendiente
     $cant = $empresa->guias
     ->where('GuiEFor', GuiaSalida::CON_FORMATO)
     ->where('EntSal', GuiaSalida::SALIDA )
-    ->whereIn('fe_rpta', [9, 99, 98])
+    ->where('fe_rpta' , '>=', 9)
     ->count();
 
     return $cant;

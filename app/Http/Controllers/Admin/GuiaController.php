@@ -74,7 +74,7 @@ class GuiaController extends Controller
 
     // Estado Sunat
     if ($estado_sunat) {
-      $busqueda->whereIn('fe_rpta', (array) $estado_sunat );
+      $busqueda->where('fe_rpta', '>=', 9 );
     }
 
     // Local
