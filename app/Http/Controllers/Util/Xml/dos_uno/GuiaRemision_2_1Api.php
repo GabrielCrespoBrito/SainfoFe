@@ -81,10 +81,6 @@ class GuiaRemision_2_1Api extends XmlHelperNew
 
   public function getInfoRemitente()
   {
-    // ["tipo_documento_proveedor",  $cliente->getTipoDocumento()],
-    // ["ruc_proveedor",  $cliente->getDocumento()],
-    // ["nombre_proveedor", $cliente->getNombre()],
-
     if ($this->documento->isGuiaTransportista()) {
       $cliente = $this->documento->cliente;
       return $this->change_datas(

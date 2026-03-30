@@ -98,7 +98,7 @@ class SendApi
       return $this;
     }
 
-    if( ! $this->guiaSalida->fe_ticket || $this->guiaSalida->fe_rpta == "99" || $this->guiaSalida->fe_rpta == "9" ){
+    if( $this->guiaSalida->fe_rpta >= "9" && $this->guiaSalida->fe_rpta != "98" ){
       if (!$this->sendEnvio()) {
         return;
       }
