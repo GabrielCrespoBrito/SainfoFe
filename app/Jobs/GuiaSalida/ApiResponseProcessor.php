@@ -83,7 +83,7 @@ class ApiResponseProcessor
     }
     elseif ( $rpta >= 9) {
       $error = sprintf('Cod: %s | Desc: %s', $content['error']['numError'], $content['error']['desError']);
-      $this->setError('Envio Con Error (99) ' . $error);
+      $this->setError('Envio Con Error ('. $content['error']['numError'] .') ' . $error);
     }
   }
 
