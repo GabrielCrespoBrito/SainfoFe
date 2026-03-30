@@ -113,7 +113,7 @@ class GuiaSalidaController extends GuiaController
       ->where('mescodi', '=', $mescodi)
       ->where('GuiEFor', '=', "1")
       ->where('EntSal', '=', GuiaSalida::SALIDA)
-      ->whereIn('fe_rpta', [9, 99, 98])
+      ->where('fe_rpta', '>=', 9)
       ->orderBy('GuiOper', 'desc');
   }
 
