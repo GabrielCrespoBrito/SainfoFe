@@ -79,9 +79,6 @@ class ProductosController extends Controller
     $filter_stock_negativo = $request->input('filter_stock_negativo', false);
     $show_stock_negativo = $request->input('show_stock_negativo', false);
 
-    logger('local_principal', [$local_principal]);
-    logger('show_stock_negativo', [$show_stock_negativo]);
-    logger('filter_stock_negativo', [$filter_stock_negativo]);
     $busqueda =  Producto::query()
       ->with([
         'marca_',

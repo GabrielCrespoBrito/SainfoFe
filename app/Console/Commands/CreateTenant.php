@@ -55,6 +55,7 @@ class CreateTenant extends Command
 		
 		// first check to make sure the tenant doesn't already exist
 		if ( $this->tenantExists($fqdn)) {
+			logger('@ERROR: TenantExists', [$fqdn]);
 			$this->error("A tenant with the subdomain '{$subdomain}' already exists.");
 			return;
 		}
