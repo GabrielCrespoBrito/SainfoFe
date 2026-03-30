@@ -81,7 +81,7 @@ class ApiResponseProcessor
     else if ($rpta == 98) {
       $this->setSuccess('Envio En Proceso (98)');
     }
-    elseif ($rpta == 99) {
+    elseif ( $rpta >= 9) {
       $error = sprintf('Cod: %s | Desc: %s', $content['error']['numError'], $content['error']['desError']);
       $this->setError('Envio Con Error (99) ' . $error);
     }
