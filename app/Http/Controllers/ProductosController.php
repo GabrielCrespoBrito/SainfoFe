@@ -76,9 +76,12 @@ class ProductosController extends Controller
     $marca = $request->input('marca');
     $deleted = $request->input('deleted', 0);
     $local_principal = $request->input('local_principal', null);
-    $filter_stock_negativo = $request->input('filter_stock_negativo', true);
+    $filter_stock_negativo = $request->input('filter_stock_negativo', false);
     $show_stock_negativo = $request->input('show_stock_negativo', false);
 
+    logger('local_principal', [$local_principal]);
+    logger('show_stock_negativo', [$show_stock_negativo]);
+    logger('filter_stock_negativo', [$filter_stock_negativo]);
     $busqueda =  Producto::query()
       ->with([
         'marca_',
