@@ -190,6 +190,7 @@ class GuiaSalidaController extends GuiaController
   public function sentSunat(GuiaSentSunatRequest $request, $id_guia)
   {
     $guia = GuiaSalida::find($id_guia);
+    $guia->createXmlZip();
     $res = $guia->sendApi();
     return response()->json(['message' => $res->data], $res->success ? 200 : 400);
   }
@@ -434,7 +435,6 @@ class GuiaSalidaController extends GuiaController
   public function prepareGuias($mescodi)
   {
     $guia_id = env('GUIA_SALIDA_PLANTILLA');
-    // loremp-ipsum-odlor-loremp-ipsum-odlor
     $pendientes = $this->getPendientes(empcodi(), $mescodi);
     $ids = $pendientes->get()->pluck('GuiOper');
     GuiaSalida::prepareGuias($ids, $guia_id);
@@ -444,11 +444,7 @@ class GuiaSalidaController extends GuiaController
 
   public function despacho(GuiaDespachoIngresoRequest $request, $id_guia)
   {
-    // _dd( $request->all() );
-    // exit();
-
     $guia = $this->model->find($id_guia);
-    // $guia->saveDespacho($request->all());
     $guia->saveDespacho($request->all());
     $guia->fresh()->createXmlZip();
 
