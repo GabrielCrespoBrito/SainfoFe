@@ -127,7 +127,6 @@ let AppModalProducto =
   addRemoveItemSelected: function (checkbox) {
     // Linguista
     let agregar = checkbox.checked;
-    // console.log("checkbox", checkbox)
     let $tr = $(checkbox).parents('tr')
     let data = $tr.data('info');
 
@@ -294,7 +293,6 @@ let AppModalProducto =
     for (let index = 0; index < cantidad_almacenes.length; index++) {
       let stock_number = $(cantidad_almacenes[index]).attr('data-id');
       let campo_id = 'prosto' + stock_number;
-      // console.log( "campo_id", campo_id );
       columns.push({ data: campo_id, className: 'text-right', searchable: false });
     }
 
