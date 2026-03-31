@@ -4,14 +4,11 @@ $title_modal = $title_modal ?? 'Productos';
 $nuevo_producto = $nuevo_producto ?? true;
 $btn_aceptar = $btn_aceptar ?? true;
 $btn_aceptar_text = $btn_aceptar_text ?? 'Aceptar';
-
-//$grupos = $grupos ?? App\Grupo::with('fams')->get();
 $grupos = $grupos ?? App\Grupo::all();
 $marcas = $marcas ?? App\Marca::all();
 
 $show_filter_stock_negativo = $show_filter_stock_negativo ?? (int) get_empresa()->hasShowFilterStockNegativo();
 $datas = 'data-show-filter-stock-negativo=' . $show_filter_stock_negativo;
-//dd($grupos);
 $fields_after = $fields_after ?? false;
 
 $fields = $fields ?? ['Codigo', 'Unidad', 'Nombre', 'Marca', 'Costo($)', 'Costo(S)', 'Margen', 'Prec.Vta', 'Stock Tot'];
