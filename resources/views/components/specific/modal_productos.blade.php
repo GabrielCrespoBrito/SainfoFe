@@ -9,8 +9,8 @@ $btn_aceptar_text = $btn_aceptar_text ?? 'Aceptar';
 $grupos = $grupos ?? App\Grupo::all();
 $marcas = $marcas ?? App\Marca::all();
 
-$show_filter_stock_negativo = $show_filter_stock_negativo ?? 0;
-
+$show_filter_stock_negativo = $show_filter_stock_negativo ?? (int) get_empresa()->hasShowFilterStockNegativo();
+$datas = 'data-show-filter-stock-negativo=' . $show_filter_stock_negativo;
 //dd($grupos);
 $fields_after = $fields_after ?? false;
 
@@ -40,7 +40,7 @@ array_push($fields, 'Properct', 'Peso', 'Base IGV', 'ISC', 'TieCodi');
 
 ?>
 
-@component('components.modal', ['id' => $id, 'title' => $title_modal])
+@component('components.modal', ['id' => $id, 'title' => $title_modal, 'datas' => $datas])
 
     @slot('body')
         <div class="row botones_div">

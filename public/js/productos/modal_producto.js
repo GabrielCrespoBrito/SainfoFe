@@ -213,12 +213,6 @@ let AppModalProducto =
         ajaxs(data, $("[name=grupo_filter]").attr('data-url'), funcs);
         // ajaxs(formData, $("[name=grupo_filter]").attr('data-url'), funcs);
       }
-
-
-
-      console.log("grupoSelected", $grupoSelected)
-      // this.eles.modal
-      // this.eles.datatable.draw();
     });
 
 
@@ -313,8 +307,6 @@ let AppModalProducto =
 
     const show_filter_stock_negativo = this.eles.modal.attr('data-show-filter-stock-negativo');
     const local_principal = this.eles.modal.find("td.local-principal").attr('data-id');
-    console.log("local_principal", local_principal)
-    console.log("show_filter_stock_negativo", show_filter_stock_negativo)
 
     const checkbox_show_stock_negativo = show_filter_stock_negativo == 1 ? `
     <div class="checkbox" style="margin-right:10px">
@@ -324,7 +316,8 @@ let AppModalProducto =
         </div>` : '';
 
     $(this.eles.table).one("preInit.dt", function () {
-      // loremp-ipsum-loremp-ipsum
+
+
       let $button =
         $(`
         ${checkbox_show_stock_negativo}
@@ -348,7 +341,8 @@ let AppModalProducto =
         "data": function (d) {
           return $.extend({}, d, {
             "local_principal": local_principal,
-            "show_filter_stock_negativo": show_filter_stock_negativo,
+            'filter_stock_negativo': show_filter_stock_negativo,
+            'show_stock_negativo': Number($("[name=show_stock_negativo]").is(':checked')),
             "campo_busqueda": $(".select-field-producto").val(),
             "grupo": $("[name=grupo_filter] option:selected").val(),
             "marca": $("[name=marca_filter] option:selected").val(),
@@ -363,6 +357,18 @@ let AppModalProducto =
       createdRow: function (row, data, index) {
         let $row = $(row);
         $row.data('info', data);
+        //
+        if (Number(show_filter_stock_negativo) == 0 || Number(local_principal) == 0) {
+          return;
+        }
+
+        let stock_local_principal = data['prosto' + local_principal];
+        if (Number(stock_local_principal) <= 0) {
+          $row.addClass('danger');
+        }
+        //
+
+
         if (AppModalProducto.elementsSelected[data.ProCodi]) {
           $row.addClass('selected');
         }
