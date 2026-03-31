@@ -238,7 +238,7 @@ class GuiaRemision_2_1Api extends XmlHelperNew
       ["modalidad_transporte", $this->getModalidadTransporte() ],
       // -----------------------------------------------------------
       ["unidad", $this->documento->DetUnid],
-      ["peso", $this->documento->guiporp],
+      ["peso", $this->documento->guiporp == "0" ? "1" : $this->documento->guiporp],
       // -----------------------------------------------------------
       // ["fecha_transporte", $this->documento->GuiFDes],
       ["fecha_transporte", date('Y-m-d') ],

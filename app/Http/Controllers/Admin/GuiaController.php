@@ -55,7 +55,8 @@ class GuiaController extends Controller
     $fecha_desde = null,
     $fecha_hasta = null,
     $tipo_guia = null,
-    $formato_guia = null  ){
+    $formato_guia = null, 
+    $pending = false  ){
 
     $empresa = Empresa::find($empresa_id);
     
@@ -77,6 +78,7 @@ class GuiaController extends Controller
       $busqueda->where('fe_rpta', '>=', 9 );
     }
 
+    
     // Local
     if ($local_id) {
       $busqueda->where('Loccodi', '=', $local_id);
@@ -139,6 +141,14 @@ class GuiaController extends Controller
     (new ActiveEmpresaTenant(Empresa::find($request->empresa_id)))->handle();
 
     $guia = GuiaSalida::find($request->id_factura);
+
+    if( $guia->pendiente() ) {
+      return response()->json([
+        'success' => false,
+        'message' => 'A la Guia ' . $guia->nameDocumento() . ' Falta Despacho'
+      ], 400);
+    }
+
     $res = $guia->sendApi();
     return response()->json(['message' => $res->data], $res->success ? 200 : 400);
 
