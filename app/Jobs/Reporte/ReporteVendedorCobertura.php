@@ -153,7 +153,7 @@ class ReporteVendedorCobertura
 
         if( $this->marcaId ){
 
-          foreach( $venta->items->filter(fn($item) => $item->producto->marcodi == $this->marcaId) as $item ){
+          foreach( $venta->items->filter(fn($item) => optional($item->producto)->marcodi == $this->marcaId) as $item ){
             $data_utilidad = (object) $item->dataUtilidad();
             $this->addToTotal($total_reporte, $data_utilidad);
             $this->addToTotal($total_vendedor, $data_utilidad);

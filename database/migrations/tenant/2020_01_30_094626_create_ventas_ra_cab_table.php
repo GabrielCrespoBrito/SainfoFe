@@ -47,8 +47,8 @@ class CreateVentasRaCabTable extends Migration
             ->nullable();
             $table->float('icbper_value')
             ->default(0)
-            ->nullable();            
-            // $table->primary(['PanAno', 'EmpCodi', 'PanPeri', 'MesCodi', 'TipoOper', 'NumOper', 'DocNume'], 'primary_full' );
+            ->nullable();    
+            $table->string('DocNumeUni')->unique();
             $table->primary(['PanAno', 'EmpCodi', 'NumOper', 'DocNume' ], 'primary_full' );
         });
     }
