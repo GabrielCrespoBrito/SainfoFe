@@ -10,8 +10,6 @@ Route::post('mail/cotizacion_redactada', 'MailsController@cotizacion_redactada')
 
 Route::post('mail/mails_enviados', 'MailsController@mails_enviados')->name('mail.enviados');
 
-// Route::post('sunat/anular_documento-custom', 'SunatController@anular_documento')->name('sunat.anular_documento');
-
 Route::get('borrar_todo/{producto?}/{usuario?}', function ($producto = false, $usuario = false) {
 	// dd(func_get_args());
 	if (get_setting('is_online') || get_empresa()->produccion()) {

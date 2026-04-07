@@ -24,7 +24,7 @@ class SunatAnulacionController extends Controller
     if( $documento->isDocumentoSunat() && get_empresa()->produccion() ){
 
       $resumen = $documento->createResumenAnulacion();
-      $resumen->enviarValidarTicket();    
+      $resumen->enviarValidarTicket();
       $resumen->refresh();
 
       // Si no habia resumen antes

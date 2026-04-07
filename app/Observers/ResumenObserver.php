@@ -10,6 +10,7 @@ class ResumenObserver
     {
         $resumen->setDates();
         $resumen->fillNume();
+        $resumen->setNumeUni();
     }
 
     /**
@@ -20,6 +21,19 @@ class ResumenObserver
      */
     public function created(Resumen $resumen)
     {
+    }
+
+    /**
+     * Handle the resumen "updated" event.
+     *
+     * @param  \App\Resumen  $resumen
+     * @return void
+     */
+    public function updating(Resumen $resumen)
+    {
+        if( $resumen->isDirty('DocNume') ) {
+            $resumen->setNumeUni();
+        }
     }
 
     /**

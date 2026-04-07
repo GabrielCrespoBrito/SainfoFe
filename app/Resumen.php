@@ -983,4 +983,10 @@ class Resumen extends Model
     return  $statusData;
   }
 
+  public function setNumeUni()
+  {
+    list($serie, $correlative, $nume) = explode('-', $this->DocNume);
+    $this->DocNumeUni = sprintf("%s-%s-%d", $serie, $correlative, $nume);
+  }
+
 }
