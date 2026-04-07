@@ -289,4 +289,9 @@ class User extends Authenticatable
     return $this->usunomb ? $this->usunomb : $this->usulogi;
   }
 
+  public function vendedor()
+  {
+    return $this->hasOne(Vendedor::class, 'usucodi', 'usucodi');
+  }
+
 }

@@ -155,11 +155,8 @@ class VentasController extends Controller
       $busqueda = $busqueda->whereBetween('ventas_cab.VtaFvta', [$request->input('fecha_desde'), $request->input('fecha_hasta')]);
     }
 
-    logger(auth()->user()->checkPermissionTo(concat_space(PermissionSeeder::A_VER_DOCUMENTOS_PROPIOS, PermissionSeeder::R_VENTA)));
-
-    
     if (auth()->user()->checkPermissionTo(concat_space(PermissionSeeder::A_VER_DOCUMENTOS_PROPIOS, PermissionSeeder::R_VENTA))) {
-      $busqueda->where('ventas_cab.UsuCodi', '=', auth()->user()->usucodi);
+      $busqueda->where('ventas_cab.Vencodi', '=', optional(auth()->user()->vendedor)->Vencodi);
     }
 
     // Tipos de Documentos
