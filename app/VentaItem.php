@@ -205,15 +205,18 @@ class VentaItem extends Model
 
   public function producto()
   {
-    return $this->belongsTo( Producto::class, 'DetCodi', 'ProCodi' )
+    return $this->belongsTo(Producto::class, 'DetCodi', 'ProCodi' )
     ->withoutGlobalScope('noEliminados');
   }
 
-  public function dataUtilidad()
+  public function dataUtilidad($isNotaCredito = false, $isSol = false, $tc = 1)
   {
+    $importe = $this->DetImpo;
+    $cantidad = $this->DetCant;
+
     return (object) [
-      'cantidad' => $this->DetCant,
-      'importe' => $this->DetImpo,
+      'cantidad' => convertNegativeIfTrue($cantidad * $tc, $isNotaCredito),
+      'importe' => convertNegativeIfTrue($importe * $tc, $isNotaCredito),
     ];
   }
 

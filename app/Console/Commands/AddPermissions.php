@@ -62,11 +62,16 @@ class AddPermissions extends Command
         return;
       }
 
-      if ($this->argument('all_user')) {
+      $all_user = $this->argument('all_user');
+
+      if ($all_user == 1) {
         $users_group = User::get()->chunk(50);
-      } else {
+      } else if($all_user == 0) {
         $users_group = User::where('carcodi', User::TIPO_DUENO)->get()->chunk(50);
+      } else if($all_user == 2) {
+        $users_group = [];
       }
+
 
 
       foreach ($permissions_add as $permission_add) {

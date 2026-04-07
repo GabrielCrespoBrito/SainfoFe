@@ -155,6 +155,13 @@ class VentasController extends Controller
       $busqueda = $busqueda->whereBetween('ventas_cab.VtaFvta', [$request->input('fecha_desde'), $request->input('fecha_hasta')]);
     }
 
+    logger(auth()->user()->checkPermissionTo(concat_space(PermissionSeeder::A_VER_DOCUMENTOS_PROPIOS, PermissionSeeder::R_VENTA)));
+
+    
+    if (auth()->user()->checkPermissionTo(concat_space(PermissionSeeder::A_VER_DOCUMENTOS_PROPIOS, PermissionSeeder::R_VENTA))) {
+      $busqueda->where('ventas_cab.UsuCodi', '=', auth()->user()->usucodi);
+    }
+
     // Tipos de Documentos
     if ($request->input("tipo") == "todos") {
       $busqueda = $busqueda->whereNotIn('ventas_cab.TidCodi', [TipoDocumentoPago::NOTA_VENTA, 50]);

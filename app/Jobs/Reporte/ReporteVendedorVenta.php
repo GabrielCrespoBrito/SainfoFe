@@ -91,9 +91,6 @@ class ReporteVendedorVenta
   {
     $query =  $this->getQuery();
     
-    // _dd( $query->first()->first() );
-    // exit();
-
     // Si no existen registros, deter el resto del script
     if( $query->count() === 0 ){
       return;

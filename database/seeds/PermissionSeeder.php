@@ -29,6 +29,8 @@ class PermissionSeeder extends Seeder
   const A_CONSULTARDOCUMENTO = "consultar_documentos";
   const A_MODIFICAR_PRECIO = "modificar-precios";
   const A_VER_NOTAS_VENTA = "ver-notas-venta";
+  const A_VER_DOCUMENTOS_PROPIOS = "ver-documentos-propios";
+
   const A_DESPACHO = "despacho";
   const A_TRASLADO = "traslado";
   const A_PAGOS = "pagos";
@@ -453,6 +455,7 @@ class PermissionSeeder extends Seeder
       concat_space(self::A_CONSULTARDOCUMENTO, self::R_VENTA),
       concat_space(self::A_MODIFICAR_PRECIO, self::R_VENTA),
       concat_space(self::A_VER_NOTAS_VENTA, self::R_VENTA),
+      concat_space(self::A_VER_DOCUMENTOS_PROPIOS, self::R_VENTA),
     ], self::R_VENTA,  false);
   }
 

@@ -53,6 +53,11 @@ class AdminController extends Controller
         Artisan::call('system_task:add_permisos', ['all_user' => 1]);
         break;
 
+      case 'permisos_all_no_assign':
+        ini_set('max_execution_time', '300');
+        Artisan::call('system_task:add_permisos', ['all_user' => 2]);
+        break;
+
 			case 'eliminar_temporales':
 				Artisan::call('eliminar:temp');
 			break;

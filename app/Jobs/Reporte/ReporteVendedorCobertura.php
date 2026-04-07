@@ -154,7 +154,16 @@ class ReporteVendedorCobertura
         if( $this->marcaId ){
 
           foreach( $venta->items->filter(fn($item) => optional($item->producto)->marcodi == $this->marcaId) as $item ){
-            $data_utilidad = (object) $item->dataUtilidad();
+
+            $data_utilidad = (object) [
+              'importe' => 0,
+              'cantidad' => 0,
+            ];
+
+            if( $venta->isAnulada() == false ){
+              $data_utilidad = (object) $item->dataUtilidad( $venta->isNotaCredito(), $venta->isSol(), $venta->VtaTcam );
+            }
+            
             $this->addToTotal($total_reporte, $data_utilidad);
             $this->addToTotal($total_vendedor, $data_utilidad);
             $this->addToTotal($total_cobertura, $data_utilidad);
