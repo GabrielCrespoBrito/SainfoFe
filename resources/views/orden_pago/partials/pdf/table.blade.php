@@ -30,8 +30,9 @@
 		<tr>
 			<td class="cuentas" colspan="7"> 
 					<div class="title"> Cuentas: </div>
-					<div class="cuenta"> <strong>BBVA</strong> {{ config('app.cuentas.bbva.regular') }} </div>
-					<div class="cuenta"> <strong>BBVA</strong> {{ config('app.cuentas.bbva.interbamcaria') }} </div>
+					@foreach($cuentas as $cuenta)
+					<div class="cuenta"> <strong>{{ $cuenta->banco->bannomb }}</strong> {{ $cuenta->moneda->monabre }} {{ $cuenta->CueNume }}  </div>
+					@endforeach
 			</td>				
 		</tr>
 

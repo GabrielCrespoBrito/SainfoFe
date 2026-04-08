@@ -6,6 +6,7 @@ use App\User;
 use App\Empresa;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Suscripcion\PlanDuracion;
+use App\Jobs\Admin\ActiveEmpresaTenant;
 use App\Jobs\Suscripcion\CreateSuscripcion;
 use Hyn\Tenancy\Traits\UsesSystemConnection;
 
@@ -159,10 +160,15 @@ class OrdenPago extends Model
     $direccion_cliente = $empresa->direccion();
     $fecha_emision = $this->fecha_emision;
     $fecha_vencimiento = $this->fecha_vencimiento;
+    // 
+    (new ActiveEmpresaTenant($empresa_fac))->handle();
+
+    $cuentas  = $empresa_fac->bancos->load(['moneda', 'banco']);
+
+    // dd($cuentas);
 
     return [
       'logo' => $logo,
-      // Empresa
       'ruc' => $ruc,
       'razon_social' => $razon_social,
       'direccion' => $direccion,
@@ -176,9 +182,9 @@ class OrdenPago extends Model
 
       'fecha_emision' => $fecha_emision,
       'fecha_vencimiento' => $fecha_vencimiento,
-
       'codigo' => $this->getIdFormat(),
       'nombre' => $this->getNombrePlan(),
+      'cuentas' => $cuentas,
       'cantidad' => 1,
       'precio' => $this->base,
       'igv' => $this->igv,
