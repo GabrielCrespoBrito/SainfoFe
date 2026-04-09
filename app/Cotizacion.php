@@ -370,8 +370,8 @@ class Cotizacion extends Model
   public function getRouteImprimir()
   {
     return $this->isOrdenCompra() ? 
-    route('orden_compras.imprimir', [ 'id' => $this->CotNume, 't_impresion' => '@@', 'formato' => '_FORMATO_']) :
-    route('coti.imprimir' , ['id_cotizacion' => $this->CotNume, 'tipo_impresion' => '@@', 'formato' => '_FORMATO_']);
+    route('orden_compras.imprimir', [ 'id' => $this->CotNume, 't_impresion' => '@@', 'formato' => '_FORMATO_', 't' => time()]) :
+    route('coti.imprimir' , ['id_cotizacion' => $this->CotNume, 'tipo_impresion' => '@@', 'formato' => '_FORMATO_', 't' => time()]);
   }
 
   public static function getNombre($tipo)

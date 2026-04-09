@@ -30,23 +30,6 @@
                 </td>
             </tr>
         @endforeach
-
-        {{-- @foreach ($item['items'] as $venta)
-    <tr class="border-bottom-stripe">
-      <td> {{ $venta['info']['id'] }} </td>
-      <td> {{ $venta['info']['tipo_documento'] }} </td>
-      <td> {{ $venta['info']['serie'] }}  </td>
-      <td> {{ $venta['info']['numeracion'] }}  </td>
-      <td> {{ $venta['info']['fecha_emision'] }} </td>
-      <td> {{ $venta['info']['fecha_vencimiento'] }}  </td>
-      <td> {{ $venta['info']['fecha_pago'] }}  </td>
-      <td> {{ $venta['info']['cliente'] }}  </td>
-      <td class="text-align-right"> {{ decimal($venta['total']['importe']) }}  </td>
-      <td class="text-align-right"> {{ decimal($venta['total']['pago']) }}  </td>
-      <td class="text-align-right"> {{ decimal($venta['total']['saldo']) }}  </td>
-      <td class="text-align-right"> {{ $venta['info']['forma_pago'] }}  </td>
-    </tr>
-    @endforeach --}}
     @endforeach
 
 </tbody>

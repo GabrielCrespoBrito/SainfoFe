@@ -553,9 +553,6 @@ class CotizacionAbstractController extends Controller
     }
 
     return response()->file($pathTemp, [
-      'Cache-Control' => 'no-cache, no-store, must-revalidate',
-      'Pragma' => 'no-cache',
-      'Expires' => '0',
       'Content-Description' => 'File Transfer',
       'Content-Disposition' => 'filename=' . $cotizacion->CotNume . '.pdf'
     ]);
