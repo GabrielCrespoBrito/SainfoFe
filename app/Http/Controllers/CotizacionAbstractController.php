@@ -531,12 +531,10 @@ class CotizacionAbstractController extends Controller
     $fileHelper = fileHelper($empresa->ruc());
     $impresionConIgv = $empresa->hasImpresionIGV();
     $tipo = $tipo == "igv";
+    $regenerarPdfCotizaciones = session()->get('regenerarPdfCotizaciones', false);
 
     if ($tipo == $impresionConIgv) {
 
-      $regenerarPdfCotizaciones = session()->get('regenerarPdfCotizaciones', false);
-
-      
       if ($fileHelper->pdfExist($namePDF) && $regenerarPdfCotizaciones == false) {
         if ($formato == PDFPlantilla::FORMATO_A4) {
           \File::put(public_path($pathTemp), $fileHelper->getPdf($namePDF));
@@ -548,11 +546,16 @@ class CotizacionAbstractController extends Controller
       else {
         $pathTemp = $cotizacion->generatePDF($formato, PDFGenerator::HTMLGENERATOR, $tipo,  true, true);
       }
-    } else {
+    } 
+    
+    else {
       $pathTemp = $cotizacion->generatePDF($formato, PDFGenerator::HTMLGENERATOR, $tipo,  true, false);
     }
 
     return response()->file($pathTemp, [
+      'Cache-Control' => 'no-cache, no-store, must-revalidate',
+      'Pragma' => 'no-cache',
+      'Expires' => '0',
       'Content-Description' => 'File Transfer',
       'Content-Disposition' => 'filename=' . $cotizacion->CotNume . '.pdf'
     ]);
