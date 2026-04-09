@@ -399,7 +399,7 @@ class CotizacionAbstractController extends Controller
       DB::connection('tenant')->beginTransaction();
       $cotizacion = Cotizacion::guardar($request->all(), $request->id_cotizacion, $request->total_documento, null);
       CotizacionItem::guardar($request->items, $cotizacion, false, $request->totales_items);
-      // $cotizacion->generatePDF(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR, get_empresa()->hasImpresionIGV(), true, true);
+      $cotizacion->generatePDF(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR, get_empresa()->hasImpresionIGV(), true, true);
       DB::connection('tenant')->commit();
     } catch (\Exception $e) {
       DB::connection('tenant')->rollback();
