@@ -76,7 +76,7 @@
                         <option data-ruc="{{ $empresaR->EmpLin1 }}"
                             data-periodo="{{ $empresaR->periodos->pluck('Pan_cAnio')->implode(',') }}"
                             value="{{ $empresaR->empcodi }}" {{ $selected ? 'selected=selected' : '' }}>
-                            {{ $empresaR->empcodi }} - {{ $empresaR->EmpNomb }}
+                            {{ $empresaR->empcodi }} - {{ $empresaR->EmpLin1 }}  {{ $empresaR->EmpNomb }}
                         </option>
                         @endforeach
                     </select>
