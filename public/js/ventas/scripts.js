@@ -3201,6 +3201,7 @@ $(document).ready(function (e) {
     $(`[name=vendedor] option[value=${data.vendedor}]`).prop('selected', true);
     $(`[name=zona] option[value=${data.ZonCodi}]`).prop('selected', true);
     $("[name=nro_pedido]").val(data.nume);
+    $("[name=forma_pago] option[value=" + data.forma_pago + "]").prop('selected', true);
 
     let items = data.items;
     let table = data.table;

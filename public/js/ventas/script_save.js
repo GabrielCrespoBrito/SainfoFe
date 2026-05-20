@@ -159,7 +159,7 @@ $(document).ready(function (e) {
 
   function sumStock(value, data, info) {
     // console.log(arguments)
-    let sum = Number(info.prosto1) + Number(info.prosto2) + Number(info.prosto3) + Number(info.prosto4) + Number(info.prosto5) + Number(info.prosto6) + Number(info.prosto7) + Number(info.prosto8) + Number(info.prosto9) ;
+    let sum = Number(info.prosto1) + Number(info.prosto2) + Number(info.prosto3) + Number(info.prosto4) + Number(info.prosto5) + Number(info.prosto6) + Number(info.prosto7) + Number(info.prosto8) + Number(info.prosto9);
     return fixedNumber(sum);
   }
 
@@ -1250,7 +1250,7 @@ $(document).ready(function (e) {
     let data = eval(tipo_documento.attr('data-series'));
     let optionDefault = tipo_documento.attr('data-series');
     let div_datos = $(".div_datos_referenciales");
-    
+
     agregarASelect(
       data,
       'serie_documento',
@@ -1277,16 +1277,15 @@ $(document).ready(function (e) {
 
 
 
-  function cambiar_condicion()
-  {
+  function cambiar_condicion() {
     let $modal = $("#modalCondicionVenta");
     let td = $("[name=tipo_documento] option:selected").val();
     let is_proforma = td == "50";
     let $textarea = $modal.find("[name=condicion_venta]");
     let $title = $modal.find(".modal-title");
-    
 
-    console.log( td, is_proforma )
+
+    console.log(td, is_proforma)
     let $check = $("#modalCondicionVenta [name=uso_individual]")
 
 
@@ -1294,16 +1293,16 @@ $(document).ready(function (e) {
 
     let $label = $("#modalCondicionVenta .label-condicion-tipo-guardado")
 
-    
-    if( is_proforma ){
+
+    if (is_proforma) {
       $label.show();
       $textarea.val($textarea.attr('data-con_cot'));
-      $title.text( "Condición de Cotización");
+      $title.text("Condición de Cotización");
     }
 
     else {
       $label.hide();
-    // $check.prop('disabled' , is_proforma );
+      // $check.prop('disabled' , is_proforma );
       $textarea.val($textarea.attr('data-con_ven'));
       $title.text("Condición de Venta");
     }
@@ -2746,13 +2745,12 @@ $(document).ready(function (e) {
     $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
   }
 
-  function initialFocus() 
-  {
-    
-    console.log("initialFocus", cursor_inicial,  inicial_input_focus )
+  function initialFocus() {
+
+    console.log("initialFocus", cursor_inicial, inicial_input_focus)
     inicial_input_focus.focus();
-    
-    
+
+
     // console.og()
     // console.log( "inicialFocus", inicial_focus );
     // if (inicial_focus == "0") {
@@ -2950,13 +2948,13 @@ $(document).ready(function (e) {
     let serie_val = $("[name=serie_doc]").val();
     let num_val = $("[name=num_doc]").val();
 
-    if ( ! serie_val.length ) {
+    if (!serie_val.length) {
 
       notificaciones("Tiene que escribir la serie", "error");
       $("[name=serie_doc]").focus()
       return;
     }
-    if ( ! num_val.length ) {
+    if (!num_val.length) {
       notificaciones("Tiene que escribir el numero del documento", "error");
       $("[name=num_doc]").focus()
       return;
@@ -2970,8 +2968,8 @@ $(document).ready(function (e) {
     let funcs = {
       success: (data) => {
         return procesarImportacion(data);
-      } 
-    }    
+      }
+    }
 
     ajaxs(data, url_consulta_cotizacion, funcs);
   }
@@ -2979,12 +2977,12 @@ $(document).ready(function (e) {
 
   function importar_documento(serie_val, num_val, nc = false) {
 
-    if ( ! serie_val.length ) {
+    if (!serie_val.length) {
       notificaciones("Tiene que escribir la serie", "error");
       $("[name=serie_doc]").focus()
       return;
     }
-    if ( ! num_val.length ) {
+    if (!num_val.length) {
       notificaciones("Tiene que escribir el numero del documento", "error");
       $("[name=num_doc]").focus()
       return;
@@ -2998,7 +2996,7 @@ $(document).ready(function (e) {
     let funcs = {
       success: (data) => {
         procesarImportacion(data, nc)
-      } 
+      }
     }
 
     ajaxs(data, url_consulta_cotizacion, funcs);
@@ -3009,16 +3007,17 @@ $(document).ready(function (e) {
 
     let serie = $("[name=serie_doc]").val();
     let numero = $("[name=num_doc]").val();
-        
-    if( serie && numero ){
-      importar_documento( serie, numero, true );
+
+    if (serie && numero) {
+      importar_documento(serie, numero, true);
     }
   }
 
-  function procesarImportacion(data, notaCredito = false)
-  {    
+  function procesarImportacion(data, notaCredito = false) {
     $("[name=moneda] option[value=" + data.moneda + "]").prop('selected', true);
     $("[name=nro_pedido]").val(data.nume);
+
+    $("[name=forma_pago] option[value=" + data.forma_pago + "]").prop('selected', true);
 
     let items = data.items;
     $("#table-items tbody").empty()
@@ -3029,15 +3028,15 @@ $(document).ready(function (e) {
 
     window.poner_data_inputs(data.cliente);
     poner_data_cliente(data.cliente);
-    show_modal("hide", "#modalImportacion");    
+    show_modal("hide", "#modalImportacion");
     notificaciones("Importación exitosa", "success");
     $("[name=serie_doc]").val("");
     $("[name=num_doc]").val("");
 
     poner_totales_cant();
-    descuento_global();    
+    descuento_global();
 
-    console.log( "NOTACREDITO" , notaCredito )
+    console.log("NOTACREDITO", notaCredito)
 
   }
 
@@ -3049,8 +3048,7 @@ $(document).ready(function (e) {
 
   }
 
-  function mostrar_condi_venta()
-  {
+  function mostrar_condi_venta() {
     show_modal("show", "#modalCondicionVenta", 'static');
   }
 
@@ -3063,10 +3061,10 @@ $(document).ready(function (e) {
     let is_cotizacion = $("[name=tipo_documento] option:selected").val() == "50";
     let type = is_cotizacion ? 'cotizacion' : 'venta';
 
-    if ( is_cotizacion ){
-      if( individual ){
+    if (is_cotizacion) {
+      if (individual) {
 
-        condicion_textarea.attr('data-con_cot', condicion_textarea.val() )
+        condicion_textarea.attr('data-con_cot', condicion_textarea.val())
         $("#modalCondicionVenta").attr('data-comprobar_guardado', 'false');
         show_modal("hide", "#modalCondicionVenta");
 
@@ -3075,7 +3073,7 @@ $(document).ready(function (e) {
       }
     }
 
-    $("#modalCondicionVenta").attr( 'data-comprobar_guardado', 'false' );
+    $("#modalCondicionVenta").attr('data-comprobar_guardado', 'false');
 
     let data = {
       type: type,
@@ -3083,14 +3081,12 @@ $(document).ready(function (e) {
     };
 
     let funcs = {
-      success: function () 
-      {
+      success: function () {
         let attr = is_cotizacion ? 'data-con_cot' : 'data-con_ven';
-        condicion_textarea.attr(attr, condicion_textarea.val());        
+        condicion_textarea.attr(attr, condicion_textarea.val());
         show_modal("hide", "#modalCondicionVenta");
       },
-      complete : function()
-      {
+      complete: function () {
         $("#modalCondicionVenta").attr('data-comprobar_guardado', 'true');
       }
     }
@@ -3173,7 +3169,7 @@ $(document).ready(function (e) {
   function ver_pagos() {
     AppPagosIndex.init();
     AppPagosIndex.tipo_pago_default = $("[name=medio_pago]").attr('data-id');
-    console.log( "medio_pago", AppPagosIndex.tipo_pago_default );
+    console.log("medio_pago", AppPagosIndex.tipo_pago_default);
     AppPago.set_callback(AppPagosIndex.show_notopenmodal.bind(AppPagosIndex));
     AppPagosIndex.set_id($("[name=codigo_venta]").val());
     AppPagosIndex.show_openmodal();
@@ -3270,8 +3266,8 @@ $(document).ready(function (e) {
    */
   // function establecerCursorInicial()
   // {
-    // console.log({ window.inicial_focus })
-    // window.inicial_focus.focus();
+  // console.log({ window.inicial_focus })
+  // window.inicial_focus.focus();
   // }
 
   function crear_cliente() {
@@ -3374,7 +3370,7 @@ $(document).ready(function (e) {
    */
 
   function setProductoInputSearchDefaultFocus() {
-    
+
     if (cursor_producto == "0") {
       return producto_input_focus = $("[name=producto_codigo]");
     }
@@ -3387,17 +3383,17 @@ $(document).ready(function (e) {
   }
 
   function setInicialFocus() {
-    
-    if (cursor_inicial == "0" ) {
+
+    if (cursor_inicial == "0") {
       inicial_input_focus = $("[name=tipo_documento]");
     }
 
-    else if (cursor_inicial == "1" ) {
+    else if (cursor_inicial == "1") {
       inicial_input_focus = producto_input_focus;
     }
   }
 
-  
+
 
   function open_modal_cliente() {
     $("#modalCliente").modal();
@@ -4220,9 +4216,9 @@ $(document).ready(function (e) {
       }
     });
 
-    $("#modalCondicionVenta .btn-example-toggle").on('click' , function(){
+    $("#modalCondicionVenta .btn-example-toggle").on('click', function () {
       let isOpen = $(this).attr('data-open') == "true";
-      if(isOpen){
+      if (isOpen) {
         $(".example-condicion").hide();
         $(this).attr('data-open', 'false');
       }
@@ -4232,11 +4228,11 @@ $(document).ready(function (e) {
       }
     })
 
-    $("#modalCondicionVenta").on('hide.bs.modal' , function(e){
+    $("#modalCondicionVenta").on('hide.bs.modal', function (e) {
 
       let comprobar_guardado = $("#modalCondicionVenta").attr('data-comprobar_guardado') == "true";
 
-      if( ! comprobar_guardado ){
+      if (!comprobar_guardado) {
         return true;
       }
 
@@ -4247,12 +4243,12 @@ $(document).ready(function (e) {
       let condicion_current = $condicion_textarea.val();
       let has_changes = condicion_save != condicion_current;
       console.log({ condicion_save, condicion_current })
-      
-      if( ! has_changes ){
+
+      if (!has_changes) {
         return true;
       }
 
-      if(confirm("Ha hecho cambios en la condición, esta seguro que desea salir sin guardar?")){        
+      if (confirm("Ha hecho cambios en la condición, esta seguro que desea salir sin guardar?")) {
         $condicion_textarea.val(condicion_save);
         $condicion_textarea.val(condicion_save);
         return true;
@@ -4618,7 +4614,7 @@ $(document).ready(function (e) {
       e.preventDefault()
       show_modal("show", "#modalSelectProducto");
       let value_input = $("[name=producto_nombre]").val().trim();
-      $(".select-field-producto").find("option[value=nombre]").prop('selected', true);      
+      $(".select-field-producto").find("option[value=nombre]").prop('selected', true);
       table_productos.search(value_input).draw();
     });
 
@@ -4627,18 +4623,18 @@ $(document).ready(function (e) {
 
       e.preventDefault();
       let value_input = $("[name=producto_codigo]").val().trim();
-          
+
       if (value_input) {
-            buscar();
-          }
-          else {
-            $(".select-field-producto").find("option[value=codigo]").prop('selected', true)
-            table_productos.search(value_input).draw();
-            show_modal("show", "#modalSelectProducto");
-          }
+        buscar();
+      }
+      else {
+        $(".select-field-producto").find("option[value=codigo]").prop('selected', true)
+        table_productos.search(value_input).draw();
+        show_modal("show", "#modalSelectProducto");
+      }
     });
 
-    
+
 
 
     // cambiar de foco carefull
@@ -4752,7 +4748,7 @@ $(document).ready(function (e) {
 
 
     let estado = "P";
-    
+
     table_cotizacion = $('#datatable-cotizacion_select').DataTable({
       "processing": true,
       "serverSide": true,
@@ -4915,7 +4911,7 @@ $(document).ready(function (e) {
     let $tipo_documento = $("[name=tipo_documento]");
     let $cliente_documento = $("#cliente_documento");
 
-    if ($tipo_documento.val() == "03" || $tipo_documento.val() == "52"  ) {
+    if ($tipo_documento.val() == "03" || $tipo_documento.val() == "52") {
       if (!$cliente_documento.val()) {
         let cliente_default = $cliente_documento.data('cliente_default');
         poner_data_cliente(cliente_default);

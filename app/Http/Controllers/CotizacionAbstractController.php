@@ -212,6 +212,7 @@ class CotizacionAbstractController extends Controller
       'nume' => $nume,
       'vendedor' => $documento->vencodi,
       'ZonCodi' => $documento->zoncodi,
+      'forma_pago' => $documento->ConCodi,
       'items' => $items,
       'moneda' => $documento->getMoneda(),
       'table' => $documento->table,

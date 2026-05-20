@@ -128,6 +128,7 @@ class Unidad extends Model
   public static function createFromProducto($productId, $productData, $listas)
   {
     $listas = $listas ?? get_empresa()->listas;
+    $auditValues = auditValues();
 
     foreach ($listas as $lista) {
       $data = [];
@@ -150,6 +151,9 @@ class Unidad extends Model
       $data['UniPUVD1'] = 0;
       $data['LisCodi'] = $lista->LisCodi;
       $data['empcodi'] = $productData['empcodi'];
+      $data['User_Crea'] = $auditValues->user;
+      $data['User_FCrea'] = $auditValues->fecha;
+      $data['User_ECrea'] = $auditValues->equipo;
       if(Unidad::insert($data) == false){
         return false;
       }

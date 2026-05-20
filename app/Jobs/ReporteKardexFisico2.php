@@ -59,7 +59,6 @@ class ReporteKardexFisico2
 
     $this->fechaInicioBusqueda = self::FECHA_INICIO_BUSQUEDA;
     $this->fechaAnteriorInicio = date('Y-m-d', strtotime('-1 day', strtotime($this->fechaInicio)));
-
     $this->handle();
   }
 
