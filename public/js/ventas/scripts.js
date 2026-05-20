@@ -3202,7 +3202,7 @@ $(document).ready(function (e) {
     $(`[name=zona] option[value=${data.ZonCodi}]`).prop('selected', true);
     $("[name=nro_pedido]").val(data.nume);
     $("[name=forma_pago] option[value=" + data.forma_pago + "]").prop('selected', true);
-
+    showHiddenBtnModalFp();
     let items = data.items;
     let table = data.table;
 
