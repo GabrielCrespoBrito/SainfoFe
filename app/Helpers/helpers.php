@@ -37,6 +37,42 @@ function nombreDocumentoCliente($tipo)
   return TipoDocumento::getNombreReporte($tipo);
 }
 
+function timeExeIni($id = '', $empcodi = null)
+{
+  $startTime = microtime(true);
+  
+  logger('@CALC timeExeIni: ' . $id, [
+    'time' => now()->format('Y-m-d H:i:s.u'),
+    'empcodi' => $empcodi,
+    'startTime' => $startTime
+  ]);
+
+  return $startTime;
+}
+
+function timeExeFin($id , $startTime, $empcodi = null)
+{
+  $endTime = microtime(true);
+  
+  logger('@CALC timeExeFin: ' . $id, [
+    'time' => now()->format('Y-m-d H:i:s.u'),
+    'empcodi' => $empcodi,
+    'endTime' => $endTime,
+    'executionTime' => $endTime - $startTime,
+    'totalTime' => getTimeExecution($startTime, $endTime)
+  ]);
+}
+
+function getTimeExecution($startTime, $endTime)
+{
+  $executionTime = microtime(true) - $startTime;
+  $executionTimeInSeconds = round($executionTime / 60, 2);
+  return $executionTimeInSeconds;
+}
+
+
+
+
 
 function auditValues()
 {

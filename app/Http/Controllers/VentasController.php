@@ -406,11 +406,14 @@ class VentasController extends Controller
     $con_productos_enviados = $tipo_guia != Venta::GUIA_ACCION_NINGUNA;
     $documento = null;
     $vtaoper = null;
+    $empcodi = empcodi();
+    $startTime = 0;
     $serie = null;
     $data_impresion = null;
     $isTableVentas = $request->tipo_documento != TipoDocumentoPago::PROFORMA;
     $isFacturacion = TipoDocumentoPago::isTipoVentas($request->tipo_documento);
     $error = '';
+    
 
     DB::connection('tenant')->beginTransaction();
     DB::connection()->beginTransaction();
@@ -425,6 +428,8 @@ class VentasController extends Controller
         $vtaoper = $documento->CotNume;
         CotizacionItem::guardarFromVenta($request->items, $documento, $request->totales_items);
       }
+
+      $startTime = timeExeIni('saveFactura ' . $vtaoper, $empcodi );
 
       if ($isTableVentas) {
         $documento->createFormaPago($request->pagos);
@@ -521,7 +526,8 @@ class VentasController extends Controller
         $needPago = false;
       }
     }
-    
+
+    timeExeFin('saveFactura ' . $vtaoper, $startTime, $empcodi);
 
     $data = [
       'codigo_venta' => $vtaoper,
@@ -556,7 +562,10 @@ class VentasController extends Controller
     $pathTemp = file_build_path('temp', $namePDF);
     $venta = Venta::find($id_factura);
     $empresa = get_empresa();
+    $id_test =  'imprimirFactura: ' . $id_factura . '-' . $venta->EmpCodi;
     $fileHelper = fileHelper($empresa->ruc());
+
+    $startTime = timeExeIni($id_test, $venta->EmpCodi);
 
     if ($plantilla_data->isFormatoA4()) {
 
@@ -582,11 +591,13 @@ class VentasController extends Controller
     // Si es mobil, descargar
     if ($download == "1" || isMobile()) {
       $realPath = file_build_path($pathTemp);
+      timeExeFin($id_test, $startTime, $venta->EmpCodi);
       return response()->download($realPath, $namePDF);
     }
 
     $path = asset($pathTemp);
     $pathJs = str_replace('\\', '/', $path);
+    timeExeFin($id_test, $startTime, $venta->EmpCodi);
     return view('ventas.pdf_test', ['path' => $path, 'pathJS' => $pathJs, 'nameFile' => $namePDF]);
   }
 
