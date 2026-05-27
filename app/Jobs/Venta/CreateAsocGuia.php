@@ -99,7 +99,7 @@ class CreateAsocGuia
     $tipo_movimiento = $isNotaCredito ? TipoMovimiento::DEFAULT_INGRESO : TipoMovimiento::DEFAULT_SALIDA;
     $tipo_ingreso_detalle = $isNotaCredito ? GuiaSalidaItem::TIPO_COMPRA : GuiaSalidaItem::TIPO_VENTA;
     $this->guia_id = GuiaSalida::createGuia($this->venta->VtaOper, true,  $this->id_almacen, $tipo_movimiento, $isElectronica, '', null, false, $tipoGuia );
-    $this->createItems($tipo_ingreso_detalle, $isNotaCredito,);
+    $this->createItems($tipo_ingreso_detalle, $isNotaCredito);
   }
 
   public function createItems($tipo_ingreso_detalle, $isNotaCredito)
@@ -175,7 +175,9 @@ class CreateAsocGuia
         $guiaItem = GuiaSalidaItem::create($guiaSalidaData);
         $guiaItem->updateStock2($guiaItem->DetCodi);
       }
-    } else {
+    } 
+    
+    else {
       foreach ($this->venta->items as $item) {
         GuiaSalidaItem::createItem($item, $this->guia_id, $tipo_ingreso_detalle, $isNotaCredito);
       }

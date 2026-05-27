@@ -407,18 +407,18 @@ class VentasController extends Controller
     $documento = null;
     $vtaoper = null;
     $empcodi = empcodi();
-    $startTime = 0;
+    $startTime = microtime(true);
     $serie = null;
     $data_impresion = null;
     $isTableVentas = $request->tipo_documento != TipoDocumentoPago::PROFORMA;
     $isFacturacion = TipoDocumentoPago::isTipoVentas($request->tipo_documento);
     $error = '';
     
-
     DB::connection('tenant')->beginTransaction();
     DB::connection()->beginTransaction();
-
+    
     try {
+      $timeTask = microtime(true);
       if ($isTableVentas) {
         $documento = Venta::createFactura($request, $con_productos_enviados, $request->total_documento);
         VentaItem::createItem($documento->VtaOper, $request->items, $con_productos_enviados, $request->totales_items, $request->placa_vehiculo);
@@ -429,13 +429,17 @@ class VentasController extends Controller
         CotizacionItem::guardarFromVenta($request->items, $documento, $request->totales_items);
       }
 
-      $startTime = timeExeIni('saveFactura ' . $vtaoper, $empcodi );
-
+      taskTimeLogger('@saveFactura-createFactura ' , $timeTask, $vtaoper, $empcodi );
+      
+      
       if ($isTableVentas) {
+        $timeTask = microtime(true);
         $documento->createFormaPago($request->pagos);
         $tipo_guia = $request->input('guia_tipo', Venta::GUIA_ACCION_NINGUNA);
+        taskTimeLogger('@saveFactura-createFormaPago ' , $timeTask, $vtaoper, $empcodi );
 
         if ($tipo_guia != Venta::GUIA_ACCION_NINGUNA) {
+        $timeTask = microtime(true);
           $rpta = $documento->createOrAssocGuia(
             $tipo_guia,
             $request->guias,
@@ -443,25 +447,39 @@ class VentasController extends Controller
             TipoMovimiento::DEFAULT_SALIDA,
             $request->guiasIds
           );
+          logger('@DATA-createOrAssocGuia', [
+            'tipo_guia' => $tipo_guia,
+            'guias' => $request->guias,
+            'id_almacen' => $request->input('id_almacen', '001'),
+            'tipo_movimiento' => TipoMovimiento::DEFAULT_SALIDA,
+            'guiasIds' => $request->guiasIds,
+            'rpta' => $rpta
+          ]);
+          taskTimeLogger('@saveFactura-createOrAssocGuia ' , $timeTask, $vtaoper, $empcodi );
           if (!$rpta->success) {
             throw new Exception(sprintf("Error Creando Guia: %s", $rpta->data), 1);
           }
         }
 
+
+        
+        $timeTask = microtime(true);
         $empresa = get_empresa();
         $formato = $request->input('formato_impresion', 'a4');
         $save = $formato == PDFPlantilla::FORMATO_A4;
         $documento->fresh()->saveXML();
         $serie = $request->serie;
+        taskTimeLogger('@saveFactura-saveXML ' , $timeTask, $vtaoper, $empcodi );
+
+
         
         if($empresa->hasVentaRapida()){
           $result = file_build_path('temp', $documento->nameFile('.pdf'));
           $data_impresion = [];
         }
-
+        
         else {
-
-
+          $timeTask = microtime(true);
           $pdfResult = $documento->generatePDF(
             $formato, 
             $save, 
@@ -473,9 +491,13 @@ class VentasController extends Controller
 
           $result = $pdfResult['tempPath'];
           $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);
+          taskTimeLogger('@saveFactura-generatePDF ' , $timeTask, $vtaoper, $empcodi );
         }
 
-      } else {
+      } 
+      
+      
+      else {
         $result = $documento->generatePDF(PDFPlantilla::FORMATO_A4, PDFGenerator::HTMLGENERATOR, get_empresa()->hasImpresionIGV(), true, true);
       }
 
@@ -508,13 +530,11 @@ class VentasController extends Controller
     if( $request->canje ){
       $needPago = false;
     }
+
     else {
       if( $isTableVentas  ){
-
         if( $documento->needPago() ){
-
           $needPago = auth()->user()->checkPermissionTo_(concat_space(PermissionSeeder::A_PAGOS, PermissionSeeder::R_VENTA));
-
         }
 
         else {
@@ -527,7 +547,8 @@ class VentasController extends Controller
       }
     }
 
-    timeExeFin('saveFactura ' . $vtaoper, $startTime, $empcodi);
+
+    taskTimeLogger('@saveFactura-final ' , $startTime, $vtaoper, $empcodi );
 
     $data = [
       'codigo_venta' => $vtaoper,

@@ -63,14 +63,18 @@ function timeExeFin($id , $startTime, $empcodi = null)
   ]);
 }
 
-function getTimeExecution($startTime, $endTime)
+function taskTimeLogger($nameTask, $starTime, $id, $empresa)
 {
-  $executionTime = microtime(true) - $startTime;
-  $executionTimeInSeconds = round($executionTime / 60, 2);
-  return $executionTimeInSeconds;
+  logger(sprintf('@CALC: %s ID:%s E:%s T:%s F:%s', $nameTask, $id, $empresa, microtime(true) - $starTime, date('Y-m-d H:i:s')));
 }
 
 
+function getTimeExecution($startTime, $endTime)
+{
+  $executionTime = $endTime - $startTime;        // Usar $endTime, no microtime(true) de nuevo
+  $executionTimeInSeconds = round($executionTime, 4); // NO dividir entre 60, ya está en segundos
+  return $executionTimeInSeconds;
+}
 
 
 
