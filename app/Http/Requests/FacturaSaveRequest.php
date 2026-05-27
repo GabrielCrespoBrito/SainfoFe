@@ -353,15 +353,16 @@ class FacturaSaveRequest extends FormRequest
       return false;
     }
 
+    if ($total_calculado > config('app.parametros.retencion_limite') && $this->cliente_model->hasRetencion() && $this->tipo_cargo_global != 'retencion') {
+      $validator->errors()->add('codRetencion', "El cliente tiene retención, por lo tanto el documento tiene que tener un código de retención");  
+      return false;
+    }
 
-    // dd($total_calculado, config('app.parametros.retencion_limite'), $this->cliente_model->hasRetencion(), $this->tipo_cargo_global);
-    
-    
-    // if ($total_calculado > config('app.parametros.retencion_limite') && $this->cliente_model->hasRetencion() && $this->tipo_cargo_global != 'retencion') {
-    //   $validator->errors()->add('codRetencion', "El cliente tiene retención, por lo tanto el documento tiene que tener un código de retención");
-    //   return false;
-    // }
 
+    if ($total_calculado < config('app.parametros.retencion_limite') && $this->cliente_model->hasRetencion() && $this->tipo_cargo_global == 'retencion') {
+      $validator->errors()->add('codRetencion', "No se puede aplicar retención a este cliente ya que el total es menor al monto minimo de retención: %s", config('app.parametros.retencion_limite'));  
+      return false;
+    }
 
     $this->total_documento = $totales;
 
