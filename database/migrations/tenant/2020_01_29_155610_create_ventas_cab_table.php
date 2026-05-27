@@ -112,6 +112,11 @@ class CreateVentasCabTable extends Migration
 				->nullable()
 				->default(0);
 			$table->primary(['VtaOper', 'EmpCodi', 'PanAno', 'PanPeri', 'TidCodi', 'VtaSeri'], 'primary_full');
+
+			// Índices de rendimiento
+			$table->index(['EmpCodi', 'TidCodi'], 'idx_ventas_cab_empcodi_tidcodi');
+			$table->index(['VtaSeri', 'TidCodi', 'EmpCodi'], 'idx_ventas_cab_serie_tid_emp');
+			$table->index('PCCodi', 'idx_ventas_cab_pccodi');
 		});
 	}
 

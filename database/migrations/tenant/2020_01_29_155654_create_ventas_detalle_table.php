@@ -68,6 +68,10 @@ class CreateVentasDetalleTable extends Migration
 			$table->string('EmpCodi')->default("001");
 			$table->string('TipoIGV')->nullable();
 			$table->primary(['Linea', 'EmpCodi']);
+
+			// Índices de rendimiento
+			$table->index('VtaOper', 'idx_ventas_detalle_vtaoper');
+			$table->index('DetCodi', 'idx_ventas_detalle_detcodi');
 		});
 	}
 

@@ -1205,8 +1205,6 @@ class Venta extends Model
 
     $plantilla  = $this->getPlantilla($formato);
     
-    // dd($plantilla);
-    // exit();
     
     $data = $this->dataPdf($formato, $impresion_directa, $items);
     $tempPath = '';

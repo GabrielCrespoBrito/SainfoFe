@@ -346,23 +346,16 @@ class GuiaSalida extends Model
 
   public static function lastId()
   {
-    $last_guia = self::orderByRaw('CONVERT(GuiOper, SIGNED) desc')
-      ->where('EmpCodi', empcodi())
-      ->first();
-
-    return $last_guia ? $last_guia->GuiOper : self::INIT;
+    $maxId = self::where('EmpCodi', empcodi())->max('GuiOper');
+    return $maxId ?: self::INIT;
   }
 
   public static function lastNume($empcodi, $tipo = "S")
   {
-    // First-Dates-First-Dates
-    $last_guia =
-      self::OrderByDesc('GuiNume')
-      ->where('EmpCodi', $empcodi)
+    $maxNume = self::where('EmpCodi', $empcodi)
       ->where('EntSal', $tipo)
-      ->first();
-    $value = is_null($last_guia) ? self::INIT_NUME  : $last_guia->GuiNume;
-    return $value;
+      ->max('GuiNume');
+    return $maxNume ?: self::INIT_NUME;
   }
 
   public static function lastGuiNumee($almacen)

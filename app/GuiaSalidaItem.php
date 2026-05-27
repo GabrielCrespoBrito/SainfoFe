@@ -83,8 +83,7 @@ class GuiaSalidaItem extends Model
 
   public static function lastId()
   {
-    $l = self::OrderByDesc('Linea')->first();
-    return $l ? $l->Linea : false;
+    return self::max('Linea') ?: false;
   }
 
   public static function agregate_cero($numero = false, $set = 0)

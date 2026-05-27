@@ -487,7 +487,8 @@ class VentasController extends Controller
             $serie->impresion_directa,
             PDFGenerator::HTMLGENERATOR,
             null,
-            $formato != PDFPlantilla::FORMATO_A4 );
+            // $formato != PDFPlantilla::FORMATO_A4 );
+            false );
 
           $result = $pdfResult['tempPath'];
           $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);

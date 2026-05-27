@@ -48,6 +48,11 @@ class CreateGuiaDetalleTable extends Migration
             $table->date('detfven')->nullable();
             $table->string('empcodi')->nullable();
             $table->primary(['Linea'], 'primary_full');
+
+            // Índices de rendimiento
+            $table->index('GuiOper', 'idx_guia_detalle_guioper');
+            $table->index('DetCodi', 'idx_guia_detalle_detcodi');
+            $table->index(['GuiOper', 'DetCodi'], 'idx_guia_detalle_guioper_detcodi');
         });
     }
 

@@ -87,6 +87,12 @@ class CreateGuiasCabTable extends Migration
             $table->string('obs_traslado')->nullable();
             $table->string('mod_traslado')->nullable();            
             $table->primary(['GuiOper', 'EmpCodi', 'PanAno', 'PanPeri'], 'primary_full');
+
+            // Índices de rendimiento
+            $table->index('EmpCodi', 'idx_guias_cab_empcodi');
+            $table->index('vtaoper', 'idx_guias_cab_vtaoper');
+            $table->index('Loccodi', 'idx_guias_cab_loccodi');
+            $table->index('TmoCodi', 'idx_guias_cab_tmocodi');
         });
     }
     /**
