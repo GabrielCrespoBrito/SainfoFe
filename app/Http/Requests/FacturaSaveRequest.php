@@ -83,7 +83,7 @@ class FacturaSaveRequest extends FormRequest
       'medio_pago'        => 'required|exists:tipo_pago,TpgCodi',
       'vendedor'          => 'required',
       'ZonCodi'          => 'required',
-      'observacion'          => 'nullable|sometimes|max:100',
+      'observacion'          => 'nullable|sometimes|max:190',
       'descuento_global'   => 'required|numeric|min:0|max:100',
       'nro_pedido'        => 'nullable|sometimes|max:100',
       'hasDetraccion'     => 'required',
