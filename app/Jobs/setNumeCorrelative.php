@@ -20,19 +20,25 @@ class setNumeCorrelative
 	public function handle()
 	{
 		$docNumeParcial  =  $this->resumen->getDocNumeParcial();
-
+		
 		$resumenLast = Resumen::OrderByDesc('DocNume')
-			->where("DocNume", 'LIKE', $docNumeParcial . '%')
-			->first();
-
-
+		->where("DocNume", 'LIKE', $docNumeParcial . '%')
+		->first();
+		
+		
 		$correDia = Resumen::DOC_DIA_INIT;
 		
-		if ( $resumenLast && optional($resumenLast)->hasNewFormatCorrelative() ) {
-			# Obtener el correlativo del ultimo resumen enviado y sumarle uno
-			$correDia = $resumenLast->getCorrelativeDia(true) + 1;
-			# Agregar los ceros correspondientes
-			$correDia = math()->addCero($correDia, 3);
+		if ( $resumenLast  ) {
+
+			if( optional($resumenLast)->hasNewFormatCorrelative() ){
+				$correDia = $resumenLast->getCorrelativeDia(true) + 1;
+			}
+			
+			else {
+				$docNume = explode( "-", $resumenLast->DocNume ) ;
+				$correDia = end($docNume) + 1;
+				$correDia = math()->addCero($correDia, 4);
+			}
 		}
 
 		$docNume = $docNumeParcial . $correDia;
