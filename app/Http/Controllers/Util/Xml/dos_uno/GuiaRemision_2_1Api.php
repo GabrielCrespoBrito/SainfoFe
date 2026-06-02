@@ -125,6 +125,7 @@ class GuiaRemision_2_1Api extends XmlHelperNew
         ["documento", $empresaTransporte->getDocumento() ],
         ["nombre", $empresaTransporte->getNombre()  ],
         ["mtc", $empresaTransporte->getRegistroMTC() ],
+        ["fecha", date('Y-m-d') ],
       ], $this->empresaTransporteXML, false);
     }
 

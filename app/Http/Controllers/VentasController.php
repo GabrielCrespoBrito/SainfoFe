@@ -407,7 +407,6 @@ class VentasController extends Controller
     $documento = null;
     $vtaoper = null;
     $empcodi = empcodi();
-    $startTime = microtime(true);
     $serie = null;
     $data_impresion = null;
     $isTableVentas = $request->tipo_documento != TipoDocumentoPago::PROFORMA;
@@ -418,7 +417,6 @@ class VentasController extends Controller
     DB::connection()->beginTransaction();
     
     try {
-      $timeTask = microtime(true);
       if ($isTableVentas) {
         $documento = Venta::createFactura($request, $con_productos_enviados, $request->total_documento);
         VentaItem::createItem($documento->VtaOper, $request->items, $con_productos_enviados, $request->totales_items, $request->placa_vehiculo);
@@ -429,17 +427,11 @@ class VentasController extends Controller
         CotizacionItem::guardarFromVenta($request->items, $documento, $request->totales_items);
       }
 
-      taskTimeLogger('@saveFactura-createFactura ' , $timeTask, $vtaoper, $empcodi );
-      
-      
       if ($isTableVentas) {
-        $timeTask = microtime(true);
         $documento->createFormaPago($request->pagos);
         $tipo_guia = $request->input('guia_tipo', Venta::GUIA_ACCION_NINGUNA);
-        taskTimeLogger('@saveFactura-createFormaPago ' , $timeTask, $vtaoper, $empcodi );
 
         if ($tipo_guia != Venta::GUIA_ACCION_NINGUNA) {
-        $timeTask = microtime(true);
           $rpta = $documento->createOrAssocGuia(
             $tipo_guia,
             $request->guias,
@@ -447,15 +439,6 @@ class VentasController extends Controller
             TipoMovimiento::DEFAULT_SALIDA,
             $request->guiasIds
           );
-          logger('@DATA-createOrAssocGuia', [
-            'tipo_guia' => $tipo_guia,
-            'guias' => $request->guias,
-            'id_almacen' => $request->input('id_almacen', '001'),
-            'tipo_movimiento' => TipoMovimiento::DEFAULT_SALIDA,
-            'guiasIds' => $request->guiasIds,
-            'rpta' => $rpta
-          ]);
-          taskTimeLogger('@saveFactura-createOrAssocGuia ' , $timeTask, $vtaoper, $empcodi );
           if (!$rpta->success) {
             throw new Exception(sprintf("Error Creando Guia: %s", $rpta->data), 1);
           }
@@ -469,7 +452,6 @@ class VentasController extends Controller
         $save = $formato == PDFPlantilla::FORMATO_A4;
         $documento->fresh()->saveXML();
         $serie = $request->serie;
-        taskTimeLogger('@saveFactura-saveXML ' , $timeTask, $vtaoper, $empcodi );
 
 
         
@@ -479,7 +461,6 @@ class VentasController extends Controller
         }
         
         else {
-          $timeTask = microtime(true);
           $pdfResult = $documento->generatePDF(
             $formato, 
             $save, 
@@ -492,7 +473,6 @@ class VentasController extends Controller
 
           $result = $pdfResult['tempPath'];
           $data_impresion = Venta::prepareDataVentaForJavascriptPrint($pdfResult['data']);
-          taskTimeLogger('@saveFactura-generatePDF ' , $timeTask, $vtaoper, $empcodi );
         }
 
       } 
@@ -547,9 +527,6 @@ class VentasController extends Controller
         $needPago = false;
       }
     }
-
-
-    taskTimeLogger('@saveFactura-final ' , $startTime, $vtaoper, $empcodi );
 
     $data = [
       'codigo_venta' => $vtaoper,

@@ -204,7 +204,11 @@ trait PartsGuiaXMLApi
       <cbc:RegistrationName><![CDATA[[nombre]]]></cbc:RegistrationName>
       <cbc:CompanyID><![CDATA[[mtc]]]></cbc:CompanyID>
     </cac:PartyLegalEntity>
-  </cac:CarrierParty>';
+  </cac:CarrierParty>
+  <cac:LoadingTransportEvent>
+    <cbc:OccurrenceDate>[fecha]</cbc:OccurrenceDate>
+  </cac:LoadingTransportEvent>';
+
 
   public $transportistaXML =
   '<cac:DriverPerson>

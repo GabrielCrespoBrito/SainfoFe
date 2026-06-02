@@ -4,12 +4,9 @@ namespace App\Jobs\GuiaSalida;
 
 use Exception;
 use App\GuiaSalida;
-use App\M;
 use GuzzleHttp\Client;
 use App\Util\ResultTrait;
-use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
 
 class SendApi
 {
@@ -63,11 +60,15 @@ class SendApi
     try {
       $res = $client->post($url, $options);
       $content = json_decode($res->getBody()->getContents());
+      
       $this->guiaSalida->saveTicket($content->numTicket, $content->fecRecepcion);
       $this->ticket = $content->numTicket;
+      
+      logger(sprintf('@GUIA-SUNAT %s %s SendApi', $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, 
+      [$content]));
       return true;
     } catch (ClientException $th) {
-      logger()->error(sprintf('@ERROR SEND API %s %s %s' , $this->guiaSalida->GuiOper, $this->guiaSalida->EmpCodi, $th->getMessage()));
+      logger()->error(sprintf('@GUIA-SUNAT ERROR SEND API %s %s %s' , $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, $th->getMessage()));
       $infoError = json_decode($th->getResponse()->getBody()->getContents());
       if (property_exists($infoError, 'status')) {
         $cod = $infoError->status;
@@ -86,8 +87,10 @@ class SendApi
         $cod = "-000";
         $msg = $th->getMessage();
       }
+      logger()->error(sprintf('@GUIA-SUNAT ERROR SEND API ClientException MESSAGE %s %s %s' , $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, $msg));
       return $this->setError(sprintf('Cod: %s | %s', $cod, $msg));
     } catch (Exception $th) {
+      logger()->error(sprintf('@GUIA-SUNAT ERROR SEND API Exception %s %s %s' , $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, $th->getMessage()));
       return $this->setError($th->getMessage());
     }
   }

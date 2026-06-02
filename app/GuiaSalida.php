@@ -120,9 +120,13 @@ class GuiaSalida extends Model
   public function sendApi()
   {
     ini_set('max_execution_time', '300');
+    logger(sprintf('@GUIA-SUNAT %s-%s', $this->EmpCodi, $this->GuiUni ));
     $sendApi = new SendApi($this);
     $sendApi->handle();
-    return $sendApi->getResult();
+    $result = $sendApi->getResult();
+    logger(sprintf('@GUIA-SUNAT %s-%s', $this->EmpCodi, $this->GuiUni, [$result]));
+    return $result;
+
   }
 
   public function isTrasladoPendiente()

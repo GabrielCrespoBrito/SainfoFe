@@ -61,6 +61,16 @@ class ValidateTicket
       $processor = $this->guiaSalida->apiResponseProcess($content);
       $result = $processor->getResult();
 
+      logger(
+        sprintf('@GUIA-SUNAT GET RESPONSE ValidateTicket %s %s %s', 
+          $this->guiaSalida->EmpCodi,
+          $this->guiaSalida->GuiUni, 
+          $this->guiaSalida->fe_ticket
+        ), [
+          $content
+        ]
+      );
+
       $this->result['success'] = $result->success;
       $this->result['data'] = $result->data;
 
@@ -81,9 +91,9 @@ class ValidateTicket
         $msg = $infoError->msg;
       }
       $this->setError(sprintf('Cod: %s | %s', $cod, $msg));
-      logger()->error(sprintf('@ERROR VALIDATE TICKET %s %s %s' , $this->guiaSalida->GuiOper, $this->guiaSalida->EmpCodi, $th->getMessage()));
+      logger()->error(sprintf('@ERROR GUIA-SUNAT VALIDATE TICKET %s %s %s %s %s' , $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, $msg, $cod, $th->getMessage()));
     } catch (Exception $th) {
-      logger()->error(sprintf('@ERROR Exception VALIDATE TICKET %s %s %s' , $this->guiaSalida->GuiOper, $this->guiaSalida->EmpCodi, $th->getMessage()));
+      logger()->error(sprintf('@ERROR GUIA-SUNAT VALIDATE TICKET %s %s %s %s %s' , $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, $th->getMessage()));
       $this->setError($th->getMessage());
     }
 
