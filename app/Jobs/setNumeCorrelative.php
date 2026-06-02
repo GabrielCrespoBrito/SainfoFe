@@ -31,7 +31,9 @@ class setNumeCorrelative
 		if ( $resumenLast  ) {
 			
 			if( optional($resumenLast)->hasNewFormatCorrelative() ){
-				$correDia = $resumenLast->getCorrelativeDia(true) + 1;
+				$correDia = $numeracion = $resumenLast->getCorrelativeDia(true);
+				logger('@NUMERACION-DEL-DIA' , [ $correDia ]);
+				$correDia = $correDia + 1;
 				$correDia  = math()->addCero($correDia, 3);
 			}
 			
