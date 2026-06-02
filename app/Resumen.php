@@ -590,12 +590,12 @@ class Resumen extends Model
 
     optional();
     $numSerie = substr($serie, -1);
-    $correlative = self::itemDia($fecha, true, $numSerie);
+    // $correlative = self::itemDia($fecha, true, $numSerie);
 		$resumen = new self;
 		$resumen->EmpCodi   = $empcodi;
 		$resumen->TipoOper  = "R";
 		$resumen->NumOper   = self::UltimoId();
-    $resumen->DocNume   = $correlative;
+    // $resumen->DocNume   = $correlative;
 		$resumen->DocFechaE = $data["fecha_generacion"];
 		$resumen->DocFechaD = $data["fecha_documento"];
     $resumen->DocMotivo = $baja ? "A" : "R";
