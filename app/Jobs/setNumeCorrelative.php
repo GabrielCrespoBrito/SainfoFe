@@ -44,6 +44,8 @@ class setNumeCorrelative
 
 		$docNume = $docNumeParcial . $correDia;
 
+		logger('@RESUMEN-NUMERACION' , [ $this->resumen->EmpCodi, $docNume]);
+
 		$this->resumen->fill(['DocNume' => $docNume ]);
 	}
 }
