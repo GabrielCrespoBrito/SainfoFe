@@ -28,8 +28,12 @@ class setNumeCorrelative
 		
 		$correDia = Resumen::DOC_DIA_INIT;
 		
+		logger('@RESUMEN-LAST', [ $resumenLast ]);
+
 		if ( $resumenLast  ) {
 			
+			logger('@RESUMEN-LAST-FORMATO', [ optional($resumenLast)->hasNewFormatCorrelative() ]);
+
 			if( optional($resumenLast)->hasNewFormatCorrelative() ){
 				$correDia = $numeracion = $resumenLast->getCorrelativeDia(true);
 				logger('@NUMERACION-DEL-DIA' , [ $correDia ]);
@@ -41,6 +45,8 @@ class setNumeCorrelative
 				$docNume = explode( "-", $resumenLast->DocNume ) ;
 				$correDia = end($docNume) + 1;
 				$correDia = math()->addCero($correDia, 4);
+
+				logger('@FORMATO-ANTERIOR' , [ $correDia ]);
 			}
 		}
 
