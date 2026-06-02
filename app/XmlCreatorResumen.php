@@ -105,6 +105,7 @@ class XmlCreatorResumen extends XmlHelper
          <cbc:TaxAmount currencyID="PEN">[igv_total]</cbc:TaxAmount>
          <cac:TaxSubtotal>
          <cbc:TaxAmount currencyID="PEN">[igv_total]</cbc:TaxAmount>
+        <cbc:Percent currencyID="PEN">[igv_porcentaje]</cbc:Percent>
          <cac:TaxCategory>
              <cac:TaxScheme>
                  <cbc:ID>1000</cbc:ID>
@@ -222,6 +223,7 @@ public $billingReferenceBase =
         ["isc_total", decimal($item->DetISC)],
         ["icbper_total", decimal($item->getBolsaTotal())],
         ["condicion_code" , $condicion_code ],
+        ["igv_porcentaje" , $item->DetIGV  ? config('app.parametros.igv', 18) : 0 ],
         ["cliente_documento" , $cliente_documento ],
         ['BillingReference' , $this->getBillingReference($item , $this->documento->isAnulacion()) ],
         ["cliente_tipo_documento" , $tipo_documento ],        

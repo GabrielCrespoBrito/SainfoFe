@@ -561,10 +561,7 @@ class VentasController extends Controller
     $pathTemp = file_build_path('temp', $namePDF);
     $venta = Venta::find($id_factura);
     $empresa = get_empresa();
-    $id_test =  'imprimirFactura: ' . $id_factura . '-' . $venta->EmpCodi;
     $fileHelper = fileHelper($empresa->ruc());
-
-    $startTime = timeExeIni($id_test, $venta->EmpCodi);
 
     if ($plantilla_data->isFormatoA4()) {
 
@@ -590,13 +587,11 @@ class VentasController extends Controller
     // Si es mobil, descargar
     if ($download == "1" || isMobile()) {
       $realPath = file_build_path($pathTemp);
-      timeExeFin($id_test, $startTime, $venta->EmpCodi);
       return response()->download($realPath, $namePDF);
     }
 
     $path = asset($pathTemp);
     $pathJs = str_replace('\\', '/', $path);
-    timeExeFin($id_test, $startTime, $venta->EmpCodi);
     return view('ventas.pdf_test', ['path' => $path, 'pathJS' => $pathJs, 'nameFile' => $namePDF]);
   }
 

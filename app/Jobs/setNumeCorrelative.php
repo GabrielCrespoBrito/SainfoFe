@@ -29,9 +29,10 @@ class setNumeCorrelative
 		$correDia = Resumen::DOC_DIA_INIT;
 		
 		if ( $resumenLast  ) {
-
+			
 			if( optional($resumenLast)->hasNewFormatCorrelative() ){
 				$correDia = $resumenLast->getCorrelativeDia(true) + 1;
+				$correDia  = math()->addCero($correDia, 3);
 			}
 			
 			else {
