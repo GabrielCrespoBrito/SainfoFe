@@ -120,7 +120,7 @@ class Resumen extends Model
    */
   public function hasNewFormatCorrelative()
   {
-    return  strlen($this->DocNume) == 17;
+    return  strlen($this->DocNume) == 17 || strlen($this->DocNume) == 18;
   }
 
   /**
