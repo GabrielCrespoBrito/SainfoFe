@@ -523,7 +523,9 @@ return [
 
   "aws_url_bucket" => env('AWS_URL_ABSOLUTE_BUCKET', null),
 
-
+  'empresas_apply_igv_percent' => [
+    
+  ],
 
   'reporte_mas_vendido_dias_limite' => env('REPORTE_MAS_VENDIDOS_DIAS', 31),
   'reporte_utilidades_dias_limite' => env('REPORTE_UTILIDADES_DIAS', 31),

@@ -105,7 +105,7 @@ class XmlCreatorResumen extends XmlHelper
          <cbc:TaxAmount currencyID="PEN">[igv_total]</cbc:TaxAmount>
          <cac:TaxSubtotal>
          <cbc:TaxAmount currencyID="PEN">[igv_total]</cbc:TaxAmount>
-        <cbc:Percent currencyID="PEN">[igv_porcentaje]</cbc:Percent>
+         [percent_igv]
          <cac:TaxCategory>
              <cac:TaxScheme>
                  <cbc:ID>1000</cbc:ID>
@@ -118,6 +118,8 @@ class XmlCreatorResumen extends XmlHelper
 </sac:SummaryDocumentsLine>
 ';
 
+// <cbc:Percent currencyID="PEN">[igv_porcentaje]</cbc:Percent>
+
 public $billingReferenceBase = 
 "<cac:BillingReference>
   <cac:InvoiceDocumentReference>
@@ -125,6 +127,10 @@ public $billingReferenceBase =
     <cbc:DocumentTypeCode>[tipo]</cbc:DocumentTypeCode>
   </cac:InvoiceDocumentReference>
 </cac:BillingReference>";
+
+
+public $percentBase = 
+'<cbc:Percent currencyID="PEN">[igv_porcentaje]</cbc:Percent>';
 
 
   public $footer_part_xml = 
@@ -213,6 +219,13 @@ public $billingReferenceBase =
         $cliente_documento = $item->PCRucc;
       }
 
+      $percent_igv = "";
+
+      if( $this->empresa->applyIgvPercent() ){
+        $percent_igv = $this->change_datas([
+          ["igv_porcentaje" , $item->DetIGV  ? "18.00" : "0.00" ] ], $this->percentBase ,false);
+      }
+
       $this->items_part_xml .= $this->change_datas([
         ["item_id" , (int) $item->DetItem ],
         ["numero_serie_venta" , $item->detseri . "-" . $item->detNume ],
@@ -223,7 +236,7 @@ public $billingReferenceBase =
         ["isc_total", decimal($item->DetISC)],
         ["icbper_total", decimal($item->getBolsaTotal())],
         ["condicion_code" , $condicion_code ],
-        ["igv_porcentaje" , (float) ($item->DetIGV  ? config('app.parametros.igv', 18) : 0 ) ],
+        ["percent_igv" , $percent_igv  ],
         ["cliente_documento" , $cliente_documento ],
         ['BillingReference' , $this->getBillingReference($item , $this->documento->isAnulacion()) ],
         ["cliente_tipo_documento" , $tipo_documento ],        

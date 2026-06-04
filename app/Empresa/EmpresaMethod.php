@@ -28,6 +28,12 @@ trait EmpresaMethod
       ->getResult();
   }
 
+  public function applyIgvPercent()
+  {
+    $empresas_apply_igv_percent = config('app.empresas_apply_igv_percent', []);
+    return in_array($this->empcodi, $empresas_apply_igv_percent);
+  }
+
   public function getOrGenerateSireTokenApi()
   {
     return (new GenerateTokenSire($this))
