@@ -223,7 +223,7 @@ public $billingReferenceBase =
         ["isc_total", decimal($item->DetISC)],
         ["icbper_total", decimal($item->getBolsaTotal())],
         ["condicion_code" , $condicion_code ],
-        ["igv_porcentaje" , $item->DetIGV  ? config('app.parametros.igv', 18) : 0 ],
+        ["igv_porcentaje" , $item->DetIGV  ? (float) config('app.parametros.igv', 18) : 0 ],
         ["cliente_documento" , $cliente_documento ],
         ['BillingReference' , $this->getBillingReference($item , $this->documento->isAnulacion()) ],
         ["cliente_tipo_documento" , $tipo_documento ],        
