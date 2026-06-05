@@ -149,6 +149,10 @@ class GuiaController extends Controller
       ], 400);
     }
 
+    if( $request->input('createXml', true) ) {
+      $guia->createXmlZip();
+    }
+
     $res = $guia->sendApi();
     return response()->json(['message' => $res->data], $res->success ? 200 : 400);
 
