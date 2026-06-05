@@ -65,7 +65,7 @@ class SendApi
       $this->ticket = $content->numTicket;
       
       logger(sprintf('@GUIA-SUNAT %s %s SendApi', $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, 
-      [$content]));
+      ), [$content]);
       return true;
     } catch (ClientException $th) {
       logger()->error(sprintf('@GUIA-SUNAT ERROR SEND API %s %s %s' , $this->guiaSalida->EmpCodi, $this->guiaSalida->GuiUni, $th->getMessage()));
