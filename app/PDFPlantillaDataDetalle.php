@@ -22,6 +22,17 @@ class PDFPlantillaDataDetalle extends Model
     return $this->codigo_producto;
   }
 
+  
+  public function DetDetaFormat()
+  {
+    return str_replace( "\n", '<br/>' , $this->DetDeta );
+  }
+
+  public function getDetDetaAttribute()
+  {
+    return 'COMENTARIO ITEM';
+  }
+
   public function getDetUnidAttribute()
   {
     return $this->unidad;

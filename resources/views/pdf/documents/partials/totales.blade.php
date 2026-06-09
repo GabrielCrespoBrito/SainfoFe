@@ -20,7 +20,6 @@
     $total = $venta2->VtaImpo;
     $style = $style ?? '';
     $decimalsTotal = $decimalsTotal ?? '2';
-    
 
 @endphp
 
@@ -88,7 +87,7 @@
             <tr>
                 <td class="total_nombre {{ $total_nombre_class }}">IGV.: {{ $igvPorc }} </td>
                 <td class="total_value {{ $total_value_class }}"> <span class="moneda_abbr">{{ $moneda_abreviatura }}
-                    </span> {{ fixedValue($igv, $decimalsTotal) }}</td>
+                    </span> {{ fixedValue($igv, 2) }}</td>
             </tr>
         @endif
 
@@ -113,20 +112,22 @@
             <tr>
                 <td class="total_nombre {{ $total_nombre_class }}">TOTAL.: </td>
                 <td class="total_value {{ $total_value_class }}"> <span class="moneda_abbr">{{ $moneda_abreviatura }}
-                    </span> {{ fixedValue($total, $decimalsTotal) }}</td>
+                    </span> {{ fixedValue($total, 2) }}</td>
             </tr>
 
             @if ($venta_rapida && $showACuenta)
                 <tr>
                     <td class="total_nombre {{ $total_nombre_class }}">A CUENTA: </td>
                     <td class="total_value {{ $total_value_class }}"> <span
-                            class="moneda_abbr">{{ $moneda_abreviatura }} </span> {{ fixedValue($venta2->VtaPago, $decimalsTotal) }}</td>
+                            class="moneda_abbr">{{ $moneda_abreviatura }} </span>
+                        {{ fixedValue($venta2->VtaPago, $decimalsTotal) }}</td>
                 </tr>
 
                 <tr>
                     <td class="total_nombre {{ $total_nombre_class }}">SALDO: </td>
                     <td class="total_value {{ $total_value_class }}"> <span
-                            class="moneda_abbr">{{ $moneda_abreviatura }} </span> {{ fixedValue($venta2->VtaSald, $decimalsTotal) }}</td>
+                            class="moneda_abbr">{{ $moneda_abreviatura }} </span>
+                        {{ fixedValue($venta2->VtaSald, $decimalsTotal) }}</td>
                 </tr>
             @endif
 

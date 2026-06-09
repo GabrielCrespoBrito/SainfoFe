@@ -901,7 +901,10 @@ function fixedValueCustom($value, $decimal = 2)
 
 function fixedValue($value, $decimal = 2)
 {
-  return number_format((float)$value, $decimal, '.', '');
+  $v = number_format((float)$value, $decimal, '.', '');
+
+  return $v;
+
 }
 
 function newformat_date($time, $format = "Y/m/d")
