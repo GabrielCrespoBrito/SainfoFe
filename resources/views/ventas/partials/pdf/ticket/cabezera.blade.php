@@ -10,7 +10,7 @@
     @endif
 
     <p class="center titulo"> {{ $empresa['EmpNomb'] }} </p>
-    <p class="center size-regular"> {{ $direccion }} </p>
+    <p class="center size-regular"> {!! $direccion !!} </p>
     <div class="ruc center size-regular">R.U.C.: {{ $empresa['EmpLin1'] }} </div>
     <div class="tlf center size-regular">{!! $telefonos_local ?? $telefonos !!} </div>
     <div class="email center size-regular">{{ $empresa['EmpLin3'] }} </div>

@@ -23,7 +23,7 @@
 						@php $direcciones = explode( "/" , $empresa['EmpLin2'] ); @endphp
 
 				    @foreach( $direcciones as $direccion )
-							<p class="direccion">{{ $direccion }}</p>
+							<p class="direccion">{!! $direccion !!}</p>
 						@endforeach
 						<p class="telefono">{{ $empresa['EmpLin4'] }}</p>
 						<p class="email">{{ $empresa['EmpLin3'] }}</p>

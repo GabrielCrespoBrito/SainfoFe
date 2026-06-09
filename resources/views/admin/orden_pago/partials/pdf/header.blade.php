@@ -6,7 +6,7 @@
                     <img style="" src="data:image/png;base64,{{ $logo }}">
                 </p>
 
-                <div class="data"> {{ $direccion }} </div>
+                <div class="data"> {!! $direccion !!} </div>
                 <div class="data"> {!! $telefonos !!} </div>
                 <div class="data"> {{ $email }} </div>
             </td>
