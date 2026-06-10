@@ -354,6 +354,14 @@ class FacturaSaveRequest extends FormRequest
     }
 
     $montoRetencion = config('app.parametros.retencion_limite');
+
+
+
+    if( $retencion && $detraccion_porc ){
+      $validator->errors()->add('codRetencion', "Si el documento aplica Detracción, no se puede consignar tambien Retención, quitar el porcentaje de Retención aplicado, para poder guardar el documento.");  
+      return false;
+    }
+    
     
     if ($total_calculado > $montoRetencion && $this->cliente_model->hasRetencion() && $this->tipo_cargo_global != 'retencion') {
       $validator->errors()->add('codRetencion', "El cliente tiene retención, por lo tanto el documento tiene que tener un código de retención");  
