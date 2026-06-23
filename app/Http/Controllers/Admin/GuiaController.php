@@ -197,9 +197,11 @@ class GuiaController extends Controller
 
     $guia->GuiFemi = hoy();
     $guia->GuiFDes = hoy();
+    $guia->GuiFDes = hoy();
     $guia->PanAno = date('Y');
     $guia->PanPeri = date('m');
     $guia->mescodi = date('Ym');
+    $guia->User_FCrea = date('Y-m-d 00:00:00') ;
     $guia->save();
 
     return response()->json([
