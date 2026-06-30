@@ -6,6 +6,9 @@
     $class_name_table = $class_name_table ?? '';
     $thead_class = $thead_class ?? '';
     $tbody_class = $tbody_class ?? '';
+    $tbody_td_class = $tbody_td_class ?? '';
+    $precio_unitario = $precio_unitario ?? true;
+    $campoTotal = $campoTotal ?? 'DetImpo';
 
     $theads = [
         [
@@ -39,20 +42,9 @@
         ],
     ];
 
-    /*
-if($orden_campos['valor_unitario'] ){
-$theads[] = [
-'class_name' => 'bg-black c-white pr-x3 pl-x3 text-right',
-'text' => 'V.Unit'
-];
-}
-*/
-
-    //if($orden_campos['precio_unitario'] ){
-
     $theads[] = [
         'class_name' => 'bg-black c-white pr-x3 pl-x3 text-right',
-        'text' => 'P.Unit',
+        'text' => $precio_unitario ? 'P.Unit' : 'V.Unit',
     ];
 
     //}
@@ -78,31 +70,33 @@ $theads[] = [
         <tbody class="{{ $tbody_class }}">
             @foreach ($items as $item)
                 <tr>
-                    <td class="{{ $borderTbody ? 'border-left-style-solid' : '' }} pl-x3 vertical-align-top">
-                        {{ $item->DetItem }} II</td>
-                    <td class="pl-x6 vertical-align-top">{{ $item->DetCodi }}</td>
-                    <td class="pl-x6 text-left vertical-align-top">{{ $item->DetNomb }}
+                    <td
+                        class="{{ $borderTbody ? 'border-left-style-solid' : '' }} pl-x3 vertical-align-top {{ $tbody_td_class }}">
+                        {{ $item->DetItem }}</td>
+                    <td class="pl-x6 vertical-align-top {{ $tbody_td_class }}">{{ $item->DetCodi }}</td>
+                    <td class="pl-x6 text-left vertical-align-top {{ $tbody_td_class }}">{{ $item->DetNomb }}
                         @if ($item->DetDeta)
                             <br>{!! $item->DetDetaFormat() !!}
                         @endif
                     </td>
-                    <td class="pr-x6 vertical-align-top pl-x3">{{ $item->DetUnid }}</td>
-                    <td class="text-right pr-x3 vertical-align-top">{{ fixedValue($item->DetPeso) }}</td>
+                    <td class="pr-x6 vertical-align-top pl-x3 {{ $tbody_td_class }}">{{ $item->DetUnid }}</td>
+                    <td class="text-right pr-x3 vertical-align-top {{ $tbody_td_class }}">
+                        {{ fixedValue($item->DetPeso) }}</td>
                     <td
-                        class="text-right {{ $borderTbody ? 'border-right-style-solid border-left-style-solid' : '' }}  pr-x3 pl-x3 vertical-align-top">
+                        class="text-right {{ $borderTbody ? 'border-right-style-solid border-left-style-solid' : '' }}  pr-x3 pl-x3 vertical-align-top {{ $tbody_td_class }}">
                         {{ $item->DetCant }}</td>
 
                     <td
-                        class="text-right {{ $borderTbody ? 'border-right-style-solid' : '' }}  pr-x3 pl-x3 vertical-align-top">
-                        {{ $item->getPrecio($orden_campos['precio_unitario']) }}</td>
+                        class="text-right {{ $borderTbody ? 'border-right-style-solid' : '' }}  pr-x3 pl-x3 vertical-align-top {{ $tbody_td_class }}">
+                        {{ $item->getPrecio($precio_unitario) }}</td>
 
                     {{-- @if ($orden_campos['precio_unitario']) --}}
                     {{-- <td class="text-right border-right-style-solid pr-x3 pl-x3 vertical-align-top"> {{ decimal($item->precioUnitario(), $decimals ) }}</td> --}}
                     {{-- @endif --}}
 
                     <td
-                        class="text-right {{ $borderTbody ? 'border-right-style-solid' : '' }} pr-x3 pl-x3 vertical-align-top">
-                        {{ decimal($item->DetImpo) }}</td>
+                        class="text-right {{ $borderTbody ? 'border-right-style-solid' : '' }} pr-x3 pl-x3 vertical-align-top {{ $tbody_td_class }}">
+                        {{ decimal($item->{$campoTotal}) }}</td>
 
                 </tr>
             @endforeach

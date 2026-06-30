@@ -1070,9 +1070,11 @@ class Venta extends Model
     }
 
     $orden_campos = $e->getOrdenCampos();
+    
     logger("@orden_campos", [
       $orden_campos
     ]);
+    
     $guias = $this->getNumerosGuias();
     $data = [
       'title' => $this->nameFile('.pdf'),
