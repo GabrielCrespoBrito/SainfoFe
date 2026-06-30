@@ -1070,6 +1070,9 @@ class Venta extends Model
     }
 
     $orden_campos = $e->getOrdenCampos();
+    logger("@orden_campos", [
+      $orden_campos
+    ]);
     $guias = $this->getNumerosGuias();
     $data = [
       'title' => $this->nameFile('.pdf'),
@@ -1097,7 +1100,6 @@ class Venta extends Model
       'nombre_documento' => $this->nombreDocumento(),
       'documento_id' => $documento_id,
       'condiciones' => $condiciones,
-      'condiciones' => $condiciones,
       'observacion' => $this->VtaObse,
       'peso' => $this->getPesoTotal(),
       'base' => $this->Vtabase,
@@ -1120,7 +1122,6 @@ class Venta extends Model
       'formato_small' => $is_small,
       'logo_ticket_url' => $logo_ticket_url,
       'firma'          => $this->fe_firma,
-      'peso'          => $this->getPesoTotal(),
       'status_code' => $this->status_code,
       'placa' => $placa,
       'status_message' => $this->getStatusMessage()

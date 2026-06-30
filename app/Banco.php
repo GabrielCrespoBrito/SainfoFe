@@ -17,5 +17,18 @@ class Banco extends Model
 	{
 		return $this->hasMany(BancoEmpresa::class, 'BanCodi' , 'bancodi' );
 	}
+
+	public function getBancoImageLogo()
+	{
+		$nameBanco = mb_strtolower(trim($this->bannomb));
+
+		$path = public_path(file_build_path('images', 'bancos', $nameBanco . '.jpeg'));
+
+		if (file_exists($path)) {
+			return $path;
+		}
+
+		return false;
+	}
 	
 }

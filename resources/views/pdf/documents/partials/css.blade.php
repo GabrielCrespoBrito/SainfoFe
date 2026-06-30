@@ -2663,6 +2663,10 @@ border-top-style: dotted;
 border-bottom-style: dotted;
 }
 
+.border-bottom-style-dashed {
+border-bottom-style: dashed;
+}
+
 .border-bottom-style-double {
 border-bottom-style: double;
 }
@@ -2910,10 +2914,10 @@ outline:1px solid black;
 
 
 @if ($logoMarcaAgua)
-body.a4 .img-marca-agua {
-position : fixed;
-opacity : .5;
-}
+    body.a4 .img-marca-agua {
+    position : fixed;
+    opacity : .5;
+    }
 @endif
 
 

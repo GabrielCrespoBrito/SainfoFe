@@ -981,6 +981,7 @@ trait VentaMethod
     foreach( $bancos as $banGroup => $cuentas ){
       foreach( $cuentas as $cuenta ){
         $data_cuenta = [
+          'banco_image' => $cuenta->banco->getBancoImageLogo(),
           'banco_nombre' => $cuenta->banco->bannomb,
           'banco_moneda' => Moneda::getAbrev($cuenta->MonCodi),
           'banco_cuenta' => removeWhiteSpace($cuenta->CueNume),
