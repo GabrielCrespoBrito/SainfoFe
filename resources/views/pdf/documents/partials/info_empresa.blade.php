@@ -102,7 +102,7 @@
                 </span>
             @endif
 
-            <span class="telefonos_text {{ $telefonos_text_class }}"> {!! $telefonos !!} </span>
+            <span class="telefonos_text {{ $telefonos_text_class }}"> {!! formatTelefono($telefonos) !!} </span>
 
         </div>
     @endif

@@ -899,6 +899,39 @@ function fixedValueCustom($value, $decimal = 2)
 }
 
 
+function formatTelefono( $telefonos )
+{
+//
+		// $nameBanco = mb_strtolower(trim($this->bannomb));
+
+		// $path = public_path(file_build_path('images', 'bancos', $nameBanco . '.jpeg'));
+
+		// if (file_exists($path)) {
+		// 	return $path;
+		// }
+
+		// return false;
+  //
+    $path = public_path(file_build_path('images', 'bancos', 'yape.jpeg'));
+
+  $imgString = '<img src="data:image/jpeg;base64,' . base64_encode(file_get_contents($path)) . '" alt="yape" style="width: 20px; margin-left: 10px;" />';
+
+  if (is_array($telefonos)) {
+    foreach ($telefonos as $i => $telefono) {
+      $telefonos[$i] = str_replace("[yape]", $imgString, $telefono);
+    }
+  }
+
+  if (is_string($telefonos)) {
+    $telefonos  = str_replace("[yape]", $imgString, $telefonos);
+  }
+
+  logger('@FIXED TELEFONOS', [ $telefonos ]);
+
+  return $telefonos;
+
+}
+
 function fixedValue($value, $decimal = 2)
 {
   $v = number_format((float)$value, $decimal, '.', '');
