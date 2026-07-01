@@ -74,6 +74,8 @@
 
         @include('pdf.documents.partials.table_cot1', [
             'class_name' => 'col-10 border-color-blue-light',
+            'precioConIgv' => $orden_campos['precio_con_igv'],
+            'totalConIgv' => $orden_campos['total_con_igv'],
             'class_name_table' =>
                 'col-10 border-color-blue-light border-style-solid border-bottom-0 border-width-1 border-color-black',
             'thead_class' =>
@@ -87,8 +89,6 @@
             'class_cant' =>
                 'text-right pl-x1 pr-x8 pr-x3 border-left-style-solid border-color-blue-light border-right-style-solid border-width-1',
             'class_orden' => 'text-center',
-            'campoTotal' => 'DetCSol',
-            'precio_unitario' => false,
         ])
 
         <div class="col-10 border-top-0 border-style-solid border-width-1 border-color-blue-light">

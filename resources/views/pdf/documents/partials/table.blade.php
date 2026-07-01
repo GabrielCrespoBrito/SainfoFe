@@ -15,9 +15,27 @@ if ($complete_tds_spaces) {
     }
 }
 
-$precioValorCampo = $precioValorCampo ?? 'precio_unitario';
-$precioValorText = $precioValorText ?? 'P.Unit';
-$totalCampo = $totalCampo ?? 'total';
+$precioConIgv = $precioConIgv ?? true;
+$totalConIgv = $precioConIgv ?? true;
+
+// 'precioValorCampo' => 'valor_unitario',
+// 'precioValorText' => 'V.Unit',
+// 'totalCampo' => 'valor_venta_por_item',
+// totalConIgv
+
+if ($precioConIgv) {
+    $precioValorCampo = $precioValorCampo ?? 'precio_unitario';
+    $precioValorText = $precioValorText ?? 'P.Unit';
+} else {
+    $precioValorCampo = $precioValorCampo ?? 'valor_unitario';
+    $precioValorText = $precioValorText ?? 'V.Unit';
+}
+
+if ($totalConIgv) {
+    $totalCampo = $totalCampo ?? 'total';
+} else {
+    $totalCampo = $totalCampo ?? 'valor_venta_por_item';
+}
 
 $class_name = $class_name ?? '';
 $class_name_table = $class_name_table ?? '';

@@ -1598,13 +1598,16 @@ class Empresa extends Model
 
     if ($rpta) {
       $data = json_decode($rpta);
-
       $precio_unitario = $data->precio_unitario;
+      $precio_con_igv = $data->precio_con_igv ?? true;
+      $total_con_igv = $data->total_con_igv ?? true;
       $valor_unitario = $data->valor_unitario;
       $descuento = $data->descuento;
       $importe = $data->importe;
     } else {
       $precio_unitario = true;
+      $precio_con_igv = false;
+      $total_con_igv = false;
       $valor_unitario = true;
       $descuento = true;
       $importe = true;
@@ -1612,6 +1615,8 @@ class Empresa extends Model
 
     return [
       'precio_unitario' => $precio_unitario,
+      'precio_con_igv' => $precio_con_igv,
+      'total_con_igv' => $total_con_igv,
       'valor_unitario' => $valor_unitario,
       'descuento' => $descuento,
       'importe' => $importe,

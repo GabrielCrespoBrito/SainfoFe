@@ -7,8 +7,16 @@
     $thead_class = $thead_class ?? '';
     $tbody_class = $tbody_class ?? '';
     $tbody_td_class = $tbody_td_class ?? '';
-    $precio_unitario = $precio_unitario ?? true;
-    $campoTotal = $campoTotal ?? 'DetImpo';
+    // $precio_unitario = $precio_unitario ?? true;
+    // $campoTotal = $campoTotal ?? 'DetImpo';
+
+    //             'campoTotal' => 'DetCSol',
+    //         'precio_unitario' => false,
+
+    $precioConIgv = $precioConIgv ?? true;
+    $totalConIgv = $precioConIgv ?? true;
+
+    $campoTotal = $totalConIgv ? 'DetImpo' : 'DetCSol';
 
     $theads = [
         [
@@ -44,7 +52,7 @@
 
     $theads[] = [
         'class_name' => 'bg-black c-white pr-x3 pl-x3 text-right',
-        'text' => $precio_unitario ? 'P.Unit' : 'V.Unit',
+        'text' => $precioConIgv ? 'P.Unit' : 'V.Unit',
     ];
 
     //}
@@ -88,7 +96,7 @@
 
                     <td
                         class="text-right {{ $borderTbody ? 'border-right-style-solid' : '' }}  pr-x3 pl-x3 vertical-align-top {{ $tbody_td_class }}">
-                        {{ $item->getPrecio($precio_unitario) }}</td>
+                        {{ $item->getPrecio($precioConIgv) }}</td>
 
                     {{-- @if ($orden_campos['precio_unitario']) --}}
                     {{-- <td class="text-right border-right-style-solid pr-x3 pl-x3 vertical-align-top"> {{ decimal($item->precioUnitario(), $decimals ) }}</td> --}}
@@ -110,12 +118,7 @@
                         <td class="pr-x6 pl-x3"></td>
                         <td class="pr-x3"></td>
                         <td class="border-right-style-solid border-left-style-solid pr-x3 pl-x3"></td>
-                        @if ($orden_campos['valor_unitario'])
-                            <td class="border-right-style-solid pr-x3 pl-x3"></td>
-                        @endif
-                        @if ($orden_campos['precio_unitario'])
-                            <td class="border-right-style-solid pr-x3 pl-x3"></td>
-                        @endif
+                        <td class="border-right-style-solid pr-x3 pl-x3"></td>
                         <td class="border-right-style-solid pr-x3 pl-x3"></td>
                     </tr>
                 @endfor

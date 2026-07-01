@@ -79,9 +79,10 @@
         @include('pdf.documents.partials.table', [
             'complete_tds_spaces' => $footerBreak ? false : true,
             'cantAddDoc' => 43,
-            'precioValorCampo' => 'valor_unitario',
-            'precioValorText' => 'V.Unit',
-            'totalCampo' => 'valor_venta_por_item',
+        
+            'precioConIgv' => $orden_campos['precio_con_igv'],
+            'totalConIgv' => $orden_campos['total_con_igv'],
+        
             'class_name' =>
                 'col-12  border-style-solid border-width-1 border-color-blue-light ' . $footerBreak
                     ? ''
