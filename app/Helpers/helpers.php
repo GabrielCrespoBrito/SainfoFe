@@ -901,18 +901,7 @@ function fixedValueCustom($value, $decimal = 2)
 
 function formatTelefono( $telefonos )
 {
-//
-		// $nameBanco = mb_strtolower(trim($this->bannomb));
-
-		// $path = public_path(file_build_path('images', 'bancos', $nameBanco . '.jpeg'));
-
-		// if (file_exists($path)) {
-		// 	return $path;
-		// }
-
-		// return false;
-  //
-    $path = public_path(file_build_path('images', 'bancos', 'yape.jpeg'));
+  $path = public_path(file_build_path('images', 'bancos', 'yape.jpeg'));
 
   $imgString = '<img src="data:image/jpeg;base64,' . base64_encode(file_get_contents($path)) . '" alt="yape" style="width: 20px; margin-left: 10px;" />';
 
