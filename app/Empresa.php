@@ -1601,13 +1601,14 @@ class Empresa extends Model
       $precio_unitario = $data->precio_unitario;
       $precio_con_igv = $data->precio_con_igv ?? true;
       $total_con_igv = $data->total_con_igv ?? true;
+
       $valor_unitario = $data->valor_unitario;
       $descuento = $data->descuento;
       $importe = $data->importe;
     } else {
       $precio_unitario = true;
-      $precio_con_igv = false;
-      $total_con_igv = false;
+      $precio_con_igv = true;
+      $total_con_igv = true;
       $valor_unitario = true;
       $descuento = true;
       $importe = true;

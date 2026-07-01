@@ -1051,8 +1051,6 @@ class Venta extends Model
     $contacto = "";
     $mostrar_igv = true;
 
-    // dd( $telefonos, $telefonos_local );
-
     if ($this->isAnulada()) {
       $documento_id = optional($this->anulacion)->docNume;
     } else {
@@ -1070,11 +1068,6 @@ class Venta extends Model
     }
 
     $orden_campos = $e->getOrdenCampos();
-    
-    logger("@orden_campos", [
-      $orden_campos
-    ]);
-    
     $guias = $this->getNumerosGuias();
     $data = [
       'title' => $this->nameFile('.pdf'),
