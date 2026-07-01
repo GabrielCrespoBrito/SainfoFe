@@ -918,12 +918,12 @@ function formatTelefono( $telefonos )
 
   if (is_array($telefonos)) {
     foreach ($telefonos as $i => $telefono) {
-      $telefonos[$i] = str_replace("[yape]", $imgString, $telefono);
+      $telefonos[$i] = str_replace(["[yape]", "[YAPE]"], $imgString, $telefono);
     }
   }
 
   if (is_string($telefonos)) {
-    $telefonos  = str_replace("[yape]", $imgString, $telefonos);
+    $telefonos  = str_replace(["[yape]", "[YAPE]"], $imgString, $telefonos);
   }
 
   logger('@FIXED TELEFONOS', [ $telefonos ]);
