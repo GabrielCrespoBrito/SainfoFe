@@ -907,12 +907,12 @@ function formatTelefono( $telefonos )
 
   if (is_array($telefonos)) {
     foreach ($telefonos as $i => $telefono) {
-      $telefonos[$i] = str_replace(["[yape]", "[YAPE]"], $imgString, $telefono);
+      $telefonos[$i] = str_replace("[yape]", $imgString, strtolower($telefono));
     }
   }
 
   if (is_string($telefonos)) {
-    $telefonos  = str_replace(["[yape]", "[YAPE]"], $imgString, $telefonos);
+    $telefonos  = str_replace("[yape]", $imgString, strtolower($telefonos));
   }
 
   logger('@FIXED TELEFONOS', [ $telefonos ]);
