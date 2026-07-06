@@ -915,8 +915,6 @@ function formatTelefono( $telefonos )
     $telefonos  = str_replace("[yape]", $imgString, strtolower($telefonos));
   }
 
-  logger('@FIXED TELEFONOS', [ $telefonos ]);
-
   return $telefonos;
 
 }

@@ -99,8 +99,7 @@ class StoreProducts
       $this->storeModels();
       DB::connection('tenant')->commit();
     } catch (Throwable $th) {
-      dd($th);
-      logger( '@ERROR IMPORT-PRODUCTS ' . $th->getMessage());
+      logger( '@ERROR IMPORT-PRODUCTS ' , [$th]);
       $this->addError($th->getMessage());
       DB::connection('tenant')->rollback();
     }

@@ -164,6 +164,7 @@ class TomaInventarioController extends Controller
       DB::connection('tenant')->commit();
     } catch (\Throwable $th) {
       DB::connection('tenant')->rollback();
+      logger('@ERROR importExcellProducto', [$th]);
       return response()->json(['message' => $th->getMessage()], 400);
     }
 

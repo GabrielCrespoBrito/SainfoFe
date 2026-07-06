@@ -41,6 +41,7 @@ class ImportExcellProducts
     ->getResult();    
 
     if( ! $result->success ){
+      logger('@IMPORT EXCELL PRODUCTS', [ $result->errors ]);
       throw new Exception(implode('| ', $result->errors), 1);
     }
 
