@@ -327,6 +327,8 @@ class UsersController extends Controller
 
     $user->deleteAll();
 
+    $user->delete();
+
     noti()->success('Usuario borrado','Se ha borrado correctamente');
     return redirect()->route('usuarios.index');    
   }
