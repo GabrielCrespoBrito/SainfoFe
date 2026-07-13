@@ -15,7 +15,7 @@ class GuiaRemision_2_1Api extends XmlHelperNew
     $this->change_datas([
       ["codigo", $this->correlativo],
       ['fecha', $this->documento->GuiFemi ],
-      ['tiempo', $this->documento->getTime()],
+      ['tiempo', '00:00:00' ],
       ['guiaTypeCode', $this->documento->getTipoDocumento() ],
       ['nota', $this->documento->getNotaXML() ],
       ['ordenID', $this->documento->GuiNume],

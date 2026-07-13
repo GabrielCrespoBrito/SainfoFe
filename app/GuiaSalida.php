@@ -1371,8 +1371,14 @@ class GuiaSalida extends Model
     return (new GenerateDataEnvioApi($this))->handle();
   }
 
-  public function createXmlZip()
+  public function createXmlZip($updateFechaActual = true)
   {
+    if($updateFechaActual){
+      $this->GuiFemi = date('Y-m-d');
+      $this->GuiFDes = date('Y-m-d');
+      $this->save();
+    }
+    
     $input = new GuiaRemision_2_1Api($this);
     return $input->guardar();
   }

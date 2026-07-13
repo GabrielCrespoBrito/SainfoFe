@@ -31,13 +31,13 @@ use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Guia\GuiaGenerarDocRequest;
-use App\Http\Requests\Guia\GuiaDespachoIngresoRequest;
 use App\Http\Requests\GuiaIngresoFromCompraRequest;
 
 class GuiaController extends Controller
 {
   public $tipo;
   public $model;
+
   public function searchJson(Request $request)
   {
     $term = $request->input('data');
