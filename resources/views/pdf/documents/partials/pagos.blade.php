@@ -52,8 +52,7 @@
                 @endforeach
             @endif
 
-            {{--  --}}
-            @if ((empcodi() == '008' && $is_credito) || $venta2->hasDetraccion() || $venta2->hasMontoRetencion())
+            @if ((empcodi() == '008' && ($is_credito) || $venta2->hasDetraccion() || $venta2->hasMontoRetencion()))
                 <tr>
                     <td colspan="3">
 
