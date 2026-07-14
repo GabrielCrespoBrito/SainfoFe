@@ -197,8 +197,8 @@ class CotizacionSaveRequest extends FormRequest
             $local
           );
 
-          if( $hora = auth()->user()->hora_limite_cot ){
-            $validator->errors()->add('hora', "No puede cotizar despues de la hora: {$hora}");
+          if( auth()->user()->hora_limite_cot  && date('H:i:s') > date('H:i:s', strtotime(auth()->user()->hora_limite_cot) ) ){
+            $validator->errors()->add('hora', "No puede cotizar despues de la hora: " . auth()->user()->hora_limite_cot);
             return;
           }
 
