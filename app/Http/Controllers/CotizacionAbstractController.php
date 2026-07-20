@@ -151,18 +151,12 @@ class CotizacionAbstractController extends Controller
     $cliente_info['tipo_documento']  = $cliente->tipo_documento_c->TdocNomb;
 
 
-    // dd($documento->items->sortBy('DetItem'));
-    // exit();
-
-    // dd( $documento->load(['items' => function($q){
-    // }])  items->sortBy('DetItem') );
-    // exit();
-
-    // ->orderByRaw('section * 1 desc') 
 
     $count = $documento->items->count();
 
     foreach ($documento->items as $item) {
+
+
       $data = [];
       $data['Index'] = (int) $item->DetItem;
       $data['Unidades'] = $item->producto->unidades;

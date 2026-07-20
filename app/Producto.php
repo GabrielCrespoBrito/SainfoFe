@@ -80,11 +80,13 @@ class Producto extends Model
 
     static::addGlobalScope('empresa', function ($query) {
       $empcodiField = self::EMPRESA_CAMPO ?? 'empcodi';
-      return $query->where($empcodiField, empcodi());
+      $table = $query->getModel()->getTable();
+      return $query->where($table . '.' . $empcodiField, empcodi());
     });
 
     static::addGlobalScope('noEliminados', function ($query) {
-      return $query->where('UDelete', '=', '0');
+      $table = $query->getModel()->getTable();
+      return $query->where($table . '.UDelete', '=', '0');
     });
   }
 

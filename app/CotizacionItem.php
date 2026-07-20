@@ -97,11 +97,6 @@ class CotizacionItem extends Model
 		return $this->belongsTo( Cotizacion::class, 'CotNume' , 'CotNume' );
 	}
 
-  public function producto(){
-
-		return $this->belongsTo( Producto::class, 'DetCodi', 'ProCodi' )->withoutGlobalScope('noEliminados');
-  }
-
   public function producto_prop($prop)
   {
 	  return $this->producto ? $this->producto[$prop] : "00";

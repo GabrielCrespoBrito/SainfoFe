@@ -10,7 +10,7 @@ use App\Cotizacion;
 class ImportacionesController extends Controller
 {
   public function getCotizacion( ImportVentaRequest $request )
-  {  		
+  { 
 		$nume = $request->serie_documento . '-' . $request->numero_documento;			
 		$documento = Cotizacion::findByNume($nume) ?? Venta::findByNume($nume);		
 		$items = [];

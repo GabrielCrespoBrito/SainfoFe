@@ -12,7 +12,7 @@ trait ModelEmpresaScope
 
     static::addGlobalScope('empresa', function ($query) {
       $empcodiField = self::EMPRESA_CAMPO ?? 'empcodi';
-      return $query->where( $empcodiField , empcodi() );
+      return $query->where( $query->getModel()->getTable() . '.' . $empcodiField , empcodi() );
     });
   }  
 }
