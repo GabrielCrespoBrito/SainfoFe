@@ -12,6 +12,7 @@ use App\Notifications\EmpresaDocPendientePorEnviar;
 use App\Notifications\EmpresaRegister;
 use App\SerieDocumento;
 use App\User;
+use App\Venta;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
@@ -57,6 +58,9 @@ class ExeCode extends Command
       case 'api-guia':
         $this->apiGuia();
         break;
+      case 'fix-costos':
+        $this->fixCostos();
+        break;
       case 'user-local':
         $this->addUserLocal();
         break;
@@ -64,8 +68,78 @@ class ExeCode extends Command
         $this->regeneratePdfGuia();
         break;
       default:
+      $this->line('Code Not Found', );
         break;
     }
+  }
+
+  public function fixCostos(){
+   
+    $params = explode("|", $this->argument('param'));
+    
+    $empcodi = $params[0];
+    $mescodi = $params[1];
+
+    $empresa = Empresa::find($empcodi);
+    (new ActiveEmpresaTenant($empresa))->handle();
+
+    $ventas = Venta::with('items')
+    ->where('mescodi', $mescodi)
+    ->where('empcodi', $empcodi)
+    ->get();
+    
+      logger("@FIX-CODES", ['empcodi' => $empcodi, 'mescodi' => $mescodi, 'count' => $ventas->count()]);
+
+
+      foreach($ventas as $venta){
+      
+      if($venta->isAnulada() || $venta->isRechazado() || $venta->hasImported() == false){
+        continue;
+      }
+
+      $cotizacion = $venta->importacion();
+
+      if($cotizacion == null){
+        continue;
+      }
+
+      $cotizacion_items = $cotizacion->items;
+
+      foreach($cotizacion_items as $cotizacion_item){
+
+        $venta_item = $venta->items->where('DetCodi', $cotizacion_item->DetCodi)->first();
+        
+        if($venta_item == null){
+          continue;
+        }
+
+        if( $venta_item->UniCodi == $cotizacion_item->UniCodi){
+          continue;
+        }
+
+        $unidad = $cotizacion_item->unidad;
+
+        $costo_soles = $unidad->UniPUCS;
+        $costo_dolares = $unidad->UniPUCD;
+        $igv_porc = math()->baseUno($venta_item->DetIGVV);
+        $incluye_igv = $venta_item->incluye_igv;
+
+
+        $costo_soles_nuevo = $incluye_igv ? ($costo_soles * $venta_item->DetCant) / $igv_porc : $costo_soles * $venta_item->DetCant;
+
+        $costo_dolares_nuevo = $incluye_igv ? ($costo_dolares * $venta_item->DetCant) / $igv_porc : $costo_dolares * $venta_item->DetCant;
+
+        $venta_item->update([
+          'UniCodi' => $cotizacion_item->UniCodi,
+          'DetCSol' => $costo_soles_nuevo,
+          'DetCDol' => $costo_dolares_nuevo,
+        ]);
+
+      }
+
+    }
+
+
   }
 
   public function regeneratePdfGuia()
