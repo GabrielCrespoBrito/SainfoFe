@@ -65,7 +65,9 @@
         @endif
       </select>
 
-      <span class="input-group-addon nro_documento"> {{ $create ? $tipo_documento_selected['nuevo_codigo_defecto'] ?? '' : $venta->VtaNumee }} </span>
+      @if(!$create)
+        <span class="input-group-addon nro_documento"> {{ $venta->VtaNumee }} </span>
+      @endif
     </div>
 
   </div>

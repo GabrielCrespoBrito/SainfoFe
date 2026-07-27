@@ -5054,6 +5054,7 @@ $(document).ready(function (e) {
         "data": function (d) {
           return $.extend({}, d, {
             "estado": estado,
+            "column_accion": 0,
             "local": $("[name=local] option:selected", '#modalSelectCotizacion').val(),
             "tipo": $("[name=tidcodi_coti] option:selected", '#modalSelectCotizacion').val(),
           });

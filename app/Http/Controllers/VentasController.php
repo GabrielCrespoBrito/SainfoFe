@@ -102,10 +102,9 @@ class VentasController extends Controller
   public function search(Request $request)
   {
     
-    $term = $request->input('search')['value'];
+    $term = $request->input('search')['value'] ?? null;
     $estado = $request->input("estado");
     $status = $request->input("status");
-    $filter = false;
 
     $busqueda = DB::connection('tenant')->table('ventas_cab')
       ->join('prov_clientes', function ($join) {
@@ -174,8 +173,8 @@ class VentasController extends Controller
     }
 
     if ($request->input("estadoAlmacen")) {
-      $filter = $request->estadoAlmacen == "Pe" ? '>' : '=';
-      $busqueda->where('ventas_cab.VtaSdCa', $filter, 0);
+      $operadorAlmacen = $request->estadoAlmacen == "Pe" ? '>' : '=';
+      $busqueda->where('ventas_cab.VtaSdCa', $operadorAlmacen, 0);
     }
 
     if ( $request->input("local") != "todos" && $request->input("local") != null ) {
@@ -197,27 +196,17 @@ class VentasController extends Controller
       }
     }
 
-    if (!is_null($term) && $busqueda->count()) {
-      $busqueda->orderBy('ventas_cab.VtaOper', 'desc');
-      $filter = true;
-      $busqueda = $busqueda
-        ->where('prov_clientes.PCNomb', 'LIKE', '%' . $term . '%')
-        ->orWhere('prov_clientes.PCRucc', 'LIKE', '%' . $term . '%')
-        ->orWhere('ventas_cab.VtaNume', 'LIKE', '%' . $term . '%')
-        ->get();
-    } else {
-      $busqueda->orderBy('ventas_cab.VtaOper', 'desc');
+    if (!empty($term)) {
+      $busqueda->where(function ($query) use ($term) {
+        $query->where('prov_clientes.PCNomb', 'LIKE', '%' . $term . '%')
+          ->orWhere('prov_clientes.PCRucc', 'LIKE', '%' . $term . '%')
+          ->orWhere('ventas_cab.VtaNume', 'LIKE', '%' . $term . '%');
+      });
     }
 
-    $dataTable = DataTables::of($busqueda);
+    $busqueda->orderBy('ventas_cab.VtaOper', 'desc');
 
-    if ($filter) {
-      $dataTable->filter(function ($query) {
-        return true;
-      }, false);
-    }
-
-    return $dataTable
+    return DataTables::of($busqueda)
       ->addColumn('nro_venta', 'ventas.partials.factura.column_nro_venta')
       ->addColumn('estado', 'ventas.partials.factura.column_estado')
       ->addColumn('estado_sunat', 'ventas.partials.factura.column_status_text')
@@ -342,7 +331,7 @@ class VentasController extends Controller
       $data["forma_pagos"] = $empresa->formas_pagos->load('dias');
       $data["cliente_default"] = ClienteProveedor::clienteDefault();
       $data["tipo_documento_defecto"] = get_option('CcoCodi');
-      $data['id_nuevo'] = Venta::UltimoId();
+      $data['id_nuevo'] = null;
       $data["create"] = 1;
       $data["tipos_notacredito"] = cacheHelper('tiponotacredito.all');
     } else {

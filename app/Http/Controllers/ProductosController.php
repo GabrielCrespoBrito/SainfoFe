@@ -81,7 +81,6 @@ class ProductosController extends Controller
 
     $busqueda =  Producto::query()
       ->with([
-        'marca_',
         'marca',
         'unidades_' => function ($q) use ($listas) {
           $q->whereIn('LisCodi', $listas);

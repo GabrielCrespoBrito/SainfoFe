@@ -277,13 +277,25 @@ class CotizacionAbstractController extends Controller
     }
 
     $busqueda->orderBy('CotNume', 'desc');
+    $rawColumns = ['estado', 'venta', 'numero'];
 
-    return DataTables::of($busqueda)
+    
+    $datatables = DataTables::of($busqueda)
       ->addColumn('numero', 'cotizaciones.partials.column_numero')
-      ->addColumn('accion', 'cotizaciones.partials.column_accion')
       ->addColumn('estado', 'cotizaciones.partials.column_estado')
-      ->addColumn('venta', 'cotizaciones.partials.column_venta')
-      ->rawColumns(['accion', 'estado', 'venta', 'numero'])
+      ->addColumn('venta', 'cotizaciones.partials.column_venta');
+
+      logger('@column_accion: ' . $request->input('column_accion', true));
+
+      if ($request->input('column_accion', true)) {
+      logger('@column_accion: true');
+
+        $rawColumns[] = 'accion';
+        $datatables->addColumn('accion', 'cotizaciones.partials.column_accion');
+      }
+
+      return $datatables
+      ->rawColumns($rawColumns)
       ->make(true);
   }
 

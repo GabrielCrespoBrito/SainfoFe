@@ -555,7 +555,9 @@ class Venta extends Model
       $ultima_venta = Venta::OrderByDesc("VtaOper")
         ->where('EmpCodi', empcodi())
         ->where('TidCodi', '!=', '52')
+        ->select(['VtaOper'])
         ->first();
+
       return Venta::agregate_cero($ultima_venta, 1);
     }
   }
