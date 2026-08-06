@@ -19,13 +19,14 @@ class ReporteUtilidades
   protected $grupo;
   protected $vendedor;
   protected $descontarPorcVendedor;
+  protected $zona;
 
   /**
    * Create a new job instance.
    *
    * @return void
    */
-  public function __construct( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor = false )
+  public function __construct( $fecha_desde, $fecha_hasta, $local, $grupo, $vendedor, $descontarPorcVendedor = false, $zona )
   {
     $this->fecha_desde = $fecha_desde;
     $this->fecha_hasta = $fecha_hasta;
@@ -33,6 +34,7 @@ class ReporteUtilidades
     $this->grupo = strtolower($grupo) == "todos" ? null : $grupo;
     $this->vendedor = strtolower($vendedor) == "todos" ? null : $vendedor;
     $this->descontarPorcVendedor = $descontarPorcVendedor;
+    $this->zona = strtolower($zona) == "todos" ? null : $zona;
     $this->handle();
   }
 
@@ -61,6 +63,9 @@ class ReporteUtilidades
 
     if ($this->vendedor) {
       $query->where('Vencodi', $this->vendedor);
+    }
+    if ($this->zona) {
+      $query->where('ZonCodi', $this->zona);
     }
       
     return

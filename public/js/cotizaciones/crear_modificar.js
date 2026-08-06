@@ -441,6 +441,7 @@ $(document).ready(function (e) {
 
 
   function agregar_item() {
+
     if (executing_ajax) {
       return;
     }
@@ -467,12 +468,11 @@ $(document).ready(function (e) {
 
     $(".labelPrecioMinimo").text("");
 
-
-    let info;
-
-    console.log("action_i()", action_i());
+    console.log("@ACTION", action_i(), $("tr.seleccionando").length, current_product_data,);
 
     if (action_i() == "create") {
+
+      console.log("@CREATE")
 
       info = {
         DetCodi: current_product_data.producto.ProCodi,
@@ -487,6 +487,8 @@ $(document).ready(function (e) {
 
     else {
       let trInfo = $("tr.seleccionando").data();
+
+      console.log("@EDIT")
 
       info = {
         // DetCodi: current_product_data.producto.ProCodi,
@@ -551,14 +553,13 @@ $(document).ready(function (e) {
     notificaciones("Item modificado exitosamente", "success");
     let tr = $("tr.seleccionando");
 
-    tr.hide(500, function () {
+    tr.hide(0, function () {
       modificar_tr(info, tr);
       tr
-        .show(500)
+        .show(100)
         .removeClass("seleccionando");
     });
 
-    console.log("edit_item", info);
 
     tr.attr('data-info', JSON.stringify(info));
     cleanInputsGroup("producto", quitar_unidad);
@@ -568,6 +569,9 @@ $(document).ready(function (e) {
     producto_input_focus
       .select()
       .focus();
+
+    action_i("create");
+
   }
 
 
@@ -623,7 +627,9 @@ $(document).ready(function (e) {
     habilitarDesactivarSelect("moneda", false);
 
     poner_totales_cant();
-    // descuento_global();
+
+    action_i("create");
+
   }
 
   function habilitarDesactivarSelect(select_name, activar = true) {
@@ -1101,6 +1107,8 @@ $(document).ready(function (e) {
 
       else if (modal.is("#modalSelectProducto")) {
 
+
+        console.log("@table_productos", action_i())
         buscar_producto(trSelect.find("td:eq(0)").text());
       }
 
@@ -1512,6 +1520,8 @@ $(document).ready(function (e) {
     }
     return action_item;
   }
+
+  window.action_i = action_i;
 
   function select_item(e) {
     e.preventDefault();

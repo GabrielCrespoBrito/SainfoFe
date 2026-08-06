@@ -1,33 +1,42 @@
 @php
-  $local = $local ?? null;
-  $grupo = $grupo ?? null;
-  $colspan = 2;
-  
-  if($local){
-    $colspan++;
-  }
+    $local = $local ?? null;
+    $grupo = $grupo ?? null;
+    $grupo = $grupo ?? null;
+    $colspan = 2;
 
-  if($grupo){
-    $colspan++;
-  }
+    if ($local) {
+        $colspan++;
+    }
+
+    if ($grupo) {
+        $colspan++;
+    }
+    if ($zona) {
+        $colspan++;
+    }
 
 @endphp
 
 <div class="container header">
-  <table id="header" width="100%">
-    <tr> <td colspan="{{ $colspan }}" style="text-align: center; "class="titulo strong"> {{ $titulo }}</td> </tr>
-    <tr>
-      <td><span class="campo"> Desde:</span> {{ $fecha_desde }}</td>
-      <td><span class="campo"> Hasta:</span> {{ $fecha_hasta }}</td>    
-      @if($local)
-      <td><span class="campo"> Local:</span> {{ $local }}</td>
-      @endif
-      @if($grupo)
-      <td><span class="campo"> Grupo:</span> {{ $grupo }}</td>
-      @endif
-      @if($vendedor)
-      <td><span class="campo"> Vendedor:</span> {{ $vendedor }}</td>
-      @endif
-    </tr>
-  </table>
+    <table id="header" width="100%">
+        <tr>
+            <td colspan="{{ $colspan }}" style="text-align: center; "class="titulo strong"> {{ $titulo }}</td>
+        </tr>
+        <tr>
+            <td><span class="campo"> Desde:</span> {{ $fecha_desde }}</td>
+            <td><span class="campo"> Hasta:</span> {{ $fecha_hasta }}</td>
+            @if ($local)
+                <td><span class="campo"> Local:</span> {{ $local }}</td>
+            @endif
+            @if ($grupo)
+                <td><span class="campo"> Grupo:</span> {{ $grupo }}</td>
+            @endif
+            @if ($vendedor)
+                <td><span class="campo"> Vendedor:</span> {{ $vendedor }}</td>
+            @endif
+            @if ($zona)
+                <td><span class="campo">Zona:</span> {{ $zona }}</td>
+            @endif
+        </tr>
+    </table>
 </div>

@@ -1,30 +1,27 @@
-function putDataInTable(html)
-{
-   $("#div-table")
-  .empty()
-  .html(html);
+function putDataInTable(html) {
+  $("#div-table")
+    .empty()
+    .html(html);
 }
 
-function searchInfoReport()
-{
+function searchInfoReport() {
   let $form = $("#form-reporte");
 
   $("#load_screen").show();
 
   let data = $form.serialize();
   let url = $form.attr('action');
-  console.log("searchInfoReport", data, url);
-  let funcs = {    success : putDataInTable,
-    complete : () => {
+  let funcs = {
+    success: putDataInTable,
+    complete: () => {
       $("#load_screen").hide();
     }
   }
 
-  ajaxs(data, url, funcs )
+  ajaxs(data, url, funcs)
 }
 
-function showInnerInfo(e)
-{
+function showInnerInfo(e) {
   e.preventDefault();
 
   let $this = $(this);
@@ -35,7 +32,7 @@ function showInnerInfo(e)
 
   $span.removeClass();
 
-  if( $trNext.is(':visible') ){
+  if ($trNext.is(':visible')) {
     $trNext.hide(500);
     $span.addClass('fa fa-eye');
   }
@@ -46,10 +43,9 @@ function showInnerInfo(e)
 }
 
 // Events
-function events()
-{
-  $(".generate-report ").on('click', searchInfoReport )
-  $("#div-table ").on('click', '.span-info', showInnerInfo )
+function events() {
+  $(".generate-report ").on('click', searchInfoReport)
+  $("#div-table ").on('click', '.span-info', showInnerInfo)
 }
 
 events();
