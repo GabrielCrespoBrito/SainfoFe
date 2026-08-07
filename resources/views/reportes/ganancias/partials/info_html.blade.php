@@ -11,7 +11,7 @@
                 'local' => $local,
                 'grupo' => $grupo,
                 'vendedor' => $vendedor,
-                'descontarPorcVendedor' => $descontarPorcVendedor,
+                'descontarPorcVendedor' => (int) $descontarPorcVendedor,
                 'zona' => $zona,
             ]) }}">
             <span class="fa fa-file-pdf-o"> </span> Ver en PDF </a>

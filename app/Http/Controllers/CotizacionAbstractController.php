@@ -285,11 +285,7 @@ class CotizacionAbstractController extends Controller
       ->addColumn('estado', 'cotizaciones.partials.column_estado')
       ->addColumn('venta', 'cotizaciones.partials.column_venta');
 
-      logger('@column_accion: ' . $request->input('column_accion', true));
-
       if ($request->input('column_accion', true)) {
-      logger('@column_accion: true');
-
         $rawColumns[] = 'accion';
         $datatables->addColumn('accion', 'cotizaciones.partials.column_accion');
       }
