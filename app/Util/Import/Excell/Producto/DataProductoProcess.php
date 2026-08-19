@@ -9,6 +9,7 @@ class DataProductoProcess
     "id" => 'ID',
     "codigo_unico" => 'ProCodi',
     "codigo_barra" => 'ProCodi1',
+    "codigo_sunat" => 'profoto2',
     "categoria" => "categoria ",
     "marca" => "marcodi",
     "familia" => "famcodi",
@@ -52,7 +53,7 @@ class DataProductoProcess
 
   public function getValueFromOriginal($campoName)
   {
-    return $this->dataOriginal[$campoName];
+    return str_replace("\xC2\xA0", "", trim($this->dataOriginal[$campoName]));
   }
 
   public function getHeaderName($campoName)

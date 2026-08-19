@@ -32,6 +32,7 @@ class ValidateProducto
 
   const HEADERS = [
     'codigo_unico',
+    'codigo_sunat',
     'codigo_barra',
     'categoria',
     'marca',
@@ -140,7 +141,8 @@ class ValidateProducto
     $success = true;
     $validator = Validator::make($item, $this->rulesItems->getRules(), [
       'codigo_unico.not_in' =>  "El Codigo Unico ({$item['codigo_unico']}) del Producto esta repetido",
-      'codigo_barra.not_in' =>  "El Codigo de Barra ({$item['codigo_barra']}) del Producto esta repetido"
+      'codigo_barra.not_in' =>  "El Codigo de Barra ({$item['codigo_barra']}) del Producto esta repetido",
+      'codigo_sunat.in' =>   sprintf("El Codigo Sunat %s no se encuentra en la relacion de Codigos Sunat", $item['codigo_sunat'])
     ]);
 
     $this->rulesItems->setCodigos(

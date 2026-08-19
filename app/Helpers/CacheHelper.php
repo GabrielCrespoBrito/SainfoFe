@@ -2,26 +2,27 @@
 
 namespace App\Helpers;
 
-use App\Grupo;
-use App\Moneda;
-use App\TipoPago;
-use App\Vehiculo;
+use App\Departamento;
 use App\Detraccion;
+use App\EmpresaTransporte;
+use App\Grupo;
+use App\Helpers\CacheHelper\ModelName;
 use App\ListaPrecio;
+use App\Models\Sunat\SunatProducto;
+use App\ModuloMonitoreo\StatusCode\StatusCode;
+use App\Moneda;
+use App\MotivoTraslado;
+use App\PDFPlantilla;
 use App\Procedencia;
 use App\TipoCliente;
-use App\Departamento;
-use App\PDFPlantilla;
 use App\TipoDocumento;
-use App\Transportista;
-use App\MotivoTraslado;
 use App\TipoExistancia;
-use App\UnidadProducto;
 use App\TipoNotaCredito;
-use App\EmpresaTransporte;
+use App\TipoPago;
+use App\Transportista;
+use App\UnidadProducto;
+use App\Vehiculo;
 use Illuminate\Support\Facades\Cache;
-use App\Helpers\CacheHelper\ModelName;
-use App\ModuloMonitoreo\StatusCode\StatusCode;
 
 class CacheHelper
 {
@@ -240,6 +241,13 @@ class CacheHelper
   {
     return Cache::rememberForever($nameCache, function () {
       return UnidadProducto::all();
+    });
+  }
+
+  public function sunat_productos_allCacheable($nameCache)
+  {
+    return Cache::rememberForever($nameCache, function () {
+      return SunatProducto::all();
     });
   }
 

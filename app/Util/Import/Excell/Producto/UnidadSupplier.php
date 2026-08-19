@@ -10,11 +10,11 @@ class UnidadSupplier extends SupplierAbstract
 {
   public function setInitData()
   {
-    $this->entidadData = UnidadProducto::pluck('UnPCodi', 'UnPNomb')->toArray();
+    $this->entidadData = UnidadProducto::pluck('UnPNomb', 'UnPCodi')->toArray();
   }
 
   public function handle(&$dataProcess)
   {
-    $dataProcess[ $this->getHeader()] = $this->entidadData[ $this->campoValue ];
+    $dataProcess[ $this->getHeader()] = $this->campoValue;
   }
 }

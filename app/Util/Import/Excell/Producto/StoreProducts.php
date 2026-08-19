@@ -18,6 +18,7 @@ class StoreProducts
     "id" => 'ID',
     "codigo_unico" => 'ProCodi',
     "codigo_barra" => 'ProCodi1',
+    "codigo_sunat" => 'profoto2',
     "categoria" => "categoria ",
     "marca" => "as",
     "familia" => "famcodi",

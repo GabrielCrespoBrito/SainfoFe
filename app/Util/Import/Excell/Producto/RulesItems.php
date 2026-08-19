@@ -4,6 +4,7 @@ namespace App\Util\Import\Excell\Producto;
 
 use App\Producto;
 use App\BaseImponible;
+use App\Models\Sunat\SunatProducto;
 use Illuminate\Validation\Rule;
 
 class RulesItems
@@ -13,6 +14,9 @@ class RulesItems
   protected $codigos_unico = [];
   protected $codigos_barra = [];
   protected $unidades;
+  protected $unidades_rule = null;
+  protected $sunat_productos_codigos;
+  protected $sunat_productos_codigos_rule = null;
   protected $procedencias;
   protected $tipoexistencias;
 
@@ -21,9 +25,24 @@ class RulesItems
 
   public function __construct()
   {
-    $this->unidades = cacheHelper('unidadproducto.all');
+    $unidades = cacheHelper('unidadproducto.all');
     $this->procedencias = cacheHelper('procendencia.all');
     $this->tipoexistencias = cacheHelper('tipoexistencia.all');
+    $sunat_productos_codigos = cacheHelper('sunat.productos.all');
+
+    $this->unidades_rule = [
+      'required',
+      Rule::in($unidades->pluck('UnPCodi')->toArray())
+    ];
+
+    $this->sunat_productos_codigos_rule = [
+      'sometimes',
+      'nullable',
+      'min:8',
+      'max:8',
+      Rule::in($sunat_productos_codigos->pluck('clase_id')->toArray())
+    ];
+
   }
 
   public function updateRules()
@@ -58,15 +77,14 @@ class RulesItems
     return $this->getRequiredString($bases);
   }
 
+  public function getCodigoSunatRule()
+  {
+    return $this->sunat_productos_codigos_rule;
+  }
+
   public function getUnidadRule()
   {
-    $unidades = $this->unidades->pluck('UnPNomb')->toArray();
-
-    return [
-      'required',
-      Rule::in($unidades)
-    ];
-
+    return $this->unidades_rule;
   }
 
 
@@ -81,12 +99,13 @@ class RulesItems
   
   public function getRules()
   {
-    if( $this->rules_items  ){
+    if( $this->rules_items ){
       $this->updateRules();
     }
     else {
       $this->generateRules();
     }
+
     return $this->rules_items;
   }
 
@@ -128,6 +147,7 @@ class RulesItems
     $this->rules_items = [
       'codigo_unico' => $this->getCodigoUnicoRule(),
       'codigo_barra' => $this->getCodigoBarraRule(),
+      'codigo_sunat' => $this->getCodigoSunatRule(),
       'categoria' =>  $this->getCategoryRule(),
       'marca' => 'required|min:1|max:120',
       'unidad' => $this->getUnidadRule(),
