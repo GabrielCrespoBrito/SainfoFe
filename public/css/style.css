@@ -4509,3 +4509,19 @@ li .empresa-inactive {
   right: 2em;
   top: 2px;
 }
+
+
+.informacion_empresa-ambiente {
+  color: white;
+  padding: 0px 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.informacion_empresa-ambiente.produccion {
+  background-color: #00a65a
+}
+
+.informacion_empresa-ambiente.desarrollo {
+  background-color: #f39c12
+}

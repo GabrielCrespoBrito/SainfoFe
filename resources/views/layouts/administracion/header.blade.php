@@ -1,5 +1,7 @@
 @php
-$datesEmpresa = get_empresa()->getSuscripcionDates();
+$empresa = get_empresa();
+$datesEmpresa = $empresa->getSuscripcionDates();
+$isProduccion = $empresa->isProduction();
 $barNotificacion = !$datesEmpresa->isSafeTime;
 @endphp
 
@@ -89,7 +91,11 @@ $barNotificacion = !$datesEmpresa->isSafeTime;
        <span class="informacion_empresa-nombre">
         {{ substr( session()->get('empresa_nombre'), 0, 20) }} ...
         </span>
+
         <span class="informacion_empresa-periodo">{{ session()->get('periodo') }}</span>
+
+        <span class="informacion_empresa-ambiente {{ $isProduccion ? 'produccion' : 'desarrollo' }}">{{ $isProduccion ? 'PRODUCCION' : 'DESARROLLO' }}</span>
+
 
         <span class="span-informacion_empresa-local">
           <select class="informacion_empresa-local" data-consult="{{ route('user-local.consult_locals') }}">
