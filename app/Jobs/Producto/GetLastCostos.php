@@ -60,10 +60,13 @@ class GetLastCostos
     }
 
     else {
-      $costo_sol_unitario = $this->incluye_igv ? ($this->unidad_costo_soles / $igv->igvBaseUno) : $this->unidad_costo_soles;
+      $igvBaseUno = floatval($igv->igvBaseUno);
+      $igvBaseUno = $igvBaseUno > 0 ? $igvBaseUno : 1;
 
-      $costo_dolar_unitario = $this->incluye_igv ?  ($this->unidad_costo_dolar / $igv->igvBaseUno ) : $this->unidad_costo_dolar;
-      
+      $costo_sol_unitario = $this->incluye_igv ? ($this->unidad_costo_soles / $igvBaseUno) : $this->unidad_costo_soles;
+
+      $costo_dolar_unitario = $this->incluye_igv ? ($this->unidad_costo_dolar / $igvBaseUno) : $this->unidad_costo_dolar;
+
       $factor_costo = $this->unidad_factor;
     }
 
