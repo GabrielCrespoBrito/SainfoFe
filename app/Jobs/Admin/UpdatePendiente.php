@@ -85,7 +85,7 @@ abstract class UpdatePendiente
         } 
 
         catch (\Throwable $th) {
-          logger(['@ERROR en UpdatePendiente', 'empresa' => $empresa->id(), 'error' => $th->getMessage()]);
+          logger(['@ERROR en UpdatePendiente', 'empresa' => $empresa->id(), 'error' => $th->getMessage(), $th ]);
         }
       }
   }

@@ -45,14 +45,8 @@ class ActionController extends Controller
       ini_set('memory_limit', -1);
       ini_set('max_execution_time', 240);
 
-      try {
-        (new UpdateEmpresasVentasPendientes(true,true))->handle();
-        return response()->json(['success' => true]);
-      } catch( \Throwable $e){
-        logger("@ERROR:updateDocumentsPendientes", [$e]);
-        return response()->json([ 'message' => $e->getMessage(), 'success' => false], 500);
-      }
-
+      (new UpdateEmpresasVentasPendientes(true,true))->handle();
+      return response()->json(['success' => true]);
     }
 
   /**
