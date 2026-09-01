@@ -50,6 +50,7 @@ class ActionController extends Controller
         return response()->json(['success' => true]);
       } catch( \Throwable $e){
         return response()->json([ 'message' => $e->getMessage(), 'success' => false], 500);
+        logger("@ERROR:updateDocumentsPendientes", [$e]);
       }
 
     }
