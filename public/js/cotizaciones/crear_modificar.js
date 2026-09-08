@@ -488,11 +488,10 @@ $(document).ready(function (e) {
     else {
       let trInfo = $("tr.seleccionando").data();
 
-      console.log("@EDIT")
 
       info = {
         // DetCodi: current_product_data.producto.ProCodi,
-        DetCodi: trInfo.info.DetCodi,
+        DetCodi: current_product_data?.producto?.ProCodi ?? trInfo.info.DetCodi,
         Unidades: trInfo.unidades,
         Marca: trInfo.info.Marca,
         MarCodi: trInfo.info.MarCodi,
@@ -500,6 +499,8 @@ $(document).ready(function (e) {
         DetPeso: trInfo.info.ProPeso,
         DetBase: trInfo.info.DetBase,
       };
+
+      console.log("@EDIT", info)
     };
 
 
@@ -552,6 +553,8 @@ $(document).ready(function (e) {
   function edit_item(info) {
     notificaciones("Item modificado exitosamente", "success");
     let tr = $("tr.seleccionando");
+
+    console.log("@EDIT_ITEM info:", info);
 
     tr.hide(0, function () {
       modificar_tr(info, tr);
@@ -2460,7 +2463,6 @@ $(document).ready(function (e) {
 
     $('#cliente_documento').on('select2:selecting', function (data) {
       let contacto = data.params.args.data.data.PCCont;
-      console.log(data.params.args.data.data.tipo_documento_c.TdocNomb)
       $("[name=zona] option[value=" + data.params.args.data.data.ZonCodi + "] ").prop('selected', true)
       $("[name=vendedor] option[value=" + data.params.args.data.data.VenCodi + "] ").prop('selected', true)
       $(".row-cliente-adicional [name=direccion]").val(data.params.args.data.data.PCDire);

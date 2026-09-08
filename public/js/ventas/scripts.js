@@ -885,13 +885,13 @@ $(document).ready(function (e) {
     else {
       let trInfo = $("tr.seleccionando").data();
       info = {
+        DetCodi: current_product_data?.producto?.ProCodi ?? trInfo.info.DetCodi,
         Unidades: trInfo.unidades,
         Marca: trInfo.info.Marca,
         MarCodi: trInfo.info.MarCodi,
         TieCodi: trInfo.info.TieCodi,
         DetPeso: trInfo.info.ProPeso,
-        ProCodi1: trInfo.info.ProCodi1,
-        DetCodi: trInfo.info.DetCodi
+        ProCodi1: trInfo.info.ProCodi1
       };
     };
 
