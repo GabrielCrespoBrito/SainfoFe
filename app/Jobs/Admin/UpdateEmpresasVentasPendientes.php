@@ -22,7 +22,7 @@ class UpdateEmpresasVentasPendientes extends UpdatePendiente
    */
   public function searchInEmpresa(Empresa $empresa)
   {
-    $query = $empresa->ventas->where('VtaFMail', StatusCode::CODE_ERROR_0011);
+    $query = $empresa->ventas()->where('VtaFMail', StatusCode::CODE_ERROR_0011);
 
     if( ! $empresa->envioBoleta() ){
       $query = $query->whereNotIn('TidCodi', [Venta::BOLETA]);

@@ -8,6 +8,7 @@ class UpdateAllPendientes
 {
   public function handle()
   {
+    logger('iniciando actualizacion de pendientes',[]);
     $system_stat_docs = (new UpdateEmpresasVentasPendientes(false,false))->handle();
     $system_stat_guias = (new UpdateEmpresasGuiasPendientes(false, false))->handle();
     $system_stat_resumenes = (new UpdateEmpresasResumenPendientes(false, false))->handle();  

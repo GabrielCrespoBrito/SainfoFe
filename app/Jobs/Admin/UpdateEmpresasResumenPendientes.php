@@ -16,7 +16,7 @@ class UpdateEmpresasResumenPendientes extends UpdatePendiente
 
   public function searchInEmpresa(Empresa $empresa)
   {
-    return $empresa->resumenes->where('UDelete' ,  Resumen::POR_PROCESAR_STATE )->count();
+    return $empresa->resumenes()->where('UDelete' ,  Resumen::POR_PROCESAR_STATE )->count();
   }
 
 }

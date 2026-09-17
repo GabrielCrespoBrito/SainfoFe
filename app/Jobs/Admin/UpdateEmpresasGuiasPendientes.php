@@ -18,7 +18,7 @@ class UpdateEmpresasGuiasPendientes extends UpdatePendiente
 
   public function searchInEmpresa(Empresa $empresa)
   {
-    $cant = $empresa->guias
+    $cant = $empresa->guias()
     ->where('GuiEFor', GuiaSalida::CON_FORMATO)
     ->where('EntSal', GuiaSalida::SALIDA )
     ->where('fe_rpta' , '>=', 9)
