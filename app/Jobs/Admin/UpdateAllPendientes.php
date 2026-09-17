@@ -14,9 +14,5 @@ class UpdateAllPendientes
     $system_stat_resumenes = (new UpdateEmpresasResumenPendientes(false, false))->handle();  
 
     SystemStat::updateAccionesPendientes(true, $system_stat_docs, $system_stat_guias, $system_stat_resumenes );
-
-    # Borrar Cache
-    (new SystemStat())->repository()->clearCache('all');
-
   }
 }

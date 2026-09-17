@@ -14,7 +14,7 @@ trait  SystemStatMethod
   public function getField( array $fields, bool $excludeCero = false )
   {
     if ($this->data === null) {
-      $this->data =  $this->repository()->all();
+      $this->data = self::whereIn('name', $fields)->get();
     }
 
     $collection = $this->data->whereIn( 'name' , $fields )->mapWithKeys(function ($item) {
@@ -52,37 +52,36 @@ trait  SystemStatMethod
    */
   public function getEmpresasVentasPendientes()
   {
-    $pendientes = $this->getField([ SystemStat::EMPRESAS_VENTAS_PENDIENTES ])->first();
-    
+    $pendientes = self::findByName(SystemStat::EMPRESAS_VENTAS_PENDIENTES);
     return (object) [
-      'data' => $pendientes->value,
-      'updated_at' => $pendientes->updated_at,
+      'data' => $pendientes ? $pendientes->value : null,
+      'updated_at' => $pendientes ? $pendientes->updated_at : null,
     ];
   }
 
   /**
-   * Obtener las empresas con documentos pendientes
+   * Obtener las empresas con guias pendientes
    */
   public function getEmpresasGuiasPendientes()
   {
-    $pendientes = $this->getField([SystemStat::EMPRESAS_GUIAS_PENDIENTES])->first();
+    $pendientes = self::findByName(SystemStat::EMPRESAS_GUIAS_PENDIENTES);
 
     return (object) [
-      'data' => $pendientes->value,
-      'updated_at' => $pendientes->updated_at,
+      'data' => $pendientes ? $pendientes->value : null,
+      'updated_at' => $pendientes ? $pendientes->updated_at : null,
     ];
   }
 
   /**
-   * Obtener las empresas con documentos pendientes
+   * Obtener las empresas con resumenes pendientes
    */
   public function getEmpresasResumenesPendientes()
   {
-    $pendientes = $this->getField([SystemStat::EMPRESAS_RESUMENES_PENDIENTES])->first();
+    $pendientes = self::findByName(SystemStat::EMPRESAS_RESUMENES_PENDIENTES);
 
     return (object) [
-      'data' => $pendientes->value,
-      'updated_at' => $pendientes->updated_at,
+      'data' => $pendientes ? $pendientes->value : null,
+      'updated_at' => $pendientes ? $pendientes->updated_at : null,
     ];
   }
 

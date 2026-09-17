@@ -10,7 +10,6 @@ class HomeController extends Controller
   public function index()
   {
     $system_stats = new SystemStat();
-    $system_stats->repository()->clearCache('all');    
     $stats = $system_stats->getStatsHome()->value;
     $acciones = $system_stats->findByName(SystemStat::ACCIONES_PENDIENTES);
     $hasPendientes = (bool) $acciones->value;

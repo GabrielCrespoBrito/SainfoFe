@@ -19,8 +19,6 @@ class ResumenController extends Controller
 {
   public function index(Request $request)
   {
-    (new SystemStat)->repository()->clearCache();
-    
     $empresas = Empresa::formatList($request->input('empresa_id', null));
     $estados = StatusCode::getCodesPrincipales();
     $tipos = TipoDocumentoPago::getTiposVentas();
@@ -35,8 +33,6 @@ class ResumenController extends Controller
 
   public function pending(Request $request)
   {
-    (new SystemStat)->repository()->clearCache();
-
     $empresas_pendientes = (new SystemStat)->getEmpresasResumenesPendientes();
 
     $empresas = Empresa::formatListPendientes($empresas_pendientes->data, $request->input('empresa', null));

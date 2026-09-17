@@ -17,8 +17,6 @@ class GuiaController extends Controller
 {
   public function index(Request $request)
   {
-    (new SystemStat)->repository()->clearCache();
-
     $empresas = Empresa::formatList( session()->get('empresa_id') );
     $estados = StatusCode::getCodesPrincipales();
     $tipos = TipoDocumentoPago::getTiposVentas();
@@ -33,8 +31,6 @@ class GuiaController extends Controller
 
   public function pending(Request $request)
   {
-    (new SystemStat)->repository()->clearCache();
-
     $empresas_pendientes = (new SystemStat)->getEmpresasGuiasPendientes();
 
     $empresas = Empresa::formatListPendientes($empresas_pendientes->data, $request->input('empresa', null));

@@ -93,14 +93,11 @@ abstract class UpdatePendiente
   }
 
   /**
-   * Borrar cache
+   * Borrar cache (obsoleto: ya no se cachea SystemStat)
    * 
    */
   public function cleanCache()
   {
-    if ($this->cleanCache) {
-      (new SystemStat)->repository()->clearCache('all');
-    }    
   }
 
   public function handle()

@@ -21,9 +21,8 @@ use App\Http\Controllers\Sunat\DocumentConsultStatusController;
 
 class DocumentoController extends Controller
 {
-  public function index(Request $request)
+   public function index(Request $request)
   {  
-    (new SystemStat)->repository()->clearCache();
     $empresas = Empresa::formatList( $request->input('empresa_id', null) );
     $estados = StatusCode::getCodesPrincipales();
     $tipos = TipoDocumentoPago::getTiposVentas();
@@ -39,8 +38,6 @@ class DocumentoController extends Controller
 
   public function pending(Request $request)
   {
-    (new SystemStat)->repository()->clearCache();
-
     $empresasAll = $request->input('empresasAll', false);
     $title = 'Documentos Pendientes';
     
@@ -56,6 +53,8 @@ class DocumentoController extends Controller
       $empresas = Empresa::formatListPendientes($empresas_pendientes->data);
       $hasPendientes = $empresas_pendientes->data->result;
     }
+
+    // dd($empresas_pendientes);
 
     logger( "empresas_pendientes", [ $empresas_pendientes ] );
 
