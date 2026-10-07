@@ -709,7 +709,7 @@ class VentasController extends Controller
     $venta = Venta::find($id);
     $venta->updateStatusCode(StatusCode::EXITO_0003['code']);
     $venta->saveStatus0003();
-    $venta->anularPago();
+    // $venta->anularPago();
 
     return response()->json(['message' => 'Se ha anulado exitosamente']);
   }
