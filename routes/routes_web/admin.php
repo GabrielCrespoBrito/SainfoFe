@@ -32,22 +32,10 @@ Route::middleware([ 'auth' , 'administrative_user' ])->group(function () {
       /// Reporte mensual
       # Ventas mensual
       Route::post('reporte-ventas-mensual-data/{id?}', 'Admin\Reportes\ReporteMensualController@getData')->name('reportes.ventas_mensual_getdata');
-
-      // Route::post('reporte-ventas-mensual-data/{id?}',  function($id){
-        // dd($id);
-        // exit();
-// 
-      // })->name('reportes.ventas_mensual_getdata');
-
-
-
-
       Route::get('reporte-ventas-mensual-report/{id?}', 'Admin\Reportes\ReporteMensualController@report')->name('reportes.ventas_mensual_pdf');
       Route::post('reporte-ventas-mensual-consult-date/{id?}', 'Admin\Reportes\ReporteMensualController@consultDate')->name('reportes.consult_date');
 
       ///
-
-
       // SUBIR CERTIFICADO
       Route::get('empresa/subir_certificado/{id}', "Admin\EmpresaController@subirCertificado")->name('empresa.subirCertificado');
       Route::post('empresa/subir_certificado/{id}', "Admin\EmpresaController@storeCertificado")->name('empresa.storeCertificado');

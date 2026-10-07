@@ -3,14 +3,10 @@
   <div class="box-header with-border">
     <i class="circle {{ $hasPendientes ? 'red' : 'green' }}"></i>
     <h3 class="box-title"> {{ $hasPendientes ? 'ACCIONES PENDIENTES' : 'NO HAY ACCIONES PENDIENTE'  }} </h3>
-    
     <a href="{{ route('admin.actions.update_all_acciones') }}" class="pull-right btn-label label-date-all"> <span class="fa fa-refresh"></span> Actualizar </a>
-    
     @if( $hasPendientes )
       <a href="{{ route('admin.comandos', 'enviar_doc_pendientes') }}" class="pull-right btn-label mr-x4"> <span class="fa fa-send"></span> Enviar Pendientes </a>
     @endif
-
-
   </div>
   <div class="box-body">
     @if($hasPendientes)

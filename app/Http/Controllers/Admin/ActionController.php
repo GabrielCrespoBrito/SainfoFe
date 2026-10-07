@@ -8,7 +8,6 @@ use App\Empresa;
 use App\Resumen;
 use App\GuiaSalida;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Jobs\Admin\ActiveEmpresaTenant;
 use App\Jobs\Admin\UpdateAllPendientes;
@@ -92,18 +91,14 @@ class ActionController extends Controller
       case 'documentos':
         $model = Venta::find($request->id);
         return view('admin.partials.opciones.ventas', ['model' => $model]);
-        break;
       case 'resumenes':
         $model = Resumen::findMultiple($request->id, $request->docnume);
         return view('admin.partials.opciones.resumenes', ['model' => $model]);
-        break;
       case 'guias':
         $model = GuiaSalida::find($request->id);
         return view('admin.partials.opciones.guias', ['model' => $model]);
-        break;
       case 'ordenes_pago':
         return "<h1> .... </h1>";
-        break;                      
       default:
         throw new Exception("Error Processing Request", 1);
     }

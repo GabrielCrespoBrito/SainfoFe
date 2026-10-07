@@ -54,11 +54,6 @@ class DocumentoController extends Controller
       $hasPendientes = $empresas_pendientes->data->result;
     }
 
-    // dd($empresas_pendientes);
-
-    logger( "empresas_pendientes", [ $empresas_pendientes ] );
-
-
     return view('admin.documentos.pending', compact('empresas', 'title', 'empresas_pendientes','routeTableSearch', 'hasPendientes', 'empresasAll'));
   }
 

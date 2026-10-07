@@ -214,7 +214,7 @@ class GuiaSalidaController extends GuiaController
     $fileHelper = filehelper(get_empresa()->ruc());
 
     if ($formato == PDFPlantilla::FORMATO_A4) {
-      if ($fileHelper->pdfExist($namePdf)) {
+      if ($fileHelper->pdfExist($namePdf) && $guia->GuiPDF) {
         $content = $fileHelper->getPdf($namePdf);
         $path = $fileHelper->saveTemp($content, $namePdf);
         return response()->file($path);
