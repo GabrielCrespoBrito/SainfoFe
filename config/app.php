@@ -504,6 +504,10 @@ return [
     '08' => env('DIAS_ENVIO_ND', 5),
   ],
 
+  //
+  'disabled_plazo_check' => env('DISABLED_PLAZO_CHECK', false),
+
+
   'mail' => [
     'pagos' =>  env('CORREO_CONTACTO_PAGOS', 'soporte@sainfo.pe'),
   ],

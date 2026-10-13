@@ -191,8 +191,10 @@ class DocumentoController extends Controller
 
     $venta = Venta::find($documento_id);
 
-    if((new DocumentHelper())->enPlazoDeEnvio( $venta->TidCodi, $venta->VtaFvta) ) {
-      return response()->json(['message' => 'Documento Fuera de Plazo'], 400);
+    if((new DocumentHelper())->enPlazoDeEnvio( $venta->TidCodi, $venta->VtaFvta) && !config('app.disabled_plazo_check') ) {
+      return response()->json([
+        'message' => 'Documento Fuera de Plazo',
+      ], 400);
     }
 
     return (new SunatController())->sendSunatVenta($documento_id , true);
