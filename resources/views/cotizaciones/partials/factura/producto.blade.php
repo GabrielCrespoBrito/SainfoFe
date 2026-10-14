@@ -35,19 +35,19 @@
                 <select name="producto_unidad" class="form-control input-sm"></select>
             </div>
 
-            <div class="form-group padding-xs col-md-1 no_pl">
+            <div class="form-group col-xs-6 padding-xs col-md-1 no_pl">
                 <label>Stock</label>
                 <input name="producto_stock" data-namedb="prosto1" readonly="readonly" class="form-control input-sm">
             </div>
 
 
-            <div class="form-group padding-xs col-md-1 no_pl">
+            <div class="form-group padding-xs col-xs-6 col-md-1 no_pl">
                 <label>Cantidad</label>
                 <input class="form-control input-sm inputs_producto" data-default="1" data-name_item="DetCant"
                     name="producto_cantidad" min="1" data-default="1" type="text" value="1">
             </div>
 
-            <div class="form-group padding-xs col-md-1 no_pl">
+            <div class="form-group padding-xs col-xs-6 col-md-1 no_pl">
                 <label>Precio
                     <abbr class="lpm labelPrecioMinimo" title="Precio Mínimo"></abbr>
                 </label>
@@ -55,7 +55,7 @@
                     min="0" data-default="0" value="0" type="text">
             </div>
 
-            <div class="form-group padding-xs col-md-1 no_pl">
+            <div class="form-group padding-xs col-xs-6 col-md-1 no_pl">
                 <label>Dcto</label>
                 <input min="0" class="form-control input-sm inputs_producto" data-namedb="ProDcto1"
                     data-name_item="DetDcto" name="producto_dct" data-default="0" value="0" type="text">
@@ -68,7 +68,7 @@
                     data-name_item="DetISP" name="producto_isc" data-default="0" type="text">
             </div>
 
-            <div class="form-group padding-xs col-md-1 no_pl">
+            <div class="form-group padding-xs col-xs-6 col-md-1 no_pl">
                 <label>IGV </label>
                 <select name="producto_igv" data-namedb="BaseIGV" data-default="GRAVADA" data-name_item="DetBase"
                     class="form-control btn-sm inputs_producto input-sm">
@@ -81,17 +81,24 @@
             </div>
 
 
-            <div class="form-group padding-xs col-md-1 no_pl">
+            <div class="form-group padding-xs col-xs-6 col-md-1 no_pl">
                 <label>Importe</label>
-                <div class="input-group">
                     <input class="form-control input-sm inputs_producto" readonly="readonly" data-name_item="DetImpo"
                         name="producto_importe" data-default="0" type="text">
-                </div>
             </div>
 
+
+            <div style="margin-top:10px" class="form-group padding-xs col-xs-12 no_pl">
+                <a href="#"
+                    class="btn btn-block pull-right btn-xs hidden-md hidden-lg col-xs-12 col-sm-12 btn-primary item-accion crear">
+                    <span class="fa fa-plus"></span> Agregar producto</a>
+            </div>
+
+
+            {{-- Comentario --}}
             <div class="div_comentario" style="display: none">
 
-                <div class="form-group padding-xs col-md-12 col-comentario">
+                <div class="col-comentario col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     <label>Comentario</label>
                     <textarea class="form-control input-sm inputs_producto" placeholder="" rows="5" name="commentario"
                         data-name_item="DetCome"></textarea>
@@ -108,9 +115,8 @@
                         <option value="ENTREGA TRABAJADORES">ENTREGA TRABAJADORES</option>
                     </select>
                 </div>
-
-
             </div>
+            {{-- /Comentario --}}
 
 
 

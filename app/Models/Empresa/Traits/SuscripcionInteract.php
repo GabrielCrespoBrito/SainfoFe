@@ -49,8 +49,8 @@ trait SuscripcionInteract
 	 */
 	public function getSuscripcionDates()
 	{
-		$dias_recordatorio_porvencer = config('app.recordatorio_suscripcion_porvencerse');
-		$dias_recordatorio_vencimiento = config('app.recordatorio_suscripcion_porvencida');
+		$dias_recordatorio_porvencer = get_setting('recordatorio_suscripcion_por_vencer', 5);
+		$dias_recordatorio_vencimiento = get_setting('recordatorio_suscripcion_por_vencida', 15);
 		$fechaActual = new Carbon();
 		$fechaVencimiento = new Carbon($this->getEndDateSuscripcion());
 		$fechaRecordatorio = $fechaVencimiento->copy()->subDays($dias_recordatorio_porvencer);

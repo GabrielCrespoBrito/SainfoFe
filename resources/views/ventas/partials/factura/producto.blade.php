@@ -109,6 +109,7 @@
                 <label>Comentario</label>
                 <textarea class="form-control input-sm inputs_producto" placeholder="" rows="5" name="commentario"
                     data-name_item="DetCome"></textarea>
+                    
             </div>
 
             <div class="form-group padding-xs col-md-3 col-gratuita" style="display: none;">

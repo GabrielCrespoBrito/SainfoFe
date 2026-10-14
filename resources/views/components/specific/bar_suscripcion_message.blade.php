@@ -1,5 +1,4 @@
 @php
-  // $dateEmpresa = get_empresa()->getSuscripcionDates();
   $className = $dateEmpresa->isVencida ? 'vencida' : 'porvencer';
 @endphp
 
