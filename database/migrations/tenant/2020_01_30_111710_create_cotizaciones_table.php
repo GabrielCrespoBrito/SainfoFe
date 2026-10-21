@@ -52,6 +52,9 @@ class CreateCotizacionesTable extends Migration
             $table->string('TidCodi')->nullable();
             $table->string('TidCodi1');
             $table->time('hora')->nullable();
+            $table->string('user_modi')->nullable()->default(null);            
+            $table->dateTime('fecha_modi')->nullable()->default(null);            
+            $table->string('equipo_modi')->nullable()->default(null);  
             $table->primary(['LocCodi', 'EmpCodi', 'CotNume'], 'primary_full' );
 
 

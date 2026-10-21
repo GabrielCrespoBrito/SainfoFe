@@ -157,18 +157,17 @@ function initDatable() {
       //      
     },
     "createdRow": function (row, data, index) {
-
       $(row).data('info', data);
-      // if (data[5].replace(/[\$,]/g, '') * 1 > 150000) {
-      // $('td', row).eq(5).addClass('highlight');
-      // }
-      // console.log("createdRow" , arguments );
     },
     "columns": [
       { data: 'numero', orderable: false, searchable: false },
       {
         data: 'CotFVta', render: function (data, type, row) {
-          return data + " " + (row.hora || "");
+
+          const fecha_hora = row.fecha_modi ? row.fecha_modi.split(" ")[1] : row.hora;
+
+          return data + " " + fecha_hora;
+
         }, orderable: false, searchable: false
       },
       { data: 'cliente_with.PCNomb', orderable: false, searchable: false },
@@ -499,10 +498,33 @@ function events() {
     const url_anular = $ele.attr('data-anular');
     const url_imprimir = $ele.attr('data-imprimir');
     const url_whatapp = $ele.attr('data-whatapp');
-    const cliente_tlf = tr_selected.data('info').cliente_with.PCTel1
+
+    const info_coti = tr_selected.data('info');
+
+    const cliente_tlf = info_coti.cliente_with.PCTel1
+    const fecha_creacion = info_coti.CotFVta + " " + info_coti.hora
+    const fecha_modificacion = info_coti.fecha_modi ? info_coti.fecha_modi : fecha_creacion;
+    const usuario_modificacion = info_coti.user_modi;
 
     const body = `
     <div class="ventas-info-ele">
+
+    <div class="seccion seccion-acciones text-center">
+      <div class="title-section"> Informacion </div>
+      <div class="col-md-12 no-pr">
+        <span class="color-gray">Fecha Creacion:</span> 
+        <span class="">${fecha_creacion}</span>
+      </div>
+      <div class="col-md-12 no-pr">
+        <span class="color-gray">Fecha Modificacion:</span> 
+        <span class="">${fecha_modificacion}</span>
+      </div>
+      <div class="col-md-12 no-pr">
+        <span class="color-gray">Usuario:</span> 
+        <span class="">${usuario_modificacion}</span>
+      </div>
+    </div>
+
     <div class="seccion seccion-acciones">
       <div class="title-section"> Compartir </div>
       <div class="col-md-12">
@@ -515,6 +537,8 @@ function events() {
         <input placeholder="Nùmero de Telefono" type="number" name="numberWhatApp" class="input-sm input-sm form-control text-center" value="${cliente_tlf}">
         </div>
     </div>
+
+
 
     <div class="seccion seccion-acciones">
       <div class="title-section"> Acciones </div>

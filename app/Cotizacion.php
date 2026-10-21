@@ -236,6 +236,8 @@ class Cotizacion extends Model
   {
     $c = $id ? Cotizacion::find($id) : new self;
 
+    $audit = auditValues();
+
     if (!$id) {
       $c->EmpCodi = empcodi();;
       $local = auth()->user()->localCurrent()->loccodi;
@@ -264,6 +266,10 @@ class Cotizacion extends Model
     $c->cotbase = $totales->total_valor_venta;
     $c->cotigvv = $totales->igv;
     $c->cotimpo = $totales->total_cobrado;
+
+    $c->user_modi = $audit->user;
+    $c->fecha_modi = $audit->fecha;
+    $c->equipo_modi = $audit->equipo;
 
     $guardar_individual = ($data['condicion_individual'] ?? 'true') == 'true';
     if ($guardar_individual) {

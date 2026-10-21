@@ -491,9 +491,6 @@ class CotizacionAbstractController extends Controller
           $woocomerce = (new WoocomerceOrder)->update($request->input('import_id'), ['status' => 'completed']);
           if(!$woocomerce->success){
           }
-          // $orden = Orden::findOrfail($request->import_id);
-        // $orden->saveCompleteStatus();
-        // $orden->info()->create(['meta_key' => MetaData::COTIZACION_ID, 'meta_value' => $cotizacion->getId()]);
 
       }
     }
