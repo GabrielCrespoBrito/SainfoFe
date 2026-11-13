@@ -162,9 +162,6 @@ trait VentasMensualAbstractController
     // Descargar Archivos
     if( $formato == "archivos" ){
 
-      // _dd( $ids );
-      // exit();
-
       // $comprimido =  $this->saveFiles($data->toArray(), $empresa->empcodi );
       $comprimido =  $this->saveFiles($ids, $empresa->empcodi );
 

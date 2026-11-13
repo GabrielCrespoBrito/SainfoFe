@@ -16,7 +16,7 @@ class Select extends React.Component {
         name={name}
         className={className}
         onChange={onChange}
-        value={selectedValue}
+        defaultValue={selectedValue}
         ref={ref_}
       >
         {options.map((option, index) => {

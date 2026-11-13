@@ -285,12 +285,14 @@ class FormNotaCredito extends React.Component {
       return [
 
         <InputImporte
+          key="importe"
           value={monto}
           ref_={this.importeRef}
           readOnly={true}
           monedaAbbre={monedaAbbre} />,
 
         <Motivo
+          key="motivo"
           ref_={this.motivoRef}
           value={this.state.motivo}
         />
@@ -300,21 +302,24 @@ class FormNotaCredito extends React.Component {
     if (tipo == 2) {
       return [
         <Motivo
+          key="motivo"
           ref_={this.motivoRef}
           value={this.state.motivo}
         />,
-        <VentaItems items={items} />
+        <VentaItems key="items" items={items} />
       ]
     }
 
     if (tipo == 3) {
       return [
-        <Concepto ref_={this.conceptoRef} />,
+        <Concepto key="concepto" ref_={this.conceptoRef} />,
         <AfectacionIGV
+          key="afectacion"
           tiposIgvs={tiposIgvs}
           ref_={this.tipoIgvRef}
         />,
         <InputImporte
+          key="importe"
           ref_={this.importeRef}
           monedaAbbre={monedaAbbre}
         />
@@ -326,18 +331,20 @@ class FormNotaCredito extends React.Component {
       return [
 
         <Motivo
+          key="motivo"
           ref_={this.motivoRef}
           value={this.state.motivo}
         />,
 
         <InputImporte
+          key="importe"
           value={monto}
           ref_={this.importeRef}
           readOnly={true}
           monedaAbbre={monedaAbbre}
         />,
 
-        <CuotasVenta ref={this.cuotasRef} />
+        <CuotasVenta key="cuotas" ref={this.cuotasRef} />
       ]
     }
 
