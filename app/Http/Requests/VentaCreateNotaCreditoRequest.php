@@ -33,9 +33,9 @@ class VentaCreateNotaCreditoRequest extends FormRequest
       'tipoIgv' => 'required_if:tipo,3|exists:tipos_igvs,cod_sunat',
       'importe' => 'required_if:tipo,3|numeric|min:0',
       'items.*.id' => 'required_if:tipo,2',
-      'items.*.cantidad' => 'required_if:tipo,2|numeric|min:0',
+      'items.*.cantidad' => 'required_if:tipo,2|numeric|gt:0',
       'cuotas.*.fecha' => 'required_if:tipo,4|date|gte:fecha',
-      'cuotas.*.monto' => 'required_if:tipo,4|numeric|min:0'
+      'cuotas.*.monto' => 'required_if:tipo,4|numeric|gt:0'
     ];
   }
 
