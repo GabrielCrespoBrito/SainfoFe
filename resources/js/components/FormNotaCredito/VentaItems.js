@@ -28,7 +28,8 @@ class VentaItems extends Component {
                 <td width="20%"> 
                   <input 
                     type="number"
-                    min="0"
+                    step="any"
+                    min="0.01"
                     data-key={item.id}
                     max={item.max}
                     className='form-control text-right input-sm'
