@@ -189,6 +189,15 @@ class CotizacionSaveRequest extends FormRequest
         $empcodi = empcodi();
         $local = auth()->user()->localCurrent()->loccodi;
 
+
+        $hora_limite_cot = auth()->user()->hora_limite_cot;
+
+        if( $hora_limite_cot && date('H:i:s') > date('H:i:s', strtotime($hora_limite_cot) ) ){
+          $validator->errors()->add('hora', "No puede cotizar ni modificar una cotización despues de la hora: " . auth()->user()->hora_limite_cot);
+          return;
+        }
+
+
         if ($this->isStore) {
           $this->series = SerieDocumento::findSerie(
             $empcodi,
@@ -197,10 +206,6 @@ class CotizacionSaveRequest extends FormRequest
             $local
           );
 
-          if( auth()->user()->hora_limite_cot  && date('H:i:s') > date('H:i:s', strtotime(auth()->user()->hora_limite_cot) ) ){
-            $validator->errors()->add('hora', "No puede cotizar despues de la hora: " . auth()->user()->hora_limite_cot);
-            return;
-          }
 
           if (!$this->series->first()) {
             $nombreDocumento = TipoDocumentoPago::getNombreDocumento($this->tipo);
