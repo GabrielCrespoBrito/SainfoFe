@@ -115,8 +115,8 @@ class CotizacionAbstractController extends Controller
     $locales = user_()->locales->load('local');
     $vendedores = get_empresa()->vendedores;
     $zonas = get_empresa()->zonas();
-    $usuarios = get_empresa()->users;
-    // $usuarios = get_empresa()->users->where('active', 1)->get();
+    // $usuarios = get_empresa()->users;
+    $usuarios = get_empresa()->users()->where('active', 1)->get();
     return view('cotizaciones.index', [
       'tipo' => $tipo,
       'locales' => $locales,
